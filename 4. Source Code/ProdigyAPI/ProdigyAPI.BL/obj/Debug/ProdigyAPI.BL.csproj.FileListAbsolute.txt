@@ -1,0 +1,44 @@
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.BL.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.BL.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\EntityFramework.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\EntityFramework.SqlServer.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\Newtonsoft.Json.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\NReco.PdfGenerator.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\NtoW.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.Marketplace.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.Model.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.SIGlobals.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.ShipmentIntegration.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.Marketplace.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.Model.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.SIGlobals.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\EntityFramework.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\EntityFramework.SqlServer.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\Newtonsoft.Json.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\NReco.PdfGenerator.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.ShipmentIntegration.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\obj\Debug\ProdigyAPI.BL.csprojResolveAssemblyReference.cache
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\obj\Debug\ProdigyAPI.BL.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\obj\Debug\ProdigyAPI.BL.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.BL.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.BL.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\EntityFramework.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\EntityFramework.SqlServer.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\Newtonsoft.Json.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\NReco.PdfGenerator.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\NtoW.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.Marketplace.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.Model.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.SIGlobals.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.ShipmentIntegration.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.Marketplace.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.Model.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.SIGlobals.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\EntityFramework.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\EntityFramework.SqlServer.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\Newtonsoft.Json.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\NReco.PdfGenerator.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\bin\Debug\ProdigyAPI.ShipmentIntegration.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\obj\Debug\ProdigyAPI.BL.csprojResolveAssemblyReference.cache
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\obj\Debug\ProdigyAPI.BL.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.BL\obj\Debug\ProdigyAPI.BL.pdb

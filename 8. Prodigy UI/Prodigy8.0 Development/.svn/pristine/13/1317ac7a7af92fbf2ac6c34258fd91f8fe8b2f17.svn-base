@@ -1,0 +1,102 @@
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="StockGroupForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="MetalCode">Code <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                  <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top">Stock Group Code</span>
+                  </div>
+                </label>
+                <input oninput="this.value = this.value.toUpperCase()" class="form-control"  id="MetalCode"
+                  formControlName="MetalCode" AlphabetFieldValidator (input)="TEXT.value = TEXT.value.toUpperCase()"
+                  [(ngModel)]="StockGroupListData.MetalCode" [readonly]="isReadOnly" placeholder="Enter Metal Code"
+                  type="text" #TEXT maxlength="2">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="MetalName">Name<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                  <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top">Stock Group Name</span>
+                  </div>
+                </label>
+                <input oninput="this.value = this.value.toUpperCase()" type="text" class="form-control" id="MetalName" 
+                [(ngModel)]="StockGroupListData.MetalName" maxlength="30"
+                  formControlName="MetalName" AlphabetFieldValidator (input)="TEXT.value = TEXT.value.toUpperCase()" placeholder="Enter Metal Name" #TEXT/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <ng-container *ngIf="EnableAdd">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="add(StockGroupForm)">
+                    <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                </ng-container>
+                <ng-container *ngIf="EnableSave">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="save(StockGroupForm)">
+                    <i class="fal fa-save"></i>&nbsp;Save</button>
+                </ng-container>
+                <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  style="margin-top: 1.2rem !important;" (click)="clear()">
+                  <i class="fal fa-trash"></i>&nbsp;Clear</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered  table-hover ">
+            <thead class="topbar">
+              <tr >
+                <th>Code</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Edit</th>
+                <th>Open</th>
+                <th>Close</th> 
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let _List of StockGroupList; let i = index">
+                <td>{{_List.MetalCode}}</td>
+                <td>{{_List.MetalName}}</td>
+                <td  [style.color]="getStatusColor(_List.ObjectStatus)">
+                  <b>{{_List.ObjectStatus | statusName : _List.ObjectStatus }}</b></td>
+                <td align="center"><i class="fas fa-edit" title="edit" (click)="editField(_List)"></i>
+                </td>
+                <td align="center"> <i class="fas fa-lock-open" title="open" (click)="openField(_List)"></i>
+                <td align="center"> <i class="fas fa-lock" title="close" (click)="closeField(_List)"></i>
+                </td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="EnableJson">
+    <pre>{{StockGroupListData | json}}</pre>
+    </ng-container>
+</div>

@@ -1,0 +1,1085 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BC0E7530-582B-4495-B7FA-6E6366B16A9D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProdigyAPI.Model</RootNamespace>
+    <AssemblyName>ProdigyAPI.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MagnaDb\AccTransactionType.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\AccType.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\APIClient.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\ApplicationErrorLog.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\APP_AUTH_TABLE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\APP_CONFIG_TABLE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\BarcodeInclusiveStone.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\BarcodeStoneData.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\BhimaEcomIntegrationEnvironment.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\CashInHand_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\CHIT_CONNECTION_TABLE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\CHTU_CHIT_CLOSURE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\Customer.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\CustomerDocument.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\DiscountRuleConfiguration.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\DocumentCreationLog.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\EcomAPIURL.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\EcomOrderAPILog.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\ElevatedPermission.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\GetAdjustedPurchaeBill_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\GetAdjustedSRBill_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\GetOrderItemsForPacking_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\GSTComponent.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\GSTGroup.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\GSTLedgerEntry.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\GSTPostingSetup.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\HSNSUC.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\IntegrationEnvironment.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\IPSetting.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\ITEM_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ACC_CODE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ACC_CURRENT_BALANCE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ACC_FINANCIAL_BALANCE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ACC_GROUP_BALANCE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ACC_JOURNAL_SEQ.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ACC_POSTING_SETUP.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ACC_SEQ_NOS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ACC_VOUCHER_SEQ_NOS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_APP_SETTING.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_BARCODE_PORT_SETTINGS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_BARCODE_SEQ_NOS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_BARCODE_TAG_WEIGHT.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_CARD_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_CESS_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_CURRENCY_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_CUSTOMER_ID_PROOF_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_DAY_END.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_DISCOUNT_PERIOD.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_FINYEAR_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_FY_ACCESS_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_GST_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_GST_TYPES.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_GS_ITEM_ENTRY.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_HALLMARK_TYPE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ITEMSIZE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_ITEM_COUNTER_LIST.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_KARAT_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_LOG_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_MASTERS_SEQ_NOS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_MC_TYPES.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_RELIGION_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_SCHEDULE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_SEQ_NOS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_STATE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_STONE_BARCODE_SEQ_NOS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_TDS_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTS_WASTAGE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_CHEQUE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_CLOSING.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_CREDITCARD_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_EXCHANGE_ENTRY_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_FY_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_GROUP_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_GST_GROUPING.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_LEDGER_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_NARRATION_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_SUBLEDGER_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_SUBSIDIARY_VOUCHER_TRANSACTIONS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_TDS_GROUPING.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_TRANSACTION_TYPES.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_VCH_TRANS_HISTORY.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ACC_VOUCHER_TRANSACTIONS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ALLOY_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_BRANCH_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_CHARGES_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_CHIT_TABLE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_COMPANY_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_COUNTER_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_COUNTER_MASTER_MAIN.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_CURRENCY_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_CUSTOMER_ID_PROOF_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_CUSTOMER_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DEPARTMENT_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DESIGNATION_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_CERTIFICATE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_CLARITY.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_COLOR.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_CUT.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_FLUORESCENCE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_POLISH.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_RATE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_SHAPE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_SIZE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DIAMOND_SYMMETRY.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DISCOUNT_ITEM_CATEGORY_GROUPING.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DISCOUNT_MASTER_CATEGORY.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_DISCOUNT_MASTER_CATEGORY_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_FTP_CONFIG.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_GRADE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_GROUP_GS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_GS_GROUPING.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_HALLMARK_CENTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ISSUERECEIPTS_TYPES.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ITEMDESIGN_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ITEM_ENTRY_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ITEM_LIST_GROUP_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ITEM_TYPE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_MAILID_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_MASTER_DESIGN.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_METALS_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_MIN_STOCK_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_ORDER_RATE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_PACKING_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_PROFESSION_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_PUBLIC_HOLIDAY.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_RATE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_RATE_MASTER_HIS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_SALESMAN_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_SALUTATION_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_SETTINGS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_SKU_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_STONE_DIAMOND_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_STONE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_SUPPLIER_GROUP.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_SUPPLIER_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_SUPPLIER_OPN_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_TCS_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_TOLERANCE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_VA_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KSTU_VOUCHER_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTS_APP_PASS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTS_CARD_COMMISSION.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTS_EMPLOYEE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTS_PAYMENT_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTS_TRANSACTION_TYPES_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_BARCODED_ISSUE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_BARCODED_ISSUE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_BARCODED_RECEIPT_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_BARCODED_RECEIPT_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_BARCODE_IMAGE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_BARCODE_IMAGE_URL.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_BARCODE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_BARCODE_STONE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_BRANCH_ORDER_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_CASHBACK_OFFER_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_CASHBACK_OFFER_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_CASH_IN_HAND_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_CONFIRMED_BARCODE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_COUNTER_ISSUE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_COUNTER_RECEIPT.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_COUNTER_STOCK.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_COUNTER_STOCK_HIS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_COUNTER_TRANSFER_LOG.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_CREDIT_BILL_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_DESIGN_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_GS_SALES_STOCK.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ISSUE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ISSUE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ISSUE_RECEIPTS_STONE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ITEM_STOCK.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_NOTE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_OFFER_DISCOUNT_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ONLINE_INVENTARY_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_OPG_STOCK_ISSUE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_OPG_STOCK_ISSUE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_OPG_STOCK_ISSUE_STONE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_OPG_STOCK_SEGGREGATED_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_OPG_STOCK_SEGGREGATED_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ORDER_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ORDER_IMAGE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ORDER_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ORDER_PRODUCTION_ISSUE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ORDER_PRODUCTION_ISSUE_STONE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_ORDER_RECEIPT_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PAYMENT_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PAYMENT_DETAILS_OLD.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PITTY_CASH_ENTRY.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PURCHASE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PURCHASE_EST_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PURCHASE_EST_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PURCHASE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PURCHASE_RETURN_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PURCHASE_RETURN_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_PURCHASE_STONE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_RECEIPTS_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_RECEIPTS_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_REPAIR_ISSUE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_REPAIR_ISSUE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_REPAIR_RECEIPT_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_REPAIR_RECEIPT_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SALES_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SALES_EST_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SALES_EST_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SALES_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SALES_MASTER_OLD.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SALES_STOCK_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SALES_STOCK_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SALES_STONE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SR_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SR_ISSUE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SR_ISSUE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SR_ISSUE_STONE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SR_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SR_RECEIPT_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SR_RECEIPT_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SR_RECEIPT_STONE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_SR_STONE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_STOCK_TAKING.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_STONE_COUNTER_STOCK.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_TDS_EXPENSE_DETAILS.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\KTTU_TRAN_MODI_LOG.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\LastUpdateTime.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\LedgerBalance.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\LOV.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\LOVKey.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\MagnaDBEntities.cs" />
+    <Compile Include="MagnaDb\MagnaDbExtendedClasses.cs" />
+    <Compile Include="MagnaDb\MagnaEdbModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MagnaEdbModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\MagnaEdbModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\MagnaEdbModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MagnaEdbModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\Menu.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\Method.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\MobileOTP.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\ModuleFunction.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\OperatorBranchMapping.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\OperatorDefaultBranch.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\OrderItemPickList.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\OrderItemShipmentLabel.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\ORDER_TYPE_ACC_POSTING.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\PackageHeader.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\PaymentJournal.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\RefreshToken.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\RoleElevatedPermissionMapping.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\RoleMethodPermission.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\RolePermission.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SDTS_MODULEFUNCTIONS_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SDTS_MODULE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SDTS_ROLEACTIONS_ROLE.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SDTS_SUBMODULE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SDTU_FUNCTION_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SDTU_OPERATOR_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SDTU_ROLE_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SendOTPToMobile1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SendOTPToMobile_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\ShipmentDetail.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\ShipmentMaster.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\SMSLog.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\TDTU_SETTING_MASTER.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\ufn_getGSTTValues_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\UserElevatedPermissionMapping.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_ACC_LedgerMaster_Load_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_acc_SubsidiaryToSummaryAccountsPosting_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_BarcodeCounterStockReport_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\Usp_CashVoucherAccName_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_createCreditReceiptPostingVouchers_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_createOrderPostingVouchers1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_createRepairPostingVouchers_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_getAllOrdersForAttach_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_getBarcodeInformation2_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_getBarcodeStoneInformation_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetCustDetailsValid_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetCustomerList1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetCustomerListCustomer_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetCustomerList_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetOPGItemsForIssue_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetOPGStoneItemsForIssue_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_getorderissuedetails_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetOrdersTobeShipped_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_getorderStonedetails_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetPickupAssignmentDetails_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetSRItemsForIssue1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetSRItemsForIssue_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetSRItemsToBeBarcoded_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetSRStoneItemsForIssue1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GetSRStoneItemsForIssue_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\Usp_getVoucherAccName_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_GSTGetGSTTaxValues_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_ItemList1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_ItemList_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_ItemList_Result1.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_ItemList_Result2.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_ItemProperties1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_ItemProperties_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_ItemProperties_Result1.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_LoadDesignMaster_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_LoadGS_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_LoadGS_Result1.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_LoadMCTypes1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_LoadMCTypes_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_LoadMCTypes_Result1.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_LoadTDS_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_LoadTransType_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_OPG_StockIssue_details_Branch_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_OPG_StockIssue_stone_details_Branch_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_OrderItems_ShippingDetails_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_OrderReceiptReport_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_OrderReport_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_SalesDiscountRevert1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_SalesDiscountRevert_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_Salesman1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_Salesman_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_Salesman_Result1.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_SMSOTP_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_stockCheckRemainingTagReport_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_stockCheckRemainingTagsReport1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_stockCheckRemainingTagsReport_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_stockCheckScannedStockReport_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_StoneDiamond1_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_StoneDiamond_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_StoneDiamond_Result1.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\usp_SupplyMetalTypes_Result.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\vAccountsVoucherType.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\vBilltype.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\vConversionBatchId.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\vGetexpenseledger.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\vLedgerStockType.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MagnaDb\WebAPITraceLog.cs">
+      <DependentUpon>MagnaEdbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <EntityDeploy Include="MagnaDb\MagnaEdbModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MagnaEdbModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="MagnaDb\MagnaEdbModel.edmx.diagram">
+      <DependentUpon>MagnaEdbModel.edmx</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MagnaDb\MagnaEdbModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MagnaEdbModel.edmx</DependentUpon>
+      <LastGenOutput>MagnaEdbModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MagnaDb\MagnaEdbModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MagnaEdbModel.edmx</DependentUpon>
+      <LastGenOutput>MagnaEdbModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

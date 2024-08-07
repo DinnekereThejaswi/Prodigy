@@ -1,0 +1,205 @@
+<div class="card mb-0">
+    <div class="card-body">
+        <!-- <div class="card-body"> -->
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <div>
+                            <i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">
+                                Voucher Date</span>
+                            <!-- <h2 class="font-light">{{voucherDate | date: 'yyyy-MM-dd'}}</h2> -->
+                            <h2 class="font-light">{{voucherDate | date:'dd/MM/yyyy'}}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="NewVoucherNo">Voucher No.</label>
+                        <input type="number" class="form-control" name="NewVoucherNo"
+                            [(ngModel)]="JournalEntryHeader.NewVoucherNo" readonly>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3 ">
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Account Name</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Narration</th>
+                                <th>Receipt No</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="form-control" [(ngModel)]="JournalEntryHeader.AccountCode">
+                                        <option [ngValue]="0">Select</option>
+                                        <option *ngFor="let _accountNameList of AccountNameList"
+                                            [value]="_accountNameList.acc_code">
+                                            {{_accountNameList.acc_name}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control"
+                                        [(ngModel)]="JournalEntryHeader.DebitAmount">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control"
+                                        [(ngModel)]="JournalEntryHeader.CreditAmount">
+                                </td>
+                                <td>
+                                    <!-- <select class="form-control" [(ngModel)]="JournalEntryHeader.Narration">
+                                  <option [ngValue]="null">Select</option>
+                                  <option *ngFor="let list of NarrationList" [value]="list.Narration">
+                                      {{list.Narration}}</option>
+                              </select> -->
+                                    <input list="narrationList" class="form-control" name="narration"
+                                        [(ngModel)]="JournalEntryHeader.Narration" />
+                                    <datalist id="narrationList">
+                                        <option [ngValue]="null">Select</option>
+                                        <option *ngFor="let list of NarrationList" [value]="list.Narration">
+                                            {{list.Narration}}</option>
+                                    </datalist>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control"
+                                        [(ngModel)]="JournalEntryHeader.ReceiptNo">
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="EnableAdd">
+                                        <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                            style="margin-top: 0.2rem !important;" (click)="add()">
+                                            <i class="far fa-plus-circle" style="padding-right:10px"></i>Add</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="EnableSave">
+                                        <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                            style="margin-top: 0.2rem !important;" (click)="save()">
+                                            <i class="fal fa-save" style="padding-right:10px"></i>Save</button>
+                                    </ng-container>
+                                    <!-- <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                        style="margin-top: 0.2rem !important;" (click)="clear()">
+                                        <i class="fal fa-window-close" style="padding-right:10px"></i>Clear</button> -->
+                                    <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary"
+                                        type="button" (click)="clear()"><i class="fal fa-close"></i>&nbsp;Clear</button>
+                                </td>
+                                <!-- <td>
+                              <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                  style="margin-top: 0.2rem !important;" (click)="clear()">
+                                  <i class="fal fa-window-close" style="padding-right:10px"></i>Clear</button>
+                          </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<ng-container *ngIf="JournalList.length>0">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Action</th>
+                                <th>SNo</th>
+                                <th>Account Name</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Naration</th>
+                                <th>Receipt No</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let _journalVoucherList of JournalList;let i=index">
+                            <tr>
+                                <td><i class="fas fa-edit" title="edit" (click)="EditRow(_journalVoucherList,i)"
+                                        style="padding-right:10px"></i>
+                                    <i class="fas fa-trash" title="delete" (click)="DeleteRow(i)"></i>
+                                </td>
+                                <td>{{i+1}}</td>
+                                <td>
+                                    <select class="form-control" [(ngModel)]="_journalVoucherList.AccountCode">
+                                        <option [ngValue]="0">Select</option>
+                                        <option *ngFor="let _accountNameList of AccountNameList"
+                                            [value]="_accountNameList.acc_code">
+                                            {{_accountNameList.acc_name}}</option>
+                                    </select>
+                                </td>
+                                <td>{{_journalVoucherList.DebitAmount}}</td>
+                                <td>{{_journalVoucherList.CreditAmount}}</td>
+                                <td>{{_journalVoucherList.Narration}}</td>
+                                <td>{{_journalVoucherList.ReceiptNo}}</td>
+                            </tr>
+                        </tbody>
+                        <tr style=" border: none;">
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none">{{DebitAmount(JournalList) | number : '1.2-2'}}</td>
+                            <td class="border-none">{{CreditAmount(JournalList) | number : '1.2-2'}}</td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                        </tr>
+                        <tr style=" border: none;">
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none">Difference</td>
+                            <td class="border-none">{{differenceAmount() | number : '1.2-2'}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<!-- </div> -->
+<!-- </div> -->
+
+<div class="modal fade" id="ReprintJournalEntryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="print">
+                <span>
+                    <div id="DisplayData" [innerHTML]='PrintDetails'></div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row pt-1" *ngIf="JournalList.length>0">
+    <div class="col-md-4">
+        <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+            (click)="Submit()" [disabled]="EnableSubmitButton">
+            <i class="far fa-save"></i> Submit</button>
+    </div>
+</div>
+
+<pre>{{JournalList | json}}</pre>

@@ -1,0 +1,87 @@
+<form class="form-horizontal">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group1">
+                <label for="BarcodeNo">Barcode No</label>
+                <input type="text" class="form-control" [(ngModel)]="barcodeDetails.BarcodeNo"
+                    [ngModelOptions]="{standalone: true}" (keyup.enter)="BarcodeDetails()" />
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group1">
+                <label for="OrderNo">Order No</label>
+                <input type="text" class="form-control" [(ngModel)]="barcodeDetails.OrderNo"
+                    [ngModelOptions]="{standalone: true}" />
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group1">
+                <label for="GS">GS</label>
+                <input type="text" class="form-control" [(ngModel)]="barcodeDetails.GSCode"
+                    [ngModelOptions]="{standalone: true}" readonly />
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group1">
+                <label for="Item">Item</label>
+                <input type="text" class="form-control" [(ngModel)]="barcodeDetails.ItemCode"
+                    [ngModelOptions]="{standalone: true}" readonly />
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group1">
+                <label for="Gwt">Gwt</label>
+                <input type="text" class="form-control" [(ngModel)]="barcodeDetails.GrossWt"
+                    [ngModelOptions]="{standalone: true}" readonly />
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group1">
+                <label for="Swt">Swt</label>
+                <input type="text" class="form-control" [(ngModel)]="barcodeDetails.StoneWt"
+                    [ngModelOptions]="{standalone: true}" readonly />
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group1">
+                <label for="Nwt">Nwt</label>
+                <input type="text" class="form-control" [(ngModel)]="barcodeDetails.NetWt"
+                    [ngModelOptions]="{standalone: true}" readonly />
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group1">
+                <button type="button" class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                    (click)="save()"><i class="fal fa-save"></i>
+                    Save </button>
+                <button type="button" class="printMe btn btn-danger waves-effect waves-light btn-rounded btn-secondary"
+                    (click)="cancel()"><i class="fal fa-remove"></i>
+                    Cancel </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<ng-container *ngIf="EnableJson">
+    <div class="col-md-3">
+        <pre>{{barcodeDetails | json}}</pre>
+    </div>
+</ng-container>

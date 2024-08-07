@@ -1,0 +1,142 @@
+<div class="row" style="display:block;margin: auto;width: 30%;">
+  <ng-container *ngIf="isReprint">
+    <form class="form-horizontal">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <div class="form-group">
+                  <label for="OrderNo">Bill Date</label>
+                  <input type="text" class="form-control" [(ngModel)]="disAppDate" [ngModelOptions]="{standalone: true}"
+                     />
+                </div> -->
+                <div class="form-group">
+                  <label for="OrderNo">Bill Date</label>&nbsp;
+                  <ng-container *ngIf="!EnableDate">
+                    <input type="text" class="form-control"  formControlName="applicationDates"  bsDatepicker
+                      [bsConfig]="datePickerConfig" [(ngModel)]="applicationDate" readonly
+                       value="{{applicationDate | date:'dd/MM/yyyy' }}"   (ngModelChange)="byDate(applicationDate)"
+                      style="width: 200px;" />
+                  </ng-container>
+                  <ng-container *ngIf="EnableDate">
+                    <input type="text" class="form-control" [(ngModel)]="applicationDate"
+                      formControlName="applicationDates" value="{{applicationDate | date:'dd/MM/yyyy' }}"
+                      style="width: 200px;" readonly />
+                  </ng-container>
+                  &nbsp;&nbsp;
+                  <i class="fal fa-edit" (click)="ValidatePermisiion()"></i>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="input-group">
+                    <select class="form-control mr-auto mt-2 mt-lg-0" [(ngModel)]="reprintHeaders.selectedOption"
+                      [ngModelOptions]="{standalone: true}">
+                      <option [ngValue]="null">Select Bill No</option>
+                      <option *ngFor="let _BillList of BillList" [value]="_BillList.BillNo">
+                        {{_BillList.BillNo}} - {{_BillList.CustName}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      Cancelled Bills
+                      <div class="material-switch pull-right">
+                        <input id="someSwitchOptionDefault" (change)="isChecked($event)" name="someSwitchOption001"
+                          type="checkbox" />
+                        <label for="someSwitchOptionDefault" class="label-default"></label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="form-group">
+                  <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                    (click)="onPrint(reprintHeaders.selectedOption)"><i class="fal fa-print"></i>
+                    Reprint </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <div class="modal fade" id="ReprintPurchaseBillingModal" tabindex="-1" data-backdrop="static" data-keyboard="false"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+            id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+          <button type="button" class="close" (click)="closePurBillTab()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <ng-container *ngIf="PrintTypeBasedOnConfig">
+          <div class="container invoice-box htmlPrint" id="print-closed-section"
+            style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+            <pre>{{PrintDetails}}</pre>
+          </div>
+          <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+            <div id="DisplayData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Added for Plain Text printing-->
+
+<div class="modal fade" id="PurBillPlainTextTab" tabindex="-1" role="dialog" aria-labelledby="PurBillPlainTextTabLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="PurBillPlainTextTabLabel" (click)=printPurBillPlainText()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{purBillPlainTextDetails}}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ends here -->
+
+<!--Added permisison modal-->
+
+<div id="PermissonModals" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Prodigy</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="PassWord">9. Password</label>
+          <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+            (keyup.enter)="passWord(Pwd.value)" IntegerDecimalFieldValidator #Pwd />{{ Pwd.focus() }}
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+            (click)="passWord(Pwd.value)">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Ends here -->

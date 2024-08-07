@@ -1,0 +1,2453 @@
+// import { SideBarService } from './sidebar.service';
+// import { Component, OnInit, Input } from '@angular/core';
+// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// //import { ROUTES } from './menu-items';
+// import { Router } from "@angular/router";
+// import { ToastrService } from 'ngx-toastr';
+// import { Keepalive } from '@ng-idle/keepalive';
+// import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+// import swal from 'sweetalert';
+
+
+// declare var $: any;
+// @Component({
+//     selector: 'ap-sidebar',
+//     templateUrl: './sidebar.component.html',
+//     providers: [SideBarService]
+// })
+// export class SidebarComponent implements OnInit {
+
+//     showMenu: string = '';
+//     showSubMenu: string = '';
+//     public sidebarnavItems: any;
+
+//     //this is for the open close
+//     addExpandClass(element: any) {
+//         if (element === this.showMenu) {
+//             this.showMenu = '0';
+
+//         } else {
+//             this.showMenu = element;
+//         }
+//     }
+
+//     addActiveClass(element: any) {
+//         if (element === this.showSubMenu) {
+//             this.showSubMenu = '0';
+
+//         } else {
+//             this.showSubMenu = element;
+//         }
+//     }
+
+//     constructor(private modalService: NgbModal, private router: Router,
+//         private _toastr: ToastrService,
+//         private idle: Idle,
+//         // private keepalive: Keepalive,
+//         private _sidebarService: SideBarService
+//     ) {
+//         this.getMenuList();
+//     }
+//     // End open close
+
+//     ROUTES: any = [];
+
+//     ngOnInit() {
+//         //this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem);
+//         $(function () {
+//             $(".sidebartoggler").on('click', function () {
+//                 if ($("#main-wrapper").hasClass("mini-sidebar")) {
+//                     $("body").trigger("resize");
+//                     $("#main-wrapper").removeClass("mini-sidebar");
+
+//                 } else {
+//                     $("body").trigger("resize");
+//                     $("#main-wrapper").addClass("mini-sidebar");
+//                 }
+//             });
+//         });
+//     }
+
+//     reset() {
+//         this.idle.watch();
+//     }
+
+//     sideMenuBar: any;
+//     getMenuList() {
+//         this._sidebarService.getMenus().subscribe(
+//             response => {
+//                 this.ROUTES = response;
+//                 this.sidebarnavItems = this.ROUTES.filter(sidebarnavItem => sidebarnavItem);
+//                 //localStorage.setItem('Menus', JSON.stringify(this.sidebarnavItems));                
+//                 // console.log(this.sidebarnavItems);
+//             },
+//             error => {
+//                 swal("Error", "Unable to load menus", "error");
+//             }
+//         )
+//     }
+
+//     @Input() Checked: Boolean;
+// }
+
+
+import { SideBarService } from './sidebar.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+//import { ROUTES } from './menu-items';
+import { Router } from "@angular/router";
+import { ToastrService } from 'ngx-toastr';
+import { Keepalive } from '@ng-idle/keepalive';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import swal from 'sweetalert';
+import { Observable } from 'rxjs';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
+declare var $: any;
+@Component({
+    selector: 'ap-sidebar',
+    templateUrl: './sidebar.component.html',
+    providers: [SideBarService]
+})
+export class SidebarComponent implements OnInit {
+
+
+    // sidebarnavItems: any = [
+    //     {
+    //         "ID": 1,
+    //         "Tittle": "Masters",
+    //         "SortOrder": 1,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-monitor",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 103,
+    //                 "Tittle": "Stock Group",
+    //                 "SortOrder": 3,
+    //                 "Path": "/masters/stock-group/",
+    //                 "Icon": "fas fa-warehouse-alt",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 104,
+    //                 "Tittle": "Karat ",
+    //                 "SortOrder": 4,
+    //                 "Path": "/masters/karat/",
+    //                 "Icon": "fas fa-coins",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 106,
+    //                 "Tittle": "GS Entry",
+    //                 "SortOrder": 6,
+    //                 "Path": "/masters/gs-entry/",
+    //                 "Icon": "fas fa-container-storage",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 107,
+    //                 "Tittle": "Product Tree",
+    //                 "SortOrder": 7,
+    //                 "Path": "/masters/product-tree/",
+    //                 "Icon": "fa fa-tree",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 110,
+    //                 "Tittle": "Counter",
+    //                 "SortOrder": 10,
+    //                 "Path": "/masters/counter/",
+    //                 "Icon": "fas fa-globe-asia",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 111,
+    //                 "Tittle": "Salesman ",
+    //                 "SortOrder": 11,
+    //                 "Path": "/masters/salesman/",
+    //                 "Icon": "fas fa-user-friends",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 123,
+    //                 "Tittle": "VA Master",
+    //                 "SortOrder": 14,
+    //                 "Path": "/masters/selling-va-master/",
+    //                 "Icon": "fa fa-cart-plus",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 115,
+    //                 "Tittle": "Daily Rates",
+    //                 "SortOrder": 15,
+    //                 "Path": "/masters/daily-rates/",
+    //                 "Icon": "fas fa-rv",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 122,
+    //                 "Tittle": "Discount Master",
+    //                 "SortOrder": 35,
+    //                 "Path": "/masters/discount-master/",
+    //                 "Icon": "fas fa-balance-scale-left",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 171,
+    //                 "Tittle": "GST Master",
+    //                 "SortOrder": 36,
+    //                 "Path": "/masters/gst-master/",
+    //                 "Icon": "fa fa-money",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 172,
+    //                 "Tittle": "HSN Master",
+    //                 "SortOrder": 37,
+    //                 "Path": "/masters/hsn-master/",
+    //                 "Icon": "fa fa-server",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 174,
+    //                 "Tittle": "GST Posting setup",
+    //                 "SortOrder": 38,
+    //                 "Path": "/masters/gst-posting-setup/",
+    //                 "Icon": "fa fa-check-square-o",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 9016,
+    //                 "Tittle": "Fixed Order",
+    //                 "SortOrder": 39,
+    //                 "Path": "/masters/fixed-order/",
+    //                 "Icon": "fa fa-flag",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 9009,
+    //                 "Tittle": "Order (Fixed Types)",
+    //                 "SortOrder": 40,
+    //                 "Path": "/masters/order-fixed-types/",
+    //                 "Icon": "fa fa-ticket",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 143,
+    //                 "Tittle": "Main Location",
+    //                 "SortOrder": 50,
+    //                 "Path": "/masters/main-location/",
+    //                 "Icon": "fa fa-location-arrow",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1010,
+    //                 "Tittle": "Vendor Master",
+    //                 "SortOrder": 52,
+    //                 "Path": "/accounts/vendor-master/",
+    //                 "Icon": "fas fa-city",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 183,
+    //                 "Tittle": "SKU Master",
+    //                 "SortOrder": 62,
+    //                 "Path": "/masters/sku-master/",
+    //                 "Icon": "fas fa-cookie-bite",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 9006,
+    //                 "Tittle": "Package Master",
+    //                 "SortOrder": 63,
+    //                 "Path": "/masters/packing-material/",
+    //                 "Icon": "fas fa-shopping-bag",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 149,
+    //                 "Tittle": "TDS Master",
+    //                 "SortOrder": 123,
+    //                 "Path": "/masters/tds-master/",
+    //                 "Icon": "fas fa-rv",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 10,
+    //         "Tittle": "Accounts",
+    //         "SortOrder": 2,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-account",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 1025,
+    //                 "Tittle": "Group",
+    //                 "SortOrder": 0,
+    //                 "Path": "/accounts/master-group/",
+    //                 "Icon": "fa fa-tasks",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1001,
+    //                 "Tittle": "Sub Group",
+    //                 "SortOrder": 1,
+    //                 "Path": "/accounts/sub-group/",
+    //                 "Icon": "fa fa-object-group",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1002,
+    //                 "Tittle": "Ledger",
+    //                 "SortOrder": 2,
+    //                 "Path": "/accounts/ledger/",
+    //                 "Icon": "fa fa-file-excel-o",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1023,
+    //                 "Tittle": "Bank Voucher Entry",
+    //                 "SortOrder": 2,
+    //                 "Path": "/accounts/bank-voucher-entry/",
+    //                 "Icon": "fa fa-university",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 255,
+    //                 "Tittle": "Cash Back",
+    //                 "SortOrder": 2,
+    //                 "Path": "/accounts/cashback/",
+    //                 "Icon": "fas fa-comments-dollar",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1004,
+    //                 "Tittle": "Cash Voucher Entry",
+    //                 "SortOrder": 3,
+    //                 "Path": "/accounts/cash-voucher/",
+    //                 "Icon": "fa fa-money",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1006,
+    //                 "Tittle": "Narration",
+    //                 "SortOrder": 3,
+    //                 "Path": "/accounts/narration/",
+    //                 "Icon": "fa fa-info-circle",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1003,
+    //                 "Tittle": "Contra Entry",
+    //                 "SortOrder": 4,
+    //                 "Path": "/accounts/contra-entry/",
+    //                 "Icon": "fas fa-exchange",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1007,
+    //                 "Tittle": "Cheque Entry",
+    //                 "SortOrder": 4,
+    //                 "Path": "/accounts/cheque-entry/",
+    //                 "Icon": "fa fa-list-alt",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1005,
+    //                 "Tittle": "Journal Entry",
+    //                 "SortOrder": 5,
+    //                 "Path": "/accounts/journal-entry/",
+    //                 "Icon": "fas fa-exchange",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1022,
+    //                 "Tittle": "Voucher Cancel",
+    //                 "SortOrder": 8,
+    //                 "Path": "/accounts/voucher-cancel/",
+    //                 "Icon": "fa fa-ban",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1011,
+    //                 "Tittle": "Accounts Update",
+    //                 "SortOrder": 11,
+    //                 "Path": "/accounts/accounts-update/",
+    //                 "Icon": "fa fa-pencil-square",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1017,
+    //                 "Tittle": "Cheque Closing",
+    //                 "SortOrder": 17,
+    //                 "Path": "/accounts/cheque-closing/",
+    //                 "Icon": "fa fa-window-close",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1024,
+    //                 "Tittle": "Cash In Hand",
+    //                 "SortOrder": 20,
+    //                 "Path": "/accounts/cash-in-hand/",
+    //                 "Icon": "fa fa-hand-paper-o",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 165,
+    //                 "Tittle": "Acc Code Setting",
+    //                 "SortOrder": 21,
+    //                 "Path": "/accounts/acc-code-setting/",
+    //                 "Icon": "fa fa-user-circle-o",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1052,
+    //                 "Tittle": "Account Posting Setup",
+    //                 "SortOrder": 22,
+    //                 "Path": "/accounts/account-posting-setup/",
+    //                 "Icon": "fa fa-wrench",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1043,
+    //                 "Tittle": "Expense Voucher Entry",
+    //                 "SortOrder": 23,
+    //                 "Path": "/accounts/expense-voucher/",
+    //                 "Icon": "fa fa-money",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 1044,
+    //                 "Tittle": "Expense Voucher Cancel",
+    //                 "SortOrder": 24,
+    //                 "Path": "/accounts/expense-voucher-cancel/",
+    //                 "Icon": "fas fa-money-bill-alt",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 37,
+    //         "Tittle": "Branch Receipts",
+    //         "SortOrder": 4,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-folder-download",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 3701,
+    //                 "Tittle": "Barcode Receipts",
+    //                 "SortOrder": 0,
+    //                 "Path": "/branchreceipts/barcodereceipts/",
+    //                 "Icon": "fa fa-envelope-open",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3700,
+    //                 "Tittle": "Non-Tag Receipts",
+    //                 "SortOrder": 1,
+    //                 "Path": "/branchreceipts/nontagreceipts/",
+    //                 "Icon": "fa fa-level-down",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3710,
+    //                 "Tittle": "Re-Print Receipts(Branch)",
+    //                 "SortOrder": 6,
+    //                 "Path": "/branchreceipts/reprint-receipts/",
+    //                 "Icon": "fas fa-print",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3713,
+    //                 "Tittle": "Receipt Cancel",
+    //                 "SortOrder": 7,
+    //                 "Path": "/branchreceipts/receiptscancel/",
+    //                 "Icon": "fa fa-remove",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3715,
+    //                 "Tittle": "Auto Barcode Receipts",
+    //                 "SortOrder": 8,
+    //                 "Path": "/branchreceipts/autobarcode-receipts/",
+    //                 "Icon": "fa fa-barcode",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 36,
+    //         "Tittle": "Branch Issue",
+    //         "SortOrder": 5,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-folder-upload",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 3601,
+    //                 "Tittle": "NT Issue",
+    //                 "SortOrder": 1,
+    //                 "Path": "/branchissue/nt-issue/",
+    //                 "Icon": "fa fa-codepen",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3608,
+    //                 "Tittle": "SR Issue",
+    //                 "SortOrder": 1,
+    //                 "Path": "/branchissue/sr-issue/",
+    //                 "Icon": "fa fa-retweet",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3606,
+    //                 "Tittle": "OPG Issue",
+    //                 "SortOrder": 2,
+    //                 "Path": "/branchissue/opgissue/",
+    //                 "Icon": "fa fa-arrow-circle-up",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3620,
+    //                 "Tittle": "TAG Issue",
+    //                 "SortOrder": 3,
+    //                 "Path": "/branchissue/tagissue/",
+    //                 "Icon": "fa fa-level-up",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3609,
+    //                 "Tittle": "Re-Print Issues(Branch)",
+    //                 "SortOrder": 10,
+    //                 "Path": "/branchissue/reprint-branch-issue/",
+    //                 "Icon": "fa fa-envelope",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3611,
+    //                 "Tittle": "Cancel Issue",
+    //                 "SortOrder": 12,
+    //                 "Path": "/branchissue/cancel-issue/",
+    //                 "Icon": "fa fa-chain-broken",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3612,
+    //                 "Tittle": "Issue Cancel (OPG & SR)",
+    //                 "SortOrder": 15,
+    //                 "Path": "/branchissue/issue-cancel/",
+    //                 "Icon": "fa fa-times",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 8,
+    //         "Tittle": "Stocks",
+    //         "SortOrder": 6,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-shopping",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 804,
+    //                 "Tittle": "GS Stock",
+    //                 "SortOrder": 1,
+    //                 "Path": "/stocks/gs-stock/",
+    //                 "Icon": "far fa-shopping-bag",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 803,
+    //                 "Tittle": "Counter Stock ",
+    //                 "SortOrder": 2,
+    //                 "Path": "/stocks/counter-stock/",
+    //                 "Icon": "mdi mdi-counter",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 801,
+    //                 "Tittle": "Stock Taking",
+    //                 "SortOrder": 4,
+    //                 "Path": "/stocks/stock-taking/",
+    //                 "Icon": "mdi mdi-archive",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 802,
+    //                 "Tittle": "Stock Check",
+    //                 "SortOrder": 5,
+    //                 "Path": "/stocks/stock-check/",
+    //                 "Icon": "mdi mdi-counter",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 808,
+    //                 "Tittle": "Stock Clear",
+    //                 "SortOrder": 6,
+    //                 "Path": "/stocks/stock-clear/",
+    //                 "Icon": "far fa-shopping-bag",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 2,
+    //         "Tittle": "Sales",
+    //         "SortOrder": 8,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-developer-board",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 211,
+    //                 "Tittle": "Sales Estimation",
+    //                 "SortOrder": 1,
+    //                 "Path": "/estimation/",
+    //                 "Icon": "far fa-code-branch ",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 207,
+    //                 "Tittle": "Reprint Estimation",
+    //                 "SortOrder": 2,
+    //                 "Path": "/estimation/reprintsalesestimation/",
+    //                 "Icon": "fal fa-print",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 212,
+    //                 "Tittle": "Sales Billing",
+    //                 "SortOrder": 3,
+    //                 "Path": "/sales-billing/",
+    //                 "Icon": "far fa-file-invoice",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 206,
+    //                 "Tittle": "Reprint Bill",
+    //                 "SortOrder": 5,
+    //                 "Path": "/sales-billing/reprintsalesbilling/",
+    //                 "Icon": "fa fa-print",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 205,
+    //                 "Tittle": "Cancel Bill",
+    //                 "SortOrder": 6,
+    //                 "Path": "/sales-billing/cancel-salesbilling/",
+    //                 "Icon": "fa fa-times-circle",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 3,
+    //         "Tittle": "Purchase",
+    //         "SortOrder": 9,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-shopping",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 311,
+    //                 "Tittle": "Purchase Estimation",
+    //                 "SortOrder": 1,
+    //                 "Path": "/purchase/",
+    //                 "Icon": "far fa-shopping-bag",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 306,
+    //                 "Tittle": "Reprint Purchase Est",
+    //                 "SortOrder": 2,
+    //                 "Path": "/purchase/reprintpurchaseestimation/",
+    //                 "Icon": "fal fa-print",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 301,
+    //                 "Tittle": "Purchase Billing",
+    //                 "SortOrder": 3,
+    //                 "Path": "/purchase/purchase-billing/",
+    //                 "Icon": "far fa-file-invoice",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 304,
+    //                 "Tittle": "Reprint Purchase Bill",
+    //                 "SortOrder": 4,
+    //                 "Path": "/purchase/reprint-purchasebill/",
+    //                 "Icon": "fal fa-print",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 303,
+    //                 "Tittle": "Cancel Purchase Bill",
+    //                 "SortOrder": 5,
+    //                 "Path": "/purchase/purchase-cancel/",
+    //                 "Icon": "far fa-ban",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 4,
+    //         "Tittle": "Orders",
+    //         "SortOrder": 10,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-paper-cut-vertical",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 401,
+    //                 "Tittle": "New Order",
+    //                 "SortOrder": 1,
+    //                 "Path": "/orders/",
+    //                 "Icon": "mdi mdi-paper-cut-vertical",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 404,
+    //                 "Tittle": "Order Receipt",
+    //                 "SortOrder": 2,
+    //                 "Path": "/orders/OrderReceipt/",
+    //                 "Icon": "fal fa-receipt",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 403,
+    //                 "Tittle": "Reprint Order",
+    //                 "SortOrder": 3,
+    //                 "Path": "/orders/reprint/",
+    //                 "Icon": "fal fa-print",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 402,
+    //                 "Tittle": "Cancel Order",
+    //                 "SortOrder": 5,
+    //                 "Path": "/orders/OrderCancel/",
+    //                 "Icon": "far fa-ban",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 409,
+    //                 "Tittle": "Close Order (Cash & Cheque)",
+    //                 "SortOrder": 6,
+    //                 "Path": "/orders/CloseOrder/",
+    //                 "Icon": "far fa-ban",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 407,
+    //                 "Tittle": "View Order",
+    //                 "SortOrder": 7,
+    //                 "Path": "/orders/vieworders/",
+    //                 "Icon": "far fa-eye",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 412,
+    //                 "Tittle": "Order Receipt Cancel",
+    //                 "SortOrder": 8,
+    //                 "Path": "/orders/ReceiptCancel/",
+    //                 "Icon": "fas fa-times",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 429,
+    //                 "Tittle": "Order Issue To CPC",
+    //                 "SortOrder": 9,
+    //                 "Path": "/orders/order-issue-to-cpc/",
+    //                 "Icon": "fas fa-bug",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 442,
+    //                 "Tittle": "Dormant Order",
+    //                 "SortOrder": 11,
+    //                 "Path": "/orders/dormant-order/",
+    //                 "Icon": "fas fa-receipt",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 443,
+    //                 "Tittle": "Unlock Dormant Order",
+    //                 "SortOrder": 12,
+    //                 "Path": "/orders/unlock-dormant-order/",
+    //                 "Icon": "fas fa-unlock",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 452,
+    //                 "Tittle": "Online Orders",
+    //                 "SortOrder": 13,
+    //                 "Path": "/online-order-management-system/",
+    //                 "Icon": "fa fa-cloud",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 453,
+    //                 "Tittle": "Online Order Cancel",
+    //                 "SortOrder": 14,
+    //                 "Path": "/online-order-management-system/online-order-cancel/",
+    //                 "Icon": "fa fa-close",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 33,
+    //         "Tittle": "Sales Return",
+    //         "SortOrder": 11,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-undo-variant",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 3301,
+    //                 "Tittle": "SR Est",
+    //                 "SortOrder": 1,
+    //                 "Path": "/salesreturn/",
+    //                 "Icon": "fas fa-exchange",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3303,
+    //                 "Tittle": "Confirm SR BILL",
+    //                 "SortOrder": 3,
+    //                 "Path": "/salesreturn/ConfirmSalesReturn/",
+    //                 "Icon": "far fa-check-square",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3304,
+    //                 "Tittle": "Reprint SR",
+    //                 "SortOrder": 4,
+    //                 "Path": "/salesreturn/reprint-salesreturn/",
+    //                 "Icon": "fal fa-print",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3305,
+    //                 "Tittle": "Cancel SR",
+    //                 "SortOrder": 5,
+    //                 "Path": "/salesreturn/cancel-salesreturn/",
+    //                 "Icon": "far fa-ban",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 34,
+    //         "Tittle": "Credit Receipt",
+    //         "SortOrder": 12,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-receipt",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 3401,
+    //                 "Tittle": "Credit Receipt",
+    //                 "SortOrder": 1,
+    //                 "Path": "/credit-receipt/credit-receipt/",
+    //                 "Icon": "fas fa-exchange",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3402,
+    //                 "Tittle": "Cancel Credit Receipt",
+    //                 "SortOrder": 2,
+    //                 "Path": "/credit-receipt/cancel-credit-receipt/",
+    //                 "Icon": "fas fa-exchange",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3403,
+    //                 "Tittle": "Reprint Credit Receipt",
+    //                 "SortOrder": 3,
+    //                 "Path": "/credit-receipt/reprint-credit-receipt/",
+    //                 "Icon": "fas fa-exchange",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 27,
+    //         "Tittle": "Stones Sales",
+    //         "SortOrder": 13,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-image-filter-vintage",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 2701,
+    //                 "Tittle": "Stone Est. Sale",
+    //                 "SortOrder": 1,
+    //                 "Path": "/stone-sales/",
+    //                 "Icon": "fa fa-joomla",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 7,
+    //         "Tittle": "Repair",
+    //         "SortOrder": 18,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-wrench",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 702,
+    //                 "Tittle": "Repair Receipts",
+    //                 "SortOrder": 1,
+    //                 "Path": "/repair/repair-receipts/",
+    //                 "Icon": "fas fa-exchange",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 701,
+    //                 "Tittle": "Repair Delivery",
+    //                 "SortOrder": 2,
+    //                 "Path": "/repair/repair-delivery/",
+    //                 "Icon": "far fa-check-square",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 703,
+    //                 "Tittle": "Repair Cancel",
+    //                 "SortOrder": 3,
+    //                 "Path": "/repair/repair-cancel/",
+    //                 "Icon": "fas fa-times",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 704,
+    //                 "Tittle": "Reprint Repair",
+    //                 "SortOrder": 4,
+    //                 "Path": "/repair/repair-reprint/",
+    //                 "Icon": "fal fa-print",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 705,
+    //                 "Tittle": "Repair Delivery Cancel",
+    //                 "SortOrder": 5,
+    //                 "Path": "/repair/delivery-cancel/",
+    //                 "Icon": "fas fa-times",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 9,
+    //         "Tittle": "Barcode",
+    //         "SortOrder": 20,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-barcode-scan",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 907,
+    //                 "Tittle": "CTC Transfer",
+    //                 "SortOrder": 5,
+    //                 "Path": "/barcode/ctc-transfer/",
+    //                 "Icon": "fas fa-sync",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 904,
+    //                 "Tittle": "Reprint Barcode",
+    //                 "SortOrder": 6,
+    //                 "Path": "/barcode/reprint-barcode/",
+    //                 "Icon": "fal fa-print",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 909,
+    //                 "Tittle": "View Barcode",
+    //                 "SortOrder": 9,
+    //                 "Path": "/barcode/",
+    //                 "Icon": "fas fa-scanner",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 240,
+    //                 "Tittle": "Update Barcode",
+    //                 "SortOrder": 11,
+    //                 "Path": "/tag-split/",
+    //                 "Icon": "fas fa-tags",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 935,
+    //                 "Tittle": "Item To Item Transfer",
+    //                 "SortOrder": 20,
+    //                 "Path": "/barcode/iti-transfer/",
+    //                 "Icon": "fa fa-road",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 950,
+    //                 "Tittle": "OrderNo Edit in Barcode",
+    //                 "SortOrder": 31,
+    //                 "Path": "/barcode/edit-orderno/",
+    //                 "Icon": "fa fa-strikethrough",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 937,
+    //                 "Tittle": "SRBarcoding",
+    //                 "SortOrder": 33,
+    //                 "Path": "/barcode/sr-barcoding/",
+    //                 "Icon": "fas fa-sync",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 15,
+    //         "Tittle": "Order Reports",
+    //         "SortOrder": 24,
+    //         "Path": null,
+    //         "Icon": "mdi-reorder-horizontal",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 1504,
+    //                 "Tittle": "Order Detail Reports",
+    //                 "SortOrder": 4,
+    //                 "Path": "/reports/OrderReport_OpenOrders",
+    //                 "Icon": null,
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": "RPT",
+    //                 "ReportServerType": "TELE1",
+    //                 "ReportApiRoute": "OrderReport_OpenOrders",
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 38,
+    //         "Tittle": "Stationary Master",
+    //         "SortOrder": 40,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-altimeter",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 4303,
+    //                 "Tittle": "ROL Master",
+    //                 "SortOrder": 3,
+    //                 "Path": "/masters/rol-master/",
+    //                 "Icon": "fas fa-rv",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 39,
+    //         "Tittle": "Stationary Transactions",
+    //         "SortOrder": 41,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-ambulance",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 4408,
+    //                 "Tittle": "Cancel Receipt",
+    //                 "SortOrder": 7,
+    //                 "Path": "/orders/ReceiptCancel/",
+    //                 "Icon": "fas fa-times",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 25,
+    //         "Tittle": "Utilities",
+    //         "SortOrder": 50,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-account-network",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 2501,
+    //                 "Tittle": "New Operators",
+    //                 "SortOrder": 1,
+    //                 "Path": "/utilities/new-operator/",
+    //                 "Icon": "fa fa-user-plus",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 2502,
+    //                 "Tittle": "Change Password",
+    //                 "SortOrder": 2,
+    //                 "Path": "/utilities/change-password/",
+    //                 "Icon": "fa fa-lock text-danger",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 2503,
+    //                 "Tittle": "New Roles",
+    //                 "SortOrder": 3,
+    //                 "Path": "/utilities/new-roles/",
+    //                 "Icon": "fa fa-star",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 2504,
+    //                 "Tittle": "Role Permission",
+    //                 "SortOrder": 4,
+    //                 "Path": "/utilities/role-permission/",
+    //                 "Icon": "fa fa-gavel",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 2509,
+    //                 "Tittle": "Application Password",
+    //                 "SortOrder": 9,
+    //                 "Path": "/utilities/application-password/",
+    //                 "Icon": "fa fa-key",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 2510,
+    //                 "Tittle": "Calender",
+    //                 "SortOrder": 10,
+    //                 "Path": "/utilities/calendar/",
+    //                 "Icon": "fa fa-calendar",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 2516,
+    //                 "Tittle": "Module Settings",
+    //                 "SortOrder": 10,
+    //                 "Path": "/utilities/module-settings/",
+    //                 "Icon": "fa fa-list-alt",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 2519,
+    //                 "Tittle": "Tolerance",
+    //                 "SortOrder": 19,
+    //                 "Path": "/utilities/tolerance/",
+    //                 "Icon": "fa fa-tachometer",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "ID": 55,
+    //         "Tittle": "OPG Process",
+    //         "SortOrder": 52,
+    //         "Path": null,
+    //         "Icon": "mdi mdi-home-variant",
+    //         "Class": "has-arrow",
+    //         "Label": null,
+    //         "LabelClass": null,
+    //         "ExtraLink": false,
+    //         "ParentID": null,
+    //         "FormType": null,
+    //         "ReportServerType": null,
+    //         "ReportApiRoute": null,
+    //         "lstOfMainMenuWithSubMenu": [
+    //             {
+    //                 "ID": 3910,
+    //                 "Tittle": "OPG Seggregation",
+    //                 "SortOrder": 0,
+    //                 "Path": "/opg-process/opg-seggregation/",
+    //                 "Icon": "fa fa-pie-chart",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3903,
+    //                 "Tittle": "Melting Issue",
+    //                 "SortOrder": 1,
+    //                 "Path": "/opg-process/opg-melting-issue/",
+    //                 "Icon": "fa fa-road",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 4001,
+    //                 "Tittle": "Melting Receipt",
+    //                 "SortOrder": 2,
+    //                 "Path": "/opg-process/opg-melting-receipt/",
+    //                 "Icon": "fa fa-download",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3911,
+    //                 "Tittle": "MG Issue to CPC",
+    //                 "SortOrder": 3,
+    //                 "Path": "/opg-process/opg-mg-issue-cpc/",
+    //                 "Icon": "fas fa-coins",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 524,
+    //                 "Tittle": "Reprint Issue",
+    //                 "SortOrder": 4,
+    //                 "Path": "/opg-process/reprint-opg-issue/",
+    //                 "Icon": "fa fa-file-image-o",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 617,
+    //                 "Tittle": "Reprint Receipt",
+    //                 "SortOrder": 5,
+    //                 "Path": "/opg-process/reprint-opg-receipt/",
+    //                 "Icon": "fa fa-sticky-note",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3909,
+    //                 "Tittle": "OPG Issue Cancel",
+    //                 "SortOrder": 7,
+    //                 "Path": "/opg-process/opg-issue-cancel/",
+    //                 "Icon": "fa fa-remove",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3910,
+    //                 "Tittle": "OPG Seggregation",
+    //                 "SortOrder": 0,
+    //                 "Path": "/opg-process/opg-seggregation/",
+    //                 "Icon": "fa fa-pie-chart",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3903,
+    //                 "Tittle": "Melting Issue",
+    //                 "SortOrder": 1,
+    //                 "Path": "/opg-process/opg-melting-issue/",
+    //                 "Icon": "fa fa-road",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 4001,
+    //                 "Tittle": "Melting Receipt",
+    //                 "SortOrder": 2,
+    //                 "Path": "/opg-process/opg-melting-receipt/",
+    //                 "Icon": "fa fa-download",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3911,
+    //                 "Tittle": "MG Issue to CPC",
+    //                 "SortOrder": 3,
+    //                 "Path": "/opg-process/opg-mg-issue-cpc/",
+    //                 "Icon": "fas fa-coins",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 524,
+    //                 "Tittle": "Reprint Issue",
+    //                 "SortOrder": 4,
+    //                 "Path": "/opg-process/reprint-opg-issue/",
+    //                 "Icon": "fa fa-file-image-o",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 617,
+    //                 "Tittle": "Reprint Receipt",
+    //                 "SortOrder": 5,
+    //                 "Path": "/opg-process/reprint-opg-receipt/",
+    //                 "Icon": "fa fa-sticky-note",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             },
+    //             {
+    //                 "ID": 3909,
+    //                 "Tittle": "OPG Issue Cancel",
+    //                 "SortOrder": 7,
+    //                 "Path": "/opg-process/opg-issue-cancel/",
+    //                 "Icon": "fa fa-remove",
+    //                 "Class": "",
+    //                 "Label": null,
+    //                 "LabelClass": null,
+    //                 "ExtraLink": false,
+    //                 "ParentID": null,
+    //                 "FormType": null,
+    //                 "ReportServerType": null,
+    //                 "ReportApiRoute": null,
+    //                 "lstOfMainMenuWithSubMenu": null
+    //             }
+    //         ]
+    //     }
+    // ]
+    showMenu: string = '';
+    showSubMenu: string = '';
+    public sidebarnavItems: any;
+    public config: PerfectScrollbarConfigInterface = {};
+    //this is for the open close
+    addExpandClass(element: any) {
+        if (element === this.showMenu) {
+            this.showMenu = '0';
+
+        } else {
+            this.showMenu = element;
+        }
+    }
+
+    addActiveClass(element: any) {
+        if (element === this.showSubMenu) {
+            this.showSubMenu = '0';
+
+        } else {
+            this.showSubMenu = element;
+        }
+    }
+
+    constructor(private modalService: NgbModal, private router: Router,
+        private _toastr: ToastrService,
+        private idle: Idle,
+        // private keepalive: Keepalive,
+        private _sidebarService: SideBarService,
+        private _Route: Router,
+    ) {
+        this.getMenuList();
+    }
+    // End open close
+
+    ROUTES: any = [];
+
+    ngOnInit() {
+
+        //this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem);
+        $(function () {
+            $(".sidebartoggler").on('click', function () {
+                if ($("#main-wrapper").hasClass("mini-sidebar")) {
+                    $("body").trigger("resize");
+                    $("#main-wrapper").removeClass("mini-sidebar");
+
+
+                } else {
+
+                    $("body").trigger("resize");
+                    $("#main-wrapper").addClass("mini-sidebar");
+                }
+            });
+        });
+    }
+
+    reset() {
+        this.idle.watch();
+    }
+
+    sideMenuBar: any;
+    getMenuList() {
+        this._sidebarService.getMenus().subscribe(
+            response => {
+                this.ROUTES = response;
+                this.sidebarnavItems = this.ROUTES.filter(sidebarnavItem => sidebarnavItem);
+                //localStorage.setItem('Menus', JSON.stringify(this.sidebarnavItems));                
+                // console.log(JSON.stringify(this.sidebarnavItems));
+            },
+            error => {
+                swal("Error", "Unable to load menus", "error");
+            }
+        )
+    }
+    state: any = [];
+    temp(arg) {
+        this._Route.navigate(['/' + arg.Path]);
+        if (this.state.find(c => c.Path === arg.Path)) {
+            this._Route.navigate(['/' + arg.Path])
+
+        }
+        else {
+            alert("Invalid Search")
+        }
+    }
+    @Input() Checked: Boolean;
+    ngAfterViewInit() {
+
+        $("body").trigger("resize");
+        $("#main-wrapper").addClass("mini-sidebar");
+        $(".search-box a, .search-box .app-search .srh-btn").on('click', function () {
+            $(".app-search").toggle(200);
+        });
+        $("body").trigger("resize");
+    }
+}

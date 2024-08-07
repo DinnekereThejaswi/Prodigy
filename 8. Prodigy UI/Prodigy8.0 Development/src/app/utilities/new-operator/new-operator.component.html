@@ -1,0 +1,437 @@
+<div class="modal overlay" id="AddNewOperatorsModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 1300px;">
+        <div class="modal-content ">
+            <div class="modal-header" *ngIf="EnableAdd" style="background:wheat;">
+
+                <strong style="text-transform: uppercase;text-align: left;" class="modal-title">Add
+                    New Operator Details</strong>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="CloseModel()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-header" *ngIf="EnableSave" style="background:tan;">
+                <strong style="text-transform: uppercase;text-align: left;" class="modal-title">Edit Operator
+                    Details</strong>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="CloseModel()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form [formGroup]="Operatorform">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label" for="search">Operator Code
+                                        <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                    </label>
+                                    <input oninput="this.value = this.value.toUpperCase()" class="form-group"
+                                        type="text" placeholder="Enter code" class="form-control"
+                                        [(ngModel)]="OperatorsPostModel.OperatorCode" maxlength="3" minlength="3"
+                                        required (input)="OperatorCode.value = OperatorCode.value.toUpperCase()"
+                                        formControlName="frmCtrl_OpCode" autocomplete="off" #OperatorCode>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="search">Operator Name<span class="textRed"> <i
+                                                class="fas fa-star-of-life"></i></span> </label>
+                                    <input oninput="this.value = this.value.toUpperCase()" class="form-group"
+                                        type="text" placeholder="Enter Operator name" class="form-control"
+                                        formControlName="frmCtrl_OpName"
+                                        (input)="Names.value = Names.value.toUpperCase()"
+                                        [(ngModel)]="OperatorsPostModel.OperatorName" maxlength="25" required
+                                        autocomplete="off" AlphabetFieldValidator #Names>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="search">Employee No
+                                        <span class="textRed"> <i class="fas fa-star-of-life"></i></span> </label>
+                                    <input class="form-group" type="text" placeholder="Enter Employee No"
+                                        class="form-control" formControlName="frmCtrl_EmpNo" NumberFieldvalidator
+                                        [(ngModel)]="OperatorsPostModel.EmployeeID" maxlength="5" autocomplete="off">
+                                </div>
+                                <ng-container *ngIf="EnableSave">
+                                    <div class="form-group">
+                                        <label class="control-label" for="search">Password
+                                            <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                        </label>
+                                        <input class="form-group" type="password" placeholder="Enter Password"
+                                            class="form-control" formControlName="frmCtrl_Password"
+                                            [(ngModel)]="OperatorsPostModel.Password" required autocomplete="off"
+                                            #Password readonly (change)="checkPassword(Password.value);">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="Karat">Confirm Password
+                                            <span class="textRed"> <i class="fas fa-star-of-life"></i></span> </label>
+                                        <input class="form-group" class="form-control" [(ngModel)]="confirmPassword"
+                                            formControlName="frmCtrl_confirmPassword" type="password"
+                                            (change)="ValidatePassword(ConfirmPassword.value)"
+                                            placeholder="Enter Confirm Password" required autocomplete="off"
+                                            #ConfirmPassword readonly>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="EnableAdd">
+                                    <div class="form-group">
+                                        <label class="control-label" for="search">Password
+                                            <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                        </label>
+                                        <input class="form-group" type="password" placeholder="Enter Password"
+                                            class="form-control" formControlName="frmCtrl_Password"
+                                            [(ngModel)]="OperatorsPostModel.Password" required autocomplete="off"
+                                            #Password (change)="checkPassword(Password.value);">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="Karat">Confirm Password
+                                            <span class="textRed"> <i class="fas fa-star-of-life"></i></span> </label>
+                                        <input class="form-group" class="form-control" [(ngModel)]="confirmPassword"
+                                            formControlName="frmCtrl_confirmPassword" type="password"
+                                            (change)="ValidatePassword(ConfirmPassword.value)"
+                                            placeholder="Enter Confirm Password" required autocomplete="off"
+                                            #ConfirmPassword>
+                                    </div>
+                                </ng-container>
+
+
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Operator Role<span class="textRed">
+                                            <i class="fas fa-star-of-life"></i></span>
+                                    </label>
+                                    <select class="form-control" formControlName="frmCtrl_Oprole"
+                                        [(ngModel)]="OperatorsPostModel.RoleID">
+                                        <option [value]="null">Select</option>
+                                        <option *ngFor="let _rolelist of Roleslist " [ngValue]="_rolelist.ID">
+                                            {{_rolelist.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="Karat">Discount Percent </label>
+                                    <input class="form-group" type="text" placeholder="Enter Discount Percent"
+                                        class="form-control" formControlName="frmCtrl_discountPercent"
+                                        IntegerDecimalFieldValidator
+                                        [(ngModel)]="OperatorsPostModel.MaxDiscountPercentAllowed" required
+                                        autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="Karat">Mobile No </label>
+                                    <input class="form-group" type="text" placeholder="Enter Mobile No"
+                                        class="form-control" formControlName="frmCtrl_Opmobile"
+                                        [(ngModel)]="OperatorsPostModel.MobileNo" maxlength="10" required
+                                        autocomplete="off" NumberFieldvalidator>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="Karat">Counter
+                                        <span class="textRed"> <i class="fas fa-star-of-life"></i></span> </label>
+                                    <select class="form-control" formControlName="frmCtrl_OpCounter"
+                                        [(ngModel)]="OperatorsPostModel.CounterCode">
+                                        <option [ngValue]="">Select</option>
+                                        <option *ngFor="let _counter of counterList" [ngValue]="_counter.CounterCode">
+                                            {{_counter.CounterName}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="type">Operator Type</label>
+                                    <select class="form-control" formControlName="frmCtrl_OpType"
+                                        [(ngModel)]="OperatorsPostModel.OperatorType">
+                                        <option [ngValue]="null">Select</option>
+                                        <option *ngFor="let _data of OperatorType" [ngValue]="_data.Code">
+                                            {{_data.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label" for="Karat">Default Branch
+                                    </label>
+                                    <select class="form-control" formControlName="frmCtrl_OpDefltBranch"
+                                        [(ngModel)]="OperatorsPostModel.DefaultStore">
+                                        <!-- <option [ngValue]="null">Select</option> -->
+                                        <option *ngFor="let _Data of allbranches" [value]="_Data.Code">
+                                            {{_Data.Code}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <ng-container *ngIf="EnableSave">
+                                    <div class="form-group">
+                                        <label>Mapped Branches </label>
+                                        <div style="height: 330px; overflow-y: scroll;">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover">
+                                                    <thead class="topbar" style="position: sticky">
+                                                        <tr>
+                                                            <th>Branch Code</th>
+                                                            <th>Branch Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr style="background: oldlace"
+                                                            *ngFor="let option of MainDropdownMaster; let i = index">
+                                                            <td align="center">
+                                                                <!-- <input type="checkbox" class="chkbxsize"
+                                                                    formControlName="frmCtrl_OpDefltBranchList"
+                                                                    (change)="onCheckboxChange(option,$event,i)"
+                                                                    [checked]="option.isChecked"
+                                                                    [attr.disabled]="isSameBranch"> -->
+
+                                                                <ng-container
+                                                                    *ngIf="OperatorsPostModel.DefaultStore === option.Code">
+                                                                    <input type="checkbox" class="chkbxsize"
+                                                                        formControlName="frmCtrl_OpDefltBranchList"
+                                                                        (change)="onCheckboxChange(option,$event,i)"
+                                                                        [checked]="option.isChecked"
+                                                                        [attr.disabled]="true">
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="OperatorsPostModel.DefaultStore != option.Code">
+                                                                    <input type="checkbox" class="chkbxsize"
+                                                                        formControlName="frmCtrl_OpDefltBranchList"
+                                                                        (change)="onCheckboxChange(option,$event,i)"
+                                                                        [checked]="option.isChecked">
+                                                                </ng-container>
+                                                            </td>
+
+                                                            <td *ngIf="OperatorsPostModel.DefaultStore === option.Code"
+                                                                style="background: rgb(79, 199, 246)">
+                                                                {{option.Code}}-{{option.Name}}</td>
+                                                            <td *ngIf="OperatorsPostModel.DefaultStore != option.Code"
+                                                                style="background: oldlace">
+                                                                {{option.Code}}-{{option.Name}}</td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="EnableAdd">
+                                    <div class="form-group">
+                                        <label>Mapped Branches </label>
+                                        <div style="height: 330px; overflow-y: scroll;">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover">
+                                                    <thead class="topbar" style="position: sticky">
+                                                        <tr>
+                                                            <th>Branch Code</th>
+                                                            <th>Branch Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let option of StoreList; let i = index">
+                                                        <tr>
+                                                            <td align="center" style="background: linen;"><input
+                                                                    type="checkbox" class="chkbxsize"
+                                                                    formControlName="frmCtrl_OpDefltBranchList"
+                                                                    (change)="LoadSelectedBranches(option,$event,i)"
+                                                                    [checked]="option.isChecked">
+                                                            </td>
+                                                            <td style="background: linen;">
+                                                                {{option.Code}}-{{option.Name}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <ng-container *ngIf="EnableAdd">
+                                    <button
+                                        class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        style="margin-top: 1.2rem !important;" (click)="addNewOperator(Operatorform)">
+                                        <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                                </ng-container>
+                                <ng-container *ngIf="EnableSave">
+                                    <button
+                                        class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        style="margin-top: 1.2rem !important;" (click)="save(Operatorform)">
+                                        <i class="fal fa-save"></i>&nbsp;Save</button>
+                                </ng-container>
+                                <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                    style="margin-top: 1.2rem !important;" (click)="clear()">
+                                    <i class="fal fa-trash"></i>&nbsp;Clear
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <ng-container *ngIf="EnableJson">
+                            <pre>{{ OperatorsPostModel |json }}</pre>
+                        </ng-container>
+                    </div>
+                    <div class="col-sm">
+                        <ng-container *ngIf="EnableJson">
+                            <pre>{{ StoreList |json }}</pre>
+                        </ng-container>
+                    </div>
+                    <div class="col-sm">
+                        <ng-container *ngIf="EnableJson">
+                            <pre>{{ MainDropdownMaster |json }}</pre>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div id="accordian">
+    <div class="card">
+        <h5 class="card-header d-flex justify-content-between align-items-center">
+            <b>New Operator</b>
+            <button class="button" (click)="AddNewOperatorModel()" style="float: right;">Add Operator</button>
+            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" (click)="Print()"
+                type="submit"><i class="fal fa-print"></i> Print</button>
+
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="Operatorform">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <form [formGroup]="OperatorSearchform" class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <!-- <label class="control-label" for="search">Search Operator </label> -->
+                                            &nbsp;&nbsp;
+                                            <strong><i class="fa fa-search"></i> Search Operator!</strong>
+                                            <input class="form-group" class="form-control" [(ngModel)]="searchText"
+                                                placeholder="Search Operator" formControlName="FrmCtrl_SerachText"
+                                                style=" border-style: solid;  border-color:rgb(28, 156, 5); border-width:thin;">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="topbar">
+                                    <tr>
+                                        <th>Edit</th>
+                                        <th>Close / Avtive</th>
+                                        <th>Operator No</th>
+                                        <th>Operator Name</th>
+                                        <th>Operator Code</th>
+                                        <th>Role Id</th>
+                                        <th>Role Name</th>
+                                        <th>Status</th>
+                                        <th>Branch Code </th>
+                                        <th>Counter Code</th>
+                                        <th>Mobile No</th>
+                                    </tr>
+                                </thead>
+                                <tbody
+                                    *ngFor="let _List of AllOperatorsList | grdFilterPipe: {EmployeeID: searchText, OperatorName : searchText, OperatorCode : searchText,RoleID : searchText,
+                                       OperatorType: searchText,Status : searchText, DefaultStore : searchText, CounterCode : searchText, MobileNo : searchText}; let i=index;">
+                                    <tr>
+                                        <td align="center" (click)="Edit(_List)">
+                                            <i class="far fa-edit" style="font-size:20px"></i>
+                                        </td>
+                                        <td align="center" (click)="ActiveOrInactiveOperator(_List)">
+                                            <ng-container *ngIf="_List.Status==='Active'">
+                                                <i class="fas fa-user-lock fa-1x"
+                                                    title="close Operator /Deactivate Operator"></i>
+                                            </ng-container>
+                                            <ng-container *ngIf="_List.Status==='Closed'">
+                                                <i class="fas fa-lock-open fa-1x" title="Active Operator"
+                                                    aria-hidden="true"></i>
+                                            </ng-container>
+                                        </td>
+                                        <!-- <td>{{i}}</td> -->
+                                        <td>{{_List.EmployeeID}}</td>
+                                        <td>{{_List.OperatorName}}</td>
+                                        <td>{{_List.OperatorCode}}</td>
+                                        <!-- <td>{{_List.RoleID}}</td> -->
+                                       
+                                        <td>{{_List.RoleID}}</td>
+                                        <td>{{_List.OperatorType}}</td>
+
+                                        <td [style.color]="getStatusColor(_List.Status)">
+                                            <b>{{_List.Status }}</b>
+                                        </td>
+                                        <td>{{_List.DefaultStore}}</td>
+                                        <td>{{_List.CounterCode}}</td>
+                                        <td>{{_List.MobileNo}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!---------------open print---------->
+<div class="modal fade" id="PrintDetailsTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i>
+                    Print</button>
+                <h3 class="modal-title">{{bcode}}-Operator List</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" id="TableData">
+                            <table class="table table-bordered table-hover">
+                                <thead class="topbar">
+                                    <tr>
+                                        <th>Employee No</th>
+                                        <th>Operator Name</th>
+
+                                        <th>Operator Code</th>
+                                        <th>Role Name</th>
+                                        <th>Counter Code</th>
+                                        <th>Mobile No</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let _List of printData">
+                                    <tr>
+                                        <td>{{_List.EmployeeID}}</td>
+                                        <td>{{_List.OperatorName}}</td>
+                                        <td>{{_List.OperatorCode}}</td>
+                                        <td>{{_List.OperatorType}}</td>
+                                        <td>{{_List.CounterCode}}</td>
+                                        <td>{{_List.MobileNo}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

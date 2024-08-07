@@ -1,0 +1,284 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- <div class="card">
+      <div class="card-body"> -->
+    <form [formGroup]="CustomerForm" class="form-horizontal">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <!-- <div class="form-group">
+                  <label for=""></label>
+                  <h4>Customer ID: <span>{{CustomerListData.ID}}</span></h4>
+                </div> -->
+              <div class="form-group">
+                <label class="control-label" for="MobileNo">Mobile Number</label><span class="textRed"> <i
+                    class="fas fa-star-of-life"></i></span>
+                <input type="text" class="form-control" id="MobileNo" (change)="getDetsByMobNo()"
+                  (keyup.enter)="getDetsByMobNo()" [(ngModel)]="CustomerListData.MobileNo" formControlName="MobileNo"
+                  maxlength="10" NumberFieldvalidator placeholder="Please Enter Mobile no" autocomplete="off" />
+              </div>
+              <div class="form-group">
+                <input type="hidden" class="form-control" formControlName="ID" [(ngModel)]="CustomerListData.ID">
+                <label for="Salutation">Salutation</label><span class="textRed"> <i
+                    class="fas fa-star-of-life"></i></span>
+                <select class="form-control" formControlName="Salutation" [(ngModel)]="CustomerListData.Salutation">
+                  <option value="null">Select Salutation</option>
+                  <option value="MR."> MR.</option>
+                  <option value="MRS.">MRS.</option>
+                  <option value="MISS.">MISS.</option>
+                  <option value="DR.">DR.</option>
+                  <option value="BABY.">BABY.</option>
+                  <option value="M/S.">M/S.</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="CustName"> Customer Name </label><span class="textRed"> <i
+                    class="fas fa-star-of-life"></i></span>
+                <input type="text" class="form-control" id="CustName" [(ngModel)]="CustomerListData.CustName"
+                  formControlName="CustName" maxlength="100" autocomplete="off" AlphabetFieldValidator />
+                <span class="textRed" *ngIf="findErrorByField('CustName', null) != ''">
+                  {{findErrorByField('CustName', null)}}
+                </span>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Address1">Address 1 </label><span class="textRed"> <i
+                    class="fas fa-star-of-life"></i></span>
+                <input type="text" class="form-control" id="Address1" maxlength="100"
+                  [(ngModel)]="CustomerListData.Address1" formControlName="Address1" autocomplete="off" />
+                <span class="textRed" *ngIf="findErrorByField('Address1', null) != ''">
+                  {{findErrorByField('Address1', null)}}
+                </span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Address2">Address 2 </label>
+                <input type="text" class="form-control" id="Address2" [(ngModel)]="CustomerListData.Address2"
+                  formControlName="Address2" maxlength="100" autocomplete="off" />
+                <span class="textRed" *ngIf="findErrorByField('Address2', null) != ''">
+                  {{findErrorByField('Address2', null)}}
+                </span>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Address3">Address 3 </label>
+                <input type="text" class="form-control" id="Address3" [(ngModel)]="CustomerListData.Address3"
+                  formControlName="Address3" maxlength="100" autocomplete="off" />
+                <span class="textRed" *ngIf="findErrorByField('Address3', null) != ''">
+                  {{findErrorByField('Address3', null)}}
+                </span>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="StateCode">State</label><span class="textRed"> <i
+                    class="fas fa-star-of-life"></i></span>
+                <select class="form-control" formControlName="StateCode" [(ngModel)]="CustomerListData.StateCode">
+                  <option [ngValue]="null">Select State</option>
+                  <option *ngFor="let State of StateList" [ngValue]="State.TINNo">
+                    {{State.StateName}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="City">City </label>
+                <input type="text" class="form-control" id="City" [(ngModel)]="CustomerListData.City"
+                  formControlName="City" maxlength="50" autocomplete="off" AlphabetFieldValidator />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Pincode">Pin Code </label>
+                <input type="text" class="form-control" id="Pincode" [(ngModel)]="CustomerListData.Pincode"
+                  formControlName="Pincode" NumberFieldvalidator maxlength="6" placeholder="e.g. 560009"
+                  autocomplete="off" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="PhoneNo">Phone Number</label>
+                <input type="text" class="form-control" id="PhoneNo" [(ngModel)]="CustomerListData.PhoneNo"
+                  formControlName="PhoneNo" maxlength="11" NumberFieldvalidator autocomplete="off" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="EmailID">Email-Id </label>
+                <input type="text" class="form-control" id="EmailID" [(ngModel)]="CustomerListData.EmailID"
+                  formControlName="EmailID" maxlength="200" EmailFieldValidator autocomplete="off" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <!-- <div class="form-group">
+                <label class="control-label" for="IDType">ID Type <div class="tooltipdesign"> <i
+                      class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top"> An identity document is any document which may be used to
+                      prove a person's identity </span>
+                  </div></label>
+                <select class="form-control" formControlName="IDType" [(ngModel)]="CustomerListData.IDType">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let IDType of IDTypeList" [ngValue]="IDType.DocCode">
+                    {{IDType.DocName}}
+                  </option>
+                </select>
+              </div> -->
+              <!-- <div class="form-group">
+                <label class="control-label" for="IDDetails">ID No </label>
+                <input type="text" class="form-control" id="IDDetails" [(ngModel)]="CustomerListData.IDDetails"
+                  formControlName="IDDetails" onKeyPress="if(this.value.length==50) return false;" />
+              </div> -->
+              <div class="form-group">
+                <label class="control-label" for="TIN">GSTIN <div class="tooltipdesign"> <i
+                      class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top"> GSTIN or Goods and Services Tax Identification Number is a
+                      unique 20-digit number, which has replaced the Tax Identification Number (TIN) </span>
+                  </div></label>
+                <input type="text" class="form-control" id="TIN" [(ngModel)]="CustomerListData.TIN"
+                  onKeyPress="if(this.value.length==20) return false;" formControlName="TIN"
+                  placeholder="e.g. 22AAAAA0000A1Z5" style="text-transform:uppercase" autocomplete="off" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="DateOfBirth">Date Of Birth </label>
+                <input type="text" bsDatepicker class="form-control" [bsConfig]="datePickerConfig"
+                  [(ngModel)]="CustomerListData.DateOfBirth" formControlName="DateOfBirth"
+                  placeholder="Select Date Of Birth" />
+              </div>
+              <div class="form-group">
+                <div *ngIf="isCheckedForm60 == false">
+                  <label class="control-label" for="PANNo">PAN <div class="tooltipdesign"> <i
+                        class="fal fa-question-circle"></i>
+                      <span class="tooltiptext tooltip-top"> Permanent Account Number is an unique identification number
+                        assigned to all taxpayers in India. </span>
+                    </div></label>
+                  <input type="text" class="form-control" style="text-transform:uppercase" id="PANNo"
+                    [(ngModel)]="CustomerListData.PANNo" formControlName="PANNo" maxlength="10" readonly />
+                </div>
+                <input type="checkbox" (change)="isChecked($event)"> Form No 60
+                <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                  <span class="tooltiptext tooltip-top"> Form 60 is a declaration to be filed by an individual or a
+                    person (not being a company or firm) who does not have a PAN </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="UploadDocForm" class="form-horizontal">
+            <div class="row">
+              <div class="col-md-3 ">
+                <div class="form-group">
+                  <label class="control-label" for="IDType">ID Type <div class="tooltipdesign"> <i
+                        class="fal fa-question-circle"></i>
+                      <span class="tooltiptext tooltip-top"> An identity document is any document which may be used
+                        to
+                        prove a person's identity </span>
+                    </div></label>
+                  <select class="form-control" formControlName="DocCode" [(ngModel)]="CustomerIDProofdets.DocCode">
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let IDType of IDTypeList" [ngValue]="IDType.DocCode">
+                      {{IDType.DocName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 ">
+                <div class="form-group">
+                  <label class="control-label" for="IDDetails">ID No </label>
+                  <input type="text" class="form-control" id="IDDetails" style="text-transform:uppercase"
+                    [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo"
+                    onKeyPress="if(this.value.length==50) return false;" autocomplete="off" />
+                </div>
+              </div>
+              <div class="col-md-3 ">
+                <div class="form-group">
+                  <label for="barcode">Image</label>
+                  <div class="input-group">
+                    <input type="file" id="file" formControlName="DocImagePath"
+                      [(ngModel)]="CustomerIDProofdets.DocImagePath" (change)="handleBrowse1($event)">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="barcode"></label>
+                  <div class="input-group">
+                    <a href="javascript:void(0)"
+                      class="btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right"
+                      (click)="Add(UploadDocForm)">Add</a>
+                    <a href="javascript:void(0)"
+                      class="btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right"
+                      (click)="Clear()">Clear</a>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="table-responsive">
+                <table class="table" id="panels">
+                  <thead class="topbar">
+                    <tr>
+                      <th></th>
+                      <th>SNo</th>
+                      <th>ID Type</th>
+                      <th>Doc No</th>
+                      <th>Doc Img</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let _customerIDProofDetails of CustomerListData.lstOfProofs; let i = index">
+                    <tr>
+                      <td>
+                        <i class="far fa-trash-alt fa-1-5x pointer" style='color: red; font-size: 1.5em !important;'
+                          (click)="Delete(_customerIDProofDetails,i)"></i>
+                      </td>
+                      <td>{{i+1}}</td>
+                      <td>{{_customerIDProofDetails.DocCode | IDType : _customerIDProofDetails.DocCode}}</td>
+                      <td>{{_customerIDProofDetails.DocNo | uppercase}}</td>
+                      <td><img [src]="_customerIDProofDetails.DocImagePath" height="100"
+                          *ngIf="_customerIDProofDetails.DocImagePath"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- <div class="col-md-3">
+              <div class="form-group">
+                <label for="file">Browse1</label>
+                <input type="file" id="file" (change)="handleBrowse1($event)">
+              </div>
+              <div class="form-group">
+                <label for="file">Image1:</label><br>
+                <img [src]="fileBrowseUrl1" height="100" *ngIf="fileBrowseUrl1">
+              </div>
+              <div class="form-group">
+                <label for="file">Browse2</label>
+                <input type="file" id="file" (change)="handleBrowse2($event)">
+              </div>
+              <div class="form-group">
+                <label for="file">Image2:</label><br>
+                <img [src]="fileBrowseUrl2" height="100" *ngIf="fileBrowseUrl2">
+              </div>
+            </div> -->
+            </div>
+          </form>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+              (click)="onSubmit(CustomerForm)"><i class="fal fa-save"></i> Submit</button>
+            <!-- <button type="submit" class="btn btn-danger" (click)="cancel()">Cancel</button> -->
+          </div>
+        </div>
+        <div class="col-md-6" style="text-align:right">
+          <span class="textRed"> <i class="fas fa-star-of-life"></i></span> Mandatory fields
+        </div>
+      </div>
+    </form>
+    <!-- </div>
+    </div> -->
+  </div>
+</div>
+
+
+<ng-container *ngIf="EnableJson">
+  <pre>{{CustomerListData | json}}</pre>
+  <!-- <pre>{{CustomerIDProofdets | json}}</pre> -->
+</ng-container>

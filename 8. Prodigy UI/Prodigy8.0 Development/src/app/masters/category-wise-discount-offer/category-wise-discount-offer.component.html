@@ -1,0 +1,270 @@
+<form [formGroup]="CategoryWiseDiscountOfferform">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <h3>Offer Options</h3>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="Company">Start Date</label>
+                        <input type="text" class="form-control" [bsConfig]="datePickerConfig" bsDatepicker
+                            placeholder="Select Date" [(ngModel)]="StartDate" formControlName="StartDate"
+                            value="{{StartDate | date:'dd/MM/yyyy' }}" (ngModelChange)="byStartDate(StartDate)" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="Company">End Date</label>
+                        <input type="text" class="form-control" [bsConfig]="datePickerConfig" bsDatepicker
+                            placeholder="Select Date" [(ngModel)]="EndDate" formControlName="EndDate"
+                            value="{{EndDate | date:'dd/MM/yyyy' }}" (ngModelChange)="byEndDate(EndDate)" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="gold">Disc Rate/gm </label>
+                        <input type="text" class="form-control" formControlName="RatePerGram" appNumbersOnly
+                            [(ngModel)]="DiscountCategory.BasicDiscRatePerRram" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="carat">Disc Rate/Ct </label>
+                        <input type="text" class="form-control" formControlName="RatePerCarat"
+                            [(ngModel)]="DiscountCategory.BasicDiscRatePerCarat" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="va">Disc VA% </label>
+                        <input type="text" class="form-control" formControlName="VAPercent" appNumbersOnly
+                            [(ngModel)]="DiscountCategory.BasicDiscVaPerentage" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        style="margin-top: 1.8rem !important;">
+                        <i class="fas fa-plus-circle"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <h3>Discount Master</h3>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label class="control-label" for="Category">Category </label>
+                        <input type="text" class="form-control" placeholder="Enter Category" autocomplete="off"
+                            autofocus>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="Categoryname">Category Name</label>
+                        <input type="text" class="form-control" placeholder="EnterCategory Name">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="gold">Add. Rate/gm(Disc) </label>
+                        <input type="text" class="form-control" placeholder="0.00" appNumbersOnly>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="carat">Add. Rate/Ct(Disc) </label>
+                        <input type="text" class="form-control" placeholder="0.00" appNumbersOnly>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="va">Add. VA%(Disc) </label>
+                        <input type="text" class="form-control" placeholder="0.00" appNumbersOnly>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <ng-container *ngIf="EnableAdd">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.8rem !important;">
+                                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                        </ng-container>
+                        <ng-container *ngIf="EnableSave">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.8rem !important;">
+                                <i class="fal fa-save"></i>&nbsp;Save</button>
+                        </ng-container>
+                        <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.8rem !important;">
+                            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered  table-hover ">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Category Code </th>
+                                <th>Category Name</th>
+                                <th>Add. Rate/Gram(Disc) </th>
+                                <th>Add. Rate/Carat(Disc)</th>
+                                <th>Add. Rate/VA%(Disc)</th>
+                                <th>Edit</th>
+                                <th>Delete </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- //*ngFor="let _list of ListOfSKU" -->
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+
+                                <td>
+                                    <i class="fa fa-edit" title="edit"></i>
+                                </td>
+
+                                <td>
+                                    <i class="fas fa-trash" title="delete"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <h3>Category Grouping</h3>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="Category">Category </label>
+                        <select class="form-control" formControlName="Category" id="Category">
+                            <option [ngValue]="null">Select</option>
+                            <!-- <option *ngFor="let _acc of Ledgers " [value]="_acc.AccCode">{{_acc.AccName}}</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="GsType">Gs Type </label>
+                        <select class="form-control" formControlName="GsType" id="GsType">
+                            <option [ngValue]="null">Select</option>
+                            <!-- <option *ngFor="let _acc of Ledgers " [value]="_acc.AccCode">{{_acc.AccName}}</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="Counter">Counter </label>
+                        <select class="form-control" formControlName="Counter" id="Counter">
+                            <option [ngValue]="null">Select</option>
+                            <!-- <option *ngFor="let _acc of Ledgers " [value]="_acc.AccCode">{{_acc.AccName}}</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="Item">Item </label>
+                        <select class="form-control" formControlName="Item" id="Item">
+                            <option [ngValue]="null">Select</option>
+                            <!-- <option *ngFor="let _acc of Ledgers " [value]="_acc.AccCode">{{_acc.AccName}}</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+
+                    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        style="margin-top: 1.8rem !important;">
+                        <i class="fas fa-plus-circle"></i>Add</button>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        style="margin-top: 1.8rem !important;">
+                        <i class="fal fa-trash"></i>&nbsp;Cancel</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered  table-hover ">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Ctegory Name</th>
+                                <th>GS Type</th>
+                                <th>Counter</th>
+                                <th>Item</th>
+                                <th>Delete</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- //*ngFor="let _list of ListOfSKU" -->
+                            <tr>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+
+
+                                <td>
+                                    <i class="fas fa-trash" title="edit"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    <ng-container *ngIf="EnableJson">
+        <pre>{{DiscountCategory |json}}</pre>
+    </ng-container>
+</div>

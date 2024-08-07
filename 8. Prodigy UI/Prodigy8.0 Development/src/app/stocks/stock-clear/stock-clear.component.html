@@ -1,0 +1,60 @@
+<form [formGroup]="StockClearForm" class="form-horizontal">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <!-- <div class="form-group">Sort By:
+              <div class="input-group" *ngFor="let radiobutton of radioItems">
+                <ul class="list-group">
+                  <div class="col-md-12">
+                    <label class="form-check-inline">
+                      <input type="radio" name="option" class="form-check-input" [value]="radiobutton"
+                        (change)="Changed(radiobutton)" [checked]="radiobutton === model.option">
+                      <h3 style="margin-top: 5px;"> {{radiobutton}}</h3>
+                    </label>
+                  </div>
+                </ul>
+              </div>
+            </div> -->
+            <div class="form-group">
+              <label class="control-label" for="Sort">Sort By:</label>
+              <select class="form-control" formControlName="Sort" (change)="Changed(StockClearForm.value.Sort)">
+                <option *ngFor="let _sort of Sort" [ngValue]="_sort.Name">
+                  {{_sort.Name}}
+                </option>
+              </select>
+            </div>
+            
+          </div>
+          
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="topbar">
+                  <tr>
+                    <th>Actions</th>
+                    <th>Batch No</th>
+                    <th>Counter</th>
+                    <th>Item</th>
+                    <th>Salesman</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let list of StockList">
+                    <td><i class="far fas fa-minus-circle pointer mr-4" style="color:orange" title="clear"
+                        (click)="ClearStock(list.BatchNo)"></i></td>
+                    <td>{{list.BatchNo}}</td>
+                    <td>{{list.Counter}} </td>
+                    <td>{{list.Item}}</td>
+                    <td>{{list.Salesman}} </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

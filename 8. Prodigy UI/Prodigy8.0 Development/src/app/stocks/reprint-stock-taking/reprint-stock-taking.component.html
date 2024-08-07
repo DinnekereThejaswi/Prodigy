@@ -1,0 +1,76 @@
+<div class="row" style="display:block;margin: auto;width: 30%;">
+  <form class="form-horizontal">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="">Batch No</label>
+                <div class="input-group">
+                  <select class="form-control mr-auto mt-2 mt-lg-0" #BatchNos>
+                    <option [value]="null">Select Batch No</option>
+                    <option *ngFor="let _BatchNo of BatchNo" [value]="_BatchNo.BatchNo">
+                      {{_BatchNo.BatchNo}} - {{_BatchNo.Counter}} Counter - {{_BatchNo.Salesman}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="input-group" *ngFor="let radiobutton of radioItems">
+                  <ul class="list-group">
+                    <div class="col-md-12">
+                      <label class="form-check-inline">
+                        <input type="radio" class="form-check-input" [value]="radiobutton"
+                          (change)="Changed(radiobutton)" [checked]="radiobutton === model.option">
+                        <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                      </label>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="getStockTakingReprint(BatchNos.value)"><i class="fal fa-print"></i>
+                  Reprint </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal overlay" id="BatchSummary" role="dialog" data-backdrop="static" data-keyboard="false">
+
+  <div class="modal-dialog modal-lg" style="max-width: 1360px;">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printBatchSummary()><i class="fal fa-print"></i> Print</button>
+
+        <div class="col-md-2">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+      </div>
+
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{printData}}</pre>
+      </div>
+
+    </div>
+  </div>
+
+</div>

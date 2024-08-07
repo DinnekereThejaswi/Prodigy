@@ -1,0 +1,1180 @@
+<div style="color: brown; text-align: right; font-style: italic;">
+    <app-lastdocno [routerUrl]="routerUrl"></app-lastdocno>
+</div>
+<br>
+
+<div class="card">
+    <div class="card-body">
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <div class="form-group">
+                        <label for="EstNo">Est No</label>
+                        <input type="text" class="form-control"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            (keyup.enter)="getEstimationDetails(estNo.value)"
+                            onKeyPress="if(this.value.length==7) return false;" placeholder="Est No" GreenBorder
+                            #estNo />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="OrderNo">Order No</label>
+                        <h2 style="margin-top: 5px;" *ngIf="estDetails.InlineOrder!= null">{{estDetails.InlineOrder}}
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-left"><i class="fal fa-calendar-alt"></i>&nbsp;
+                        <label for="Date">Date</label>
+                        <h2 class="font-light">{{ApplicationDate | date:'dd/MM/yyyy'}}</h2>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <form [formGroup]="SalesBillingForm">
+                        <div class="form-group">
+                            <label for="BillType">Bill Type</label>
+                            <select class="form-control" formControlName="BillType" [(ngModel)]="SalesBilling.BillType">
+                                <option [value]="">Select</option>
+                                <option *ngFor="let _billtype of billtype" [value]="_billtype.Value">
+                                    {{_billtype.Type}}
+                                </option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <label for="Date"></label>
+                    <div class="form-group">
+                        <ng-container
+                            *ngIf="PaymentHeader === 'Payments' && this.SalesBilling.lstOfPayToCustomer.length > 0">
+                            <label *ngFor="let radiobutton of radioItems" class="form-check-inline">
+                                <input type="radio" name="option" (click)="OnRadioBtnChnge(radiobutton)"
+                                    class="form-check-input" [value]="radiobutton"
+                                    [checked]="radiobutton === model.option" [disabled]="true">
+                                <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                            </label>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="PaymentHeader === 'Payments' && this.SalesBilling.lstOfPayToCustomer.length == 0">
+                            <label *ngFor="let radiobutton of radioItems" class="form-check-inline">
+                                <input type="radio" name="option" (click)="OnRadioBtnChnge(radiobutton)"
+                                    class="form-check-input" [value]="radiobutton"
+                                    [checked]="radiobutton === model.option">
+                                <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                            </label>
+                        </ng-container>
+                        <ng-container *ngIf="PaymentHeader != 'Payments'">
+                            <label *ngFor="let radiobutton of radioItems" class="form-check-inline">
+                                <input type="radio" name="option" (click)="OnRadioBtnChnge(radiobutton)"
+                                    class="form-check-input" [value]="radiobutton"
+                                    [checked]="radiobutton === model.option" [disabled]="true">
+                                <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                            </label>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableBilling">
+
+    <div id="accordian" class="accordion">
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#Customer" (click)="ToggleCustomerData()"
+                [ngClass]="CollapseCustomerDetailsTab ? 'collapsed' : ''"
+                [attr.data-toggle]="CollapseCustomerDetailsTab ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <a class="card-title align-middle Pointer" style="color:#0096FF">
+                            <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Customer Details</ins></span>
+                        </a>
+                    </div>
+                    <ng-container *ngIf="CollapseCustomerTab">
+                        <div class="col-md-1 pull-right">
+                        </div>
+                        <div class="col-md-2 pull-right" style="color:#0096FF">
+                            <h4><span class="align-middle" *ngIf="estDetails"> Est No: {{estDetails.EstNo}} </span></h4>
+                        </div>
+                        <div class="col-md-2 pull-right" *ngIf="CustomerName != null">
+                            <h4><span class="align-middle"> ID: {{CustomerName.ID}}</span></h4>
+                        </div>
+                        <div class="col-md-3 pull-right" *ngIf="CustomerName != null">
+                            <h4><span class="align-middle"> Customer: {{CustomerName.CustName}}</span></h4>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div id="Customer" class="card-body collapse" [collapse]="CollapseCustomerDetailsTab">
+                <app-customer>
+                </app-customer>
+            </div>
+        </div>
+        <br>
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#Sales" (click)="ToggleSalesData()"
+                [ngClass]="EnableSalesTab ? 'collapsed' : ''" [attr.data-toggle]="EnableSalesTab ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <a class="card-title align-middle" style="color:#005BFF">
+                            <i class="fal fa-cash-register fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Sales Details</ins></span>
+                        </a>
+                    </div>
+                    <ng-container *ngIf="estDetails">
+                        <div class="col-md-1 pull-right">
+                        </div>
+                        <div class="col-md-2 pull-right">
+                            <h4><span class="align-middle" *ngIf="estDetails.GrossWt!=null"> Gross. Wt:
+                                    {{estDetails.GrossWt | number :
+                                    '1.3-3'}}</span>
+                            </h4>
+                        </div>
+                        <div class="col-md-2 pull-right">
+                            <h4><span class="align-middle" *ngIf="estDetails.NetWt!=null"> Net Wt: {{estDetails.NetWt |
+                                    number : '1.3-3'}}</span>
+                            </h4>
+                        </div>
+                        <div class="col-md-3 pull-right">
+                            <h4><span class="align-middle" *ngIf="estDetails.LineAmountAfterTax!=null"> Sales Amt:
+                                    {{estDetails.LineAmountAfterTax | currencyFormat :
+                                    estDetails.LineAmountAfterTax}}</span>
+                            </h4>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div id="Sales" class="card-body collapse" [collapse]="EnableSalesTab">
+                <div class="table-responsive" *ngIf="estDetails">
+                    <table class="table" id="panels">
+                        <thead class="topbar">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Barcode</th>
+                                <th>Item </th>
+                                <th>Qty</th>
+                                <th>Gr.Wt</th>
+                                <th>Nt.Wt</th>
+                                <th>Rate/gram</th>
+                                <th>Itm.Code</th>
+                                <th>Metal Amt</th>
+                                <th>St Amt</th>
+                                <th>Dia Amt</th>
+                                <th>VA Amt</th>
+                                <th>Item Total</th>
+                                <th>SGST</th>
+                                <th>CGST</th>
+                                <th>IGST</th>
+                                <th>Sales Total</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let _SalesLines of estDetails.SalesLines; let i = index">
+                            <tr>
+                                <td>{{i + 1 }}</td>
+                                <td>{{_SalesLines.BarcodeNo}}</td>
+                                <td>{{_SalesLines.Item}}</td>
+                                <td>{{_SalesLines.Qty}}</td>
+                                <td>{{ _SalesLines.GrossWt | number : '1.3-3' }}</td>
+                                <td>{{_SalesLines.NetWt | number : '1.3-3'}}</td>
+                                <td>{{_SalesLines.RatePerGram | number : '1.2-2'}}</td>
+                                <td>{{_SalesLines.MCPercent | number : '1.2-2'}}</td>
+                                <td></td>
+                                <td>{{_SalesLines.StoneAmount | number : '1.2-2' }}</td>
+                                <td>{{_SalesLines.DiamondAmount | number : '1.2-2'}}</td>
+                                <td></td>
+                                <td>{{_SalesLines.LineAmountBeforeTax | number : '1.2-2'}}</td>
+                                <td>{{_SalesLines.SGSTAmount | number : '1.2-2'}}</td>
+                                <td>{{_SalesLines.CGSTAmount | number : '1.2-2'}}</td>
+                                <td>{{_SalesLines.IGSTAmount | number : '1.2-2'}}</td>
+                                <td>{{_SalesLines.LineAmountAfterTax | number : '1.2-2'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#Purchase" (click)="TogglePurchaseData()"
+                [ngClass]="EnablePurchaseTab ? 'collapsed' : ''" [attr.data-toggle]="EnablePurchaseTab ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <a class="card-title align-middle Pointer" style="color:#FF00C5">
+                            <i class="far fa-shopping-cart fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Purchase</ins></span>
+                        </a>
+                    </div>
+                    <ng-container *ngIf="estDetails.InlinePurchase!=null">
+                        <div class="col-md-1 pull-right">
+                        </div>
+                        <div class="col-md-2 pull-right">
+                            <h4><span class="align-middle"> Gross. Wt:
+                                    {{estDetails.InlinePurchase.GrossWt | number : '1.3-3'}}</span>
+                            </h4>
+                        </div>
+                        <div class="col-md-2 pull-right">
+                            <h4><span class="align-middle"> Net Wt: {{estDetails.InlinePurchase.NetWt | number :
+                                    '1.3-3'}}</span>
+                            </h4>
+                        </div>
+                        <div class="col-md-3 pull-right">
+                            <h4><span class="align-middle"> Purchase Amt:
+                                    {{estDetails.InlinePurchase.LineAmountAfterTax | currencyFormat :
+                                    estDetails.InlinePurchase.LineAmountAfterTax}}</span>
+                            </h4>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div id="Purchase" class=" collapse" [collapse]="EnablePurchaseTab" style="padding:10px;">
+                <div class="table-responsive">
+                    <table class="table table-bordered" style="width: 2000px;"
+                        *ngIf="estDetails.InlinePurchase != null">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Item</th>
+                                <th>Gr. Wt</th>
+                                <th>St. Wt</th>
+                                <th>DM. Ct</th>
+                                <th>Nt.Wt</th>
+                                <th>Purity %</th>
+                                <th>Melting %</th>
+                                <th>M. Loss</th>
+                                <th>Purchase Rate</th>
+                                <th>Di/St.Amt</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let field of PurchaseLines; let i = index">
+                            <tr>
+                                <td style="width:300px;">
+                                    <input [(ngModel)]="field.Item" [readonly]="true" class="form-control" type="text"
+                                        name="{{field.Item}}">
+                                </td>
+                                <td style="width:150px;">
+                                    <input [(ngModel)]="field.GrossWt" [readonly]="true" class="form-control"
+                                        type="text" (change)="GetNetWT(i);" appNumbersOnly min="0"
+                                        name="{{field.GrossWt}}" placeholder="0.000">
+                                </td>
+                                <td style="width:150px;">
+                                    <h3 [(ngModel)]="field.StoneWt" ngDefaultControl
+                                        [ngModelOptions]="{standalone: true}" class="align-middle">
+                                        {{field.StoneWt || "0.00" | number}}</h3>
+                                </td>
+                                <td style="width:150px;">
+                                    <input [(ngModel)]="field.DiamondWt" class="form-control" type="text" min="0"
+                                        [readonly]="true" (change)="chngDmdCrt(i)" [ngModelOptions]="{standalone: true}"
+                                        name="{{field.DiamondWt}}" placeholder="0.000" appNumbersOnly />
+                                </td>
+                                <td style="width:150px;">
+                                    <h3 [(ngModel)]="field.NetWt" ngDefaultControl [ngModelOptions]="{standalone: true}"
+                                        class="align-middle">{{field.NetWt || "0.00" | number}}</h3>
+                                </td>
+                                <td style="width:150px;">
+                                    <input [(ngModel)]="field.PurityPercent" [readonly]="true" class="form-control"
+                                        type="text" min="0" [ngModelOptions]="{standalone: true}"
+                                        name="{{field.PurityPercent}}" (change)="GetMLLoss_MLPercentage(i);"
+                                        placeholder="0" appNumbersOnly />
+                                </td>
+                                <td style="width:125px;">
+                                    <!-- <input [(ngModel)]="field.MeltingPercent" class="form-control" readonlytype="number" readonly
+                        [ngModelOptions]="{standalone: true}" name="{{field.MeltingPercent}}" placeholder="0.00" /> -->
+
+                                    <h3 [(ngModel)]="field.MeltingPercent" ngDefaultControl
+                                        [ngModelOptions]="{standalone: true}" class="align-middle">
+                                        {{field.MeltingPercent || "0.00" | number}}</h3>
+                                </td>
+                                <td style="width:125px;">
+                                    <!-- <input [(ngModel)]="field.MeltingLoss" class="form-control" type="number" readonly readonly
+                        [ngModelOptions]="{standalone: true}" name="{{field.MeltingLoss}}" placeholder="0.00" /> -->
+
+                                    <h3 [(ngModel)]="field.MeltingLoss" ngDefaultControl
+                                        [ngModelOptions]="{standalone: true}" class="align-middle">
+                                        {{field.MeltingLoss || "0.000" | number}}</h3>
+                                </td>
+                                <td style="width:150px;">
+                                    <h3 [(ngModel)]="field.PurhaseRate" ngDefaultControl
+                                        [ngModelOptions]="{standalone: true}" class="align-middle">
+                                        {{field.PurhaseRate || "0.00" | number}}</h3>
+                                </td>
+                                <td style="width:125px;">
+                                    <h3 [(ngModel)]="field.StoneDiamondAmount" ngDefaultControl
+                                        [ngModelOptions]="{standalone: true}" class="align-middle">
+                                        {{field.StoneDiamondAmount || "0.00" | number}}</h3>
+                                </td>
+                                <td style="width:125px;">
+                                    <h3 [(ngModel)]="field.LineAmountAfterTax" ngDefaultControl
+                                        [ngModelOptions]="{standalone: true}" class="align-middle">
+                                        {{field.LineAmountAfterTax || "0.00" | number}}</h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#Orders" (click)="ToggleOrderAttachment()"
+                [ngClass]="EnableOrderAttachmentTab ? 'collapsed' : ''"
+                [attr.data-toggle]="EnableOrderAttachmentTab ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <a class="card-title align-middle Pointer" style="color:#00BBD6" data-toggle="collapse"
+                            href="#Orders">
+                            <i class="fal fa-file-invoice fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Orders</ins></span>
+                        </a>
+                    </div>
+                    <ng-container *ngIf="estDetails.AttachedCustomerOrder.AttachmentLines.length > 0">
+                        <div class="col-md-1 pull-right">
+                        </div>
+                        <div class="col-md-2 pull-right" style="color:#0096FF">
+
+                        </div>
+                        <div class="col-md-2 pull-right">
+
+                        </div>
+                        <div class="col-md-3 pull-right">
+                            <h4><span class="align-middle"> Order Amount: {{estDetails.AttachedCustomerOrder.TotalAmount
+                                    | number
+                                    :
+                                    '1.2-2'}}
+                                </span></h4>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div id="Orders" class="card-body collapse" [collapse]="EnableOrderAttachmentTab">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Order No</th>
+                                <th>Ref No</th>
+                                <th>Fixed Wt</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody
+                            *ngFor="let _AttachedOrders of estDetails.AttachedCustomerOrder.AttachmentLines; let i = index;">
+                            <tr>
+                                <td>{{i + 1 }}</td>
+                                <td>{{_AttachedOrders.DocumentNo}}</td>
+                                <td>{{_AttachedOrders.DocumentNo}}</td>
+                                <td>{{_AttachedOrders.GrossWt | number : '1.3-3'}}</td>
+                                <td>{{_AttachedOrders.Amount | number : '1.2-2'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#SalesReturn" (click)="ToggleSRAttachment()"
+                [ngClass]="EnableSRAttachmentTab ? 'collapsed' : ''"
+                [attr.data-toggle]="EnableSRAttachmentTab ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <a class="card-title align-middle Pointer" style="color: #3F51B5;" href="#SalesReturn"
+                            data-toggle="collapse">
+                            <i class="fas fa-exchange-alt fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>SR Est</ins></span>
+                        </a>
+                    </div>
+                    <ng-container *ngIf="estDetails.AttachedSalesReturn.AttachmentLines.length > 0">
+                        <div class="col-md-1 pull-right">
+                        </div>
+                        <div class="col-md-2 pull-right" style="color:#0096FF">
+
+                        </div>
+                        <div class="col-md-2 pull-right">
+
+                        </div>
+                        <div class="col-md-3 pull-right">
+                            <h4><span class="align-middle"> SR. Amt: {{estDetails.AttachedSalesReturn.TotalAmount |
+                                    number :
+                                    '1.2-2'}}
+                                </span></h4>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div id="SalesReturn" class="card-body collapse" [collapse]="EnableSRAttachmentTab">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Est No</th>
+                                <th>Qty</th>
+                                <th>Gr.Wt</th>
+                                <th>Total Amt</th>
+                            </tr>
+                        </thead>
+
+                        <tbody
+                            *ngFor="let _AttachedSRs of estDetails.AttachedSalesReturn.AttachmentLines; let i = index;">
+                            <tr>
+                                <td>{{i + 1 }}</td>
+                                <td>{{_AttachedSRs.DocumentNo}}</td>
+                                <td>{{_AttachedSRs.Qty}}</td>
+                                <td>{{_AttachedSRs.GrossWt | number : '1.3-3'}}</td>
+                                <td>{{_AttachedSRs.Amount | number : '1.2-2'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#OldGold" (click)="ToggleOldGoldAttachment()"
+                [ngClass]="EnableOldGoldAttachmentTab ? 'collapsed' : ''"
+                [attr.data-toggle]="EnableOldGoldAttachmentTab ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <a class="card-title align-middle" style="color:rgba(47, 0, 255, 0.692)">
+                            <i class="far fa-rupee-sign fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Old Gold Est.</ins></span>
+                        </a>
+                    </div>
+                    <ng-container *ngIf="estDetails.AttachedOldPurchase.AttachmentLines.length > 0">
+                        <div class="col-md-1 pull-right">
+                        </div>
+                        <div class="col-md-2 pull-right" style="color:#0096FF">
+
+                        </div>
+                        <div class="col-md-2 pull-right">
+
+                        </div>
+                        <div class="col-md-3 pull-right">
+                            <h4><span class="align-middle"> Old Gold Amount:
+                                    {{estDetails.AttachedOldPurchase.TotalAmount |
+                                    number :
+                                    '1.2-2'}}
+                                </span></h4>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div id="OldGold" class="card-body collapse" [collapse]="EnableOldGoldAttachmentTab">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Est No</th>
+                                <th>Qty</th>
+                                <th>Gr.Wt</th>
+                                <th>Total Amt</th>
+                            </tr>
+                        </thead>
+
+                        <tbody
+                            *ngFor="let _AttachedPurchases of estDetails.AttachedOldPurchase.AttachmentLines; let i = index;">
+                            <tr>
+                                <td>{{i + 1 }}</td>
+                                <td>{{_AttachedPurchases.DocumentNo}}</td>
+                                <td>{{_AttachedPurchases.Qty}}</td>
+                                <td>{{_AttachedPurchases.GrossWt | number : '1.3-3'}}</td>
+                                <td>{{_AttachedPurchases.Amount | number : '1.2-2'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <ng-container *ngIf="EnableDisablePayment">
+            <div class="card mb-0">
+                <div class="card-header Pointer" href="#DiscountItem" (click)="DisItemSummary()"
+                    [ngClass]="EnableDiscountItemTab ? 'collapsed' : ''"
+                    [attr.data-toggle]="EnableDiscountItemTab ? '':'collapse'"
+                    style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a class="card-title align-middle" style="color:rgba(255, 0, 0, 0.466)">
+                                <i class="far fa-percent fa-2x mr-2 align-middle"></i>
+                                <span class="align-middle Pointer"><ins>Discount/Item Summary</ins></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="DiscountItem" class="card-body collapse" [collapse]="EnableDiscountItemTab">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="social-widget">
+                                            <div class="soc-content">
+                                                <div class="col-3 b-r">
+                                                    <label for="EstNo"><b>Received Amount</b></label>
+                                                    <input type="text" class="form-control" [disabled]="RecAmtEnable"
+                                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                        (keyup.enter)="ReceivedAmt(RecAmt.value)" placeholder="0"
+                                                        GreenBorder #RecAmt />
+                                                </div>
+                                                <div class="col-3 b-r">
+                                                    <label for="EstNo"><b>Discount%</b></label>
+                                                    <input class="form-control" id="exampleAccount"
+                                                        [(ngModel)]="DiscPer" readonly placeholder="0.00" min="0"
+                                                        type="number">
+                                                </div>
+                                                <div class="col-3 b-r">
+                                                    <label for="EstNo"><b>Payment Amount</b></label>
+                                                    <input class="form-control" id="exampleAccount"
+                                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                        [disabled]="PayAmtEnable" GreenBorder
+                                                        (keyup.enter)="paymentAmt(PayAmt.value)" placeholder="0.00"
+                                                        min="0" type="text" #PayAmt>
+                                                </div>
+                                                <div class="col-3 b-r">
+                                                    <label for="EstNo"><b>Remarks</b></label>
+                                                    <input class="form-control" id="exampleAccount"
+                                                        placeholder="Remarks" min="0" type="text" #Remarks>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="social-widget">
+                                            <div class="soc-content">
+                                                <div class="col-3 b-r">
+                                                    <label for="EstNo"><b>Order Rate Difference</b></label>
+                                                    <input class="form-control" id="exampleAccount" placeholder="0"
+                                                        min="0" type="number" readonly>
+                                                </div>
+                                                <div class="col-3 b-r">
+                                                    <label for="EstNo"><b>Offer Discount</b></label>
+                                                    <input class="form-control" readonly id="exampleAccount"
+                                                        [(ngModel)]="offerDiscount" placeholder="0.00" min="0"
+                                                        type="number">
+                                                </div>
+                                                <div class="col-3 b-r">
+                                                    <label for="EstNo"><b>MC Discount</b></label>
+                                                    <input class="form-control" id="exampleAccount"
+                                                        [(ngModel)]="McDiscAmt" readonly placeholder="0.00" min="0"
+                                                        type="number">
+                                                </div>
+                                                <div class="col-3 b-r">
+                                                    <label for="EstNo"><b>Additional Discount</b></label>
+                                                    <input class="form-control" id="exampleAccount"
+                                                        [(ngModel)]="AddDiscAmt" readonly placeholder="0.00" min="0"
+                                                        type="number">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <ng-container *ngIf="EnableDisablePaymentForOrderAdj">
+                <div class="card mb-0">
+                    <div class="card-header Pointer" href="#Payment" (click)="TogglePaymentData()"
+                        [ngClass]="EnablePaymentsTab ? 'collapsed' : ''"
+                        [attr.data-toggle]="EnablePaymentsTab ? '':'collapse'"
+                        style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                        <div class="row">
+                            <div class="col-md-2 ">
+                                <a class="card-title align-middle" style="color:rgb(0, 204, 255)">
+                                    <i class="far fa-rupee-sign fa-2x mr-2 align-middle"></i>
+                                    <span class="align-middle"><ins>Receipts</ins>
+                                        <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                            <span class="tooltiptext tooltip-bottom">Capture the Receipts
+                                                ( Payment collection modes) information like Cash , Cheque , Card ,
+                                                Scheme Adj, Purchase Bill
+                                                etc</span>
+                                        </div>
+                                    </span>
+                                </a>
+                            </div>
+                            <ng-container *ngIf="NoRecordsPaymentSummary">
+                                <div class="col-md-1 pull-right">
+                                </div>
+                                <div class="col-md-2 pull-right">
+
+                                </div>
+                                <div class="col-md-2 pull-right">
+
+                                </div>
+                                <div class="col-md-3 pull-right">
+                                    <h4><span class="align-middle" *ngIf="PaymentSummary != null"> Received Amount:
+                                            {{PaymentSummary.Amount}}</span>
+                                    </h4>
+                                    <h4><span class="align-middle" *ngIf="PaymentSummary == null"> Received Amount:
+                                            0.00</span>
+                                    </h4>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div id="Payment" class="card-body collapse" [hidden]="EnablePaymentsTab"
+                        [ngClass]="EnablePaymentsTab ? 'hide' : 'show'">
+                        <app-payment [autoFillAmount]="autoFetchAmount" [argPageName]="pageName"></app-payment>
+
+                        <!-- <app-payment (PaidAmountChange)="PaidTotalAmountCalculation($event)" [autoFillAmount]="autoFetchAmount"
+                        [autoFillDisAmount]="autoFetchDisAmount" [argPageName]="pageName"></app-payment> -->
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <br>
+        <div class="card mb-0" *ngIf="EnablePayToCust">
+            <div class="card-header Pointer" href="#ShopKeeper" (click)="ToggleShopKeeperData()"
+                [ngClass]="EnableShopKeeperTab ? 'collapsed' : ''"
+                [attr.data-toggle]="EnableShopKeeperTab ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <a class="card-title align-middle" style="color:rgba(0, 255, 76, 0.61)">
+                            <i class="far fa-rupee-sign fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle"><ins>Payments</ins>
+                                <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                    <span class="tooltiptext tooltip-bottom">Capture the Payments
+                                        ( Payment collection modes) information like Cash , Cheque , E-payment
+                                        etc</span>
+                                </div>
+                            </span>
+                        </a>
+                    </div>
+                    <!-- <ng-container *ngIf="NoRecordsPaymentSummary"> -->
+                    <div class="col-md-1 pull-right">
+                    </div>
+                    <div class="col-md-2 pull-right">
+
+                    </div>
+                    <div class="col-md-2 pull-right">
+
+                    </div>
+                    <div class="col-md-3 pull-right">
+                        <h4><span class="align-middle"> Paid Amount:
+                                {{PaidBySK}}</span>
+                        </h4>
+                    </div>
+                    <!-- </ng-container> -->
+                </div>
+            </div>
+            <!-- <div class="card"> -->
+            <div id="ShopKeeper" class="card-body" class="card-body collapse" [hidden]="EnableShopKeeperTab"
+                [ngClass]="EnableShopKeeperTab ? 'hide' : 'show'">
+                <form [formGroup]="PaymentForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group has-success">
+                                            <label for="PayMode">Payment Mode</label>
+                                            <select class="form-control mr-auto mt-2 mt-lg-0" #PayMode
+                                                formControlName="PayMode" (change)="onchangePaymode(PayMode.value)"
+                                                [(ngModel)]="PaymentHeaders.PayMode">
+                                                <option [ngValue]="null">Select</option>
+                                                <option *ngFor="let _paymentModes of PaymentModes"
+                                                    [value]="_paymentModes.PayMode">
+                                                    {{_paymentModes.PayName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3">
+                    <form [formGroup]="outstandinAmtForm">
+                      <div class="form-group">
+                        <label>Total Balance Amount</label>
+                        <input style="background-color: rgb(114, 241, 10);font-weight:bolder;font-size: large;" min="0"
+                          class="form-control" [readonly]="isReadOnly" formControlName="OSAmount" [(ngModel)]="PayAmount">
+                      </div>
+                    </form>
+                  </div> -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" *ngIf="toggle == 'Cheque'">
+                                    <div class="form-group">
+                                        <label>Bank name</label>
+                                        <input *ngIf="argPageName !='OC' && argPageName !='SR'" type="text"
+                                            class="form-control" [(ngModel)]="PaymentHeaders.BankName"
+                                            formControlName="BankName" placeholder="E.g. HDFC Bank" required
+                                            AlphabetFieldValidator>
+                                        <select *ngIf="argPageName == 'OC' || argPageName == 'SR'" class="form-control"
+                                            formControlName="BankName" [(ngModel)]="PaymentHeaders.BankName"
+                                            (change)="getChequeNumber($event.target.value)">
+                                            <option [value]="null">Select Bank</option>
+                                            <option *ngFor="let _chequeName of ChequeName"
+                                                [value]="_chequeName.acc_code">
+                                                {{_chequeName.acc_name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Cheque'">
+                                    <div class="form-group">
+                                        <label>Chq/ DD No</label>
+                                        <input *ngIf="argPageName!='OC'" type="text" class="form-control"
+                                            [(ngModel)]="PaymentHeaders.ChequeNo" formControlName="ChequeNo"
+                                            placeholder="Enter Chq/ DD No" maxlength="6" required NumberFieldvalidator>
+
+                                        <ng-select *ngIf="argPageName=='OC'" [items]="ChequeNo" bindLabel="chq_no"
+                                            [virtualScroll]="true" bindValue="chq_no" appendTo="body"
+                                            placeholder="Select Cheque No" [(ngModel)]="PaymentHeaders.ChequeNo"
+                                            formControlName="ChequeNo">
+                                        </ng-select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Cheque'">
+                                    <div class="form-group">
+                                        <label>Chq/ DD Date</label>
+                                        <!-- <input type="text" class="form-control" readonly
+                                        [(ngModel)]="PaymentHeaders.ChequeDate" formControlName="ChequeDate"
+                                        placeholder="Cheque Date" bsDatepicker [bsConfig]="datePickerConfig"> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Cash' || toggle == 'Cheque' 
+                            || toggle == 'EP'">
+                                    <div class="form-group">
+                                        <label *ngIf="toggle == 'EP'">Details/Remarks<span class="textRed"> <i
+                                                    class="fas fa-star-of-life"></i></span></label>
+                                        <label *ngIf="toggle != 'EP'">Details/Remarks</label>
+                                        <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.PayDetails"
+                                            formControlName="PayDetails" placeholder="Enter Details/Remarks"
+                                            AlphaNumericFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Cash' || toggle == 'Cheque' || toggle == 'EP'">
+                                    <div class="form-group">
+                                        <label>Amount<span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                            <span>
+                                                <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                                    <span class="tooltiptext tooltip-top"> Please enter the amount
+                                                    </span>
+                                                </div>
+                                            </span></label>
+                                        <ng-container
+                                            *ngIf="toggle != 'OrdAdj' && toggle != 'PurEst' && toggle != 'PurBill' && toggle != 'SREst' && toggle != 'SRBill'">
+                                            <input type="number" min="0" class="form-control"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                placeholder="{{placeholder}}" [readonly]="readonly"
+                                                [(ngModel)]="PaymentHeaders.PayAmount" formControlName="PayAmount">
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <div class="form-actions pd-5" [hidden]="toggle=='Invalid'">
+                                            <button type="submit" style="margin-top:20px;"
+                                                class=" btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                                                (click)="addRow(PaymentForm)">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Payment Mode</th>
+                                <th>Card No/Ref.No</th>
+                                <th>Chq/DD No</th>
+                                <th>Amount</th>
+                                <th>Details</th>
+                                <th>Scheme</th>
+                                <th>Card Swiped By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let _arrayList of ArrayList; let i = index">
+                            <td>{{_arrayList.PayMode | payment:_arrayList.PayMode}}</td>
+                            <td>{{_arrayList.RefBillNo}}</td>
+                            <td>{{_arrayList.ChequeNo}}</td>
+                            <td>{{_arrayList.PayAmount | number : '1.2-2'}}</td>
+                            <td>{{_arrayList.PayDetails | uppercase}}</td>
+                            <td>{{_arrayList.SchemeCode}}</td>
+                            <td>{{_arrayList.CardSwipedBy}}</td>
+                            <td>
+                                <i class="far fa-trash-alt fa-1-5x pointer"
+                                    style='color: red; font-size: 1.5em !important;'
+                                    (click)="DeleteRow(i,PaymentForm)"></i>
+                            </td>
+                        </tbody>
+                        <tr>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"><b>Total:</b></td>
+                            <td class="border-none" *ngIf="ArrayList">{{PaidByShopKeeper(ArrayList) | number : '1.2-2'}}
+                            </td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+        <br>
+        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button"
+            (click)="Submit()" [hidden]="EnableSubmitButton"><i class="fal fa-save"></i> Submit</button>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12" *ngIf="estDetails">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="social-widget">
+                                <div class="soc-header box-facebook" style="padding: 3px;">
+                                    <h3 class="text-white">Items Summary</h3>
+                                </div>
+                                <div class="soc-content">
+                                    <div class="col-2 b-r">
+                                        <label for="EstNo"><b>Sales Qty</b></label>
+                                        <h4 class="font-medium">{{estDetails.Qty}}</h4>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <label for="EstNo"><b>Sales Gr.Wt</b></label>
+                                        <h4 class="font-medium">{{estDetails.GrossWt | number : '1.3-3'}}
+                                        </h4>
+                                    </div>
+                                    <div class="col-2 b-r">
+                                        <label for="EstNo"><b>Sales N.Wt</b></label>
+                                        <h4 class="font-medium">{{estDetails.NetWt | number : '1.3-3'}}
+                                        </h4>
+                                    </div>
+                                    <div class="col-2 b-r">
+                                        <label for="EstNo"><b>Purchase Qty</b></label>
+                                        <h4 class="font-medium" *ngIf="estDetails.InlinePurchase != null">
+                                            {{estDetails.InlinePurchase.Qty}}</h4>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <label for="EstNo"><b>Purchase Gr.Wt</b></label>
+                                        <h4 class="font-medium" *ngIf="estDetails.InlinePurchase != null">
+                                            {{estDetails.InlinePurchase.GrossWt | number :
+                                            '1.3-3'}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-5 col-md-5" *ngIf="estDetails">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="social-widget">
+                                <div class="soc-header box-facebook" style="padding: 3px;">
+                                    <h3 class="text-white">Sales Summary</h3>
+                                </div>
+                                <div class="soc-content">
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium" *ngIf="estDetails!= null">
+                                            {{LineAmountBeforeTax
+                                            | number : '1.2-2'}} <h1 class="float-right">+</h1>
+                                        </h4>
+                                        <h5 class="text-black">Net Sales Amount</h5>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium" *ngIf="estDetails!= null">{{TaxAmount |
+                                            number :
+                                            '1.2-2'}}<h1 class="float-right">
+                                                +</h1>
+                                        </h4>
+                                        <h5 class="text-black">Sales GST</h5>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium">0.00<h1 class="float-right">=</h1>
+                                        </h4>
+                                        <h5 class="text-black">Cess Amount</h5>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium" *ngIf="estDetails!= null">
+                                            <b>{{LineAmountAfterTax
+                                                | number : '1.2-2'}}</b>
+                                        </h4>
+                                        <h5 class="text-black">Grand Total</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-md-7" *ngIf="estDetails">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="social-widget">
+                                <div class="soc-header box-twitter" style="padding: 3px;">
+                                    <h3 class="text-white">Overall Summary</h3>
+                                </div>
+                                <div class="soc-content">
+                                    <div class="col-2 b-r">
+                                        <h4 class="font-medium" *ngIf="estDetails != null">
+                                            <b>{{LineAmountAfterTax | number :
+                                                '1.2-2'}}</b>
+                                            <h1 class="float-right">-</h1>
+                                        </h4>
+                                        <h5 class="text-black">Sales Amount </h5>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium" *ngIf="estDetails.InlinePurchase != null">
+                                            <b>{{estDetails.InlinePurchase.LineAmountAfterTax}}</b>
+                                            <h1 class="float-right">-</h1>
+                                        </h4>
+                                        <h4 class="font-medium" *ngIf="estDetails.InlinePurchase == null">
+                                            <b>0.00</b>
+                                            <h1 class="float-right">-</h1>
+                                        </h4>
+                                        <h5 class="text-black">Purchase Amount</h5>
+                                    </div>
+                                    <div class="col-2 b-r">
+                                        <h4 class="font-medium"
+                                            *ngIf="estDetails.AttachedCustomerOrder.TotalAmount > 0">
+                                            <b>
+                                                {{estDetails.AttachedCustomerOrder.TotalAmount | number : '1.2-2'}}</b>
+                                            <h1 class="float-right">-</h1>
+                                        </h4>
+                                        <h4 class="font-medium"
+                                            *ngIf="estDetails.AttachedCustomerOrder.TotalAmount == 0">
+                                            <b>
+                                                0.00</b>
+                                            <h1 class="float-right">-</h1>
+                                        </h4>
+                                        <h5 class="text-black">Order Amount</h5>
+                                    </div>
+                                    <div class="col-2 b-r">
+                                        <h4 class="font-medium" *ngIf="estDetails.AttachedSalesReturn.TotalAmount > 0">
+                                            <b>
+                                                {{estDetails.AttachedSalesReturn.TotalAmount | number : '1.2-2'}}</b>
+                                            <h1 class="float-right">-</h1>
+                                        </h4>
+                                        <h4 class="font-medium" *ngIf="estDetails.AttachedSalesReturn.TotalAmount == 0">
+                                            <b>
+                                                0.00</b>
+                                            <h1 class="float-right">-</h1>
+                                        </h4>
+                                        <h5 class="text-black">SR Amount</h5>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium" *ngIf="estDetails.AttachedOldPurchase.TotalAmount > 0">
+                                            <b>
+                                                {{estDetails.AttachedOldPurchase.TotalAmount | number : '1.2-2'}}</b>
+                                        </h4>
+                                        <h4 class="font-medium" *ngIf="estDetails.AttachedOldPurchase.TotalAmount == 0">
+                                            <b>
+                                                0.00</b>
+                                        </h4>
+                                        <h5 class="text-black">OG Amount</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12" *ngIf="estDetails">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="social-widget">
+                                <div class="soc-header box-twitter" style="padding: 3px;">
+                                    <h3 class="text-white">Receivable/Payment Summary</h3>
+                                </div>
+                                <div class="soc-content">
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium" *ngIf="estDetails!= null">
+                                            <b>{{TotalAmount | number : '1.2-2'}}</b>
+                                            <!-- <b>{{TotalAmountCalc() | number : '1.2-2'}}</b> -->
+                                            <h1 class="float-right">-</h1>
+                                        </h4>
+                                        <h5 class="text-black">Total Amount </h5>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium" *ngIf="PaymentSummary != null">
+                                            <b>{{PaymentSummary.Amount | number : '1.2-2'}}</b>
+                                            <h1 class="float-right">+</h1>
+                                        </h4>
+                                        <h4 class="font-medium" *ngIf="PaymentSummary == null">
+                                            <b>0.00</b>
+                                            <h1 class="float-right">+</h1>
+                                        </h4>
+                                        <h5 class="text-black">Received Amount</h5>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium" *ngIf="PaidBySK > 0">
+                                            <b>{{PaidBySK}}</b>
+                                            <h1 class="float-right">=</h1>
+                                        </h4>
+                                        <h4 class="font-medium" *ngIf="PaidBySK == 0">
+                                            <b>0.00</b>
+                                            <h1 class="float-right">=</h1>
+                                        </h4>
+                                        <h5 class="text-black">Paid Amount</h5>
+                                    </div>
+                                    <div class="col-3 b-r">
+                                        <h4 class="font-medium" *ngIf="estDetails!= null">
+                                            <b>{{BalanceAmount() | number : '1.2-2'}}</b>
+                                        </h4>
+                                        <h5 class="text-black">Balance Amount</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="EnableReprint">
+    <app-reprint-salesbilling [AttachedInfoBill]="AttachedInfoBill"></app-reprint-salesbilling>
+</ng-container>
+
+<div class="modal overlay" id="GuaranteePopup" role="dialog" data-backdrop="static" data-keyboard="false">
+    <form class="form-horizontal">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Guarantee Details</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form [formGroup]="GuarantorForm" class="form-horizontal">
+                        <table class="table">
+                            <tbody class="form-group">
+                                <tr>
+                                    <td class="float-rt">Guarantor Name</td>
+                                    <td><input type="text" class="form-control" formControlName="name"
+                                            [(ngModel)]="SalesBilling.GuaranteeName"> </td>
+                                </tr>
+                                <tr>
+                                    <td class="float-rt">Due Date</td>
+                                    <td><input type="text" class="form-control" formControlName="date"
+                                            [(ngModel)]="ApplicationDate" bsDatepicker
+                                            [bsConfig]="GuaranteedatePickerConfig"
+                                            value="{{ApplicationDate | date:'dd/MM/yyyy'}}" readonly></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="input-group">
+                        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button"
+                            (click)="SaveGuarantor()"><i class="fal fa-save"></i> Save</button>
+                        <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" type="button"
+                            (click)="cancelModal()"><i class="far fa-window-close"></i>
+                            Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+
+<div class="modal fade" id="UpdateOTP" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+    aria-labelledby="UpdateOTPLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">One Time Password</h4>
+            </div>
+            <ng-container *ngIf="OTPData">
+                <ng-container *ngFor="let _OTPData of OTPData; let i = index">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="OrderNo">Order No</label>
+                            <h1>{{_OTPData.OrderNo}}</h1>
+                        </div>
+                        <div class="form-group">
+                            <label for="OrderNo">Mobile No</label>
+                            <h1>{{_OTPData.MobileNo}}</h1>
+                        </div>
+                        <div class="form-group">
+                            <label for="OrderNo">OTP</label>
+                            <ng-container *ngIf="_OTPData.IsValidated == false">
+                                <input type="password" min="0" class="form-control"
+                                    (change)="updateOTP(_OTPData,i,OTP.value)" name="OTP"
+                                    style=" border-style: solid;border-color:rgb(124, 168, 250); border-width:initial;"
+                                    #OTP>
+                                <span style="color:red;">Password Not Validated</span>
+                                <p style="color: red;">{{timeLeft}} Seconds Left....</p>
+                            </ng-container>
+                            <ng-container *ngIf="_OTPData.IsValidated == true">
+                                <input type="password" min="0" class="form-control" name="OTP" readonly>
+                                <span style="color:aquamarine;">Password Validated</span>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="form-group">
+                    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                        (click)="ValidateOTPSubmit(OTPData)"> Submit</button>
+                </div>
+            </ng-container>
+            <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="close()" data-dismiss="modal">Close</button>
+      </div> -->
+        </div>
+
+    </div>
+</div>
+
+<!-- <ng-container *ngIf="EnableJson">
+    <pre>{{DeriveEstimationBalances | json}}</pre>
+</ng-container>
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{estDetails | json}}</pre>
+</ng-container> -->
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{SalesBilling | json}}</pre>
+</ng-container>

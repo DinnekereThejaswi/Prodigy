@@ -1,0 +1,63 @@
+<div class="modal fade" id="addBarcode"  data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" style="max-width: 1360px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Select Company Code and Branch Code <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+            <span class="tooltiptext ">Select Company Code and Branch Code</span>
+          </div>
+        </h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <form class="form-horizontal" [formGroup]="cbWidgetForm">
+                    <div class="row">
+                      <div class="col-md-4 ">
+                        <div class="form-group">
+                          <label class="control-label">Select Company Code</label>
+                          <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="ccode"
+                            [disabled]="isDisabled" [(ngModel)]="cbWidgetHeader.ccode" (change)="ChngCompanyCode()">
+                            <option *ngFor="let _cbWidgetData of cbWidgetData" [value]="_cbWidgetData.CompanyCode">
+                              {{_cbWidgetData.CompanyCode}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4 ">
+                        <div class="form-group">
+                          <label for="OrderNo">Select Branch Code</label>
+                          <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="bcode"
+                            [disabled]="isDisabled" [(ngModel)]="cbWidgetHeader.bcode" (change)="ChngBranchCode()">
+                            <option *ngFor="let _cbWidgetData of cbWidgetData" [value]="_cbWidgetData.BranchCode">
+                              {{_cbWidgetData.BranchCode}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4" style="text-align: right">
+                        <div>
+                          <i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">Current Branch</span>
+                          <h1 class="font-light">{{cbWidgetHeader.bcode}}</h1>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="padding-bottom: 15px;">
+              <div class="col-md-6">
+                <button class="btn btn-success btn-rounded mt-20" style="margin-bottom: 20px;" type="button"
+                  (click)="storedata(cbWidgetForm)">
+                  Proceed</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

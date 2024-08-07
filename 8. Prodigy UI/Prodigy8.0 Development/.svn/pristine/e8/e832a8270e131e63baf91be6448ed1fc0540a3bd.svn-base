@@ -1,0 +1,9 @@
+import { PipeTransform } from '@angular/core';
+import * as moment from 'moment';
+import * as ɵngcc0 from '@angular/core';
+export declare class DateFormatPipe implements PipeTransform {
+    transform(value: Date | moment.Moment | string | number, ...args: any[]): string;
+    static ngPipeDef: ɵngcc0.ɵɵPipeDefWithMeta<DateFormatPipe, "amDateFormat">;
+}
+
+//# sourceMappingURL=date-format.pipe.d.ts.map

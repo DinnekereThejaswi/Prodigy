@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ProdigyAPI.ShipmentIntegration.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ProdigyAPI_ShipmentIntegration_com_bluedart_netconnect_pickup_PickupRegistration" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc/Basic</Value>
+    </Setting>
+    <Setting Name="ProdigyAPI_ShipmentIntegration_com_bluedart_netconnect_waybill_WayBillGeneration" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc/Basic</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

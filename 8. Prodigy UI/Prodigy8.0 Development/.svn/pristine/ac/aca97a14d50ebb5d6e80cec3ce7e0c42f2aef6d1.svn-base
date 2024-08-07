@@ -1,0 +1,13 @@
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc1 from './ng-dropdown-panel.component';
+import * as ɵngcc2 from './ng-option.component';
+import * as ɵngcc3 from './ng-select.component';
+import * as ɵngcc4 from './ng-option-highlight.directive';
+import * as ɵngcc5 from './ng-templates.directive';
+import * as ɵngcc6 from '@angular/common';
+export declare class NgSelectModule {
+    static ngModuleDef: ɵngcc0.ɵɵNgModuleDefWithMeta<NgSelectModule, [typeof ɵngcc1.NgDropdownPanelComponent, typeof ɵngcc2.NgOptionComponent, typeof ɵngcc3.NgSelectComponent, typeof ɵngcc4.NgOptionHighlightDirective, typeof ɵngcc5.NgOptgroupTemplateDirective, typeof ɵngcc5.NgOptionTemplateDirective, typeof ɵngcc5.NgLabelTemplateDirective, typeof ɵngcc5.NgMultiLabelTemplateDirective, typeof ɵngcc5.NgHeaderTemplateDirective, typeof ɵngcc5.NgFooterTemplateDirective, typeof ɵngcc5.NgNotFoundTemplateDirective, typeof ɵngcc5.NgTypeToSearchTemplateDirective, typeof ɵngcc5.NgLoadingTextTemplateDirective, typeof ɵngcc5.NgTagTemplateDirective, typeof ɵngcc5.NgLoadingSpinnerTemplateDirective], [typeof ɵngcc6.CommonModule], [typeof ɵngcc3.NgSelectComponent, typeof ɵngcc2.NgOptionComponent, typeof ɵngcc4.NgOptionHighlightDirective, typeof ɵngcc5.NgOptgroupTemplateDirective, typeof ɵngcc5.NgOptionTemplateDirective, typeof ɵngcc5.NgLabelTemplateDirective, typeof ɵngcc5.NgMultiLabelTemplateDirective, typeof ɵngcc5.NgHeaderTemplateDirective, typeof ɵngcc5.NgFooterTemplateDirective, typeof ɵngcc5.NgNotFoundTemplateDirective, typeof ɵngcc5.NgTypeToSearchTemplateDirective, typeof ɵngcc5.NgLoadingTextTemplateDirective, typeof ɵngcc5.NgTagTemplateDirective, typeof ɵngcc5.NgLoadingSpinnerTemplateDirective]>;
+    static ngInjectorDef: ɵngcc0.ɵɵInjectorDef<NgSelectModule>;
+}
+
+//# sourceMappingURL=ng-select.module.d.ts.map

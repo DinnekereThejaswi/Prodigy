@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WayBillGeneration" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IWayBillGeneration_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsam:Addressing>
+          <wsp:Policy>
+            <wsam:AnonymousResponses />
+          </wsp:Policy>
+        </wsam:Addressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" />
+      <xsd:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Enums.AWBGeneration" />
+      <xsd:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWayBillGeneration_GenerateWayBill_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateWayBill" />
+  </wsdl:message>
+  <wsdl:message name="IWayBillGeneration_GenerateWayBill_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateWayBillResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWayBillGeneration_ImportData_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportData" />
+  </wsdl:message>
+  <wsdl:message name="IWayBillGeneration_ImportData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWayBillGeneration_CancelWaybill_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelWaybill" />
+  </wsdl:message>
+  <wsdl:message name="IWayBillGeneration_CancelWaybill_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelWaybillResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWayBillGeneration_UpdateEwayBill_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEwayBill" />
+  </wsdl:message>
+  <wsdl:message name="IWayBillGeneration_UpdateEwayBill_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEwayBillResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWayBillGeneration_UpdateWayBill_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateWayBill" />
+  </wsdl:message>
+  <wsdl:message name="IWayBillGeneration_UpdateWayBill_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateWayBillResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWayBillGeneration">
+    <wsdl:operation name="GenerateWayBill">
+      <wsdl:input wsam:Action="http://tempuri.org/IWayBillGeneration/GenerateWayBill" message="tns:IWayBillGeneration_GenerateWayBill_InputMessage" />
+      <wsdl:output wsam:Action="http://tempuri.org/IWayBillGeneration/GenerateWayBillResponse" message="tns:IWayBillGeneration_GenerateWayBill_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportData">
+      <wsdl:input wsam:Action="http://tempuri.org/IWayBillGeneration/ImportData" message="tns:IWayBillGeneration_ImportData_InputMessage" />
+      <wsdl:output wsam:Action="http://tempuri.org/IWayBillGeneration/ImportDataResponse" message="tns:IWayBillGeneration_ImportData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelWaybill">
+      <wsdl:input wsam:Action="http://tempuri.org/IWayBillGeneration/CancelWaybill" message="tns:IWayBillGeneration_CancelWaybill_InputMessage" />
+      <wsdl:output wsam:Action="http://tempuri.org/IWayBillGeneration/CancelWaybillResponse" message="tns:IWayBillGeneration_CancelWaybill_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEwayBill">
+      <wsdl:input wsam:Action="http://tempuri.org/IWayBillGeneration/UpdateEwayBill" message="tns:IWayBillGeneration_UpdateEwayBill_InputMessage" />
+      <wsdl:output wsam:Action="http://tempuri.org/IWayBillGeneration/UpdateEwayBillResponse" message="tns:IWayBillGeneration_UpdateEwayBill_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateWayBill">
+      <wsdl:input wsam:Action="http://tempuri.org/IWayBillGeneration/UpdateWayBill" message="tns:IWayBillGeneration_UpdateWayBill_InputMessage" />
+      <wsdl:output wsam:Action="http://tempuri.org/IWayBillGeneration/UpdateWayBillResponse" message="tns:IWayBillGeneration_UpdateWayBill_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IWayBillGeneration" type="tns:IWayBillGeneration">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GenerateWayBill">
+      <soap:operation soapAction="http://tempuri.org/IWayBillGeneration/GenerateWayBill" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportData">
+      <soap:operation soapAction="http://tempuri.org/IWayBillGeneration/ImportData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelWaybill">
+      <soap:operation soapAction="http://tempuri.org/IWayBillGeneration/CancelWaybill" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEwayBill">
+      <soap:operation soapAction="http://tempuri.org/IWayBillGeneration/UpdateEwayBill" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateWayBill">
+      <soap:operation soapAction="http://tempuri.org/IWayBillGeneration/UpdateWayBill" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSHttpBinding_IWayBillGeneration" type="tns:IWayBillGeneration">
+    <wsp:PolicyReference URI="#WSHttpBinding_IWayBillGeneration_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GenerateWayBill">
+      <soap12:operation soapAction="http://tempuri.org/IWayBillGeneration/GenerateWayBill" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportData">
+      <soap12:operation soapAction="http://tempuri.org/IWayBillGeneration/ImportData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelWaybill">
+      <soap12:operation soapAction="http://tempuri.org/IWayBillGeneration/CancelWaybill" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEwayBill">
+      <soap12:operation soapAction="http://tempuri.org/IWayBillGeneration/UpdateEwayBill" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateWayBill">
+      <soap12:operation soapAction="http://tempuri.org/IWayBillGeneration/UpdateWayBill" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WayBillGeneration">
+    <wsdl:port name="BasicHttpBinding_IWayBillGeneration" binding="tns:BasicHttpBinding_IWayBillGeneration">
+      <soap:address location="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc/Basic" />
+    </wsdl:port>
+    <wsdl:port name="WSHttpBinding_IWayBillGeneration" binding="tns:WSHttpBinding_IWayBillGeneration">
+      <soap12:address location="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

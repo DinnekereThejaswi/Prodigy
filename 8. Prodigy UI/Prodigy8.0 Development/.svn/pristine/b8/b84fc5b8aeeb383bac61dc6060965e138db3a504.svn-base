@@ -1,0 +1,220 @@
+import { Component, Renderer2, Input, ViewChild, NgModule } from '@angular/core';
+
+// tslint:disable:no-input-rename component-selector
+import * as ɵngcc0 from '@angular/core';
+
+const _c0 = ["bcElement"];
+const _c1 = ["bcElement", ""];
+const jsbarcode = require('jsbarcode');
+class NgxBarcode6Component {
+    constructor(renderer) {
+        this.renderer = renderer;
+        this.elementType = 'svg';
+        this.cssClass = 'barcode'; // this should be done more elegantly
+        this.format = 'CODE128';
+        this.lineColor = '#000000';
+        this.width = 2;
+        this.height = 100;
+        this.displayValue = false;
+        this.fontOptions = '';
+        this.font = 'monospace';
+        this.textAlign = 'center';
+        this.textPosition = 'bottom';
+        this.textMargin = 2;
+        this.fontSize = 20;
+        this.background = '#ffffff';
+        this.margin = 10;
+        this.marginTop = 10;
+        this.marginBottom = 10;
+        this.marginLeft = 10;
+        this.marginRight = 10;
+        this.value = '';
+        this.valid = () => true;
+    }
+    get options() {
+        return {
+            format: this.format,
+            lineColor: this.lineColor,
+            width: this.width,
+            height: this.height,
+            displayValue: this.displayValue,
+            fontOptions: this.fontOptions,
+            font: this.font,
+            textAlign: this.textAlign,
+            textPosition: this.textPosition,
+            textMargin: this.textMargin,
+            fontSize: this.fontSize,
+            background: this.background,
+            margin: this.margin,
+            marginTop: this.marginTop,
+            marginBottom: this.marginBottom,
+            marginLeft: this.marginLeft,
+            marginRight: this.marginRight,
+            valid: this.valid,
+        };
+    }
+    ngOnChanges() {
+        this.createBarcode();
+    }
+    createBarcode() {
+        if (!this.value) {
+            return;
+        }
+        let element;
+        switch (this.elementType) {
+            case 'img':
+                element = this.renderer.createElement('img');
+                break;
+            case 'canvas':
+                element = this.renderer.createElement('canvas');
+                break;
+            case 'svg':
+            default:
+                element = this.renderer.createElement('svg', 'svg');
+        }
+        jsbarcode(element, this.value, this.options);
+        for (const node of this.bcElement.nativeElement.childNodes) {
+            this.renderer.removeChild(this.bcElement.nativeElement, node);
+        }
+        this.renderer.appendChild(this.bcElement.nativeElement, element);
+    }
+}
+NgxBarcode6Component.ngComponentDef = ɵngcc0.ɵɵdefineComponent({ type: NgxBarcode6Component, selectors: [["ngx-barcode6"]], factory: function NgxBarcode6Component_Factory(t) { return new (t || NgxBarcode6Component)(ɵngcc0.ɵɵdirectiveInject(Renderer2)); }, viewQuery: function NgxBarcode6Component_Query(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵstaticViewQuery(_c0, true);
+    } if (rf & 2) {
+        var _t;
+        ɵngcc0.ɵɵqueryRefresh(_t = ɵngcc0.ɵɵloadViewQuery()) && (ctx.bcElement = _t.first);
+    } }, inputs: { elementType: ["bc-element-type", "elementType"], cssClass: ["bc-class", "cssClass"], format: ["bc-format", "format"], lineColor: ["bc-line-color", "lineColor"], width: ["bc-width", "width"], height: ["bc-height", "height"], displayValue: ["bc-display-value", "displayValue"], fontOptions: ["bc-font-options", "fontOptions"], font: ["bc-font", "font"], textAlign: ["bc-text-align", "textAlign"], textPosition: ["bc-text-position", "textPosition"], textMargin: ["bc-text-margin", "textMargin"], fontSize: ["bc-font-size", "fontSize"], background: ["bc-background", "background"], margin: ["bc-margin", "margin"], marginTop: ["bc-margin-top", "marginTop"], marginBottom: ["bc-margin-bottom", "marginBottom"], marginLeft: ["bc-margin-left", "marginLeft"], marginRight: ["bc-margin-right", "marginRight"], value: ["bc-value", "value"], valid: ["bc-valid", "valid"] }, features: [ɵngcc0.ɵɵNgOnChangesFeature()], consts: 2, vars: 1, template: function NgxBarcode6Component_Template(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵelementStart(0, "div", null, _c1);
+        ɵngcc0.ɵɵstyling();
+        ɵngcc0.ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵngcc0.ɵɵclassMap(ctx.cssClass);
+        ɵngcc0.ɵɵstylingApply();
+    } }, encapsulation: 2 });
+/*@__PURE__*/ ɵngcc0.ɵsetClassMetadata(NgxBarcode6Component, [{
+        type: Component,
+        args: [{
+                selector: 'ngx-barcode6',
+                template: `<div #bcElement [class]="cssClass"></div>`
+            }]
+    }], function () { return [{ type: Renderer2 }]; }, { constructor: [], renderer: [], elementType: [{
+            type: Input,
+            args: ['bc-element-type']
+        }], cssClass: [{
+            type: Input,
+            args: ['bc-class']
+        }], format: [{
+            type: Input,
+            args: ['bc-format']
+        }], lineColor: [{
+            type: Input,
+            args: ['bc-line-color']
+        }], width: [{
+            type: Input,
+            args: ['bc-width']
+        }], height: [{
+            type: Input,
+            args: ['bc-height']
+        }], displayValue: [{
+            type: Input,
+            args: ['bc-display-value']
+        }], fontOptions: [{
+            type: Input,
+            args: ['bc-font-options']
+        }], font: [{
+            type: Input,
+            args: ['bc-font']
+        }], textAlign: [{
+            type: Input,
+            args: ['bc-text-align']
+        }], textPosition: [{
+            type: Input,
+            args: ['bc-text-position']
+        }], textMargin: [{
+            type: Input,
+            args: ['bc-text-margin']
+        }], fontSize: [{
+            type: Input,
+            args: ['bc-font-size']
+        }], background: [{
+            type: Input,
+            args: ['bc-background']
+        }], margin: [{
+            type: Input,
+            args: ['bc-margin']
+        }], marginTop: [{
+            type: Input,
+            args: ['bc-margin-top']
+        }], marginBottom: [{
+            type: Input,
+            args: ['bc-margin-bottom']
+        }], marginLeft: [{
+            type: Input,
+            args: ['bc-margin-left']
+        }], marginRight: [{
+            type: Input,
+            args: ['bc-margin-right']
+        }], value: [{
+            type: Input,
+            args: ['bc-value']
+        }], valid: [{
+            type: Input,
+            args: ['bc-valid']
+        }], options: [], ngOnChanges: [], createBarcode: [], bcElement: [{
+            type: ViewChild,
+            args: ['bcElement', { static: true }]
+        }] });
+NgxBarcode6Component.ctorParameters = () => [
+    { type: Renderer2 }
+];
+NgxBarcode6Component.propDecorators = {
+    elementType: [{ type: Input, args: ['bc-element-type',] }],
+    cssClass: [{ type: Input, args: ['bc-class',] }],
+    format: [{ type: Input, args: ['bc-format',] }],
+    lineColor: [{ type: Input, args: ['bc-line-color',] }],
+    width: [{ type: Input, args: ['bc-width',] }],
+    height: [{ type: Input, args: ['bc-height',] }],
+    displayValue: [{ type: Input, args: ['bc-display-value',] }],
+    fontOptions: [{ type: Input, args: ['bc-font-options',] }],
+    font: [{ type: Input, args: ['bc-font',] }],
+    textAlign: [{ type: Input, args: ['bc-text-align',] }],
+    textPosition: [{ type: Input, args: ['bc-text-position',] }],
+    textMargin: [{ type: Input, args: ['bc-text-margin',] }],
+    fontSize: [{ type: Input, args: ['bc-font-size',] }],
+    background: [{ type: Input, args: ['bc-background',] }],
+    margin: [{ type: Input, args: ['bc-margin',] }],
+    marginTop: [{ type: Input, args: ['bc-margin-top',] }],
+    marginBottom: [{ type: Input, args: ['bc-margin-bottom',] }],
+    marginLeft: [{ type: Input, args: ['bc-margin-left',] }],
+    marginRight: [{ type: Input, args: ['bc-margin-right',] }],
+    value: [{ type: Input, args: ['bc-value',] }],
+    bcElement: [{ type: ViewChild, args: ['bcElement', { static: true },] }],
+    valid: [{ type: Input, args: ['bc-valid',] }]
+};
+
+class NgxBarcode6Module {
+}
+NgxBarcode6Module.ngModuleDef = ɵngcc0.ɵɵdefineNgModule({ type: NgxBarcode6Module });
+/*@__PURE__*/ ɵngcc0.ɵɵsetNgModuleScope(NgxBarcode6Module, { declarations: [NgxBarcode6Component], exports: [NgxBarcode6Component] });
+/*@__PURE__*/ ɵngcc0.ɵsetClassMetadata(NgxBarcode6Module, [{
+        type: NgModule,
+        args: [{
+                declarations: [NgxBarcode6Component],
+                imports: [],
+                exports: [NgxBarcode6Component]
+            }]
+    }], null, null);
+NgxBarcode6Module.ngInjectorDef = ɵngcc0.ɵɵdefineInjector({ factory: function NgxBarcode6Module_Factory(t) { return new (t || NgxBarcode6Module)(); }, imports: [[]] });
+
+/*
+ * Public API Surface of ngx-barcode6
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+export { NgxBarcode6Component, NgxBarcode6Module };
+
+//# sourceMappingURL=ngx-barcode6.js.map

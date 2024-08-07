@@ -1,0 +1,401 @@
+<form [formGroup]="GsEntryFrom" class="form-horizontal">
+  <div class="card mb-0">
+    <div id="outer">
+      <!-- <div class="inner">
+        <div class="form-group">
+          <ng-container *ngIf="EnableAdd">
+            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+              style="margin-top: 1.2rem !important;" (click)="add(StockGroupForm)">
+              <i class="far fa-plus-circle"></i>Add</button>
+          </ng-container>
+        </div>
+      </div> -->
+      <div class="inner">
+        <div class="form-group">
+          <ng-container *ngIf="EnableAdd">
+            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+              style="margin-top: 1.2rem !important;" (click)="UpdateGSList(GsEntryFrom)">
+              <i class="far fa-save"></i>&nbsp;Save</button>
+          </ng-container>
+          <ng-container *ngIf="EnableSave">
+            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+              style="margin-top: 1.2rem !important;" (click)="AddNewGS(GsEntryFrom)">
+              <i class="fal fa-plus-circle">&nbsp;Add</i></button>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="inner">
+        <div class="form-group">
+          <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+            style="margin-top: 1.2rem !important;" (click)="clear()">
+            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+        </div>
+      </div>
+      <div class="inner">
+        <div class="form-group">
+          <button class="btn btn-outline-dark waves-effect waves-light btn-rounded btn-secondary MT-2"
+            style="margin-top: 1.2rem !important;" (click)="modifyModel()">
+            <i class="fal fa-edit"></i>&nbsp;Modify/View</button>
+        </div>
+      </div>
+      <div class="inner">
+        <div class="form-group">
+          <button type="button" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+            style="margin-top: 1.2rem !important;" (click)=Print() id="exampleModalLabel"><i class="fal fa-print"></i>
+            Print</button>
+        </div>
+      </div>
+    </div>
+    <!-- <form [formGroup]="GsEntryFrom" class="form-horizontal" > -->
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- <div class="card-body"> -->
+        <fieldset class="scheduler-border">
+          <legend class="scheduler-border">Item Details</legend>
+          <!-- Two columns: 50% width on large and up-->
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label">GS Code</label>
+                <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                  (input)="GSCodes.value = GSCodes.value.toUpperCase()" AlphabetFieldValidator
+                  [(ngModel)]="GsEntryListData.GsCode" [readonly]="isReadOnly" formControlName="FormGSCode"
+                  maxlength="5" placeholder="Enter GS Code" #GSCodes>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label">GS Name</label>
+                <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                  (input)="GSNames.value = GSNames.value.toUpperCase()" AlphabetFieldValidator
+                  [(ngModel)]="GsEntryListData.ItemLevel1Name " formControlName="FormGSName" maxlength="25"
+                  placeholder="Enter GS Name" #GSNames>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label">UOM</label>
+                <select class="form-control" formControlName="FormMeasureType"
+                  [(ngModel)]="GsEntryListData.MeasureType">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _uom of uom" [ngValue]="_uom.code">
+                    {{_uom.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label">Stock Group </label>
+                <select class="form-control" formControlName="FormStockName" [(ngModel)]="GsEntryListData.MetalType"
+                  (change)="StockGroupChanged($event)" #FormStockName>
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _stock of StockGroupList" [value]="_stock.MetalCode">
+                    {{_stock.MetalName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <!-- *ngIf="SelectedStockGroupCode =='GL'" -->
+            <div class="col-sm-3 " *ngIf="GsEntryListData.MetalType =='GL'">
+              <div class="form-group">
+                <label class="control-label">Karat</label>
+                <select class="form-control" formControlName="Formkarat" [(ngModel)]="GsEntryListData.Karat">
+                  <option [value]="null">Select</option>
+                  <option *ngFor="let _karat of KaratList" [value]="_karat.Karat">
+                    {{_karat.Karat}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label">Purity</label>
+                <input type="text" class="form-control" IntegerDecimalFieldValidator
+                  [(ngModel)]="GsEntryListData.Purity" formControlName="FormPurtiy" maxlength="5"
+                  placeholder="EnterPurity">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label class="control-label">Is Stone Attached</label>
+              <div class="form-group" style="width: 20px;height: 20px;">
+                <input type="checkbox" class="chkbxsize" class="form-control" formControlName="FormIsStoneAttached"
+                  (change)="checkkboxchng($event)" [checked]="GsEntryListData.IsStone =='Y'" />
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">GST</legend>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Goods Type</label>
+                  <select class="form-control" formControlName="FormGoodsTye"
+                    [(ngModel)]="GsEntryListData.GSTGoodsGroupCode">
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let _typesOfGoods of goodsType" [ngValue]="_typesOfGoods.Code">
+                      {{_typesOfGoods.Code}}-{{_typesOfGoods.Description}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Service Type</label>
+                  <select class="form-control" formControlName="FormServiceType"
+                    [(ngModel)]="GsEntryListData.GSTServicesGroupCode">
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let _serviceType of serviceType" [ngValue]="_serviceType.Code">
+                      {{_serviceType.Code}}-{{_serviceType.Description}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">HSN</label>
+                  <select class="form-control" formControlName="FormHsnCode" [(ngModel)]="GsEntryListData.HSN">
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let _hsn of HSN" [value]="_hsn.Code">
+                      {{_hsn.Code}}-{{_hsn.Description}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Opn.PCs</label>
+                    <input type="text" class="form-control" [(ngModel)]="GsEntryListData.OpeningUnits"
+                      formControlName="FormOpnPiece" IntegerDecimalFieldValidator maxlength="4" placeholder="0">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Open Value</label>
+                    <input type="text" class="form-control" IntegerDecimalFieldValidator
+                      [(ngModel)]="GsEntryListData.OpeningGwtValue" formControlName="FormOpnValue" maxlength="9"
+                      placeholder="0.00">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Opn. Gr.Wt</label>
+                    <input type="text" class="form-control" IntegerDecimalFieldValidator
+                      [(ngModel)]="GsEntryListData.OpeningGwt" formControlName="FormOpnGWT" maxlength="5"
+                      placeholder="0.00">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label">Opn.Nt.Wt</label>
+                    <input type="text" class="form-control" IntegerDecimalFieldValidator
+                      [(ngModel)]="GsEntryListData.OpeningNwt" formControlName="FormOpnNWT" maxlength="5"
+                      placeholder="0.00">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label">commodity Code</label>
+                <input type="text" class="form-control" [(ngModel)]="GsEntryListData.CommodityCode"
+                  formControlName="FormCommodityCode" maxlength="10" placeholder="Enter CommodityCode">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered " style="border: 1px solid black;">
+              <tbody>
+                <tr>
+                  <td>
+                    <label class="control-label">
+                      <input type="radio" id="FormIsSales" formControlName="FormIsSales" (change)="IsSales($event)"
+                        [checked]="GsEntryListData.BillType =='S'"
+                        style="height:25px; width:25px; vertical-align: middle;" />&nbsp;&nbsp;&nbsp;&nbsp;Sales</label>
+                  </td>
+                  <td>
+                    <label class="control-label">
+                      <input type="radio" id="FormIsPurchase" formControlName="FormIsPurchase"
+                        (change)="IsPurchase($event)" [checked]="GsEntryListData.BillType =='P'"
+                        style="height:25px; width:25px; vertical-align: middle;" />&nbsp;&nbsp;&nbsp;&nbsp;Purchase</label>
+                  </td>
+                  <td>
+                    <label class="control-label">
+                      <input type="radio" id="FormIsRepair" formControlName="FormIsRepair" (change)="IsRepair($event)"
+                        [checked]="GsEntryListData.BillType =='R'"
+                        style="height:25px; width:25px; vertical-align: middle;" />&nbsp;&nbsp;&nbsp;&nbsp;Repair</label>
+                  </td>
+                  <td>
+                    <label class="control-label">
+                      <input type="radio" id="FormIsPacking" (change)="IsPacking($event)"
+                        [checked]="GsEntryListData.BillType =='Z'"
+                        style="height:25px; width:25px; vertical-align: middle;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;Packing
+                    </label>
+                  </td>
+                  <td>
+                    <label class="control-label">
+                      <input type="radio" id="FormIsGift" (change)="ISGiftItems($event)"
+                        [checked]="GsEntryListData.BillType =='G'"
+                        style="height:25px; width:25px; vertical-align: middle;" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;GiftItems</label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <div>
+      <ng-container *ngIf="EnableJson">
+        <pre>{{GsEntryListData | json  }}</pre>
+      </ng-container>
+    </div>
+  </div>
+</form>
+
+
+<div class="modal overlay" id="ModifyGSModel" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1200px">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h4 class="modal-title"> Group Stack Details</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal" >&times;</button> -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="ModalClose()">Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead class="topbar">
+                  <tr>
+                    <th>Edit</th>
+                    <th>Id</th>
+                    <th>Item Name</th>
+                    <th>Measure Type</th>
+                    <th>Item Type</th>
+                    <th>Karat</th>
+                    <th>Bill Type </th>
+                    <th>Opening Units</th>
+                    <th>Opening Gwt</th>
+                    <th>Opening Nwt</th>
+                    <th>Gwt Value </th>
+                    <th>Nwt Value</th>
+                    <th>Object Status</th>
+                    <th>Is stone</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let _gsList of GSList;let i=index">
+                  <tr>
+                    <td align="center">
+                      <!-- <button type="button" class="btn btn-outline-dark  btn-sm" (click)="editField(_salesmans)">Edit</button> -->
+                      <i class="fas fa-edit" title="edit" (click)="LoadBackGsDetails(_gsList)"></i>
+                    </td>
+                    <td>{{i}}</td>
+                    <td>{{_gsList.ItemLevel1Name}}</td>
+                    <td>{{_gsList.MeasureType}}</td>
+                    <td>{{_gsList.MetalType}}</td>
+                    <td>{{_gsList.Karat}}</td>
+                    <td>{{_gsList.BillType}}</td>
+                    <td>{{_gsList.OpeningUnits}}</td>
+                    <td>{{_gsList.OpeningGwt}}</td>
+                    <td>{{_gsList.OpeningNwt}}</td>
+                    <td>{{_gsList.OpeningGwtValue}}</td>
+                    <td>{{_gsList.OpeningNwtValue}}</td>
+                    <td>{{_gsList.ObjectStatus}}</td>
+                    <td>{{_gsList.IsStone}}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="GSDetailsTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i>
+          Print</button>
+        <h3 class="modal-title">{{bcode}}-GS List</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive" id="TableData">
+              <table class="table table-bordered table-hover">
+                <thead class="topbar">
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Measure Type</th>
+                    <th>Item Type</th>
+                    <th>Karat</th>
+                    <th>Bill Type </th>
+                    <th>Opening Units</th>
+                    <th>Opening Gwt</th>
+                    <th>Opening Nwt</th>
+                    <th>Gwt Value </th>
+                    <th>Nwt Value</th>
+                    <th>Object Status</th>
+                    <th>Is stone</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let _gsList of printData;let i=index">
+                  <tr>
+                    <td>{{_gsList.ItemLevel1Name}}</td>
+                    <td>{{_gsList.MeasureType}}</td>
+                    <td>{{_gsList.MetalType}}</td>
+                    <td>{{_gsList.Karat}}</td>
+                    <td>{{_gsList.BillType}}</td>
+                    <td>{{_gsList.OpeningUnits}}</td>
+                    <td>{{_gsList.OpeningGwt}}</td>
+                    <td>{{_gsList.OpeningNwt}}</td>
+                    <td>{{_gsList.OpeningGwtValue}}</td>
+                    <td>{{_gsList.OpeningNwtValue}}</td>
+                    <td>{{_gsList.ObjectStatus}}</td>
+                    <td>{{_gsList.IsStone}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

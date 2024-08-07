@@ -1,0 +1,114 @@
+.card-title {
+    margin-bottom: -0.3rem !important;
+  }
+  
+  .table-responsive {
+    display: block;
+    width: 99.9% !important;
+    overflow-x: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  
+  .card-header{
+    border-radius: 15px !important;
+  }
+  .card{
+    border-radius: 15px !important;
+  
+  }
+  .card-body{ 
+    padding: 10px 30px 0px 30px !important; 
+    border-bottom: 2px solid black;
+    border-radius: 15px;
+  }
+  .p-38 { height: 38px; }
+  .text-white { color: white;}
+  .Pointer { cursor: pointer; }
+  
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+  }
+  
+  .hide{
+   display: hide;
+  }
+  
+  .show{
+    display: block;
+  }
+  
+  
+  /* oject staus color */
+  .item-color1 {
+      background-color: red;
+      }
+     .item-color2 {
+      background-color: green;
+      }
+  
+  
+  /* buttons */
+  #outer
+  {
+      width:100%;
+      text-align: right;
+  }
+  .inner
+  {
+      display: inline-block;
+  }
+  
+  /* fieldset */
+  fieldset {
+      border: 2px solid #757575 !important;
+      padding: 0 1.4em 0px 1.4em !important;
+      margin: 0 0 1.5em 0 !important;
+      box-shadow: 0px 0px 0px 0px rgb(0, 0, 0);
+      border-radius: 15px;
+     
+    }
+    
+    legend {
+      font-size: 18px !important;
+      font-family: "Montserrat", Helvetica, sans-serif;
+      font-weight: 100;
+      text-align: left !important;
+      width:auto;
+      padding:0 2px;
+      border-bottom:none;
+  
+    }
+  
+  
+    .chkbxsize{
+      width: 10px; 
+      height:10px; 
+    }
+    .scheduler-border{
+      border-color: #F00;
+      border-style: solid;
+    }
+  
+  
+  
+    
+  
+    .form{
+      background-color: black;
+    }
+    
+  
+    .p {
+      font-family: Lato;
+    }
+  
+  
+    /* radio button ::-webkit-textfield-decoration-container */
+    .container {
+      padding: 2rem 0rem;
+    }
+    h4 {
+      margin: 2rem 0rem 1rem;
+    }

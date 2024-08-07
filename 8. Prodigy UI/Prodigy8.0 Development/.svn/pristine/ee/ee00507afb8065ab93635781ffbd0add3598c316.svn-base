@@ -1,0 +1,175 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="ROLNewForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="GS">GS
+                    <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="GS" [(ngModel)]="ROLNewListData.GS">
+                    <option [ngValue]="null">Select</option>
+                    <option  [ngValue]="">
+                      test
+                    </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="CounterCode">Counter Code
+                    <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="CounterCode" [(ngModel)]="ROLNewListData.CounterCode">
+                    <option [ngValue]="null">Select</option>
+                    <option  [ngValue]="">
+                      test
+                    </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Item">Item Name<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="Item" [(ngModel)]="ROLNewListData.Item">
+                  <option [ngValue]="null">Select</option>
+                  <option  [ngValue]="">
+                    test
+                  </option>
+              </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Design">Design Name<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="Design" [(ngModel)]="ROLNewListData.Design">
+                  <option [ngValue]="null">Select</option>
+                  <option  [ngValue]="">
+                    test
+                  </option>
+              </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="ItemSize">Item Size<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="ItemSize" [(ngModel)]="ROLNewListData.ItemSize">
+                  <option [ngValue]="null">Select</option>
+                  <option  [ngValue]="">
+                    test
+                  </option>
+              </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="FromWt">From Wt<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control" id="FromWt" [(ngModel)]="ROLNewListData.FromWt"
+                  formControlName="FromWt" IntegerDecimalFieldValidator maxlength="7"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" for="ToWt">To Wt
+                  </label>
+                  <input type="text" class="form-control" id="CaratTo" [(ngModel)]="ROLNewListData.ToWt"
+                    formControlName="ToWt" IntegerDecimalFieldValidator maxlength="7"/>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" for="MinQty">Min Qty
+                  </label>
+                  <input type="text" class="form-control" id="MinQty" [(ngModel)]="ROLNewListData.MinQty"
+                    formControlName="MinQty" IntegerDecimalFieldValidator maxlength="7"/>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" for="MediumQty">Medium Qty
+                  </label>
+                  <input type="text" class="form-control" id="MediumQty" [(ngModel)]="ROLNewListData.MediumQty"
+                    formControlName="MediumQty" IntegerDecimalFieldValidator maxlength="7"/>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label" for="MaxQty">Max Qty
+                  </label>
+                  <input type="text" class="form-control" [(ngModel)]="ROLNewListData.MaxQty"
+                    formControlName="MaxQty" IntegerDecimalFieldValidator maxlength="7"/>
+                </div>
+              </div>
+              
+            <div class="col-md-3" style="padding-top:22px">
+              <div class="form-group">
+                <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="onSubmit(ROLNewForm)"><i class="fal fa-save"></i> Add</button>
+                <button type="submit"
+                  class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="topbar">
+              <tr>
+                <th>GS Code</th>
+                <th>Counter Code</th>
+                <th>Item Name</th>
+                <th>Design Name</th>
+                <th>Item Size</th>
+                <th>From Wt</th>
+                <th>To Wt</th>
+                <th>Min Qty</th>
+                <th>Medium Qty</th>
+                <th>Max Qty</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+             <tr> 
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td>0.00</td>
+                <td>2</td>
+                <td>2000</td>
+                <td><i class="fas fa-edit" title="Edit"></i></td>
+                <td><i class="fas fa-trash-alt" title="Delete"></i></td>
+                
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+ <!-- <pre>{{ ROLNewListData | json }}</pre> -->
+</div>
+

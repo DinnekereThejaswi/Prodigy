@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-5">
+            <h3>Machine Registration</h3>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-3">
+            <button class="btn btn-success float-right" (click)="addMachineRecord()">
+              Add
+            </button>
+
+          </div>
+        </div>
+        <h6 class="card-subtitle"></h6>
+        <div class="table-responsive my-custom-scrollbar">
+          <table class="table table-bordered">
+            <thead class="topbar">
+              <tr>
+                <!-- <th>ID</th>-->
+               
+                <th>Sl.No</th>
+                <th>Machine</th>
+                <th>Counter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!-- <tr *ngFor="let kar of Location | search: searchText | paginate: { itemsPerPage:top, totalItems:MainCount, currentPage: p }" [ngClass]="{'btn-primary': cust.ID == currentId }"> -->
+              <tr *ngFor="let List of MachineList; let i=index">
+                <!-- <td>{{currency.ID}}</td>-->
+               <td>{{i+1}}</td>
+                <td>{{List.MachineName}}</td>
+                <td>{{List.BillCounter}}</td>
+                <td>
+                  <i class="fas fa-trash-alt pointer" style="color:red" title="Delete" (click)="deleteMachineRecord(List.ObjID)"></i> 
+                
+                  <!-- <i class="far fa-pencil-alt pointer mr-4" style="color:orange" title="Edit"></i> -->
+                    <!-- <i class="fas fa-window-close pointer" style="color:red" title="Close"></i> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

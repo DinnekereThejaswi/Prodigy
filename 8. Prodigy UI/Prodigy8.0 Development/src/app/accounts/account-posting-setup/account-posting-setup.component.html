@@ -1,0 +1,179 @@
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#TransactionPosting"
+            [ngClass]="CollapseTransactionsPostingTab ? 'collapsed' : ''"
+            [attr.data-toggle]="CollapseTransactionsPostingTab ? '':'collapse'" (click)="ToggleTransactionPosting();"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-3 ">
+                    <a class="card-title align-middle " style="color:#005BFF">
+                        <i class="fal fa-file-invoice fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle "><ins>Transactions Posting</ins>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="TransactionPosting" class="card-body collapse" [collapse]="CollapseTransactionsPostingTab">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="panels">
+                    <thead class="topbar">
+                        <tr>
+                            <th>GS</th>
+                            <th>Sales</th>
+                            <th>Sales Return</th>
+                            <th>Purchase</th>
+                            <th>Issues</th>
+                            <th>Receipt</th>
+                            <th>Stone Issue</th>
+                            <th>Stone Receipt</th>
+                            <th>Stone Purchase</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let _gsCode of gsCode">
+                        <tr>
+                            <td> {{_gsCode.Name}} - {{_gsCode.gsCode}} </td>
+                            <td class="pointer"
+                                (click)="EditDetails('S',getSalesLedger(_gsCode.gsCode),_gsCode.gsCode)">
+                                {{getSalesLedger(_gsCode.gsCode)}}
+                            </td>
+                            <td class="pointer" (click)="EditDetails('RS',getSRLedger(_gsCode.gsCode),_gsCode.gsCode)">
+                                {{getSRLedger(_gsCode.gsCode)}}</td>
+                            <td class="pointer"
+                                (click)="EditDetails('P',getPurchaseLedger(_gsCode.gsCode),_gsCode.gsCode)">
+                                {{getPurchaseLedger(_gsCode.gsCode)}}</td>
+                            <td class="pointer"
+                                (click)="EditDetails('I',getIssuesLedger(_gsCode.gsCode),_gsCode.gsCode)">
+                                {{getIssuesLedger(_gsCode.gsCode)}}</td>
+                            <td class="pointer"
+                                (click)="EditDetails('R',getReceiptLedger(_gsCode.gsCode),_gsCode.gsCode)">
+                                {{getReceiptLedger(_gsCode.gsCode)}}</td>
+                            <td class="pointer" (click)="EditDetails('SI',getSILedger(_gsCode.gsCode),_gsCode.gsCode)">
+                                {{getSILedger(_gsCode.gsCode)}}</td>
+                            <td class="pointer"
+                                (click)="EditDetails('SR',getStoneReceiptLedger(_gsCode.gsCode),_gsCode.gsCode)">
+                                {{getStoneReceiptLedger(_gsCode.gsCode)}}
+                            </td>
+                            <td class="pointer" (click)="EditDetails('SD',getSPLedger(_gsCode.gsCode),_gsCode.gsCode)">
+                                {{getSPLedger(_gsCode.gsCode)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#PayModePosting" [ngClass]="CollapsePayModePostingTab ? 'collapsed' : ''"
+            [attr.data-toggle]="CollapsePayModePostingTab ? '':'collapse'" (click)="TogglePayModePosting();"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <a class="card-title align-middle Pointer" style="color:#ff000065">
+                        <i class="fas fa-2x fa-barcode mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>PayMode Posting</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="PayModePosting" class="card-body collapse" [collapse]="CollapsePayModePostingTab">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="panels">
+                    <thead class="topbar">
+                        <tr>
+                            <th>Pay Mode</th>
+                            <th>Ledger Name</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let _payModes of payModes">
+                        <tr>
+                            <td> {{_payModes.PayMode}}</td>
+                            <td class="pointer"
+                                (click)="EditDetails('PM',getPayModeLedger(_payModes.AccountCode),_payModes.AccountCode)">
+                                {{getPayModeLedger(_payModes.AccountCode)}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#PayModePosting" [ngClass]="CollapseIssueReceiptsTab ? 'collapsed' : ''"
+            [attr.data-toggle]="CollapseIssueReceiptsTab ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <a class="card-title align-middle Pointer" style="color:#ff00ff">
+                        <i class="fas fa-2x fa-gem mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Issue Receipts Posting</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#Customer" [ngClass]="CollapseCPCPostingTab ? 'collapsed' : ''"
+            [attr.data-toggle]="CollapseCPCPostingTab ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <a class="card-title align-middle Pointer" style="color:#00ffea">
+                        <i class="fas fa-2x fa-gem mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>CPC Posting</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal overlay" id="LedgerPopup" role="dialog" data-backdrop="static" data-keyboard="false">
+    <form class="form-horizontal">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Account Posting Edit</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form [formGroup]="LedgerForm" class="form-horizontal">
+                        <table class="table">
+                            <tbody class="form-group">
+                                <tr>
+                                    <td class="float-rt">Ledger</td>
+                                    <td>
+                                        <select class="form-control" formControlName="ledger"
+                                            [(ngModel)]="ledgerPost.AccountCode" (change)="chngLedger()">
+                                            <option [ngValue]="null">Select</option>
+                                            <option *ngFor="let _ledgerList of ledgerList" [value]="_ledgerList.Code">
+                                                {{_ledgerList.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="input-group">
+                        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button"
+                            (click)="saveLedger()"><i class="fal fa-save"></i> Save</button>
+                        <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" type="button"
+                            (click)="cancelModal()"><i class="far fa-window-close"></i>
+                            Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{ledgerPost | json}}</pre>
+</ng-container>

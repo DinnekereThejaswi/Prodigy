@@ -1,0 +1,78 @@
+{
+  "_from": "@ng-idle/keepalive@^10.0.0-beta.1",
+  "_id": "@ng-idle/keepalive@10.0.0-beta.1",
+  "_inBundle": false,
+  "_integrity": "sha512-cCDNmYbzVLsSfchjCJzqA+qED6s8kcD1/fV3JNTj9fmchZ05ZFT3qB1CB5RxfQlvGmdOKykRQWWn3XRRBdhHNw==",
+  "_location": "/@ng-idle/keepalive",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@ng-idle/keepalive@^10.0.0-beta.1",
+    "name": "@ng-idle/keepalive",
+    "escapedName": "@ng-idle%2fkeepalive",
+    "scope": "@ng-idle",
+    "rawSpec": "^10.0.0-beta.1",
+    "saveSpec": null,
+    "fetchSpec": "^10.0.0-beta.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@ng-idle/keepalive/-/keepalive-10.0.0-beta.1.tgz",
+  "_shasum": "aba8fd105dd0a07a0849e8e1277660bb18d62857",
+  "_spec": "@ng-idle/keepalive@^10.0.0-beta.1",
+  "_where": "E:\\MagnaWeb-Angular8.0",
+  "author": {
+    "name": "Mike Grabski",
+    "email": "me@mikegrabski.com",
+    "url": "http://mikegrabski.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/HackedByChinese/ng2-idle.git/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "deprecated": false,
+  "description": "Module that works with @ng-idle/core to keep a user session alive while user is active.",
+  "es2015": "fesm2015/ng-idle-keepalive.js",
+  "esm2015": "esm2015/ng-idle-keepalive.js",
+  "fesm2015": "fesm2015/ng-idle-keepalive.js",
+  "homepage": "https://github.com/HackedByChinese/ng2-idle.git#readme",
+  "keywords": [
+    "angular",
+    "angular2",
+    "ng2-idle",
+    "ng-idle",
+    "idle",
+    "inactive",
+    "timeout",
+    "session",
+    "keepalive"
+  ],
+  "license": "Apache-2.0",
+  "main": "bundles/ng-idle-keepalive.umd.js",
+  "metadata": "ng-idle-keepalive.metadata.json",
+  "module": "fesm2015/ng-idle-keepalive.js",
+  "name": "@ng-idle/keepalive",
+  "peerDependencies": {
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0",
+    "@ng-idle/core": "^10.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HackedByChinese/ng2-idle.git"
+  },
+  "sideEffects": false,
+  "typings": "ng-idle-keepalive.d.ts",
+  "version": "10.0.0-beta.1",
+  "es2015_ivy_ngcc": "__ivy_ngcc__/fesm2015/ng-idle-keepalive.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14",
+    "module": "8.2.14"
+  }
+}

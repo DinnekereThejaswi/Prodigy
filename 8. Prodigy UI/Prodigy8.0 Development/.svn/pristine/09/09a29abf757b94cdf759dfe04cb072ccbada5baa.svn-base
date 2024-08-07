@@ -1,0 +1,105 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="ProdctAtribform" class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label" for="Supplier">Attribute Code</label>
+                        <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                        formControlName="frmCtrl_atrbCode"  (input)="Codes.value = Codes.value.toUpperCase()"
+                         [readonly]="isReadOnly" placeholder="Enter Attribute code"
+                        type="text" #Codes>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="GS">Attribute Name</label>
+                        <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                        formControlName="frmCtrl_atrbName"  (input)="Codes.value = Codes.value.toUpperCase()"
+                        [readonly]="isReadOnly" placeholder="Enter Attribute name"
+                        type="text" #Codes>
+                    </div>
+                </div>
+              
+                <div class="col-md-3">
+                    <div class="form-group">
+                      <ng-container *ngIf="EnableAdd">
+                        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                          style="margin-top: 1.2rem !important;" (click)="add(ProdctAtribform)">
+                          <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                      </ng-container>
+                      <ng-container *ngIf="EnableSave">
+                        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                          style="margin-top: 1.2rem !important;" (click)="save(ProdctAtribform)">
+                          <i class="fal fa-save"></i>&nbsp;Save</button>
+                      </ng-container>
+                      <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        style="margin-top: 1.2rem !important;" >
+                        <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                    </div>
+                  </div>
+                
+                <div class="col-md-4" >
+                    <br>
+                    <div class="text-right">&nbsp;
+                        <button class="btn btn-success btn-rounded" type="button" ><i
+                                class="fa fa-print"></i>&nbsp;Print</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered  table-hover ">
+              <thead class="topbar">
+                <tr>
+                  <th>Attribute Code</th>
+                  <th>Attribute Name</th>
+                  <th>Status</th>
+                  <th>Edit</th>
+                  <th>Open</th>
+                  <th>Close</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>TH</td>
+                      <td>THEMES </td>
+                      
+                      <td>O</td>
+                      <td align="center">
+                        <i class="fas fa-edit" title="edit" ></i>
+                      </td>
+                      <td align="center">
+                        <i class="fas fa-edit" title="edit" ></i>
+                      </td>
+                      <td align="center">
+                        <i class="fas fa-edit" title="edit" ></i>
+                      </td>                                                                                                                              
+                  </tr>
+                <!-- <tr *ngFor="let  _hsn of HSNMasterList">
+                  <td>{{_hsn.GSTGroupCode}}</td>
+                  <td>{{_hsn.Type}}</td>
+                  <td>{{_hsn.Code}}</td>
+                  <td>{{_hsn.Description}}</td>
+                  <td><input type="checkbox" [checked]="_hsn.IsActive==true" style="width: 20px;height: 20px;" /></td>
+                  <td align="center">
+                    <i class="fas fa-edit" title="edit" (click)="editField(_hsn)"></i>
+                  </td>
+                  <td align="center">
+                    <i class="fas fa-edit" title="edit" (click)="deletField(_hsn)"></i>
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+    </div>
+  </div>
+
+
+ 

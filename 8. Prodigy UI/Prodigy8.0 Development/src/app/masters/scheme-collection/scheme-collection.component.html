@@ -1,0 +1,93 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="SchemeCollectionform" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="control-label" for="Paymode">Pay Mode</label>
+                    <div class="form-group">
+                        <select class="form-control" formControlName="Paymode"
+                            [(ngModel)]="SchemeCollectionListData.Code" id="Paymode">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _modes of Paymode " [value]="_modes.Code">{{_modes.Description}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="LedgerName">Ledger Name</label>
+                        <select class="form-control" formControlName="LedgerName" id="LedgerName"
+                            [(ngModel)]="SchemeCollectionListData.AccCode">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _acc of Ledgers " [value]="_acc.AccCode">{{_acc.AccName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <ng-container *ngIf="EnableAdd">
+                        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;">
+                            <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                    </ng-container>
+                    <ng-container *ngIf="EnableSave">
+                        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;">
+                            <i class="fal fa-save"></i>&nbsp;Save</button>
+                    </ng-container>
+                    <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        style="margin-top: 1.2rem !important;">
+                        <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                </div>
+            </div>
+        </form>
+        <ng-container *ngIf="EnableJson">
+            <pre>{{SchemeCollectionListData | json}}</pre>
+        </ng-container>
+    </div>
+</div>
+<br>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered  table-hover ">
+                    <thead class="topbar">
+                        <tr>
+                            <th>Pay Mode</th>
+                            <th>Ledger Name</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- //*ngFor="let _list of ListOfSKU" -->
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <!-- <td>{{_list.GSCode}}</td>
+                            <td>{{_list.ItemCode}}</td>
+                            <td>{{_list.DesignCode}}</td>
+                            <td>{{_list.Weight}}</td>
+                            <td>{{_list.SKUID}}</td>
+                            <td>{{_list.ObjStatus}}</td> -->
+                            <td>
+                                <i class="fa fa-edit" title="edit"></i>
+                            </td>
+
+                            <td>
+                                <i class="fas fa-trash" title="edit"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

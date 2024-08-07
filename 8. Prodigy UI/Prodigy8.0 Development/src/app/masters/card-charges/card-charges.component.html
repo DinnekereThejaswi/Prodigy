@@ -1,0 +1,144 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="CardChargesForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Account">Account Name
+                  <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="frmCtrl_Account"
+                  [(ngModel)]="CardChargesListData.AccCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _accNamesList of AccNamesList" [ngValue]="_accNamesList.Code">
+                    {{_accNamesList.Name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Bank">Bank Name
+                  <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="frmCtrl_Bank"
+                  [(ngModel)]="CardChargesListData.BankAccCode" (change)="BankDetails($event.target.selectedIndex)">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _bankNamesList of BankNamesList" [ngValue]="_bankNamesList.Code">
+                    {{_bankNamesList.Name}}</option>
+                </select>
+
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="BankCharges">Bank Charge % <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                  <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top">Bank Charge % </span>
+                  </div>
+                </label>
+                <input type="text" class="form-control" id="BankCharges" [(ngModel)]="CardChargesListData.Charge"
+                  formControlName="frmCtrl_BankCharges" IntegerDecimalFieldValidator maxlength="9"
+                  placeholder="Enter Bank Charge % " />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="STax">S.Tax % <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                  <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top">S.Tax</span>
+                  </div>
+                </label>
+                <input type="text" class="form-control" id="STax" [(ngModel)]="CardChargesListData.ServiceTax"
+                  formControlName="frmCtrl_STax" IntegerDecimalFieldValidator maxlength="9"
+                  placeholder="Enter Service Tax" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="DisSeq">Dis Seq<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                  <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top">Dis Seq</span>
+                  </div>
+                </label>
+                <input type="text" class="form-control" id="DisSeq" [(ngModel)]="CardChargesListData.DispSeq"
+                  formControlName="frmCtrl_DisSeq" IntegerDecimalFieldValidator maxlength="9"
+                  placeholder="Enter DisSeq" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="ChargePercent">Charge %<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="CardChargesListData.CustCharge"
+                  formControlName="frmCtrl_ChargePercent" IntegerDecimalFieldValidator maxlength="9"
+                  placeholder="Enter Charges" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <ng-container *ngIf="EnableAdd">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="add(fixedOrderForm)">
+                    <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                </ng-container>
+                <ng-container *ngIf="EnableSave">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="save(fixedOrderForm)">
+                    <i class="fal fa-save"></i>&nbsp;Save</button>
+                </ng-container>
+                <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  style="margin-top: 1.2rem !important;" (click)="Clear()">
+                  <i class="fal fa-trash"></i>&nbsp;Clear</button>
+
+              </div>
+            </div>
+          </div>
+        </form>
+        <ng-container *ngIf="EnableJson">
+          <pre>{{ CardChargesListData | json }}</pre>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="topbar">
+              <tr>
+                <th>Account Name</th>
+                <th>Bank Name</th>
+                <th>Bank Charge %</th>
+                <th>S.Tax % </th>
+                <th>Dis Seq</th>
+                <th>Charge %</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody *ngFor=" let _list of CardChargesList">
+              <tr>
+                <td>{{_list.AccCode}} </td>
+                <td>{{_list.Bank}} </td>
+                <td>0 </td>
+                <td>{{_list.ServiceTax}} </td>
+                <td>{{_list.DispSeq}} </td>
+                <td>{{_list.Charge}} </td>
+                <td><i class="fas fa-edit" title="Edit" (click)="edit(_list)"></i></td>
+                <td><i class="fas fa-trash-alt" (click)="delete(_list)"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

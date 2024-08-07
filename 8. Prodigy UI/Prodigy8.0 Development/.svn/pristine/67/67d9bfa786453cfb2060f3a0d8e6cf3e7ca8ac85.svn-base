@@ -1,0 +1,48 @@
+.card-header {
+  border-radius: 15px !important;
+}
+
+.card {
+  border-radius: 15px !important;
+
+}
+
+.card-body {
+  padding      : 10px 30px 0px 30px !important;
+  border-bottom: 2px solid black;
+  border-radius: 15px;
+}
+
+.CustomWidth200 {
+  width: 200pt;
+}
+
+.CustomWidth100 {
+  width: 100pt;
+}
+
+.CustomWidth150 {
+  width: 150pt;
+}
+
+.CustomWidth50 {
+  width: 50pt;
+}
+
+.CustomWidth75 {
+  width: 75pt;
+}
+
+@media (min-width:2200px) and (max-width: 2440px) {
+  .table-responsive {
+    overflow-x: hidden !important;
+
+  }
+}
+
+@media (min-width: 300px) and (max-width: 2200px) {
+  .table-responsive {
+    overflow-x: auto !important;
+
+  }
+}

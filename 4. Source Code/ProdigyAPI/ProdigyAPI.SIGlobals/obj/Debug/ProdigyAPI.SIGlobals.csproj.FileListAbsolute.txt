@@ -1,0 +1,24 @@
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\ProdigyAPI.SIGlobals.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\ProdigyAPI.SIGlobals.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\EntityFramework.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\Newtonsoft.Json.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\NtoW.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\ProdigyAPI.Model.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\ProdigyAPI.Model.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\EntityFramework.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\Newtonsoft.Json.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\obj\Debug\ProdigyAPI.SIGlobals.csprojResolveAssemblyReference.cache
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\obj\Debug\ProdigyAPI.SIGlobals.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\obj\Debug\ProdigyAPI.SIGlobals.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\ProdigyAPI.SIGlobals.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\ProdigyAPI.SIGlobals.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\EntityFramework.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\Newtonsoft.Json.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\NtoW.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\ProdigyAPI.Model.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\ProdigyAPI.Model.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\EntityFramework.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\bin\Debug\Newtonsoft.Json.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\obj\Debug\ProdigyAPI.SIGlobals.csprojResolveAssemblyReference.cache
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\obj\Debug\ProdigyAPI.SIGlobals.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.SIGlobals\obj\Debug\ProdigyAPI.SIGlobals.pdb

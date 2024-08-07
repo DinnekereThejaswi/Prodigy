@@ -1,0 +1,188 @@
+<div class="card">
+  <div class="card-body">
+    <form class="form-horizontal">
+      <div class="row">
+
+        <div class="col-md-3 ">
+          <div class="">
+            <div><i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">
+                Voucher Date</span>
+              <!-- <h2 class="font-light">{{CashSummaryHeader.VoucherDate | date: 'yyyy-MM-dd'}}</h2> -->
+              <h2 class="font-light">{{CashSummaryHeader.VoucherDate | date:'dd/MM/yyyy'}}</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="NewVoucherNo">Voucher No.</label>
+            <input type="number" class="form-control" name="NewVoucherNo" [(ngModel)]="CashSummaryHeader.NewVoucherNo"
+              readonly>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="">Master Ledger</label>
+            <select class="form-control mr-auto mt-2 mt-lg-0" name="AccountCodeMaster"
+              [(ngModel)]="CashSummaryHeader.AccountCodeMaster"
+              (change)="getAccountName(CashSummaryHeader.AccountCodeMaster)" [disabled]="isDisabled">
+              <option [ngValue]="null">Select</option>
+              <option *ngFor="let ledger of MasterLedger" [value]="ledger.AccountCode">
+                {{ledger.AccountName}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-3 ">
+          <div class="form-group">
+            <label for="">Type</label>
+            <select class="form-control mr-auto mt-2 mt-lg-0" name="TransType" [(ngModel)]="CashSummaryHeader.TransType"
+              (change)="getcashvouchertable()" [disabled]="isDisabled">
+              <option [ngValue]="null">Select</option>
+              <option *ngFor="let type of TypeList" [value]="type.Code">
+                {{type.Name}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="topbar">
+              <tr>
+                <th>Account Name</th>
+                <th>Debit</th>
+                <th>Credit</th>
+                <th>Naration</th>
+                <th>Ref. No</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <select class="form-control" [(ngModel)]="CashSummaryHeader.AccountCode">
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let name of ApplicationNameList" [value]="name.acc_code">
+                      {{name.acc_name}}</option>
+                  </select>
+                </td>
+
+                <td>
+                  <input type="number" class="form-control" (change)="debitAmt()"
+                    [(ngModel)]="CashSummaryHeader.DebitAmount" [readonly]="CashSummaryHeader.TransType == 'REC'">
+                </td>
+
+                <td><input type="number" class="form-control" (change)="creditAmt()"
+                    [(ngModel)]="CashSummaryHeader.CreditAmount" [readonly]="CashSummaryHeader.TransType == 'PAY'"></td>
+                <td>
+                  <!-- <select class="form-control" [(ngModel)]="CashSummaryHeader.Narration">
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let list of NarrationList" [value]="list.Narration">
+                      {{list.Narration}}</option>
+                  </select> -->
+                  <!-- <ng-select [items]="NarrationList" bindLabel="Narration" [virtualScroll]="true"
+                  bindValue="Narration" appendTo="body" placeholder="Select"
+                  [(ngModel)]="CashSummaryHeader.Narration" [typeahead]="typeahead">
+                  </ng-select> -->
+                  <input list="narrationList" class="form-control" name="narration"
+                    [(ngModel)]="CashSummaryHeader.Narration" />
+                  <datalist id="narrationList">
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let list of NarrationList" [value]="list.Narration">
+                      {{list.Narration}}</option>
+                  </datalist>
+                </td>
+                <td><input type="text" class="form-control" [(ngModel)]="CashSummaryHeader.ReceiptNo"></td>
+                <td>
+                  <ng-container *ngIf="EnableAdd">
+                    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                      (click)="PostCashVoucher();">
+                      <i class="far fa-plus-circle" style="padding-right:10px"></i>Add</button>
+                  </ng-container>
+                  <ng-container *ngIf="EnableSave">
+                    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                      (click)="PutCashVoucher();">
+                      <i class="fas fa-save" style="padding-right:10px"></i>Save</button>
+                  </ng-container>
+                  <!-- <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary" (click)="clear()">
+                    <i class="far fa-window-close" style="padding-right:10px"></i>Clear</button> -->
+                  <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary" type="button"
+                    (click)="clear()"><i class="fal fa-close"></i>&nbsp;Clear</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button"
+      (click)="PostCashVoucher();"><i class="fal fa-save"></i> Save</button> -->
+  </div>
+</div>
+<div class="card" [hidden]="CashSummaryHeader.AccountCodeMaster == null || CashSummaryHeader.TransType == null">
+  <div class="card-body">
+    <div class="row">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="topbar">
+            <tr>
+              <th>Action</th>
+              <th>Sl. No.</th>
+              <th>Voucher No</th>
+              <th>Account Name</th>
+              <th>Debit</th>
+              <th>Credit</th>
+              <th>Naration</th>
+              <th>Ref. No</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let table of CashVoucherList;let i = index">
+              <td><i class="fas fa-edit" title="Edit" (click)="Data(table)" style="padding-right:10px"></i>
+                <!-- <i class="fas fa-trash-alt" title="Delete" style="padding-right:10px" (click)="deleteField(table)" ></i> -->
+                <i class="fal fa-print" (click)="PrintVoucher(table)"></i>
+              </td>
+              <td>{{i+1}}</td>
+              <td>{{table.VoucherNo}}</td>
+              <td>{{table.AccName}}</td>
+              <td>{{table.Debit}}</td>
+              <td>{{table.Credit}}</td>
+              <td>{{table.Narration}}</td>
+              <td>{{table.RefNo}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="ReprintCashVoucher" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="print">
+        <span>
+          <div id="DisplayData" [innerHTML]='PrintDetails'></div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="EnableJson">
+  <pre>{{CashSummaryHeader | json}}</pre>
+</ng-container>

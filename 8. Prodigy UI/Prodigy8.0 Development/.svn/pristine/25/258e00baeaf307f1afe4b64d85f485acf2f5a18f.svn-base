@@ -1,0 +1,98 @@
+{
+  "_from": "ngx-select-ex@^6.0.1",
+  "_id": "ngx-select-ex@6.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-yQssfSnG/YH4fpM+McEPaCzNxxHgL5Wv3UNWDUiYF3sPfFsTtMHd/V3OSPhOX/wsE9hOPl25U+ZCTHNHViZsUQ==",
+  "_location": "/ngx-select-ex",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "ngx-select-ex@^6.0.1",
+    "name": "ngx-select-ex",
+    "escapedName": "ngx-select-ex",
+    "rawSpec": "^6.0.1",
+    "saveSpec": null,
+    "fetchSpec": "^6.0.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ngx-select-ex/-/ngx-select-ex-6.0.1.tgz",
+  "_shasum": "136f452a8f9d4f4e38a9d3b32c3dea5bc8548a26",
+  "_spec": "ngx-select-ex@^6.0.1",
+  "_where": "E:\\MagnaWeb-Angular8.0",
+  "author": {
+    "name": "Konstantin Polyntsov",
+    "email": "optimistex@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/optimistex/ngx-select-ex/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Konstantin Polyntsov",
+      "email": "optimistex@gmail.com",
+      "url": "https://github.com/optimistex"
+    },
+    {
+      "name": "Vyacheslav Chub",
+      "email": "vyacheslav.chub@valor-software.com",
+      "url": "https://github.com/buchslava"
+    },
+    {
+      "name": "Dmitriy Shekhovtsov",
+      "email": "valorkin@gmail.com",
+      "url": "https://github.com/valorkin"
+    },
+    {
+      "name": "Oleksandr Telnov",
+      "email": "otelnov@gmail.com",
+      "url": "https://github.com/otelnov"
+    }
+  ],
+  "dependencies": {
+    "lodash.isequal": "^4.5.0",
+    "tslib": "^2.0.0"
+  },
+  "deprecated": false,
+  "description": "Angular based replacement for select boxes",
+  "es2015": "fesm2015/ngx-select-ex.js",
+  "esm2015": "esm2015/ngx-select-ex.js",
+  "fesm2015": "fesm2015/ngx-select-ex.js",
+  "homepage": "https://github.com/optimistex/ngx-select-ex#readme",
+  "keywords": [
+    "ngx-select",
+    "ngx-select-ex",
+    "angular",
+    "angular2",
+    "angular4",
+    "angular5",
+    "angular6",
+    "select",
+    "select2",
+    "ui-select",
+    "multiselect",
+    "multi-select"
+  ],
+  "license": "MIT",
+  "main": "bundles/ngx-select-ex.umd.js",
+  "metadata": "ngx-select-ex.metadata.json",
+  "module": "fesm2015/ngx-select-ex.js",
+  "name": "ngx-select-ex",
+  "peerDependencies": {},
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/optimistex/ngx-select-ex.git"
+  },
+  "sideEffects": false,
+  "standard-version": {
+    "scripts": {
+      "postbump": "npm run build"
+    }
+  },
+  "typings": "ngx-select-ex.d.ts",
+  "version": "6.0.1"
+}

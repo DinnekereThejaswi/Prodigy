@@ -1,0 +1,889 @@
+<form [formGroup]="OrdersHeaderForm" class="form-horizontal">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="form-body">
+        <div class="row">
+          <div class="col-6">
+            <div class="row p-t-20">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="text-left"><i class="fal fa-user"></i>&nbsp; <span class="text-muted">Customer
+                      Name</span>
+                    <ng-container *ngIf="EnableCustomerDetails">
+                      <h2 class="font-light">{{Customer.CustName}}</h2>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="text-left">
+                  <i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">Order Date</span>
+                  <h2 class="font-light" formControlName="OrderDate" ngDefaultControl
+                    [(ngModel)]="OrderHeaderDetails.OrderDate">{{ordDate}}</h2>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Due Date <span class="textRed"> <i
+                        class="fas fa-star-of-life"></i></span> <span>
+                      <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                        <span class="tooltiptext tooltip-top"> Delivery due date decided by the company </span>
+                      </div>
+                    </span> </label>
+                  <input type="text" class="form-control" [readonly]="EnableReadOnlyControls"
+                    formControlName="DeliveryDate" [(ngModel)]="OrderHeaderDetails.DeliveryDate" bsDatepicker
+                    [bsConfig]="datePickerConfig" placeholder="Select Order Due Date">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="control-label">Order Type</label>
+                  <ng-container *ngIf="EnableModifyOrderctrls">
+                    <select class="form-control mr-auto mt-2 mt-lg-0" #OrderType formControlName="OrderType"
+                      [(ngModel)]="OrderHeaderDetails.OrderType" (change)="getOrderType(OrderType.value);">
+                      <option [ngValue]="null">Select</option>
+                      <option *ngFor="let _RateTypeData of OrderTypeData" [value]="_RateTypeData.value">
+                        {{_RateTypeData.name}}
+                      </option>
+                    </select>
+                  </ng-container>
+                  <ng-container *ngIf="!EnableModifyOrderctrls">
+                    <select class="form-control mr-auto mt-2 mt-lg-0" #OrderType formControlName="OrderType"
+                      [(ngModel)]="OrderHeaderDetails.OrderType" (change)="getOrderType(OrderType.value);">
+                      <option [ngValue]="null" [disabled]="EnableReadOnlyControls">Select</option>
+                      <option *ngFor="let _RateTypeData of OrderTypeData" [value]="_RateTypeData.value"
+                        [disabled]="EnableReadOnlyControls">
+                        {{_RateTypeData.name}}
+                      </option>
+                    </select>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="row p-t-20">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">GS Type <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                    <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                      <span class="tooltiptext tooltip-top"> Group of stock </span>
+                    </div>
+                  </label>
+                  <select class="form-control mr-auto mt-2 mt-lg-0" #GS formControlName="GS"
+                    [(ngModel)]="OrderHeaderDetails.gsCode" (change)="getRateperGram(OrdersHeaderForm);">
+                    <option [ngValue]="null" [disabled]="EnableReadOnlyControls">Select</option>
+                    <option *ngFor="let _GSList of GSList" [value]="_GSList.gsCode" [disabled]="EnableReadOnlyControls">
+                      {{_GSList.Name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group ">
+                  <label class="control-label">Purity <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                    <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                      <span class="tooltiptext tooltip-top"> Unit of Purity e.g.24K,22K,18K </span>
+                    </div>
+                  </label>
+                  <select class="form-control mr-auto mt-2 mt-lg-0" #Karat formControlName="Karat"
+                    (change)="getRateperGram(OrdersHeaderForm);" [(ngModel)]="OrderHeaderDetails.Karat">
+                    <option [ngValue]="null" [disabled]="EnableReadOnlyControls">Select</option>
+                    <option *ngFor="let _KaratList of KaratList" [value]="_KaratList.karat"
+                      [disabled]="EnableReadOnlyControls">
+                      {{_KaratList.karat}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Rate Type</label>
+                  <!-- <div class="m-b-10">
+                    <label *ngFor="let radiobutton of radioItems" class="custom-control custom-radio align-middle"
+                      style="display: inline-block;padding-right: 1.5rem;">
+                      <ng-container *ngIf="OrderHeaderDetails.OrderType!='A'">
+                        <input type="radio" (click)="OnRadioBtnChnge(radiobutton)" class="custom-control-input"
+                          [value]="radiobutton" formControlName="OrderRateType"
+                          [(ngModel)]="OrderHeaderDetails.OrderRateType" [disabled]="EnableReadOnlyControls">
+                        <span class="custom-control-label">{{radiobutton}}</span>
+                      </ng-container>
+                      <ng-container *ngIf="OrderHeaderDetails.OrderType=='A' && radiobutton != 'Flexi'">
+                      <input type="radio" (click)="OnRadioBtnChnge(radiobutton)" class="custom-control-input"
+                        [value]="radiobutton" formControlName="OrderRateType"
+                        [(ngModel)]="OrderHeaderDetails.OrderRateType" [disabled]="EnableReadOnlyControls">
+                      <span class="custom-control-label">{{radiobutton}}</span>
+                      </ng-container>
+                      <ng-container *ngIf="OrderHeaderDetails.OrderType=='A' && radiobutton == 'Flexi'">
+                        <input type="radio" (click)="OnRadioBtnChnge(radiobutton)" class="custom-control-input"
+                        [value]="radiobutton" formControlName="OrderRateType"
+                        [(ngModel)]="OrderHeaderDetails.OrderRateType" [attr.disabled]="false">
+                      <span class="custom-control-label">{{radiobutton}}</span>
+                      </ng-container>
+                    </label>
+                  </div> -->
+                  <div class="m-b-10">
+                    <ng-container *ngIf="EnableReadOnlyControls">
+                      <label *ngFor="let radiobutton of radioItems" class="custom-control custom-radio align-middle"
+                        style="display: inline-block;padding-right: 1.5rem;">
+                        <ng-container *ngIf="OrderHeaderDetails.OrderType!='R'">
+                          <input type="radio" (click)="OnRadioBtnChnge(radiobutton)" class="custom-control-input"
+                            [value]="radiobutton" formControlName="OrderRateType"
+                            [(ngModel)]="OrderHeaderDetails.OrderRateType" [attr.disabled]="true">
+                          <span class="custom-control-label">{{radiobutton}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="OrderHeaderDetails.OrderType=='R' && radiobutton != 'Flexi'">
+                          <input type="radio" (click)="OnRadioBtnChnge(radiobutton)" class="custom-control-input"
+                            [value]="radiobutton" formControlName="OrderRateType"
+                            [(ngModel)]="OrderHeaderDetails.OrderRateType" [attr.disabled]="true">
+                          <span class="custom-control-label">{{radiobutton}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="OrderHeaderDetails.OrderType=='R' && radiobutton == 'Flexi'">
+                          <input type="radio" (click)="OnRadioBtnChnge(radiobutton)" class="custom-control-input"
+                            [value]="radiobutton" formControlName="OrderRateType"
+                            [(ngModel)]="OrderHeaderDetails.OrderRateType" [attr.disabled]="true" >
+                          <span class="custom-control-label">{{radiobutton}}</span>
+                        </ng-container>
+                      </label>
+                    </ng-container>
+                    <ng-container *ngIf="!EnableReadOnlyControls">
+                      <label *ngFor="let radiobutton of radioItems" class="custom-control custom-radio align-middle"
+                        style="display: inline-block;padding-right: 1.5rem;">
+                        <ng-container *ngIf="OrderHeaderDetails.OrderType!='R'">
+                          <input type="radio" (click)="OnRadioBtnChnge(radiobutton)" class="custom-control-input"
+                            [value]="radiobutton" formControlName="OrderRateType"
+                            [(ngModel)]="OrderHeaderDetails.OrderRateType">
+                          <span class="custom-control-label">{{radiobutton}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="OrderHeaderDetails.OrderType=='R' && radiobutton != 'Flexi'">
+                          <input type="radio" (click)="OnRadioBtnChnge(radiobutton)" class="custom-control-input"
+                            [value]="radiobutton" formControlName="OrderRateType"
+                            [(ngModel)]="OrderHeaderDetails.OrderRateType">
+                          <span class="custom-control-label">{{radiobutton}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="OrderHeaderDetails.OrderType=='R' && radiobutton == 'Flexi'">
+                          <input type="radio" (click)="OnRadioBtnChnge(radiobutton)" class="custom-control-input"
+                            [value]="radiobutton" formControlName="OrderRateType"
+                            [(ngModel)]="OrderHeaderDetails.OrderRateType" [attr.disabled]="DisableIfReserved">
+                          <span class="custom-control-label">{{radiobutton}}</span>
+                        </ng-container>
+                      </label>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right"><i class="fal fa-rupee-sign"></i>&nbsp; <span
+                    class="text-muted">Rate/Gram</span>
+                  <input type="number" class="form-control" maxlength="18" (change)="UpdateRate(RateGram.value)"
+                    [value]="Rate" [readonly]="EnableRate" BlueBorder #RateGram>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="text-right">&nbsp;
+                  <button class="btn btn-success btn-rounded" type="button" [disabled]="EnableReadOnlyControls"
+                    (click)="EditRate()"><i class="fal fa-edit"></i>Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">Manager</label>
+              <ng-container *ngIf="EnableModifyOrderctrls">
+                <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="ManagerCode"
+                  [(ngModel)]="OrderHeaderDetails.ManagerCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _managerList of ManagerList" [value]="_managerList.sal_code">
+                    {{_managerList.sal_name}}
+                  </option>
+                </select>
+              </ng-container>
+              <ng-container *ngIf="!EnableModifyOrderctrls">
+                <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="ManagerCode"
+                  [(ngModel)]="OrderHeaderDetails.ManagerCode">
+                  <option [ngValue]="null" [disabled]="EnableReadOnlyControls">Select</option>
+                  <option *ngFor="let _managerList of ManagerList" [value]="_managerList.sal_code"
+                    [disabled]="EnableReadOnlyControls">
+                    {{_managerList.sal_name}}
+                  </option>
+                </select>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">Customer Type<span class="textRed"> <i
+                    class="fas fa-star-of-life"></i></span></label>
+              <ng-container *ngIf="EnableModifyOrderctrls">
+                <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="BookingType"
+                  [(ngModel)]="OrderHeaderDetails.BookingType">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _bookingTypeList of BookingTypeList" [value]="_bookingTypeList.Type">
+                    {{_bookingTypeList.Name}}
+                  </option>
+                </select>
+              </ng-container>
+              <ng-container *ngIf="!EnableModifyOrderctrls">
+                <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="BookingType"
+                  [(ngModel)]="OrderHeaderDetails.BookingType">
+                  <option [ngValue]="null" [disabled]="EnableReadOnlyControls">Select</option>
+                  <option *ngFor="let _bookingTypeList of BookingTypeList" [value]="_bookingTypeList.Type"
+                    [disabled]="EnableReadOnlyControls">
+                    {{_bookingTypeList.Name}}
+                  </option>
+                </select>
+              </ng-container>
+            </div>
+          </div>
+
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">Purchase Plan<span class="textRed"> <i
+                    class="fas fa-star-of-life"></i></span></label>
+              <select class="form-control mr-auto mt-2 mt-lg-0"
+                (change)="getAdvancePercent(OrderHeaderDetails.OrderAdvanceRateType)"
+                formControlName="OrderAdvanceRateType" [(ngModel)]="OrderHeaderDetails.OrderAdvanceRateType">
+                <option [ngValue]="null" [disabled]="EnableReadOnlyControls">Select</option>
+                <option *ngFor="let _purchasePlanDets of PurchasePlanDets" [value]="_purchasePlanDets.BookingTypeCode"
+                  [disabled]="EnableReadOnlyControls">
+                  {{_purchasePlanDets.Name}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <ng-container *ngIf="AdvancePercent.length > 0">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">Advance %<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span></label>
+                <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="AdvancePercent"
+                  [(ngModel)]="OrderHeaderDetails.AdvancePercent"
+                  (change)="SetRateValidityDays(OrderHeaderDetails.AdvancePercent)">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _advancePercent of AdvancePercent" [value]="_advancePercent.AdvanceAmountPercent">
+                    {{_advancePercent.AdvanceAmountPercent}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="AdvancePercent.length == 0">
+            <div class="col-md-3">
+            </div>
+          </ng-container>
+
+        </div>
+
+        <ng-container *ngIf="AdvancePercent.length > 0 && AdvanceAmount() > 0">
+          <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+              <span style="color:red"><br>
+                Minimum Advance Amt Rs {{AdvanceAmount()}}
+              </span>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Sales Person<span class="textRed"> <i
+                    class="fas fa-star-of-life"></i></span></label>
+              <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="SalCode"
+                [(ngModel)]="OrderHeaderDetails.SalCode">
+                <option [ngValue]="null" [disabled]="EnableReadOnlyControls">Select</option>
+                <option *ngFor="let _salesman of SalesManList" [value]="_salesman.sal_code"
+                  [disabled]="EnableReadOnlyControls">
+                  {{_salesman.CodeName}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Remarks</label>
+              <div class="m-b-10">
+                <input type="text" class="form-control" formControlName="Remarks" placeholder="Enter Remarks/Details"
+                  [(ngModel)]="OrderHeaderDetails.Remarks" [readonly]="EnableReadOnlyControls">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<form [formGroup]="reserveForm" *ngIf="toggle == 'OrderAdvance' || toggle == 'Reserved'">
+  <div class="card card-outline-info">
+    <div class="card-header">
+      <h4 class=" text-white mt-10">{{toggle}} Order - Item Details</h4>
+    </div>
+    <div class="card-body">
+      <div class="row" *ngIf="toggle == 'Reserved' && EnableDisResOrderControls">
+        <div class="col-md-3 ">
+          <div class="form-group">
+            <label for="barcode">Barcode/Tag No</label>
+            <div class="input-group">
+              <input class="form-control" formControlName="barcode" onKeyPress="if(this.value.length==10) return false;"
+                placeholder="Barcode" (keyup.enter)="getDetails(barcode)" type="text" GreenBorder #barcode>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-3 ">
+          <div class="form-group">
+            <label for="barcode"></label>
+            <div class="input-group">
+              <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                (click)="getDetails(barcode)"><i class="fal fa-search"></i> Search</button>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="topbar">
+            <tr>
+              <th *ngIf="toggle == 'Reserved' && EnableDisResOrderControls">Action</th>
+              <th>S.No</th>
+              <th>Counter</th>
+              <th>Item</th>
+              <th>Item Description</th>
+              <th>Qty</th>
+              <th>Total Gr.Wt</th>
+              <th>MC/gram</th>
+              <th>MC/piece</th>
+              <th>Item Amount</th>
+              <th>MC Amt</th>
+              <th>Order Image</th>
+              <th>SalCode</th>
+            </tr>
+          </thead>
+
+          <tbody *ngFor="let _barcodeLines of barcodeLines; let i = index;">
+            <tr>
+              <td *ngIf="toggle == 'Reserved' && EnableDisResOrderControls">
+                <i class="far fa-eye fa-1-5x pointer" aria-hidden="true"
+                  style='color: #009688; font-size: 1.5em !important;' data-toggle="modal" data-target="#myModal"
+                  (click)="GetBarcodeInfo(_barcodeLines)"></i>
+                <i class="far fa-trash-alt fa-1-5x pointer" style='color: red; font-size: 1.5em !important;'
+                  (click)="DeleteRow(i)"></i>
+              </td>
+              <td>{{i + 1 }}</td>
+              <td>{{_barcodeLines.CounterCode}}</td>
+              <td>{{_barcodeLines.ItemName}}</td>
+              <td>{{_barcodeLines.Description}}</td>
+              <td>{{_barcodeLines.Quantity}}</td>
+              <td>{{_barcodeLines.ToGrossWt | number : '1.3-3'}}</td>
+              <td></td>
+              <td>{{_barcodeLines.MCPer}}</td>
+              <td>{{_barcodeLines.ItemAmount | number : '1.2-2'}}</td>
+              <td>{{_barcodeLines.Amount | number : '1.2-2'}}</td>
+              <td></td>
+              <td>{{_barcodeLines.CounterCode}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+
+<!-- Customized Order -->
+<div *ngIf="toggle == 'Customized Order'">
+  <div class="card card-outline-info">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-6 position-relative">
+          <h4 class="mt-10 text-white" style="margin-top: 10px;">Customized Order - Item Details</h4>
+        </div>
+        <div class="col-md-6">
+          <button *ngIf="EnableDisCusOrderControls" style="padding: 1px 15px 1px 15px;"
+            class="btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right" [disabled]="EnableAddRow"
+            (click)="addrow()">
+            <i class="far fa-plus-circle"></i> Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="topbar">
+            <tr>
+              <th>Counter</th>
+              <th>Item</th>
+              <th>Item Description</th>
+              <th>Qty</th>
+              <th>Appr.Wt.</th>
+              <th>ItemType</th>
+              <th>Appr.Swt.</th>
+              <th>MC Types</th>
+              <th>MC/gram</th>
+              <th>MC/piece</th>
+              <th>MC %</th>
+              <th>Appr.Amt</th>
+              <ng-container *ngIf="fieldArray.length > 0">
+                <th>Order Image
+                  <div *ngIf="EnableDisCusOrderControls" class="input-group">
+                    <input #myInput type="file" id="file" (change)="handleBrowse($event)" BlueBorder>
+                  </div>
+                </th>
+              </ng-container>
+              <th *ngIf="EnableDisCusOrderControls">Action</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let field of fieldArray; let i = index">
+            <tr>
+              <td>
+                <select class="form-control CustomWidth200 " name="{{field.CounterCode}}"
+                  [(ngModel)]="field.CounterCode" #CounterCode (change)="getItemName($event.target.value,i);">
+                  <option [disabled]="readonly[i]" [ngValue]="null">Select</option>
+                  <option *ngFor="let _counter of Counter" [value]="_counter.CounterCode" [disabled]="readonly[i]">
+                    {{_counter.CounterName}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control CustomWidth100" name="{{field.ItemName}}" [(ngModel)]="field.ItemName">
+                  <option [disabled]="readonly[i]" [ngValue]="null">Select</option>
+                  <option *ngFor="let _itemName of ItemName[i]" [value]="_itemName.ItemName" [disabled]="readonly[i]">
+                    {{_itemName.ItemName}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <!-- <input [(ngModel)]="field.Description" [readonly]="readonly[i]" class="form-control" type="text"
+                  name="{{field.Description}}" placeholder="Description" /> -->
+                <textarea style="background-color:white;color:black;" [readonly]="readonly[i]" placeholder="Description"
+                  [(ngModel)]='field.Description' name="{{field.Description}}">
+                   </textarea>
+              </td>
+              <td>
+                <input [(ngModel)]="field.Quantity" [readonly]="readonly[i]" class="form-control CustomWidth50" min="0"
+                  type="number" name="{{field.Quantity}}" placeholder="Qty" />
+              </td>
+              <td>
+                <input [(ngModel)]="field.FromGrossWt" [readonly]="readonly[i]" class="form-control CustomWidth50"
+                  min="0" type="number" name="{{field.FromGrossWt}}" placeholder="0.00"
+                  (change)="calculateAmount(field.FromGrossWt,i)" BlueBorder />
+              </td>
+              <td>
+                <select class="form-control CustomWidth200" name="{{field.ItemType}}" [(ngModel)]="field.ItemType"
+                  (change)="chngOrderType($event.target.value,i)">
+                  <option [disabled]="readonly[i]" value="" selected>Select</option>
+                  <option *ngFor="let _orderItemType of OrderItemType" [value]="_orderItemType.Type"
+                    [disabled]="readonly[i]">
+                    {{_orderItemType.Name}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <input [(ngModel)]="field.AppSwt" [readonly]="AppSwt[i]" class="form-control CustomWidth100" min="0"
+                  type="number" name="{{field.AppSwt}}" placeholder="0.000" />
+              </td>
+              <td>
+                <select class="form-control CustomWidth200" #Item name="{{field.MCType}}" [(ngModel)]="field.MCType"
+                  (change)="toggleMCtype($event.target.value,i)">
+                  <option value="" selected [disabled]="readonly[i]">Select</option>
+                  <option *ngFor="let _MCTypes of MCTypes" [value]="_MCTypes.MC_ID" [disabled]="readonly[i]">
+                    {{_MCTypes.MC_NAME}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <input [(ngModel)]="field.MCPer" [readonly]="MCPer[i]" class="form-control CustomWidth100" min="0"
+                  type="number" name="{{field.MCPer}}" placeholder="0.00" />
+              </td>
+              <td>
+                <input [(ngModel)]="field.MCPerPiece" [readonly]="MCPerPiece[i]" class="form-control CustomWidth100"
+                  min="0" type="number" name="{{field.MCPerPiece}}" placeholder="0.00" />
+              </td>
+              <td>
+                <input [(ngModel)]="field.MCPercent" [readonly]="MCPercent[i]" class="form-control CustomWidth100"
+                  min="0" type="number" name="{{field.MCPercent}}" placeholder="0.00" />
+              </td>
+              <td>
+                <input [(ngModel)]="field.Amount" [readonly]="readonly[i]" class="form-control CustomWidth100" min="0"
+                  type="number" name="{{field.Amount}}" placeholder="0.00" />
+              </td>
+              <td>
+                <img [src]="field.ImgID" height="100" *ngIf="field.ImgID">
+              </td>
+              <td *ngIf="EnableDisCusOrderControls">
+                <ng-container *ngIf="EnableEditDelbtn[i]">
+                  <button class="btn btn-default btn-rounded" type="button" (click)="editFieldValue(i)"><i
+                      class="fal fa-pencil-alt"></i> Edit</button>
+                  <button class="btn btn-danger btn-rounded" type="button" (click)="deleteFieldValue(i)"><i
+                      class="fal fa-trash-alt"></i> Delete</button>
+                </ng-container>
+                <ng-container *ngIf="EnableSaveCnlbtn[i]">
+                  <button class="btn btn-success btn-rounded" type="button" (click)="saveDataFieldValue(i)"><i
+                      class="fal fa-save"></i> Save</button>
+                  <button class="btn btn-warning btn-rounded" type="button" (click)="cancelDataFieldValue(i)"><i
+                      class="far fa-window-close"></i> Cancel</button>
+                </ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+<br>
+<div class="row" style="padding-bottom: 15px;">
+  <div class="col-md-6">
+    <button *ngIf="!EnableSubmitButton" class="btn btn-success btn-rounded mt-20" style="margin-bottom: 20px;"
+      type="button" (click)="SendItemDetsToPaymentComp()">
+      <i class="fal fa-save"></i> Save</button>
+  </div>
+  <div class="col-md-6" style="text-align:right">
+    <span class="textRed"> <i class="fas fa-star-of-life"></i></span> Mandatory fields <br>
+
+  </div>
+</div>
+
+<div id="PermissonModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Prodigy</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="OrderNo">2. Password</label>
+          <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+            (keyup.enter)="passWord(PwdOrderRate.value)" #PwdOrderRate>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+            (click)="passWord(PwdOrderRate.value)">Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+  <pre>{{OrderHeaderDetails | json}}</pre>
+</ng-container>
+
+
+<div class="modal" id="myViewModal">
+  <ng-container *ngIf="modalPopUPBarcode">
+    <div class="modal-dialog modal-lg" style="max-width: 1200px;">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title"> BarcodeNo : {{modalPopUPBarcode.BarcodeNo}} </h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="columns">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <ul class="price">
+                        <li>
+                          <span class="float-left">Item Qty</span>
+                          <span class="float-right">{{modalPopUPBarcode.ItemQty}}</span>
+                        </li>
+
+                        <li>
+                          <span class="float-left">Gr. Wt(g)</span>
+                          <span class="float-right">{{modalPopUPBarcode.Grosswt | number : '1.2-2'}}</span>
+                        </li>
+
+
+                        <li>
+                          <span class="float-left">St Wt(g)</span>
+                          <span class="float-right">{{modalPopUPBarcode.Stonewt | number : '1.2-2'}}</span>
+                        </li>
+
+                        <li>
+                          <span class="float-left">N wt(g)</span>
+                          <span class="float-right">{{modalPopUPBarcode.Netwt | number : '1.2-2'}}</span>
+                        </li>
+
+                        <li>
+                          <span class="float-left">Bill Qty</span>
+                          <span class="float-right">{{modalPopUPBarcode.ItemQty}}</span>
+                        </li>
+                        <li>
+                          <span class="float-left">Bill Gr Wt</span>
+                          <span class="float-right">{{modalPopUPBarcode.Grosswt | number : '1.2-2'}}</span>
+                        </li>
+                        <li>
+                          <span class="float-left font">Rate</span>
+                          <span class="float-right">{{modalPopUPBarcode.Rate | number : '1.2-2'}}</span>
+                        </li>
+                        <li>
+                          <span class="float-left">Karat</span>
+                          <span class="float-right">{{modalPopUPBarcode.Karat}}</span>
+                        </li>
+
+                      </ul>
+                    </div>
+                    <div class="col-md-7">
+                      <form [formGroup]="SalesGSForm" class="form-horizontal">
+
+                        <div class="form-group">
+                          <label for="GS">GS</label>
+                          <div class="form-group">
+                            <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="GS"
+                              [(ngModel)]="SalesPersonModel.GS">
+                              <option *ngFor="let _GSList of GSList" [value]="_GSList.gsCode" [disabled]="readonly">
+                                {{_GSList.Name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="ItemName">Item</label>
+                          <div class="form-group">
+                            <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="ItemName"
+                              [(ngModel)]="SalesPersonModel.ItemName">
+                              <option *ngFor="let _ItemName of ItemName" [value]="_ItemName.item_name"
+                                [disabled]="readonly">
+                                {{_ItemName.CodeName}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </form>
+                      <ul class="price">
+                        <li>
+                          <span class="float-left">Design</span>
+                          <span class="float-right">{{modalPopUPBarcode.DesignName}}</span>
+                        </li>
+
+                        <li>
+                          <span class="float-left">Counter</span>
+                          <span class="float-right">{{modalPopUPBarcode.CounterCode}}</span>
+                        </li>
+                        <li>
+                          <span class="float-left">Size</span>
+                          <span class="float-right">{{modalPopUPBarcode.ItemSize}}</span>
+                        </li>
+                        <li>
+                          <span class="float-left">Piece Item</span>
+                          <span class="float-right">{{modalPopUPBarcode.PieceRate}}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <ul class="price">
+                        <li>
+                          <span class="float-left font">Order No</span>
+                          <span class="float-right"></span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-4">
+                      <ul class="price">
+                        <li>
+                          <span class="float-left font">Order Rate</span>
+                          <span class="float-right"></span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-4">
+                      <ul class="price">
+                        <li>
+                          <span class="float-left font">Order Karat</span>
+                          <span class="float-right"></span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4 class="modal-title"></h4>
+                      <fieldset class="scheduler-border">
+                        <legend class="scheduler-border"><i class="far fa-wrench align-middle"></i> MC Details
+                        </legend>
+                        <div class="table-responsive">
+                          <table class="table table-bordered">
+                            <thead class="topbar">
+                              <tr>
+                                <th>MC Type</th>
+                                <th>MC/Gram</th>
+                                <th>MC/Piece</th>
+                                <th>MC%</th>
+                                <th>Wast.%</th>
+                                <th>MC Amt</th>
+                                <th>Wastage Grams</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{{McType}}</td>
+                                <td></td>
+                                <td>{{modalPopUPBarcode.McPerPiece | number : '1.2-2'}}</td>
+                                <td>{{modalPopUPBarcode.McPercent | number : '1.2-2'}}</td>
+                                <td>{{modalPopUPBarcode.WastPercent | number : '1.2-2'}}</td>
+                                <td>{{modalPopUPBarcode.McAmount | number : '1.2-2'}}</td>
+                                <td>{{modalPopUPBarcode.WastageGrms | number : '1.2-2'}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </fieldset>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4 class="modal-title"></h4>
+                      <fieldset class="scheduler-border">
+                        <legend class="scheduler-border"><i class="fas fa-gem align-middle"></i> Stone Details
+                        </legend>
+                        <div class="table-responsive">
+                          <table class="table table-bordered">
+                            <thead class="topbar">
+                              <tr>
+                                <th>Name</th>
+                                <th>Qty</th>
+                                <th>Carat</th>
+                                <th>Stone Wt</th>
+                                <th>Rate/gram</th>
+                                <th>Amount</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngIf="!NoRecords">
+                              <tr>
+                                <td colspan="10">
+                                  <h6 style="text-align: center">No Stone Records Found</h6>
+                                </td>
+                              </tr>
+                            </tbody>
+                            <tbody *ngIf="NoRecords">
+                              <tr *ngFor="let _stoneList of GetStoneList">
+                                <td>{{_stoneList.Name}}</td>
+                                <td>{{_stoneList.Qty}}</td>
+                                <td>{{_stoneList.Carrat}}</td>
+                                <td>{{_stoneList.StoneWt | number : '1.2-2'}}</td>
+                                <td>{{_stoneList.Rate | number : '1.2-2'}}</td>
+                                <td>{{_stoneList.Amount | number : '1.2-2'}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="columns">
+                  <ul class="price">
+                    <li>
+                      <span class="float-left font">Billing N.Wt</span>
+                      <span class="float-right">{{modalPopUPBarcode.Netwt | number : '1.2-2'}}</span>
+                    </li>
+
+                    <li>
+                      <span class="float-left">Discount MC%</span>
+                      <span class="float-right">{{modalPopUPBarcode.DiscountMc | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left">Total Sales Mc</span>
+                      <span class="float-right">{{modalPopUPBarcode.TotalSalesMc | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left">Mc Discount Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.McDiscountAmt | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left">Metal Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.GoldValue | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left">MC Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.VaAmount | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left">Stone Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.StoneCharges | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left">Diamond Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.DiamondCharges | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left">Item Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.ItemTotalAfterDiscount | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left font">SGST Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.SGSTAmount | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left font">CGST Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.CGSTAmount | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left font">IGST Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.IGSTAmount | number : '1.2-2'}}</span>
+                    </li>
+                    <li>
+                      <span class="float-left font">CESS Amt</span>
+                      <span class="float-right"></span>
+                    </li>
+                  </ul>
+
+                  <ul class="price mt-3">
+                    <li>
+                      <span class="float-left font">Total Amt</span>
+                      <span class="float-right">{{modalPopUPBarcode.ItemFinalAmount | number : '1.2-2'}}</span>
+                    </li>
+                  </ul>
+
+                  <ul class="price mt-3">
+                    <li>
+                      <span class="float-left">Discount</span>
+                      <span class="float-right">{{modalPopUPBarcode.ItemAdditionalDiscount | number : '1.2-2'}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

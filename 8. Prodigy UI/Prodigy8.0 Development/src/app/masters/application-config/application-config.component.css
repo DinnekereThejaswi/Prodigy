@@ -1,0 +1,31 @@
+.card-header {
+    border-radius: 15px !important;
+}
+
+.card {
+    border-radius: 15px !important;
+}
+
+.card-body {
+    padding      : 10px 30px 0px 30px !important;
+    border-bottom: 2px solid black;
+    border-radius: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    .columns {
+        width: 100%;
+    }
+}
+
+@media (min-width:2200px) and (max-width: 2440px) {
+    .table-responsive {
+        overflow-x: hidden !important;
+    }
+}
+
+@media (min-width: 300px) and (max-width: 2200px) {
+    .table-responsive {
+        overflow-x: auto !important;
+    }
+}

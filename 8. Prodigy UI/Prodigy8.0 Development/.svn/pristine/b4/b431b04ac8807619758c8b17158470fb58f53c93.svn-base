@@ -1,0 +1,260 @@
+<div class="row">
+    <div class="col-sm-8">
+
+    </div>
+    <div class="col-sm-4">
+        <app-lastdocno [routerUrl]="routerUrl" style="color: brown; text-align: right; font-style: italic;">
+        </app-lastdocno>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="AutobarcodereceiptHeaderForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="ReceiptFrom">Receipt From</label>
+                        <select  class="form-control" formControlName="frmCtrl_ReceiptFrom" [(ngModel)]="AutoBarcodeReceiptPost.IssueBranchCode"
+                           >
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _receiptFrom of ReceiptFrom" [value]="_receiptFrom.Code">
+                                {{_receiptFrom.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="ReceivedBy">Received By</label>
+                        <input type="text" placeholder="Admin" class="form-control"  class="form-control" formControlName="frmCtrl_ReceivedBy"  value="Admin" readonly>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="Date">Date</label>&nbsp;
+                        <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig"
+                            [(ngModel)]="applicationDate" formControlName="frmCtrl_ReceiptDate" readonly
+                            value="{{applicationDate | date:'dd/MM/yyyy' }}" disabled />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="IssueNo">Issue No</label>
+                        <input class="form-control" type="text" [(ngModel)]="AutoBarcodeReceiptPost.IssueNo"
+                        class="form-control" formControlName="frmCtrl_IssueNo">
+                    </div>
+                </div>
+                <ng-container  *ngIf="Enable">
+                    <div class="col-sm-1" style="padding-top:28px;">
+                        <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            href="javascript:void(0)" (click)="Go()">
+                            Go
+                        </a>
+                    </div>
+                </ng-container>
+      
+                <ng-container  *ngIf="disable">
+                    <div class="col-sm-1">
+                        <br>
+                        <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" (click)="cancel()"
+                        type="button"><i class="far fa-window-close"></i>&nbsp;Cancel</button>
+                    </div>
+                </ng-container>
+                
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div id="accordian" class="accordion" *ngIf="AutoBarcodeReceiptPost.ReceiptDetails.length > '0'">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#Barcodes" (click)="ToggleBarcodes()"
+            [ngClass]="BarcodesDetailsTab ? 'collapsed' : ''" [attr.data-toggle]="BarcodesDetailsTab ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <a class="card-title align-middle Pointer" style="color:#ff000065">
+                        <i class="fas fa-2x fa-barcode mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Scanned/Imported Barcodes</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="Barcodes" class="card-body collapse" [collapse]="BarcodesDetailsTab">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="topbar">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>Tag</th>
+                                    <th>Item </th>
+                                    <th>Counter</th>
+                                    <th>Qty</th>
+                                    <th>Gross.Wt</th>
+                                    <th>St.Wt</th>
+                                    <th>N.Wt</th>
+                                    <th>D.Cts</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let _barcodeDetails of BarcodeDetails;let i=index;">
+                                <tr>
+                                    <td>{{_barcodeDetails.SlNo}}</td>
+                                    <td>{{_barcodeDetails.BarcodeNo}}</td>
+                                    <td>{{_barcodeDetails.ItemCode}}</td>
+                                    <td>{{_barcodeDetails.CounterCode}}</td>
+                                    <td>{{_barcodeDetails.Qty}}</td>
+                                    <td>{{_barcodeDetails.GrossWt | number:'1.3-3'}}</td>
+                                    <td>{{_barcodeDetails.StoneWt | number:'1.3-3'}}</td>
+                                    <td>{{_barcodeDetails.NetWt | number:'1.3-3'}}</td>
+                                    <td>{{_barcodeDetails.Dcts | number:'1.3-3'}}</td>
+                                    <td>{{_barcodeDetails.Amount | number:'1.2-2'}}</td>
+                                </tr>
+                            </tbody>
+                            <tr *ngIf="AutoBarcodeReceiptPost.ReceiptDetails.length > '0'">
+                                <td class="border-none"></td>
+                                <td class="border-none"></td>
+                                <td class="border-none"></td>
+                                <td class="border-none"><b>Total</b></td>
+                                <td class="border-none"><b>{{AutoBarcodeReceiptPost.TotalQty | number}}</b></td>
+                                <td class="border-none"><b>{{AutoBarcodeReceiptPost.TotalGrossWt | number :
+                                        '1.3-3'}}</b></td>
+                                <td class="border-none"><b>{{AutoBarcodeReceiptPost.TotalStoneWt | number :
+                                        '1.3-3'}}</b></td>
+                                <td class="border-none"><b>{{AutoBarcodeReceiptPost.TotalNetWt | number : '1.3-3'}}</b>
+                                </td>
+                                <td class="border-none"><b>{{AutoBarcodeReceiptPost.TotalDcts | number : '1.3-3'}}</b>
+                                </td>
+                                <td class="border-none"><b>{{AutoBarcodeReceiptPost.TotalAmount | number : '1.2-2'}}</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#StoneDetails" (click)="ToggleStoneDetails()"
+            [ngClass]="CollapseStoneDetailsTab ? 'collapsed' : ''"
+            [attr.data-toggle]="CollapseStoneDetailsTab ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <a class="card-title align-middle Pointer" style="color:#ff00ff">
+                        <i class="fas fa-2x fa-gem mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Stone/Diamond Details</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="StoneDetails" class="card-body collapse" [collapse]="CollapseStoneDetailsTab">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="topbar">
+                                <tr>
+                                    <th>SNo</th>
+                                    <th>Type</th>
+                                    <th>Barcode No</th>
+                                    <th>Name</th>
+                                    <th>Qty</th>
+                                    <th>Carat</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let _stoneDetails of StoneDetails;let i=index;">
+                                <tr>
+                                    <td>{{_stoneDetails.SlNo}}</td>
+                                    <td>{{_stoneDetails.Type}}</td>
+                                    <td>{{_stoneDetails.BarcodeNo}}</td>
+                                    <td>{{_stoneDetails.Name}}</td>
+                                    <td>{{_stoneDetails.Qty}}</td>
+                                    <td>{{_stoneDetails.Carrat | number:'1.3-3'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row" *ngIf="AutoBarcodeReceiptPost.ReceiptDetails.length > '0'">
+    <div class="col-md-4">
+        <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+            (click)="SaveAutoBarcode()">
+            <i class="far fa-save"></i> Submit</button>
+        <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" (click)="cancel()"
+            type="button"><i class="far fa-window-close"></i>&nbsp;Cancel</button>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <div class="col-md-3">
+        <pre>{{AutoBarcodeReceiptPost | json}}</pre>
+    </div>
+</ng-container>
+
+
+
+<div class="row" style="display:block;margin: auto;width: 30%;">
+    <div class="modal fade" id="NTReceiptsTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                        class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                        id="exampleModalLabel" (click)=printNtreceipt()><i class="fal fa-print"></i> Print</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <ng-container *ngIf="PrintTypeBasedOnConfig">
+                    <div class="container invoice-box htmlPrint" id="print-closed-section"
+                        style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+                        <pre>{{NTreceiptPrint}}</pre>
+                    </div>
+                    <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                        <div id="DisplayntreceiptData" class="center" [innerHTML]='NTreceiptPrint | safeHtml'></div>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="PermissonModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Prodigy</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="BackTodashBoard()">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="PassWord">25. Password</label>
+                    <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+                        (keyup.enter)="passWord(Pwd.value)" IntegerDecimalFieldValidator #Pwd />{{ Pwd.focus() }}
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                        (click)="passWord(Pwd.value)">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

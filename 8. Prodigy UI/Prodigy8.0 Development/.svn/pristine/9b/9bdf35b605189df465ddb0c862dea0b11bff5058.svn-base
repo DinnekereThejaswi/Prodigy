@@ -1,0 +1,13 @@
+{
+  "name": "@angular/material/slide-toggle",
+  "typings": "../slide-toggle.d.ts",
+  "main": "../bundles/material-slide-toggle.umd.js",
+  "module": "../esm5/slide-toggle.es5.js",
+  "es2015": "../esm2015/slide-toggle.js",
+  "sideEffects": false,
+  "es2015_ivy_ngcc": "../__ivy_ngcc__/esm2015/slide-toggle.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14"
+  }
+}

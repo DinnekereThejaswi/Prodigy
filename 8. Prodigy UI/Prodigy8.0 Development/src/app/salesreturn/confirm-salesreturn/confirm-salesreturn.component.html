@@ -1,0 +1,1249 @@
+<div style="color: brown; text-align: right; font-style: italic;">
+  <app-lastdocno [routerUrl]="routerUrl"></app-lastdocno>
+</div>
+<br>
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div id="header" class="card-body show">
+      <form [formGroup]="ConfirmSRHeaderForm" class="form-horizontal">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-body">
+
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="control-label">Sales Return Est No</label>
+                    <div class="m-b-10">
+                      <input type="text"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                        onKeyPress="if(this.value.length==7) return false;"
+                        (keyup.enter)="GetsalesRetEstNo(salesReturnEstNo.value)" class="form-control" #salesReturnEstNo
+                        name="salesReturnEstNo" GreenBorder autofocus>
+                    </div>
+                  </div>
+                </div>
+                <ng-container *ngIf="EnableConfirmSR">
+                  <div class="col-md-2">
+                    <!-- <div class="form-group" style="display: inline-block;padding-top: 1.5rem;">
+                    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary" type="submit"
+                      (click)="GetsalesRetEstNo(salesReturnEstNo.value)">Submit</button>
+                  </div> -->
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="control-label">Remarks</label>
+                      <div class="m-b-10">
+                        <input type="text" class="form-control" [(ngModel)]="confirmSRHeader.Remarks"
+                          formControlName="Remarks">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group  text-center" style="margin-top:25px ">
+                      <label *ngFor="let radiobutton of radioItems" class="form-check-inline">
+                        <ng-container *ngIf="this.getSalesReturnData.IsCreditBill == true && PayableAmount > 0">
+                          <ng-container *ngIf="radiobutton == 'Payment' || radiobutton == 'Order'">
+                            <input type="radio" name="option" (click)="OnRadioBtnChnge(radiobutton)"
+                              class="form-check-input" [value]="radiobutton" [checked]="radiobutton === model.option"
+                              [disabled]="true">
+                            <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                          </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="this.getSalesReturnData.IsCreditBill == true && PayableAmount < 0">
+                          <ng-container
+                            *ngIf="radiobutton == 'Payment' || radiobutton == 'Order' || radiobutton == 'Adjust'">
+                            <input type="radio" name="option" (click)="OnRadioBtnChnge(radiobutton)"
+                              class="form-check-input" [value]="radiobutton" [checked]="radiobutton === model.option"
+                              [disabled]="true">
+                            <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                          </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="this.getSalesReturnData.IsCreditBill == false">
+                          <ng-container *ngIf="radiobutton == 'Payment' || radiobutton == 'Adjust'">
+                            <input type="radio" name="option" (click)="OnRadioBtnChnge(radiobutton)"
+                              class="form-check-input" [value]="radiobutton" [checked]="radiobutton === model.option"
+                              [disabled]="true">
+                            <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                          </ng-container>
+                        </ng-container>
+                      </label>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <ng-container *ngIf="EnableConfirmSR">
+                <div class="row">
+                  <!-- <div class="col-lg-3 col-md-6"> -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="control-label">Billed Branch</label>
+                      <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="BilledBranch" disabled
+                        [(ngModel)]="confirmSRHeader.BilledBranch">
+                        <option [ngValue]="null">Select</option>
+                        <option *ngFor="let _BilledBranch of BilledBranch" [value]="_BilledBranch.PartyCode">
+                          {{_BilledBranch.PartyName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="control-label">Sales Person</label>
+                      <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="SalCode" disabled
+                        [(ngModel)]="confirmSRHeader.SalCode">
+                        <option [ngValue]="null">Select</option>
+                        <option *ngFor="let _salesman of SalesManList" [value]="_salesman.sal_code">
+                          {{_salesman.CodeName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="text-center">
+                      <div class="">
+                        <div class="row p-t-10 p-b-10">
+                          <!-- Column -->
+                          <div class="col p-r-0">
+                            <h6 class="text-muted"><i class="fal fa-calendar-alt"></i>&nbsp;
+                              SR Date</h6>
+                            <h3 class="font-light" formControlName="salesReturnDate" ngDefaultControl>
+                              {{salesReturnDate | date:'dd/MM/yyyy'}}
+                            </h3>
+                          </div>
+                          <!-- Column -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="text-center">
+                      <div class="">
+                        <div class="row p-t-10 p-b-10">
+                          <!-- Column -->
+                          <div class="col p-r-0">
+                            <h6 class="text-muted"><i class="fal fa-calendar-alt"></i>&nbsp;
+                              Sales Bill Bo</h6>
+                            <h3 class="font-light" [(ngModel)]="confirmSRHeader.BillNo" ngDefaultControl>{{BillNo}}</h3>
+                          </div>
+                          <!-- Column -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="text-center">
+                      <div class="">
+                        <div class="row p-t-10 p-b-10">
+                          <!-- Column -->
+                          <div class="col p-r-0">
+                            <h6 class="text-muted"><i class="fal fa-calendar-alt"></i>&nbsp;
+                              Bill Date</h6>
+                            <h3 class="font-light" formControlName="BillDate" [(ngModel)]="confirmSRHeader.BillDate"
+                              ngDefaultControl>{{Billdate | date:'dd/MM/yyyy'}}</h3>
+                          </div>
+                          <!-- Column -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <!-- <pre>{{ SRHeaderForm | json }}</pre> -->
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+<ng-container *ngIf="EnableConfirmSR">
+
+  <div id="accordian" class="accordion">
+    <div class="card mb-0">
+      <div class="card-header Pointer" href="#Customer" (click)="ToggleCustomerData()"
+        [ngClass]="CollapseCustomerDetailsTab ? 'collapsed' : ''"
+        [attr.data-toggle]="CollapseCustomerDetailsTab ? '':'collapse'"
+        style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+        <div class="row">
+          <div class="col-md-2 ">
+            <a class="card-title align-middle Pointer" style="color:#0096FF">
+              <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+              <span class="align-middle Pointer"><ins>Customer Details</ins></span>
+            </a>
+          </div>
+          <ng-container *ngIf="CollapseCustomerTab">
+            <div class="col-md-1 pull-right">
+            </div>
+            <div class="col-md-2 pull-right" style="color:#0096FF">
+              <h4><span class="align-middle"></span></h4>
+            </div>
+            <div class="col-md-2 pull-right">
+              <h4><span class="align-middle"> ID: {{CustomerName.ID}}</span></h4>
+            </div>
+            <div class="col-md-3 pull-right">
+              <h4><span class="align-middle"> Customer: {{CustomerName.CustName}}</span></h4>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div id="Customer" class="card-body collapse" [collapse]="CollapseCustomerDetailsTab">
+        <app-customer [filterRadioBtns]="filterRadioBtns">
+        </app-customer>
+      </div>
+    </div>
+    <br>
+
+    <div class="card mb-0">
+      <div class="card-header Pointer" href="#Item" (click)="ToggleItemData()"
+        [ngClass]="EnableItemsTab ? 'collapsed' : ''" [attr.data-toggle]="EnableItemsTab ? '':'collapse'"
+        style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+        <div class="row">
+          <div class="col-md-2 ">
+            <a class="card-title align-middle Pointer" style="color:#FF00C5">
+              <i class="far fa-shopping-cart fa-2x mr-2 align-middle"></i>
+              <span class="align-middle Pointer"><ins>Item Details</ins></span>
+            </a>
+          </div>
+          <ng-container *ngIf="CollapseCustomerTab">
+            <div class="col-md-2 pull-right">
+              <h4><span class="align-middle">Qty: {{Quantity | number : '1.3-3'}}</span>
+              </h4>
+            </div>
+            <div class="col-md-2 pull-right">
+              <h4><span class="align-middle"> Nt. Wt: {{Ntwt | number : '1.3-3'}}
+                </span>
+              </h4>
+            </div>
+            <div class="col-md-2 pull-right">
+              <h4><span class="align-middle"> Gr. Wt: {{Grosswt | number : '1.3-3'}}
+                </span>
+              </h4>
+            </div>
+            <div class="col-md-2 pull-right">
+              <h4><span class="align-middle">Amount: {{TotAmount | currencyFormat : TotAmount}}</span>
+              </h4>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div id="Item" class="card-body collapse" [collapse]="EnableItemsTab" style="padding:10px;">
+        <div class="table-responsive">
+          <table class="table table-bordered" id='panels'>
+            <thead class="topbar">
+              <tr>
+                <th>SNo</th>
+                <th>Name</th>
+                <th>Qty</th>
+                <th>Gr. Wt</th>
+                <th>N.Wt</th>
+                <th>AddWt</th>
+                <th>DeductWt</th>
+                <th>Dm Amount</th>
+                <th>Total Amount</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let field of fieldArray; let i = index">
+              <tr>
+                <!-- (click)="sendDataToDiamondComp(field,i)" -->
+                <td>{{field.SlNo}}</td>
+                <td>{{field.ItemName}}</td>
+                <td>{{field.Quantity}}</td>
+                <td>{{field.GrossWt | number : '1.3-3'}}</td>
+                <td>{{field.NetWt | number : '1.3-3'}}</td>
+                <td>{{field.AddWt | number : '1.3-3'}}</td>
+                <td>{{field.DeductWt | number : '1.3-3'}}</td>
+                <td>{{field.NetAmount | number : '1.2-2'}}</td>
+                <td>{{field.ItemFinalAmount | number : '1.2-2'}}</td>
+              </tr>
+            </tbody>
+            <tr style=" border: none;">
+              <td class="border-none"><span class="Heading">Grand Total</span>: </td>
+              <td class="border-none"></td>
+              <td class="border-none">{{Qty(fieldArray)}}</td>
+              <td class="border-none">{{GrossWtTotal(fieldArray) | number : '1.3-3'}}</td>
+              <td class="border-none">{{NetWt(fieldArray) | number : '1.3-3'}}</td>
+              <td class="border-none">{{AddWt(fieldArray) | number : '1.3-3'}}</td>
+              <td class="border-none">{{DedWt(fieldArray) | number : '1.3-3'}}</td>
+              <td class="border-none"></td>
+              <td class="border-none">{{Amount(fieldArray) | number : '1.2-2'}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="card mb-0" *ngIf="enablePayment">
+      <div class="card mb-0">
+        <div class="card-header Pointer" href="#Payment" (click)="TogglePaymentData()"
+          [ngClass]="EnablePaymentsTab ? 'collapsed' : ''" [attr.data-toggle]="EnablePaymentsTab ? '':'collapse'"
+          style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+          <div class="row">
+            <div class="col-md-2 ">
+              <a class="card-title align-middle" style="color:rgb(0, 204, 255)">
+                <i class="far fa-rupee-sign fa-2x mr-2 align-middle"></i>
+                <span class="align-middle"><ins>Payment Details</ins>
+                  <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top">Capture the Receipts
+                      ( Payment collection modes) information like Cash , Cheque , Card , Scheme Adj, Purchase Bill
+                      etc</span>
+                  </div>
+                </span>
+              </a>
+            </div>
+            <div class="col-md-4 pull-right">
+            </div>
+            <div class="col-md-4 pull-right">
+              <ng-container *ngIf="paymentPaidAmt > 0">
+                <h4><span class="align-middle"> Amount: {{paymentPaidAmt | number : '1.2-2'}} </span></h4>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div id="Payment" class="card-body collapse" [hidden]="EnablePaymentsTab"
+          [ngClass]="EnablePaymentsTab ? 'hide' : 'show'">
+          <app-payment (PaidAmountChange)="PaidTotalAmountCalculation($event)" [autoFillAmount]="autoFetchAmount"
+            [argPageName]="pageName"></app-payment>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-2 pb-3">
+      <div class="col-md-4">
+        <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+          (click)="submitPost()">Submit</button>
+      </div>
+    </div>
+    <br>
+
+
+    <ng-container *ngIf="EnableSRSummary">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card">
+            <div class="row">
+              <div class="col-12">
+                <div class="social-widget">
+                  <div class="soc-header box-facebook" style="padding: 3px;">
+                    <h3 class="text-white">SR Summary</h3>
+                  </div>
+                  <div class="soc-content">
+                    <div class="col-2 b-r">
+                      <!-- <h4 class="font-medium">{{TotalSRAmount | number : '1.2-2'}} -->
+                      <h4 class="font-medium">{{ItemAmount | number : '1.2-2'}}
+                        <h1 class="float-right">-</h1>
+                      </h4>
+                      <h5 class="text-black">Item Amount</h5>
+                    </div>
+                    <div class="col-2 b-r">
+                      <h4 class="font-medium">{{DiscountAmount | number : '1.2-2'}}<h1 class="float-right">=</h1>
+                      </h4>
+                      <h5 class="text-black">Discount</h5>
+                    </div>
+                    <div class="col-2 b-r">
+                      <h4 class="font-medium">{{ grandTotal | number : '1.2-2'}}<h1 class="float-right">+</h1>
+                      </h4>
+                      <h5 class="text-black">Grand Total</h5>
+                    </div>
+                    <div class="col-2 b-r">
+                      <h4 class="font-medium"><b>{{TaxAmount | number : '1.2-2'}}</b>
+                        <h1 class="float-right">+</h1>
+                      </h4>
+                      <h5 class="text-black">Sales GST</h5>
+                    </div>
+                    <div class="col-2 b-r">
+                      <h4 class="font-medium"><b>0.00</b>
+                        <h1 class="float-right">=</h1>
+                      </h4>
+                      <h5 class="text-black">Cess Amount</h5>
+                    </div>
+                    <div class="col-2 b-r">
+                      <h4 class="font-medium"><b>{{ grandTotal + TaxAmount | currencyFormat}}</b>
+                        <!-- <h4 class="font-medium"><b>{{ grandTotal + TaxAmount - VPAmount | currencyFormat}}</b> -->
+                      </h4>
+                      <h5 class="text-black">Total SR Amount</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <div class="card">
+            <div class="row">
+              <div class="col-12">
+                <div class="social-widget">
+                  <div class="soc-header box-facebook" style="padding: 2px;">
+                    <h3 class="text-white">Paid Amount</h3>
+                  </div>
+                  <div class="soc-content">
+                    <div class="col-4 b-r">
+                      <!-- <h3 class="font-medium">{{TotalSRAmount | number : '1.2-2'}} <h1 class="float-right">-</h1> -->
+                      <h3 class="font-medium">{{TotSRAmt | currencyFormat}} <h1 class="float-right">-</h1>
+
+                      </h3>
+                      <h5 class="text-black">Total SR Amount</h5>
+                    </div>
+                    <div class="col-4 b-r">
+                      <h3 class="font-medium">{{PaidAmount | number : '1.2-2'}} <h1 class="float-right">=</h1>
+                      </h3>
+                      <h5 class="text-black">Paid Amount</h5>
+                    </div>
+                    <div class="col-4 b-r">
+                      <h3 class="font-medium"><b>{{BalanceAmount() | number : '1.2-2'}}</b></h3>
+                      <h5 class="text-black">Balance Amount</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+          <div class="card">
+            <div class="row">
+              <div class="col-12">
+                <div class="social-widget">
+                  <div class="soc-header box-facebook" style="padding: 2px;">
+                    <h3 class="text-white">Payable Amount</h3>
+                  </div>
+                  <div class="soc-content">
+                    <div class="col-4 b-r">
+                      <h3 class="font-medium">{{TotSRAmt | currencyFormat}} <h1 class="float-right">-</h1>
+                      </h3>
+                      <h5 class="text-black">Total SR Amount</h5>
+                    </div>
+                    <div class="col-4 b-r">
+                      <h3 class="font-medium">{{VPAmount | number : '1.2-2'}} <h1 class="float-right">=</h1>
+                      </h3>
+                      <h5 class="text-black">VP Amount</h5>
+                    </div>
+                    <div class="col-4 b-r">
+                      <!-- <h3 class="font-medium"><b>{{TotalSRAmount - VPAmount | number : '1.2-2'}}</b></h3> -->
+                      <h3 class="font-medium"><b>{{PayableAmount | number : '1.2-2'}}</b></h3>
+                      <h5 class="text-black">Payable Amount</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="EnableJson">
+      <pre>{{getSalesReturnData | json}}</pre>
+    </ng-container>
+  </div>
+
+</ng-container>
+
+<ng-container *ngIf="EnableReprintSR">
+  <app-reprint-salesreturn></app-reprint-salesreturn>
+</ng-container>
+
+<!-- <ng-container *ngIf="EnableReprintOrder">
+  <app-reprint-order></app-reprint-order>
+</ng-container> -->
+
+
+<!-- Order Block Starts from here-->
+
+
+<!-- <div class="modal fade" id="OrderTab" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+  aria-labelledby="OrderTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="OrderTabLabel" (click)=printOrder()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" (click)="closeOrderTab()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-order-section" style="max-width: 900px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">{{Orderheading}}</h3>
+          <div class="card">
+            <div class="card-body">
+
+              <div class="row mb-4 margin">
+                <div class="col-md-4 divborder">
+                  <h5 class="mb-3 top"> CUSTOMER DETAILS:</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{orderDetails.Salutation}}{{orderDetails.CustName}}</b></td>
+                      </tr>
+                      <tr class="spaceUnder">
+                        <td>Address</td>
+                        <td class="mb" style="width: 150px;
+                                                word-break: break-all;white-space: normal;">
+                          <b>{{orderDetails.Address1}}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td> <b>{{orderDetails.Address2}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>State</td>
+                        <td><b>{{orderDetails.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td *ngIf="orderDetails.StateCode != 0">Code</td>
+                        <td><b>{{orderDetails.StateCode}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>MobileNo</td>
+                        <td><b>{{orderDetails.MobileNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>{{orderDetails.CustDocType}}</td>
+                        <td><b>{{orderDetails.CustDocValue}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-4 divborder">
+                  <h5 class="mb-3 top">GSTIN:<b>{{ShowroomList.TinNo}}</b></h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <ngx-barcode6 [bc-value]="OrderNum" [bc-width]="width" [bc-height]="height">
+                          </ngx-barcode6>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Order No.</td>
+                        <td><b>{{orderDetails.BranchCode}}/O/{{orderDetails.OrderNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Order Date</td>
+                        <td><b>{{orderDetails.OrderDate | date: 'd/M/y'}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Place of supply</td>
+                        <td><b>{{orderDetails.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Tax Payment Mode</td>
+                        <td><b>Normal</b></td>
+                      </tr>
+                      <tr>
+                        <td>Rate</td>
+                        <td><b>{{orderDetails.Rate | currencyFormat}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Delivery Date</td>
+                        <td><b>{{orderDetails.DeliveryDate | date: 'd/M/y'}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Order Type</td>
+                        <td><b>{{orderDetails.OrderType}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>PAN</td>
+                        <td><b>{{ShowroomList.PAN}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Purchase Plan</td>
+                        <td><b>{{orderDetails.BookingType | purchasePlan:orderDetails.BookingType}}</b>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-4 lastdivborder">
+                  <h5 class="mb-3 top"> SHOWROOM ADDRESS</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{ShowroomList.CompanyName }}</b></td>
+                      </tr>
+                      <tr class="spaceUnder">
+                        <td>Address</td>
+                        <td class="mb" style="width: 150px;
+                                                word-break: break-all;white-space: normal;">
+                          <b>{{ShowroomList.Address1}}</b>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><b>{{ShowroomList.Address2}}</b>
+                      </tr>
+                      <tr>
+                        <td>City</td>
+                        <td><b>{{ShowroomList.city}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>State</td>
+                        <td><b>{{ShowroomList.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Code</td>
+                        <td><b>{{ShowroomList.StateCode}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Phone</td>
+                        <td><b>{{ShowroomList.PhoneNo}}</b></td>
+                      </tr>
+                    </tbody>
+
+                  </table>
+                 
+                </div>
+              </div>
+              <div class="row margin">
+                <div class="col-lg-12">
+                  <h3 style="text-align:center"><b>{{ReprintType | uppercase}}</b></h3>
+                  <div class="table-responsive-sm">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="classname">Item Description</th>
+                          <th class="classname">Quantity</th>
+                          <th>Weight</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let _Linesarray of Linesarray">
+                          <td class="classname">{{_Linesarray.Description}}</td>
+                          <td class="classname">{{_Linesarray.Quantity}}</td>
+                          <td class="classname">
+                            {{_Linesarray.FromGrossWt | number : '1.3-3'}}</td>
+                        </tr>
+                        <tr>
+                          <th class="classname">Totals</th>
+                          <th class="classname">{{WeightTotalList.Quantity}}</th>
+                          <th class="classname">
+                            {{WeightTotalList.FromGrossWt | number : '1.3-3'}}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="row mb-2" *ngIf="TotalList">
+                    <div class="col-md-12" style="text-align: right"><b>Total Amount :
+                        {{ TotalList.pay_amt | currencyFormat}}</b></div>
+                  </div>
+                  <div class="row mb-2" *ngIf="TotalList">
+                    <div class="col-md-12"><b> {{ TotalList.pay_amt | round | numberToWords}}</b>
+                    </div>
+                  </div>
+                  <div class="row mb-2" *ngIf="!TotalList">
+                    <div class="col-md-12"><b>Rupees NIL Only</b>
+                    </div>
+                  </div>
+            
+
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <div>OPR:<b>{{orderDetails.OperatorCode}}</b></div>
+                </div>
+                <div class="col-sm-4">
+                  <div>Salesman Code:<b>{{ orderDetails.SalCode}}</b></div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">Remarks : <b>{{orderDetails.Remarks}}.</b></div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  Taxes and Duties will be
+                  charged extra as
+                  applicable at
+                  the time of Billing.<br>
+                  I hereby agree to take delivery of the articles on payment of the full amount.
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 float-left">
+                  <div class="mb-5">{{orderDetails.OrderRateType}}
+                  </div>
+                  <div class="mt-5"> Customer Signature</div>
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                  <div class="mb-5">For {{ShowroomList.CompanyName}}</div>
+                  Authorized Signature
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="row" style="display:block;margin: auto;width: 30%;">
+  <div class="modal fade" id="OrderTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+            id="exampleModalLabel" (click)=printOrder()><i class="fal fa-print"></i> Print</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="PrintCreditReceipt()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <ng-container *ngIf="PrintTypeBasedOnConfig">
+          <div class="container invoice-box htmlPrint" id="print-closed-section"
+            style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+            <pre>{{orderDetails}}</pre>
+          </div>
+          <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+            <div id="DisplayOrderData" class="center" [innerHTML]='orderDetails | safeHtml'></div>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="modal fade" id="ReceiptTab" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog"
+  aria-labelledby="ReceiptTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="ReceiptTabLabel" (click)=printOrderReceipt()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" (click)="closeOrderReceiptTab()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-receipt-section"
+        style="max-width: 900px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">{{OrderReceiptheading}}</h3>
+          <div class="card">
+            <div class="card-body">
+
+              <div class="row mb-4 margin">
+                <div class="col-md-4 divborder">
+                  <h5 class="mb-3 top"> CUSTOMER DETAILS:</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{orderDetails.Salutation}}{{orderDetails.CustName}}</b></td>
+                      </tr>
+                      <tr class="spaceUnder">
+                        <td>Address</td>
+                        <td class="mb" style="width: 150px;
+                                                word-break: break-all;white-space: normal;">
+                          <b>{{orderDetails.Address1}}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td> <b>{{orderDetails.Address2}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>State</td>
+                        <td><b>{{orderDetails.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td *ngIf="orderDetails.StateCode != 0">Code</td>
+                        <td><b>{{orderDetails.StateCode}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>MobileNo</td>
+                        <td><b>{{orderDetails.MobileNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>{{orderDetails.CustDocType}}</td>
+                        <td><b>{{orderDetails.CustDocValue}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-4 divborder">
+                  <h5 class="mb-3 top">GSTIN:<b>{{ShowroomList.TinNo}}</b></h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Receipt No</td>
+                        <td><b>{{ReceiptListdisplay.ReceiptNo }}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Receipt Date</td>
+                        <td><b>{{ReceiptListdisplay.PayDate | date: 'd-M-y h:mm:ss a'}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Order No.</td>
+                        <td><b>{{orderDetails.BranchCode}}/O/{{orderDetails.OrderNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Order Date</td>
+                        <td><b>{{orderDetails.OrderDate | date: 'd-M-y h:mm:ss a'}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="col-md-4 lastdivborder">
+                  <h5 class="mb-3 top"> SHOWROOM ADDRESS</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{ShowroomList.CompanyName }}</b></td>
+                      </tr>
+                      <tr class="spaceUnder">
+                        <td>Address</td>
+                        <td class="mb" style="width: 150px;
+                                                word-break: break-all;white-space: normal;">
+                          <b>{{ShowroomList.Address1}}</b>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><b>{{ShowroomList.Address2}}</b>
+                      </tr>
+                      <tr>
+                        <td>City</td>
+                        <td><b>{{ShowroomList.city}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>State</td>
+                        <td><b>{{ShowroomList.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Code</td>
+                        <td><b>{{ShowroomList.StateCode}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Phone</td>
+                        <td><b>{{ShowroomList.PhoneNo}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="row margin">
+                <div class="col-lg-12">
+                  <div class="table-responsive-sm">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="classname">Mode</th>
+                          <th class="classname">Details</th>
+                          <th class="classname">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let _ReceiptList of ReceiptList">
+                          <td class="classname">
+                            {{_ReceiptList.PayMode | payment:_ReceiptList.PayMode}}</td>
+                          <ng-Container *ngIf="_ReceiptList.PayMode == 'R'">
+                            <td class="classname">
+                              {{_ReceiptList.RefBillNo}}/{{_ReceiptList.ChequeNo}}/{{_ReceiptList.Bank}}/{{_ReceiptList.CardAppNo}}
+                            </td>
+                          </ng-Container>
+                          <ng-Container *ngIf="_ReceiptList.PayMode != 'R'">
+                            <td *ngIf="_ReceiptList.PayMode == 'PB' || _ReceiptList.PayMode == 'SR'" class="classname">
+                              {{_ReceiptList.BranchCode}}/{{_ReceiptList.RefBillNo}}</td>
+                            <td
+                              *ngIf="_ReceiptList.PayMode != 'PB' && _ReceiptList.PayMode != 'SR' && _ReceiptList.PayMode != 'R'"
+                              class="classname">{{_ReceiptList.PayDetails}}</td>
+                          </ng-Container>
+                          <td class="classname">{{_ReceiptList.PayAmount | number : '1.2-2'}}
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <th class="classname">Totals</th>
+                          <th class="classname"></th>
+                          <th class="classname"> {{ ReceiptTotal.pay_amt | number : '1.2-2'}}
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 ">
+                  <div class="table-responsive-sm">
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <td class="classname bottom"><strong>Taxable Amt:<br>
+                              {{ ReceiptTotal.pay_amount_before_tax | number : '1.2-2'}}</strong>
+                          </td>
+                          <td class="classname bottom">
+                            <strong>CGST @ 1.5%:<br>
+                              {{ ReceiptTotal.CGST_Amount | number : '1.2-2'}}</strong>
+                          </td>
+                          <td class="classname bottom">
+                            <strong>SGST @ 1.5%:<br>
+                              {{ ReceiptTotal.SGST_Amount | number : '1.2-2'}}</strong>
+                          </td>
+                          <td class="classname bottom">
+                            <strong>IGST @ 3%:<br>
+                              {{ ReceiptTotal.IGST_Amount | number : '1.2-2'}}</strong>
+                          </td>
+                          <td class="classname bottom">
+                            <strong>Total Amt:<br>
+                              {{ ReceiptTotal.pay_amt | number : '1.2-2'}}</strong>
+                          </td>
+                        </tr>
+                        <tr></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-1">
+                <div class="col-md-12">
+                  <b> {{ ReceiptTotal.pay_amt | numberToWords}}</b>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <div>OPR:<b>{{orderDetails.OperatorCode}}</b></div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 float-left">
+                  <div class="mt-5"> Customer Signature</div>
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                  <div class="mb-5">For {{ShowroomList.CompanyName}}</div>
+                  Authorized Signatory
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+<!-- Added for Plain Text printing related to Order-->
+
+<!-- <div class="modal fade" id="OrderPlainTextTab" tabindex="-1" role="dialog" aria-labelledby="OrderPlainTextTabLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="OrderPlainTextTabLabel" (click)=printOrderPlainText()><i class="fal fa-print"></i>
+          Print</button>
+        <button type="button" class="close" (click)="closeOrderPlainTextTab()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{orderPlainTextDetails}}</pre>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- Ends here -->
+
+
+<!-- Added for Plain Text printing related to Order Receipt-->
+
+<!-- <div class="modal fade" id="OrderReceiptPlainTextTab" tabindex="-1" role="dialog"
+  aria-labelledby="OrderReceiptPlainTextTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="OrderReceiptPlainTextTabLabel" (click)=printOrderReceiptPlainText()><i class="fal fa-print"></i>
+          Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{orderReceiptPlainTextDetails}}</pre>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- Ends here -->
+
+<!-- Order Block ends here-->
+
+
+<!--Added for SR Print and Credit Receipt-->
+
+<!-- <div class="modal fade" id="ReprintSRBillModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printSRBill()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" (click)="closeSRBill()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <span>
+        <div id="DisplayData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+      </span>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- <div class="modal fade" id="ReprintSREstModal" tabindex="-1" role="dialog"
+  aria-labelledby="ReprintSREstModalTextTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="ReprintSREstModalTextTabLabel" (click)=printSREst()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" (click)="PrintCreditReceipt()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{PrintDetails}}</pre>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-section" style="max-width: 1400px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">CREDIT RECEIPT</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="row mb-4 margin">
+                <div class="col-md-4 divborder bottom">
+                  <h5 class="mb-3 top"> CUSTOMER DETAILS:</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{ReceiptDetails.CustomerName}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Address</td>
+                        <td><b>{{ReceiptDetails.Address1}}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td> <b>{{ReceiptDetails.Address2}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>State</td>
+                        <td><b>{{ReceiptDetails.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Mobile No</td>
+                        <td><b>{{ReceiptDetails.MobileNo}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="col-md-4 divborder bottom">
+                  <h5 class="mb-3 top">Bill Receipt</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Receipt No</td>
+                        <td><b>{{ReceiptDetails.ReceiptNo }}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Receipt Date</td>
+                        <td><b>{{ReceiptDetails.ReceiptDate | date: 'd/M/y'}}</b></td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+                </div>
+                <div class="col-md-4 lastdivborder">
+                  <h5 class="mb-3 top"> SHOWROOM ADDRESS</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{ShowroomList.CompanyName }}</b></td>
+                      </tr>
+                      <tr class="spaceUnder">
+                        <td>Address</td>
+                        <td class="mb" style="width: 150px;
+                                              word-break: break-all;white-space: normal;">
+                          <b>{{ShowroomList.Address1}}</b>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><b>{{ShowroomList.Address2}}</b>
+                      </tr>
+                      <tr>
+                        <td>Phone</td>
+                        <td><b>{{ShowroomList.PhoneNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>TIN</td>
+                        <td><b>{{ShowroomList.TinNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>E-mail</td>
+                        <td><b>{{ShowroomList.EMailID}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Website</td>
+                        <td><b>{{ShowroomList.Website}}</b></td>
+                      </tr>
+
+                    </tbody>
+
+                  </table>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div *ngIf="ReceiptDetails.CFlag=='Y'" class="watermark">Cancelled</div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th style="text-align: center">Original/Duplicate</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Received with thanks from Mr./Mrs./M/s. <b>{{ReceiptDetails.CustomerName}}</b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>The Sum of Rs.<b>{{ReceiptDetails.Amount}} ( {{ReceiptDetails.Amount |numberToWords }}
+                              )</b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td> Towards the Bill Number: <b>{{SummaryHeader.BillNo}}</b> Dated:
+                            <b>{{ReceiptDetails.BilledDate | date: 'd/M/y'}}</b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Customer Credit Balance Amount Rs :<b>{{ReceiptDetails.CreditBalance}}</b>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let _array of Linesarray">
+                          <td *ngIf="_array.PayMode=='D'">By cheque/DD : <b>{{_array.PayAmount}}</b> , cheque/DD No.
+                            <b>{{_array.ChequeNo}}</b>,
+                            Dated: <b>{{_array.ChequeDate | date: 'd/M/y'}}</b>, Drawn on <b>{{_array.Bank}}</b>
+                          </td>
+                          <td *ngIf="_array.PayMode=='C'">Cash Received: <b>{{_array.PayAmount}}</b></td>
+                          <td *ngIf="_array.PayMode=='EP'">E-Payment: <b>{{_array.PayAmount}}</b></td>
+                          <td *ngIf="_array.PayMode=='R'">By CC: {{_array.PayAmount}} ,{{_array.BankName}} ,
+                            {{_array.Bank}} , {{_array.CardType}} , {{_array.CardAppNo}} </td>
+
+                          <td *ngIf="_array.PayMode=='Q'">By cheque/DD: <b>{{_array.PayAmount}} , ChequeNo:
+                              {{_array.ChequeNo}} , Dated: {{_array.ChequeDate | date: 'd/M/y'}} , Drawn on:
+                              {{_array.Bank}}</b></td>
+
+                        </tr>
+                        <tr>
+                          <td>Balance Amount: <b>{{ReceiptDetails.BalanceAmount | round}}</b> </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="ReceiptDetails.lstOfPayment">
+                <div class="col-md-6">
+                  <div>Operator Code :{{ReceiptDetails.lstOfPayment[0].OperatorCode}}<b></b></div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 float-left">
+                  <div class="mb-5"></div>
+                  Customer Signature
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                  <div class="mb-5">For {{ShowroomList.CompanyName}}</div>
+                  Authorized Signature
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="modal fade" id="CreditReceiptModal" tabindex="-1" role="dialog"
+  aria-labelledby="CreditReceiptModalTextTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="CreditReceiptModalTextTabLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container *ngIf="PrintTypeBasedOnConfig">
+        <div class="container invoice-box htmlPrint" id="print-closed-section"
+          style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+          <pre>{{ReceiptDetails}}</pre>
+        </div>
+        <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+          <div id="DisplayCreditReceiptData" class="center" [innerHTML]='ReceiptDetails | safeHtml'></div>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>

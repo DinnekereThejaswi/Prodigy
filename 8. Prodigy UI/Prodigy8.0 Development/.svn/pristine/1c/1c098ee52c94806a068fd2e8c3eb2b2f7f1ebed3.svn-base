@@ -1,0 +1,11 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/*
+ * Public API Surface of ng-keyboard-shortcuts
+ */
+export { KeyboardShortcutsService } from './lib/ng-keyboard-shortcuts.service';
+export { KeyboardShortcutsModule } from './lib/ng-keyboard-shortcuts.module';
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljX2FwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL25nLWtleWJvYXJkLXNob3J0Y3V0cy8iLCJzb3VyY2VzIjpbInB1YmxpY19hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUlBLHlDQUFjLHFDQUFxQyxDQUFDO0FBQ3BELHdDQUFjLG9DQUFvQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiBuZy1rZXlib2FyZC1zaG9ydGN1dHNcbiAqL1xuXG5leHBvcnQgKiBmcm9tICcuL2xpYi9uZy1rZXlib2FyZC1zaG9ydGN1dHMuc2VydmljZSc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9uZy1rZXlib2FyZC1zaG9ydGN1dHMubW9kdWxlJztcbmV4cG9ydCB7IFNob3J0Y3V0SW5wdXQsIFNob3J0Y3V0RXZlbnRPdXRwdXQgfSBmcm9tICcuL2xpYi9uZy1rZXlib2FyZC1zaG9ydGN1dHMuaW50ZXJmYWNlcyc7XG4iXX0=

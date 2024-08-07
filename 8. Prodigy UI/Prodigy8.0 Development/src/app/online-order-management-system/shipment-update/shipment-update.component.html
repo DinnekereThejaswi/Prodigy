@@ -1,0 +1,63 @@
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#AWBPrint" (click)="ToggleAWBPrint()"
+            [ngClass]="EnableAWBPrint ? 'collapsed' : ''" [attr.data-toggle]="EnableAWBPrint ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <a class="card-title align-middle" style="color:#00BBD6">
+                        <i class="fal fa fa-print fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>AWB Reprint</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="AWBPrint" class="card-body collapse" [collapse]="EnableAWBPrint">
+            <app-awb-print></app-awb-print>
+        </div>
+    </div>
+</div>
+<br>
+
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#PickUpRegister" (click)="TogglePickUpRegister()"
+            [ngClass]="EnablePickUpRegister ? 'collapsed' : ''"
+            [attr.data-toggle]="EnablePickUpRegister ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <a class="card-title align-middle" style="color: #3F51B5;">
+                        <i class="fal fa-paper-plane fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Pick Up Register</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="PickUpRegister" class="card-body collapse" [collapse]="EnablePickUpRegister">
+            <app-pick-up-register></app-pick-up-register>
+        </div>
+    </div>
+</div>
+<br>
+
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#CancelRegisterPickUp" (click)="ToggleCancelRegisterPickUp()"
+            [ngClass]="EnableCancelRegisterPickUp ? 'collapsed' : ''"
+            [attr.data-toggle]="EnableCancelRegisterPickUp ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <a class="card-title align-middle" style="color:#FF00C5">
+                        <i class="fal fa-times fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Cancel Register Pick Up</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="CancelRegisterPickUp" class="card-body collapse" [collapse]="EnableCancelRegisterPickUp">
+            <app-canel-pick-up-register></app-canel-pick-up-register>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,575 @@
+<div class="row" style="display:block;margin: auto;width: 30%;" *ngIf="ShowHide">
+  <form class="form-horizontal">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- <div class="form-group">
+                <div class="input-group">
+                  <select class="form-control mr-auto mt-2 mt-lg-0" (change)="GetType(Type.value)" #Type>
+                    <option value="null">Select Estimation Type</option>
+                    <option value="S">Sales</option>
+                    <option value="P">Purchase</option>
+                    <option value="SR">Sales Return</option>
+                    <option value="OG">OldGold Purchase</option> 
+                  </select>
+                </div>
+              </div> -->
+              <div class="form-group">
+                <label for="exampleAccount">Estimation No</label>
+                <div class="input-group">
+                  <!-- <input class="form-control" id="exampleAccount" placeholder="Est No" type="number" #estNo> -->
+                  <input type="number" class="form-control"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    onKeyPress="if(this.value.length==7) return false;" placeholder="Est No" #estNo />
+
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-group">
+                  <input type="checkbox" class="chkbxsize" [(ngModel)]="isChecked" (change)="FieldsChange($event)" />
+                  Print Bill
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="getEstimationDetails(estNo.value)"><i class="fal fa-print"></i>
+                  Reprint </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+<div class="modal fade" id="PurchaseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" *ngIf="EnablePurchaseReprintHeaders">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printPurchase()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-sectionPurchase"
+        style="max-width: 1100px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">{{heading}}</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="row mb-4 ">
+                <div class="col-md-6 ">
+                  <h5 class="mb-3 "> CustName: <span>{{estPurchaseDetails.CustName}}</span></h5>
+                </div>
+                <div class="col-md-5 ">
+                  <h5 class="mb-3 ">Purchase Estimate: <span>{{estPurchaseDetails.EstNo}}</span></h5>
+                </div>
+                <!-- <div class="col-md-2 divborder">
+                </div> -->
+                <div class="col-md-1">
+                </div>
+              </div>
+              <div class="row margin">
+                <div class="col-lg-12">
+                  <div class="table-responsive-sm">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="classname">Description</th>
+                          <th class="classname">Rate</th>
+                          <th class="classname">Gr.Wt</th>
+                          <th class="classname">St.Wt</th>
+                          <th class="classname">Net Wt</th>
+                          <th class="classname">St.Amt</th>
+                          <th class="classname">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="PurchaseDetails">
+                        <tr *ngFor="let _PurchaseDetails of PurchaseDetails">
+                          <td class="classname">{{_PurchaseDetails.ItemDescription}}</td>
+                          <td class="classname">{{_PurchaseDetails.PurchaseRate | number : '1.2-2'}}</td>
+                          <td class="classname">{{_PurchaseDetails.GrossWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_PurchaseDetails.StneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_PurchaseDetails.NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_PurchaseDetails.DiamondAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{_PurchaseDetails.ItemAmount | number : '1.2-2'}}</td>
+                        </tr>
+                        <tr *ngIf="getPurchaseTotForPrint">
+                          <td class="classname">Grand Total</td>
+                          <td class="classname"></td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].GrossWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].StneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].DiamondAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].ItemAmount | number : '1.2-2'}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row mb-4 margin">
+                  <div class="col-md-5">
+                    <h5 class="mb-3"> EstDate:
+                      <span>{{estPurchaseDetails.PDate | date :'dd-MMM-yy h:mm:ss a '}}</span>
+                    </h5>
+                  </div>
+                  <div class="col-md-3">
+                    <h5 class="mb-3">SalCode: <span>{{PurchaseDetails[0].SalCode}}</span></h5>
+                  </div>
+                  <div class="col-md-2">
+                    <h5 class="mb-3"> OpCode: <span>{{estPurchaseDetails.OperatorCode}}</span></h5>
+                  </div>
+                  <div class="col-md-2">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <ng-container
+                  *ngFor="let _PurchaseStoneDetails of PurchaseDetails[0].lstPurchaseEstStoneDetailsVM;let i=index">
+                  <div class="row mb-2 margin">
+                    <div class="col-md-6">
+                      <h5 class="mb-3">
+                        # {{_PurchaseStoneDetails.Name}}\{{_PurchaseStoneDetails.Amount | number : '1.2-2'}} *
+                        {{_PurchaseStoneDetails.Carrat | number : '1.3-3'}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container
+                  *ngFor="let _PurchaseDiamondDetails of PurchaseDetails[0].lstPurchaseEstDiamondDetailsVM;let i=index">
+                  <div class="row mb-2 margin">
+                    <div class="col-md-6">
+                      <h5 class="mb-3">
+                        # {{_PurchaseDiamondDetails.Name}}\{{_PurchaseDiamondDetails.Amount | number : '1.2-2'}} *
+                        {{_PurchaseDiamondDetails.Carrat | number : '1.3-3'}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="OGModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  *ngIf="EnableOGReprintHeaders">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printOG()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-sectionOG" style="max-width: 1100px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">{{heading}}</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="row mb-4 ">
+                <div class="col-md-6 ">
+                  <h5 class="mb-3 "> CustName: <span>{{estOGDetails.CustName}}</span></h5>
+                </div>
+                <div class="col-md-5 ">
+                  <h5 class="mb-3">Purchase Estimate: <span>{{estOGDetails.EstNo}}</span></h5>
+                </div>
+                <!-- <div class="col-md-2 divborder">
+                </div> -->
+                <div class="col-md-1">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="table-responsive-sm">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="classname">Description</th>
+                          <th class="classname">Rate</th>
+                          <th class="classname">Gr.Wt</th>
+                          <th class="classname">St.Wt</th>
+                          <th class="classname">Net Wt</th>
+                          <th class="classname">St.Amt</th>
+                          <th class="classname">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="OGDetails">
+                        <tr *ngFor="let _OGDetails of OGDetails">
+                          <td class="classname"></td>
+                          <td class="classname">{{_OGDetails.PurchaseRate| number : '1.2-2'}}</td>
+                          <td class="classname">{{_OGDetails.GrossWt| number : '1.3-3'}}</td>
+                          <td class="classname">{{_OGDetails.StneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_OGDetails.NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_OGDetails.DiamondAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{_OGDetails.ItemAmount | number : '1.2-2'}}</td>
+                        </tr>
+                        <tr *ngIf="getOGTotForPrint">
+                          <td class="classname">Grand Total</td>
+                          <td class="classname"></td>
+                          <td class="classname">{{getOGTotForPrint[0].GrossWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getOGTotForPrint[0].StneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getOGTotForPrint[0].NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getOGTotForPrint[0].DiamondAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{getOGTotForPrint[0].ItemAmount | number : '1.2-2'}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row mb-4">
+                  <div class="col-md-3">
+                    <h5 class="mb-3"> EstDate: <span>{{estOGDetails.PDate | date :'dd-MMM-yy h:mm:ss a'}}</span></h5>
+                  </div>
+                  <div class="col-md-3">
+                    <h5 class="mb-3">SalCode: <span>{{OGDetails[0].SalCode}}</span></h5>
+                  </div>
+                  <div class="col-md-2">
+                    <h5 class="mb-3"> OpCode: <span>{{estOGDetails.OperatorCode}}</span></h5>
+                  </div>
+                  <div class="col-md-4">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="SRModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  *ngIf="EnableSRReprintHeaders">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printSR()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-sectionSR" style="max-width: 1100px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">{{heading}}</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="row mb-4">
+                <div class="col-md-6 ">
+                  <h5 class="mb-3 "> Sales Bill No: <span>{{estSRDetails.VotureBillNo}}</span></h5>
+                </div>
+                <div class="col-md-6 ">
+                  <h5 class="mb-3 ">SR Date:
+                    <span>{{estSRDetails.SalesReturnDate | date :'dd-MMM-yy h:mm:ss a '}}</span>
+                  </h5>
+                </div>
+              </div>
+              <div class="row mb-4 ">
+                <div class="col-md-6 ">
+                  <h5 class="mb-3"> SR Est.No: <span>{{estSRDetails.EstNo}}</span></h5>
+                </div>
+                <div class="col-md-3 ">
+                  <h5 class="mb-3">Gold Rate: <span>{{estSRDetails.Rate}}/gm</span></h5>
+                </div>
+                <div class="col-md-3 ">
+                  <h5 class="mb-3"> OperatorCode: <span>{{estSRDetails.OperatorCode}}</span></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="table-responsive-sm">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="classname">Stone Name</th>
+                          <th class="classname">Qty</th>
+                          <th class="classname">Gr.Wt</th>
+                          <th class="classname">St.Wt</th>
+                          <th class="classname">Net Wt</th>
+                          <th class="classname">VA Amt</th>
+                          <th class="classname">St.Amt</th>
+                          <th class="classname">Gold Amt</th>
+                          <th class="classname">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="SRDetails">
+                        <tr *ngFor="let _SRDetails of SRDetails">
+                          <td class="classname">{{_SRDetails.ItemName}}</td>
+                          <td class="classname">{{_SRDetails.Quantity}}</td>
+                          <td class="classname">{{_SRDetails.GrossWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_SRDetails.StoneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_SRDetails.NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_SRDetails.VAAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{_SRDetails.StoneCharges | number : '1.2-2'}}</td>
+                          <td class="classname">{{_SRDetails.SRAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{_SRDetails.NetAmount | number : '1.2-2'}}</td>
+                        </tr>
+                        <tr *ngIf="getSRTotForPrint">
+                          <td class="classname">Grand Total</td>
+                          <td class="classname">{{getSRTotForPrint[0].Quantity}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].GrossWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].StoneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].VAAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].StoneCharges | number : '1.2-2'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].SRAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].NetAmount | number : '1.2-2'}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                  <table>
+                    <tbody *ngIf="getSRTotForPrint">
+                      <tr>
+                        <td>Taxable Value :</td>
+                        <td>{{getSRTotForPrint[0].ItemTotalAfterDiscount | number : '1.2-2'}}</td>
+                      </tr>
+                      <tr>
+                        <td> SGST {{getSRTotForPrint[0].SGSTPercent}} %:</td>
+                        <td>{{getSRTotForPrint[0].SGSTAmount | number : '1.2-2'}}</td>
+                      </tr>
+                      <tr>
+                        <td>CGST {{getSRTotForPrint[0].CGSTPercent}} %:</td>
+                        <td>{{getSRTotForPrint[0].CGSTAmount | number : '1.2-2'}}</td>
+                      </tr>
+                      <tr>
+                        <td>IGST {{getSRTotForPrint[0].IGSTPercent}} %:</td>
+                        <td>{{getSRTotForPrint[0].IGSTAmount | number : '1.2-2'}}</td>
+                      </tr>
+                      <tr>
+                        <td>Invoice Amount :</td>
+                        <td>{{getSRTotForPrint[0].ItemFinalAmount}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row mb-4">
+                  <div class="col-md-10">
+                    <h5 class="mb-3 "><span><b>{{ getSRTotForPrint[0].ItemFinalAmount | numberToWords}}</b></span></h5>
+                  </div>
+                  <div class="col-md-2">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Added for Plain Text printing related to Sales Estimation-->
+
+<div class="modal fade" id="SalesEstimationPlainTextTab" tabindex="-1" role="dialog"
+  aria-labelledby="SalesEstimationPlainTextTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="SalesEstimationPlainTextTabLabel" (click)=printSalesEstimation()><i class="fal fa-print"></i>
+          Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="CloseSalesPrint()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container *ngIf="PrintTypeBasedOnConfig">
+        <div class="container invoice-box htmlPrint" id="print-closed-section"
+          style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+          <pre>{{salesEstimationPlainTextDetails}}</pre>
+        </div>
+        <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+          <div id="DisplaySalesData" class="center" [innerHTML]='salesEstimationPlainTextDetails | safeHtml'></div>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Ends here -->
+
+<!-- Added for Plain Text printing related to Purchase Estimation-->
+
+<div class="modal fade" id="PurchaseEstimationPlainTextTab" tabindex="-1" role="dialog"
+  aria-labelledby="PurchaseEstimationPlainTextTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="PurchaseEstimationPlainTextTabLabel" (click)=printPurchaseEstimationPlainText()><i
+            class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{purchaseEstimationPlainTextDetails}}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ends here -->
+
+<!-- Added for Plain Text printing related to Purchase Estimation-->
+
+<div class="modal fade" id="SREstPlainTextTab" tabindex="-1" role="dialog" aria-labelledby="SREstPlainTextTabTabLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="SREstPlainTextTabLabel" (click)=printSREstimationPlainText()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{SREstimationPlainTextDetails}}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ends here -->
+
+
+<!-- Added for Sales Billing Reprint using Est No-->
+
+
+<div class="modal fade" id="ReprintSalesBillingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <span>
+        <div id="DisplayData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- Added for Plain Text Purchase Estimation printing fro  continous printing-->
+
+<div class="modal fade" id="PurEstPlainTextTab" tabindex="-1" role="dialog" aria-labelledby="PurEstPlainTextTabLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="PurEstPlainTextTabLabel" (click)=printPurEst()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ClosePurchasePrint()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container *ngIf="PrintTypeBasedOnConfig">
+        <div class="container invoice-box htmlPrint" id="print-closed-section"
+          style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+          <pre>{{purEstPlainTextDetails}}</pre>
+        </div>
+        <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+          <div id="DisplayPurchaseData" class="center" [innerHTML]='purEstPlainTextDetails | safeHtml'></div>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Ends here -->
+
+<!-- Added for Plain Text SR Estimation printing-->
+
+<div class="modal fade" id="SREstPlainTextTab" tabindex="-1" role="dialog" aria-labelledby="SREstPlainTextTabTabLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="SREstPlainTextTabLabel"><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="CloseSRPrint()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container *ngIf="PrintTypeBasedOnConfig">
+        <div class="container invoice-box htmlPrint" id="print-closed-section"
+          style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+          <pre>{{SREstimationPlainTextDetails}}</pre>
+        </div>
+        <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+          <div id="DisplaySRData" class="center" [innerHTML]='SREstimationPlainTextDetails | safeHtml'></div>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Ends here -->
+<!-- Added for Plain Text Old Gold Estimation printing-->
+
+<div class="modal fade" id="OGPlainTextTab" tabindex="-1" role="dialog" aria-labelledby="OGPlainTextTabLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="OGPlainTextTabLabel"><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container *ngIf="PrintTypeBasedOnConfig">
+        <div class="container invoice-box htmlPrint" id="print-closed-section"
+          style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+          <pre>{{OGPlainTextDetails}}</pre>
+        </div>
+        <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+          <div id="DisplayOGData" class="center" [innerHTML]='OGPlainTextDetails | safeHtml'></div>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Ends here -->

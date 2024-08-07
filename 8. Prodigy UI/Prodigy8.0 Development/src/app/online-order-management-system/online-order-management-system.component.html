@@ -1,0 +1,101 @@
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#ReceivedOrders" (click)="ToggleReceivedOrders()"
+            [ngClass]="EnableReceivedOrders ? 'collapsed' : ''"
+            [attr.data-toggle]="EnableReceivedOrders ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#005BFF">
+                        <i class="fal fa-hand-receiving fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Received Orders</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="ReceivedOrders" class="card-body collapse" [collapse]="EnableReceivedOrders">
+            <app-received-orders></app-received-orders>
+        </div>
+    </div>
+</div>
+<br>
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#ItemPicking" (click)="ToggleItemPicking()"
+            [ngClass]="EnableItemPicking ? 'collapsed' : ''" [attr.data-toggle]="EnableItemPicking ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#FF00C5">
+                        <i class="fal fa-truck  fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Item Picking</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body collapse" [collapse]="EnableItemPicking">
+            <app-item-picking></app-item-picking>
+        </div>
+    </div>
+</div>
+<br>
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#ItemPacking" (click)="ToggleItemPacking()"
+            [ngClass]="EnableItemPacking ? 'collapsed' : ''" [attr.data-toggle]="EnableItemPacking ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#00BBD6">
+                        <i class="fal fa-shopping-bag fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Item Packing</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body collapse" [collapse]="EnableItemPacking">
+            <app-item-packing></app-item-packing>
+        </div>
+    </div>
+</div>
+<br>
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#TaxInvoiceGeneration" (click)="ToggleTaxInvoiceGeneration()"
+            [ngClass]="EnableTaxInvoiceGeneration ? 'collapsed' : ''"
+            [attr.data-toggle]="EnableTaxInvoiceGeneration ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <a class="card-title align-middle" style="color: #3F51B5;">
+                        <i class="fal fa-file-invoice fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Tax Invoice Generation</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body collapse" [collapse]="EnableTaxInvoiceGeneration">
+            <app-tax-invoice-generation></app-tax-invoice-generation>
+        </div>
+    </div>
+</div>
+<br>
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#ItemDispatch" (click)="ToggleItemDispatch()"
+            [ngClass]="EnableItemDispatch ? 'collapsed' : ''" [attr.data-toggle]="EnableItemDispatch ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#FF00C5">
+                        <i class="fal fa-paper-plane fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Item Dispatch</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body collapse" [collapse]="EnableItemDispatch">
+            <app-item-dispatch></app-item-dispatch>
+        </div>
+    </div>
+</div>

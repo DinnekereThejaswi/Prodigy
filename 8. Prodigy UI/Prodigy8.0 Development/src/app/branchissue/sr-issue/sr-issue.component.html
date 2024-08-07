@@ -1,0 +1,281 @@
+<div class="row">
+    <div class="col-sm-8">
+
+    </div>
+    <div class="col-sm-4">
+        <app-lastdocno [routerUrl]="routerUrl" style="color: brown; text-align: right; font-style: italic;">
+        </app-lastdocno>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="srissueHeaderForm" class="form-horizontal">
+                <div class="row">
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="control-label" for="no">Issued To</label>
+                            <select class="form-control" formControlName="IssueTo" [(ngModel)]="srissue.IssueTo">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let _issueTo of IssueTo" [value]="_issueTo.Code">
+                                    {{_issueTo.Name}}
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="no">Issue Date </label>
+                            <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig"
+                                [(ngModel)]="applicationDate" readonly
+                                value="{{applicationDate | date:'dd/MM/yyyy' }}" />
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="no">Issued By</label>
+                            <input class="form-control" type="text" value="Admin" readonly>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label" for="no">GS </label>
+                                <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="GSCode"
+                                    [(ngModel)]="srissue.GSCode">
+                                    <option [ngValue]=" null">Select</option>
+                                    <option *ngFor="let _GSList of GSList" [value]="_GSList.GSCode">
+                                        {{_GSList.GSName}} </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <!-- <input type="date" class="form-control" /> -->
+                            <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig" readonly
+                                formControlName="FromDate" [(ngModel)]="srissue.FromDate"
+                                value="{{srissue.FromDate | date:'dd/MM/yyyy' }}" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <!-- <input type="date" class="form-control" /> -->
+                            <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig" readonly
+                                value="{{srissue.ToDate | date:'dd/MM/yyyy' }}" formControlName="ToDate"
+                                [(ngModel)]="srissue.ToDate" />
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <br>
+                        <button type="submit" (click)="Go(srissueHeaderForm)"
+                            class="btn btn-success waves-effect waves-light btn-rounded btn-secondary">&nbsp;
+                            Go</button>
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<ng-container *ngIf="LineItems.length > '0'">
+    <div id="accordian" class="accordion">
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#itemDetails" (click)="ToggleitemDetails()"
+                [ngClass]="EnableItemDetails ? 'collapsed' : ''" [attr.data-toggle]="EnableItemDetails ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <a class="card-title align-middle" style="color:#005BFF">
+                            <i class="fal fa-hand-receiving fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Item Details</ins></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="itemDetails" class="card-body collapse" [collapse]="EnableItemDetails">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table" id="panels">
+                                <thead class="topbar">
+                                    <th>SR Bill No</th>
+                                    <th>SNo</th>
+                                    <th>Item</th>
+                                    <th>Qty </th>
+                                    <th>Gr.Wt(g)</th>
+                                    <th>St.Wt(g)</th>
+                                    <th>N.Wt(g)</th>
+                                </thead>
+                                <tbody *ngFor="let _list of LineItems;let i=index;">
+                                    <tr>
+                                        <td>{{_list.BillNo}}</td>
+                                        <td>{{_list.SlNo}}</td>
+                                        <td>{{_list.ItemCode}}</td>
+                                        <td>{{_list.Qty}}</td>
+                                        <td>{{_list.GrossWt}}</td>
+                                        <td>{{_list.StoneWt}}</td>
+                                        <td>{{_list.NetWt}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div id="accordian" class="accordion">
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#fittedstones" (click)="ToggleFittedStonesDetails()"
+                [ngClass]="EnableFittedStoneDetails ? 'collapsed' : ''"
+                [attr.data-toggle]="EnableFittedStoneDetails ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <a class="card-title align-middle" style="color:#FF00C5">
+                            <i class="fa fa-download  fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Fitted Stone Details</ins></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="fittedstones" class="card-body collapse" [collapse]="EnableFittedStoneDetails">
+                <div class="col-md-12">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="topbar">
+                                <th>Bill.No</th>
+                                <th>SNo</th>
+                                <th>Gs</th>
+                                <th>Item</th>
+                                <th>Qty </th>
+                                <th>Carat</th>
+                                <th>Amount</th>
+                            </thead>
+                            <tbody *ngFor="let _stoneDetails of StoneDetails;let i= index">
+                                <tr>
+                                    <td>{{_stoneDetails.BillNo}}</td>
+                                    <td>{{_stoneDetails.ItemSlNo}}</td>
+                                    <td>{{_stoneDetails.SlNo}}</td>
+                                    <td>{{_stoneDetails.GS}}</td>
+                                    <td>{{_stoneDetails.Name}}</td>
+                                    <td>{{_stoneDetails.Qty}}</td>
+                                    <td>{{_stoneDetails.Carrat}}</td>
+                                    <td>{{_stoneDetails.Amount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+                (click)="SaveSRIssue()">
+                <i class="far fa-save"></i> Submit</button>
+            <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" (click)="cancel()"
+                type="button"><i class="far fa-window-close"></i>&nbsp;Cancel</button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="social-widget">
+                            <div class="soc-header box-facebook" style="padding: 3px;">
+                                <h3 class="text-white">Summary</h3>
+                            </div>
+                            <div class="soc-content">
+                                <div class="col-1 b-r">
+                                    <h4 class="font-medium"><b>{{SRIssueList.Qty}}</b></h4>
+                                    <h5 class="text-black">Qty</h5>
+                                </div>
+                                <div class="col-1 b-r">
+                                    <h4 class="font-medium"><b>{{SRIssueList.GrossWt | number:'1.3-3'}}</b></h4>
+                                    <h5 class="text-black">Gross.Wt</h5>
+                                </div>
+                                <div class="col-2 b-r">
+                                    <h4 class="font-medium"><b>{{SRIssueList.StoneWt | number:'1.3-3'}}</b></h4>
+                                    <h5 class="text-black">Stone.Wt</h5>
+                                </div>
+                                <div class="col-2 b-r">
+                                    <h4 class="font-medium"><b>{{SRIssueList.NetWt | number:'1.3-3'}}</b></h4>
+                                    <h5 class="text-black">Net.Wt</h5>
+                                </div>
+                                <div class="col-2 b-r">
+                                    <h4 class="font-medium"><b>{{SRIssueList.AmountBeforeTax | number:'1.2-2'}}</b>
+                                        <h1 class="float-right">+</h1>
+                                    </h4>
+                                    <h5 class="text-black">Total Amt</h5>
+                                </div>
+                                <div class="col-2 b-r">
+                                    <h4 class="font-medium"><b>{{SRIssueList.IGSTAmount | number:'1.2-2'}}</b>
+                                        <h1 class="float-right">=</h1>
+                                    </h4>
+                                    <h5 class="text-black">IGST Amt</h5>
+                                </div>
+                                <div class="col-2 b-r">
+                                    <h4 class="font-medium"><b>{{SRIssueList.AmountAfterTax | number:'1.2-2'}}</b></h4>
+                                    <h5 class="text-black">Grand Total</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<div class="row" style="display:block;margin: auto;width: 30%;">
+
+    <div class="modal fade" id="SRIssueTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                        class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                        id="exampleModalLabel" (click)=printSRIssue()><i class="fal fa-print"></i> Print</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <ng-container *ngIf="PrintTypeBasedOnConfig">
+                    <div class="container invoice-box htmlPrint" id="print-closed-section"
+                        style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+                        <pre>{{srIssuePrint}}</pre>
+                    </div>
+                    <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                        <div id="DisplaysrIssueData" class="center" [innerHTML]='srIssuePrint | safeHtml'></div>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <pre>
+        {{srissue | json}}
+    </pre>
+</ng-container>

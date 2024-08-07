@@ -1,0 +1,66 @@
+import { Injectable, NgModule, defineInjectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ */
+import * as ɵngcc0 from '@angular/core';
+class ConnectionService {
+    constructor() {
+        this.connectionMonitor = new Observable((observer) => {
+            window.addEventListener('offline', (e) => {
+                observer.next(false);
+            });
+            window.addEventListener('online', (e) => {
+                observer.next(true);
+            });
+        });
+    }
+    /**
+     * @return {?}
+     */
+    monitor() {
+        return this.connectionMonitor;
+    }
+}
+ConnectionService.ngInjectableDef = ɵngcc0.ɵɵdefineInjectable({ token: ConnectionService, factory: function ConnectionService_Factory(t) { return new (t || ConnectionService)(); }, providedIn: 'root' });
+/*@__PURE__*/ ɵngcc0.ɵsetClassMetadata(ConnectionService, [{
+        type: Injectable,
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return []; }, { constructor: [], connectionMonitor: [], monitor: [] });
+/** @nocollapse */
+ConnectionService.ctorParameters = () => [];
+/** @nocollapse */ ConnectionService.ngInjectableDef = defineInjectable({ factory: function ConnectionService_Factory() { return new ConnectionService(); }, token: ConnectionService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ */
+class ConnectionServiceModule {
+}
+ConnectionServiceModule.ngModuleDef = ɵngcc0.ɵɵdefineNgModule({ type: ConnectionServiceModule });
+/*@__PURE__*/ ɵngcc0.ɵsetClassMetadata(ConnectionServiceModule, [{
+        type: NgModule,
+        args: [{
+                imports: [],
+                providers: [ConnectionService]
+            }]
+    }], null, null);
+ConnectionServiceModule.ngInjectorDef = ɵngcc0.ɵɵdefineInjector({ factory: function ConnectionServiceModule_Factory(t) { return new (t || ConnectionServiceModule)(); }, providers: [ConnectionService], imports: [[]] });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ */
+
+export { ConnectionService, ConnectionServiceModule };
+
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkU6L01hZ25hV2ViLUFuZ3VsYXI4LjAvbm9kZV9tb2R1bGVzL25nLWNvbm5lY3Rpb24tc2VydmljZS9mZXNtMjAxNS9uZy1jb25uZWN0aW9uLXNlcnZpY2UuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7Ozs7O0FBT0E7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztDQWlCQyw0RkFLQzs7Ozs7Ozs7Ozs7Ozs7Ozs7OztDQVVELHlOQU1DIiwiZmlsZSI6Im5nLWNvbm5lY3Rpb24tc2VydmljZS5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEluamVjdGFibGUsIE5nTW9kdWxlLCBkZWZpbmVJbmplY3RhYmxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBPYnNlcnZhYmxlIH0gZnJvbSAncnhqcyc7XG5cbi8qKlxyXG4gKiBAZmlsZW92ZXJ2aWV3IGFkZGVkIGJ5IHRzaWNrbGVcclxuICogQHN1cHByZXNzIHtjaGVja1R5cGVzLGV4dHJhUmVxdWlyZSx1c2VsZXNzQ29kZX0gY2hlY2tlZCBieSB0c2NcclxuICovXHJcbmNsYXNzIENvbm5lY3Rpb25TZXJ2aWNlIHtcclxuICAgIGNvbnN0cnVjdG9yKCkge1xyXG4gICAgICAgIHRoaXMuY29ubmVjdGlvbk1vbml0b3IgPSBuZXcgT2JzZXJ2YWJsZSgob2JzZXJ2ZXIpID0+IHtcclxuICAgICAgICAgICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ29mZmxpbmUnLCAoZSkgPT4ge1xyXG4gICAgICAgICAgICAgICAgb2JzZXJ2ZXIubmV4dChmYWxzZSk7XHJcbiAgICAgICAgICAgIH0pO1xyXG4gICAgICAgICAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcignb25saW5lJywgKGUpID0+IHtcclxuICAgICAgICAgICAgICAgIG9ic2VydmVyLm5leHQodHJ1ZSk7XHJcbiAgICAgICAgICAgIH0pO1xyXG4gICAgICAgIH0pO1xyXG4gICAgfVxyXG4gICAgLyoqXHJcbiAgICAgKiBAcmV0dXJuIHs/fVxyXG4gICAgICovXHJcbiAgICBtb25pdG9yKCkge1xyXG4gICAgICAgIHJldHVybiB0aGlzLmNvbm5lY3Rpb25Nb25pdG9yO1xyXG4gICAgfVxyXG59XHJcbkNvbm5lY3Rpb25TZXJ2aWNlLmRlY29yYXRvcnMgPSBbXHJcbiAgICB7IHR5cGU6IEluamVjdGFibGUsIGFyZ3M6IFt7XHJcbiAgICAgICAgICAgICAgICBwcm92aWRlZEluOiAncm9vdCdcclxuICAgICAgICAgICAgfSxdIH0sXHJcbl07XHJcbi8qKiBAbm9jb2xsYXBzZSAqL1xyXG5Db25uZWN0aW9uU2VydmljZS5jdG9yUGFyYW1ldGVycyA9ICgpID0+IFtdO1xyXG4vKiogQG5vY29sbGFwc2UgKi8gQ29ubmVjdGlvblNlcnZpY2UubmdJbmplY3RhYmxlRGVmID0gZGVmaW5lSW5qZWN0YWJsZSh7IGZhY3Rvcnk6IGZ1bmN0aW9uIENvbm5lY3Rpb25TZXJ2aWNlX0ZhY3RvcnkoKSB7IHJldHVybiBuZXcgQ29ubmVjdGlvblNlcnZpY2UoKTsgfSwgdG9rZW46IENvbm5lY3Rpb25TZXJ2aWNlLCBwcm92aWRlZEluOiBcInJvb3RcIiB9KTtcblxuLyoqXHJcbiAqIEBmaWxlb3ZlcnZpZXcgYWRkZWQgYnkgdHNpY2tsZVxyXG4gKiBAc3VwcHJlc3Mge2NoZWNrVHlwZXMsZXh0cmFSZXF1aXJlLHVzZWxlc3NDb2RlfSBjaGVja2VkIGJ5IHRzY1xyXG4gKi9cclxuY2xhc3MgQ29ubmVjdGlvblNlcnZpY2VNb2R1bGUge1xyXG59XHJcbkNvbm5lY3Rpb25TZXJ2aWNlTW9kdWxlLmRlY29yYXRvcnMgPSBbXHJcbiAgICB7IHR5cGU6IE5nTW9kdWxlLCBhcmdzOiBbe1xyXG4gICAgICAgICAgICAgICAgaW1wb3J0czogW10sXHJcbiAgICAgICAgICAgICAgICBwcm92aWRlcnM6IFtDb25uZWN0aW9uU2VydmljZV1cclxuICAgICAgICAgICAgfSxdIH0sXHJcbl07XG5cbi8qKlxyXG4gKiBAZmlsZW92ZXJ2aWV3IGFkZGVkIGJ5IHRzaWNrbGVcclxuICogQHN1cHByZXNzIHtjaGVja1R5cGVzLGV4dHJhUmVxdWlyZSx1c2VsZXNzQ29kZX0gY2hlY2tlZCBieSB0c2NcclxuICovXG5cbi8qKlxyXG4gKiBAZmlsZW92ZXJ2aWV3IGFkZGVkIGJ5IHRzaWNrbGVcclxuICogQHN1cHByZXNzIHtjaGVja1R5cGVzLGV4dHJhUmVxdWlyZSx1c2VsZXNzQ29kZX0gY2hlY2tlZCBieSB0c2NcclxuICovXG5cbmV4cG9ydCB7IENvbm5lY3Rpb25TZXJ2aWNlLCBDb25uZWN0aW9uU2VydmljZU1vZHVsZSB9O1xuIl19

@@ -1,0 +1,60 @@
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div id="header" class="card-body show">
+      <form [formGroup]="NarrationForm" class="form-horizontal">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="Narration">Narration</label>
+              <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="NarrationModel.Narration"
+                  formControlName="Narration">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                style="margin-top: 1.2rem !important;" (click)="add(NarrationForm)">
+                <i class="far fa-plus-circle"></i>Add</button>
+              <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                style="margin-top: 1.2rem !important;" (click)="clear()">
+                <i class="far fal fa-trash"></i>Clear</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+<div class="card mb-0">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="topbar">
+          <tr>
+            <th>Delete</th>
+            <th>Narration</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let _narrationList of NarrationList">
+          <tr>
+            <td>
+              <!-- <i class="fas fa-close" title="Delete" (click)="deleteField(_narrationList)"></i> -->
+              <button class="btn btn-default btn-rounded" type="button" (click)="deleteField(_narrationList)"><i
+                  class="far fa-window-close"></i>
+                Delete</button>
+            </td>
+            <td>{{_narrationList.Narration}}</td>
+          </tr>
+          <tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<br>
+<ng-container *ngIf="EnableJson">
+  <pre>{{NarrationModel | json}}</pre>
+</ng-container>

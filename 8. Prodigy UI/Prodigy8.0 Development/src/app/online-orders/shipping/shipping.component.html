@@ -1,0 +1,231 @@
+<div class="card">
+    <div class="card-body">
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3" style="margin-top: 5px;">
+                    <div class="form-group">
+                        <select class="form-control" #marketPlace (change)="orderstobeshipped(marketPlace.value)">
+                            <option [value]="null">Select Market Place</option>
+                            <option *ngFor="let _marketPlaceList of marketPlaceList" [value]="_marketPlaceList.Id">
+                                {{_marketPlaceList.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-top: 5px;">
+                    <div class="text-right">&nbsp;
+                        <button class="btn btn-success btn-rounded" type="button"
+                            (click)="orderstobeshipped(marketPlace.value)">Get
+                            Items - Ready
+                            For Shipment
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-top: 5px;">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter AWB No" autocomplete="off"
+                            (keyup.enter)="dataExistbyAwbNo(AwbNo.value)" #AwbNo>
+                    </div>
+                </div>
+                <div class="col-md-2" style="margin-top: 5px;">
+                    <div class="form-group">
+                        <button type="button"
+                            class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            (click)="printDispatchListDets()">
+                            <i class="fal fa-print"></i>&nbsp;Print</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-8">
+        <div class="table-responsive">
+            <table class="table" id="panels">
+                <thead class="topbar">
+                    <tr>
+                        <th>
+                            <input type="checkbox" [checked]="checkedAll" (change)="pushAllDataToShipList($event)">
+                        </th>
+                        <th>Order No</th>
+                        <th>Order Source</th>
+                        <th>Central RefNo</th>
+                        <th>Package Wt</th>
+                        <th>Pos Invoice No</th>
+                        <th>SKU</th>
+                        <th>AWB No</th>
+                        <th>GST Amount</th>
+                        <th>Invoice Amount</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let _orderstobeshippedList of orderstobeshippedList;let i=index;">
+                    <tr>
+                        <td>
+                            <input type="checkbox" [checked]="dataExistbyOrderNo(_orderstobeshippedList.OrderNo)"
+                                (change)="pushDataToShipList($event,i,_orderstobeshippedList)">
+                        </td>
+                        <td>{{_orderstobeshippedList.OrderNo}}</td>
+                        <td>{{_orderstobeshippedList.OrderSource}}</td>
+                        <td>{{_orderstobeshippedList.CentralRefNo}}</td>
+                        <td>{{_orderstobeshippedList.PackageWeight | number:'1.3-3'}}</td>
+                        <td>{{_orderstobeshippedList.BillNo}}</td>
+                        <td>{{_orderstobeshippedList.SKU}}</td>
+                        <td>{{_orderstobeshippedList.AwbNo}}</td>
+                        <td>{{_orderstobeshippedList.GSTAmt | number:'1.2-2'}}</td>
+                        <td>{{_orderstobeshippedList.TotalAmount | number:'1.2-2'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-4" style="border: 1px solid black;">
+        <div class="form-group">
+            <div class="input-group">
+                <ul class="list-group">
+                    <div class="col-md-12">
+                        <br>
+                        <div class="form-group">
+                            <label for="">Person Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="postShipJson.PickupAgentName"
+                                [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mobile No</label>
+                            <input type="number" maxlength="10" class="form-control"
+                                [(ngModel)]="postShipJson.PickupAgentMobileNo" [ngModelOptions]="{standalone: true}"
+                                onKeyPress="if(this.value.length==10) return false;">
+                        </div>
+                        <div class="form-group" style="width: 300px;">
+                            <label for="">Remarks</label>
+                            <textarea style="width: 320px;height: 100px;" [(ngModel)]="postShipJson.PickupRemarks"
+                                [ngModelOptions]="{standalone: true}">
+                             </textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-rounded" type="button" (click)="ItemToDispatch()">Item
+                                Dispatch</button>
+                        </div>
+                        <br>
+                        <h2 *ngIf="postShipJson.OrderList.length > 0">Total Items to Dispatch :
+                            {{postShipJson.OrderList.length}}</h2>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<!-- <div class="modal fade" id="printDispatchListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 750px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <tr class="center" *ngIf="Company">
+                <td>{{Company.CompanyName}}</td>
+            </tr>
+            <div class="center">Online Order items - Dispatch Details as on {{appDate}} </div>
+            <div class="table-responsive">
+                <table class="table" id="panels">
+                    <thead class="topbar">
+                        <tr>
+                            <th>SNo</th>
+                            <th>Market Place Order No</th>
+                            <th>AWB No</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let _Linesarray of postShipJson.OrderList;let i=index">
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>{{_Linesarray.OrderNo}}</td>
+                            <td>{{_Linesarray.AwbNo}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="center">(Run Date: {{currentDate}}) </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="modal overlay" id="printDispatchListModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 750px;">
+        <div class="modal-content ">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)="print()"><i class="fal fa-print"></i> Print</button>
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container invoice-box htmlPrint" id="print-section"
+                    style="max-width: 1400px;border-width: 2em">
+                    <div class="row">
+                        <div class="col-md-5"></div>
+                        <div class="col-md-6" *ngIf="Company">
+                            {{Company.CompanyName}}<br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10">
+                            Online Order items - Dispatch Details as on {{appDate}} <br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="topbar">
+                                        <tr>
+                                            <th>SNo</th>
+                                            <th>Market Place Order No</th>
+                                            <th>AWB No</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let _Linesarray of postShipJson.OrderList;let i=index">
+                                        <tr>
+                                            <td>{{i+1}}</td>
+                                            <td>{{_Linesarray.OrderNo}}</td>
+                                            <td>{{_Linesarray.AwbNo}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-8">
+                            (Run Date: {{currentDate}}) <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{postShipJson | json}}</pre>
+</ng-container>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+    <p style="color: white"> Please Wait... </p>
+</ngx-spinner>

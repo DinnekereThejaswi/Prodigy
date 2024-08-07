@@ -1,0 +1,6 @@
+<router-outlet>
+    <!-- <ng4-loading-spinner [threshold]="100" [timeout]="1000" [loadingText]="'Please wait.....'"></ng4-loading-spinner> -->
+</router-outlet>
+<!-- <app-footer></app-footer> -->
+
+<div class="loader loader-default is-active" *ngIf="loader" data-text="Loading..."></div>

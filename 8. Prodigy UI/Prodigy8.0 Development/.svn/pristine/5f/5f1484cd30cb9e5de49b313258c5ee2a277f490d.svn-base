@@ -1,0 +1,13 @@
+{
+  "name": "@angular/material/tabs",
+  "typings": "../tabs.d.ts",
+  "main": "../bundles/material-tabs.umd.js",
+  "module": "../esm5/tabs.es5.js",
+  "es2015": "../esm2015/tabs.js",
+  "sideEffects": false,
+  "es2015_ivy_ngcc": "../__ivy_ngcc__/esm2015/tabs.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14"
+  }
+}

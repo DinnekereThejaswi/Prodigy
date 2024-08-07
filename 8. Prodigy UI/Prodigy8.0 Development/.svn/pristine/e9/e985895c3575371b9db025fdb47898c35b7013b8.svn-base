@@ -1,0 +1,50 @@
+<div class="row" style="display:block;margin: auto;width: 30%;">
+  <form [formGroup]="CashInHandForm" class="form-horizontal">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="OrderNo">Date</label>
+                <input type="text" class="form-control" [(ngModel)]="applicationDate"
+                  [ngModelOptions]="{standalone: true}" readonly />
+              </div>
+              <div class="form-group">
+                <label for="OrderNo">Cash Balance</label>
+                <input type="number" class="form-control" [(ngModel)]="CashInHandModel.CashBalance"
+                  formControlName="CashBalance" readonly />
+              </div>
+              <div class="form-group">
+                <label for="OrderNo">Cash In Hand</label>
+                <input type="text" class="form-control"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                  onKeyPress="if(this.value.length==15) return false;" [(ngModel)]="CashInHandModel.CashInHand"
+                  formControlName="CashInHand" (change)="CalDifference()" />
+              </div>
+              <div class="form-group">
+                <label for="OrderNo">Cash Difference</label>
+                <input type="number" class="form-control" [(ngModel)]="cashDifference"
+                  [ngModelOptions]="{standalone: true}" readonly />
+              </div>
+              <div class="form-group">
+                <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="Save()"><i class="fal fa-save"></i>
+                  Save </button>
+                <button class="printMe btn btn-danger waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="exit()"><i class="fal fa-remove"></i>
+                  Exit </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-container *ngIf="EnableJson">
+  <pre>
+  {{CashInHandModel | json}}
+</pre>
+</ng-container>

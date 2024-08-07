@@ -1,0 +1,90 @@
+<ng-container *ngIf="EnableDiamondTab">
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border"><i class="fas fa-gem align-middle"></i> Diamond Details</legend>
+
+    <div class="table-responsive">
+      <table class="table" id='panels' style="width: 1200px;">
+        <thead class="topbar">
+          <tr>
+            <th>GS Name</th>
+            <th>Item Name</th>
+            <th>Qty</th>
+            <th>Carats</th>
+            <th>Max Rate/Carat</th>
+            <th>Rate/Carat</th>
+            <th>Amount</th>
+            <th *ngIf="ShowHide">Action</th>
+            <th *ngIf="ShowHide"><button
+                class="mt-2  btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right"
+                [disabled]="EnableAddRow" (click)="addrow()">
+                <i class="far fa-plus-circle"></i> Add</button></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let field of fieldArray; let i = index">
+          <tr>
+            <td style="width: 30%;">
+              <select class="form-control mr-auto mt-2 mt-lg-0">
+                <option [ngValue]="OD" [disabled]="readonly[i]">OLD DIAMOND</option>
+              </select>
+            </td>
+            <td style="width: 30%;">
+              <select class="form-control mr-auto mt-2 mt-lg-0" [(ngModel)]="field.Name"
+                (change)="GetItemName(ItemName.value);" #ItemName>
+                <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                <option *ngFor="let _ItemList of ItemList" [value]="_ItemList.StoneName" [disabled]="readonly[i]">
+                  {{_ItemList.StoneName}}
+                </option>
+              </select>
+            </td>
+            <td style="width: 10%;">
+              <input [(ngModel)]="field.Qty" class="form-control" type="text" min="0" name="{{field.Qty}}"
+                placeholder="0.00" [readonly]="readonly[i]" appNumbersNoDecimalOnly />
+            </td>
+            <td style="width: 10%;">
+              <!-- <input [(ngModel)]="field.Carrat" class="form-control" type="text" min="0" [readonly]="readonly[i]"
+                name="{{field.Carrat}}" placeholder="0.00" (change)="GetAmount(i);" appNumbersOnly/> -->
+              <!-- (keydown.Tab)="validateCarat(i);" -->
+              <!-- </td> -->
+              <input [(ngModel)]="field.Carrat" class="form-control" type="text" min="0" [readonly]="readonly[i]"
+                name="{{field.Carrat}}" placeholder="0.00" (change)="GetStnDmdRate(i);" BlueBorder appNumbersOnly />
+            </td>
+            <td style="width: 10%;">
+              <input [(ngModel)]="field.OrgRate" class="form-control" type="text" min="0" name="{{field.Rate}}"
+                placeholder="0.00" (change)="GetAmount(i);" BlueBorder readonly />
+            </td>
+            <td style="width: 10%;">
+              <input [(ngModel)]="field.Rate" class="form-control" type="text" min="0" [readonly]="readonly[i]"
+                name="{{field.Rate}}" placeholder="0.00" (change)="GetAmount(i);" BlueBorder appNumbersOnly />
+            </td>
+            <td style="width: 10%;">
+              <!-- <input [(ngModel)]="field.Amount"  class="form-control" type="number"
+            name="{{field.Amount}}" placeholder="0.00" /> -->
+              <h3 [(ngModel)]="field.Amount" [ngModelOptions]="{standalone: true}" class="align-middle">
+                {{field.Amount || "0.00" | number}}</h3>
+            </td>
+            <ng-container *ngIf="ShowHide">
+              <td colspan="2" style="width: 30%;">
+                <ng-container *ngIf="EnableEditDelbtn[i]">
+                  <button class="btn btn-default btn-rounded" type="button" (click)="editFieldValue(i)"><i
+                      class="fal fa-pencil-alt"></i> Edit</button>
+                  <button class="btn btn-danger btn-rounded" type="button" (click)="deleteFieldValue(i)"><i
+                      class="fal fa-trash-alt"></i> Delete</button>
+                </ng-container>
+                <ng-container *ngIf="EnableSaveCnlbtn[i]">
+                  <button class="btn btn-success btn-rounded" type="button" (click)="saveDataFieldValue(i)"><i
+                      class="fal fa-save"></i> Save</button>
+                  <button class="btn btn-warning btn-rounded" type="button" (click)="cancelDataFieldValue(i)"><i
+                      class="far fa-window-close"></i> Cancel</button>
+                </ng-container>
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-container *ngIf="EnableJson">
+      <pre>{{PurchaseLinesDetails | json}}</pre>
+      <pre>{{fieldArray | json}}</pre>
+    </ng-container>
+  </fieldset>
+</ng-container>

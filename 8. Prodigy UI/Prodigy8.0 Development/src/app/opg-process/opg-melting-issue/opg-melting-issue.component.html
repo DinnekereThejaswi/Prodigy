@@ -1,0 +1,261 @@
+<div class="row">
+    <div class="col-sm-8">
+
+    </div>
+    <div class="col-sm-4">
+        <app-lastdocno [routerUrl]="routerUrl" style="color: brown; text-align: right; font-style: italic;">
+        </app-lastdocno>
+    </div>
+</div>
+
+<div class="card mb-0">
+    <div class="card-body">
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="no">Received From</label>
+                        <input class="form-control" type="text" value="BRANCH KORAMANGALA" readonly>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="no">Issue To </label>
+                        <select class="form-control" [(ngModel)]="MeltingIssuePost.IssueTo"
+                            [ngModelOptions]="{standalone: true}">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _issueTo of IssueTo" [value]="_issueTo.Code">
+                                {{_issueTo.Name}}
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="no">Issued By</label>
+                        <input class="form-control" type="text" value="Admin" readonly>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="no">Date</label>
+                        <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig" readonly
+                            value="{{applicationDate | date:'dd/MM/yyyy' }}"  disabled/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="control-label" for="no">Remarks </label>
+                            <input class="form-control" type="text" value="" [(ngModel)]="MeltingIssuePost.Remarks"
+                                [ngModelOptions]="{standalone: true}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#itemDetails" (click)="ToggleitemDetails()"
+            [ngClass]="EnableItemDetails ? 'collapsed' : ''" [attr.data-toggle]="EnableItemDetails ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#005BFF">
+                        <i class="fal fa-hand-receiving fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>ItemDetails</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="itemDetails" class="card-body collapse" [collapse]="EnableItemDetails">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" style="width: 1300px;">
+                            <thead class="topbar">
+                                <tr>
+                                    <th>GS</th>
+                                    <th>Batch Id</th>
+                                    <th>Gr.Wt(gms)</th>
+                                    <th>Net Wt(gms)</th>
+                                    <th>Rate/Gram</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                    <th>
+                                        <button
+                                            class="btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right"
+                                            style="margin-top: 1.2rem !important;" (click)="add()"
+                                            [disabled]="EnableAddRow">
+                                            <i class="far fa-plus-circle"></i> Add</button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let field of fieldArray; let i = index">
+                                <tr>
+                                    <td>
+                                        <select class="form-control mr-auto mt-2 mt-lg-0 CustomWidth100"
+                                            [(ngModel)]="field.GSCode" (change)="getBatchID(field.GSCode,i)">
+                                            <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                            <option *ngFor="let _Gs of GsList" [value]="_Gs.Code"
+                                                [disabled]="readonly[i]">
+                                                {{_Gs.Name}} </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control mr-auto mt-2 mt-lg-0 CustomWidth240"
+                                            [(ngModel)]="field.BatchId" (change)="getBatchDetails(field.BatchId,i)">
+                                            <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                            <option *ngFor="let _BatchList of BatchList[i]" [value]="_BatchList.BatchId"
+                                                [disabled]="readonly[i]">
+                                                {{_BatchList.BatchId}} </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text"
+                                            [(ngModel)]="field.GrossWt" readonly>
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text" [(ngModel)]="field.NetWt"
+                                            readonly>
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text" [(ngModel)]="field.Rate"
+                                            [readonly]="readonly[i]" (change)="calcAmount(i)" appNumbersOnly>
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text" [(ngModel)]="field.Amount"
+                                            readonly>
+                                    </td>
+                                    <td colspan="2">
+                                        <ng-container *ngIf="EnableEditDelbtn[i]">
+                                            <button class="btn btn-default btn-rounded wd" type="button"
+                                                (click)="editFieldValue(i)"><i class="fal fa-pencil-alt"></i>
+                                                Edit</button>
+                                            <button class="btn btn-danger btn-rounded" type="button"
+                                                (click)="deleteFieldValue(i)"><i class="fal fa-trash-alt"></i>
+                                                Delete</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="EnableSaveCnlbtn[i]">
+                                            <button class="btn btn-success btn-rounded" type="button"
+                                                (click)="saveDataFieldValue(i)"><i class="fal fa-save"></i>
+                                                Save</button>
+                                            <button class="btn btn-warning btn-rounded" type="button"
+                                                (click)="cancelDataFieldValue(i)"><i class="far fa-window-close"></i>
+                                                Cancel</button>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row" *ngIf="MeltingIssuePost.OPGBatchLines.length > '0'">
+    <div class="col-md-4">
+        <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+            (click)="SaveMeltingIssue()">
+            <i class="far fa-save"></i> Submit</button>
+        <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" (click)="cancel()"
+            type="button"><i class="far fa-window-close"></i>&nbsp;Cancel</button>
+    </div>
+</div>
+<br>
+<div class="row" *ngIf="MeltingIssuePost.OPGBatchLines.length > '0'">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-12">
+                    <div class="social-widget">
+                        <div class="soc-header box-facebook" style="padding: 3px;">
+                            <h3 class="text-white">Total Summary</h3>
+                        </div>
+                        <div class="soc-content">
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>0.000</b></h4>
+                                <h5 class="text-black">Total Wt(gms)</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>0.00</b>
+                                    <h1 class="float-right">+</h1>
+                                </h4>
+                                <h5 class="text-black">Total Charges(Rs)</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>0.00</b>
+                                    <h1 class="float-right">+</h1>
+                                </h4>
+                                <h5 class="text-black">SGST</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>0.00</b>
+                                    <h1 class="float-right">+</h1>
+                                </h4>
+                                <h5 class="text-black">CGST</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>0.00</b>
+                                    <h1 class="float-right">=</h1>
+                                </h4>
+                                <h5 class="text-black">IGST</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>0.00</b></h4>
+                                <h5 class="text-black">Grand Total</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" style="display:block;margin: auto;width: 30%;">
+
+    <div class="modal fade" id="OPGMeltingIssueTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                        class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                        id="exampleModalLabel" (click)=printOpgMeltingIssue()><i class="fal fa-print"></i>
+                        Print</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <ng-container *ngIf="PrintTypeBasedOnConfig">
+                    <div class="container invoice-box htmlPrint" id="print-closed-section"
+                        style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+                        <pre>{{opgMeltingIssuePrint}}</pre>
+                    </div>
+                    <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                        <div id="DisplayopgMeltingIssueData" class="center"
+                            [innerHTML]='opgMeltingIssuePrint | safeHtml'></div>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <div class="col-md-3">
+        <pre>{{MeltingIssuePost | json}}</pre>
+    </div>
+</ng-container>

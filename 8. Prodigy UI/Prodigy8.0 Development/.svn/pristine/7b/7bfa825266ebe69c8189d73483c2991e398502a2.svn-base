@@ -1,0 +1,200 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="ROLMasterForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="GS">GS
+                  <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="frmCtrl_GS" (change)="getItemsByGs($event)"
+                  [(ngModel)]="ROLMasterListData.GSCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _GSList of GSList" [value]="_GSList.Code">
+                    {{_GSList.Name}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Item">Item<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="frmCtrl_Item"
+                  (change)="getItemsCode($event.target.selectedIndex)" [(ngModel)]="ROLMasterListData.CategoryCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let Item of ItemLists" [ngValue]="Item.ItemCode">
+                    {{Item.ItemName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Design">DesignName<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="frmCtrl_Desgin"
+                  (change)="DesignNameCode($event.target.selectedIndex)" [(ngModel)]="ROLMasterListData.DesignCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let Design of DesignList" [ngValue]="Design.Code">
+                    {{Design.Name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Counter">Counter<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="frmCtrl_counter"
+                  (change)="CounterNameCode($event.target.selectedIndex)" [(ngModel)]="ROLMasterListData.CounterCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _counterList of CounterList" [ngValue]="_counterList.Code">
+                    {{_counterList.Name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="control-label" for="MinQty">Min Qty<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="ROLMasterListData.MinQty"
+                  formControlName="frmCtrl_MinQty" IntegerDecimalFieldValidator maxlength="7" />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="control-label" for="MinWt">Min.Wt
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="ROLMasterListData.MinWt"
+                  formControlName="frmCtrl_MinWt" IntegerDecimalFieldValidator maxlength="7" />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="control-label" for="MaxQty">Max.Qty
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="ROLMasterListData.MaxQty"
+                  formControlName="frmCtrl_MaxQty" IntegerDecimalFieldValidator maxlength="7" />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="control-label" for="MaxWt">Max. Wt
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="ROLMasterListData.MaxWt"
+                  formControlName="frmCtrl_MaxWt" IntegerDecimalFieldValidator maxlength="7" />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <br>
+              <div class="form-group">
+                <ng-container *ngIf="EnableAdd">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    (click)="add(ROLMasterForm)">
+                    <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                </ng-container>
+                <ng-container *ngIf="EnableSave">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    (click)="save(ROLMasterForm)">
+                    <i class="fal fa-save"></i>&nbsp;Save</button>
+                </ng-container>
+                <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  (click)="clear()">
+                  <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                <ng-container>
+
+                  <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=Printing()><i class="fal fa-print"></i> Print</button>
+
+                </ng-container>
+
+
+
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <pre>{{ ROLMasterListData |json}}</pre>
+  </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="topbar">
+              <tr>
+                <th>GS</th>
+                <th>Item</th>
+                <th>Desing</th>
+                <th>Counter</th>
+                <th>Min.Qty</th>
+                <th>Min.Wt</th>
+                <th>Max.Qty</th>
+                <th>Max.Wt</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let _rolStock of RolStock">
+                <td>{{_rolStock.GSCode}}</td>
+                <td>{{_rolStock.CategoryName}}</td>
+                <td>{{_rolStock.DesignName}}</td>
+                <td>{{_rolStock.CounterName}}</td>
+                <td>{{_rolStock.MinQty}}</td>
+                <td>{{_rolStock.MinWt}}</td>
+                <td>{{_rolStock.MaxQty}}</td>
+                <td>{{_rolStock.MaxWt}}</td>
+
+                <td align="center">
+                  <i class="fas fa-edit" title="edit" (click)="editField(_rolStock)"></i>
+                </td>
+
+                <td align="center">
+                  <i class="fas fa-trash" title="close" (click)="Delete(_rolStock)"></i>
+                </td>
+
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <pre>{{ ROLMasterListData | json }}</pre> -->
+</div>
+
+<!--printRolModal-->
+
+<div class="modal fade" id="printRolModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 600px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="print">
+        <span>
+          <div id="DisplayData" [innerHTML]='PrintDetails  | safeHtml'></div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

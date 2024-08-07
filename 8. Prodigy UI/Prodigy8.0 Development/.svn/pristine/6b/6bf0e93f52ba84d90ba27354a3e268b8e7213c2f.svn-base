@@ -1,0 +1,382 @@
+<div class="card">
+
+  <div class="card-body">
+    <form [formGroup]="CounterStockForm">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label" for="Company">Date</label>
+            <!--  -->
+            <input type="text" class="form-control" [bsConfig]="datePickerConfig" bsDatepicker placeholder="Select Date"
+              [(ngModel)]="applicationDate" formControlName="applicationDate" />
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label" for="GS">GS</label>
+            <select class="form-control" formControlName="GS">
+              <option [ngValue]="null">Select</option>
+              <option *ngFor="let _GSList of GSList" [value]="_GSList.gsCode">
+                {{_GSList.Name}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label">Sub Location</label>
+            <select class="form-control" formControlName="CounterCode" (change)="CounterStockMain(CounterStockForm)">
+              <option [ngValue]="null">Select</option>
+              <option *ngFor="let Counter of CounterList" [ngValue]="Counter.gsCode">
+                {{Counter.Name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2" style="padding-top:28px;">
+          <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" href="javascript:void(0)"
+            (click)="CounterStockMain(CounterStockForm)">
+            Go
+          </a>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm-3" style="padding-top:28px;">
+          <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" data-toggle="modal"
+            href="javascript:void(0)" (click)="GSWiseSummary(CounterStockForm)">
+            <i class="fal fa-list-alt"></i>
+            <!-- GS Wise Summary -->
+            Summary
+          </a>
+        </div>
+        <div class="col-sm-3" style="padding-top:28px;">
+          <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" href="javascript:void(0)"
+            (click)="ItemWiseSummary(CounterStockForm)">
+            <i class="fas fa-info-circle"></i>
+            <!-- Item Wise Summary -->
+            Details
+          </a>
+        </div>
+      </div>
+    </form>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-5">
+          <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+            placeholder="Search for Item Name">
+        </div>
+        <br>
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="topbar">
+              <tr>
+                <th>Actions</th>
+                <th>GS</th>
+                <th>Item Name</th>
+                <th>Opn.Qty</th>
+                <th>Opn.Gwt</th>
+                <th>Bar.Qty</th>
+                <th>Bar.Gwt</th>
+                <th>Sal.Qty</th>
+                <th>Sal.Gwt</th>
+                <th>Rec.Qty</th>
+                <th>Rec.Gwt</th>
+                <th>Isu.Qty</th>
+                <th>Isu.Gwt</th>
+                <th>Cls.Qty</th>
+                <th>Cls.Gwt</th>
+                <th>Counter</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let CounterList of CounterStockList | filter:searchText; let i = index ">
+                <td class="padding"><i class="far fas fa-minus-circle pointer mr-4" style="color:orange" title="short"
+                    (click)="sendShortData(CounterList)"></i>
+                  <i class="fas fa-plus-circle pointer mr-4" style="color:red" title="Excess"
+                    (click)="sendExcessData(CounterList)"></i>
+                </td>
+                <td align="left">{{CounterList.GS}}</td>
+                <td align="left">{{CounterList.ItemName}}</td>
+                <td align="right">{{CounterList.OpnQty}}</td>
+                <td align="right">{{CounterList.OpnGwt | number : '1.3-3'}}</td>
+                <td align="right">{{CounterList.BarQty}}</td>
+                <td align="right">{{CounterList.BarGwt | number : '1.3-3'}}</td>
+                <td align="right">{{CounterList.SalQty}}</td>
+                <td align="right">{{CounterList.SalGwt | number : '1.3-3'}}</td>
+                <td align="right">{{CounterList.RecQty}}</td>
+                <td align="right">{{CounterList.RecGwt | number : '1.3-3'}}</td>
+                <td align="right">{{CounterList.IssQty}}</td>
+                <td align="right">{{CounterList.IssGwt | number : '1.3-3'}}</td>
+                <td align="right">{{CounterList.ClsQty}}</td>
+                <td align="right">{{CounterList.ClsGwt | number : '1.3-3'}}</td>
+                <td align="right">{{CounterList.Cntr}}</td>
+              </tr>
+              <tr *ngFor="let total of TotalList">
+                <td align="right">Total</td>
+                <td align="right"></td>
+                <td></td>
+                <td align="right">{{total.OpnQty}}</td>
+                <td align="right">{{total.OpnGwt | number : '1.3-3'}}</td>
+                <td align="right">{{total.BarQty}}</td>
+                <td align="right">{{total.BarGwt | number : '1.3-3'}}</td>
+                <td align="right">{{total.SalQty}}</td>
+                <td align="right">{{total.SalGwt | number : '1.3-3'}}</td>
+                <td align="right">{{total.RecQty}}</td>
+                <td align="right">{{total.RecGwt | number : '1.3-3'}}</td>
+                <td align="right">{{total.IssQty}}</td>
+                <td align="right">{{total.IssGwt | number : '1.3-3'}}</td>
+                <td align="right">{{total.ClsQty}}</td>
+                <td align="right">{{total.ClsGwt | number : '1.3-3'}}</td>
+                <td align="right"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3" style="padding-top:28px;">
+    <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" data-toggle="modal"
+      href="javascript:void(0)" (click)="ClosingStockSummary(CounterStockForm)">
+      <i class="fal fa-times"></i>
+      Closing Stock Report
+    </a>
+  </div>
+  <div class="col-sm-3" style="padding-top:28px;">
+    <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" href="javascript:void(0)"
+      (click)="CounterSummary(CounterStockForm)">
+      <i class="fas fa-list-alt"></i>
+      Counter Summary
+    </a>
+  </div>
+</div>
+
+
+<div class="modal overlay" id="short" role="dialog" data-backdrop="static" data-keyboard="false">
+
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content ">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" *ngIf="short">Short</h4>
+        <h4 class="modal-title" *ngIf="excess">Excess</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form [formGroup]="ModelForm">
+          <table class="table">
+            <tbody>
+              <tr *ngIf="short">
+                <td class="float-rt">Short Ref No</td>
+                <td><input type="text" class="form-control" formControlName="shortRefNo" readonly>
+                </td>
+                <td class="float-rt">Short Date</td>
+                <td>
+                  <input type="text" class="form-control" formControlName="TransactionDate" readonly>
+                </td>
+              </tr>
+              <tr *ngIf="excess">
+                <td class="float-rt">Excess Ref No</td>
+                <td><input type="text" class="form-control" formControlName="excessRefNo" readonly>
+                </td>
+                <td class="float-rt">Excess Date</td>
+                <td>
+                  <input type="text" class="form-control" formControlName="TransactionDate" readonly>
+                </td>
+              </tr>
+              <tr>
+                <td class="float-rt">Counter Code</td>
+                <td>
+                  <input type="text" class="form-control" readonly formControlName="CounterCode"
+                    [(ngModel)]="CounterStockSummaryHeader.CounterCode">
+                </td>
+              </tr>
+              <tr>
+
+                <td class="float-rt">GS Code</td>
+                <td>
+                  <input type="text" class="form-control" readonly formControlName="GSCode"
+                    [(ngModel)]="CounterStockSummaryHeader.GSCode">
+                </td>
+              </tr>
+              <tr>
+
+                <td class="float-rt">Item</td>
+                <td>
+                  <input type="text" class="form-control" readonly formControlName="ItemCode"
+                    [(ngModel)]="CounterStockSummaryHeader.ItemCode">
+                </td>
+              </tr>
+              <tr>
+                <td class="float-rt"> Qty</td>
+                <td><input type="text" class="form-control" formControlName="Qty"
+                    [(ngModel)]="CounterStockSummaryHeader.Qty"></td>
+                <td class="float-rt">Current Qty</td>
+                <td><input type="text" class="form-control" formControlName="CurQty" tabindex="-1"
+                    [(ngModel)]="CounterStockSummaryHeader.CurQty" readonly></td>
+
+              </tr>
+              <tr>
+                <td class="float-rt">Gr Wt</td>
+                <td><input type="text" class="form-control" formControlName="GrossWt"
+                    [(ngModel)]="CounterStockSummaryHeader.GrossWt" (change)="netwt()"></td>
+                <td class="float-rt">Current Gr Wt</td>
+                <td><input type="text" class="form-control" formControlName="GrWt"
+                    [(ngModel)]="CounterStockSummaryHeader.GrWt" readonly tabindex="-1"></td>
+              </tr>
+              <tr>
+                <td class="float-rt">St. Wt</td>
+                <td> <input type="text" class="form-control" formControlName="StoneWt"
+                    [(ngModel)]="CounterStockSummaryHeader.StoneWt" (change)="netwt()"></td>
+                <td class="float-rt">Current St. Wt</td>
+                <td><input type="text" class="form-control" formControlName="CurQty" tabindex="-1"
+                    [(ngModel)]="CounterStockSummaryHeader.CurQty" readonly></td>
+
+              </tr>
+              <tr>
+                <td class="float-rt">Net Wt</td>
+                <td> <input type="text" class="form-control" readonly tabindex="-1" formControlName="NetWt"
+                    [(ngModel)]="CounterStockSummaryHeader.NetWt"></td>
+                <td class="float-rt">Current Net. Wt</td>
+                <td><input type="text" class="form-control" formControlName="CurQty" tabindex="-1"
+                    [(ngModel)]="CounterStockSummaryHeader.CurQty" readonly></td>
+
+              </tr>
+              <tr>
+                <td class="float-rt">Remarks</td>
+                <td> <input type="text" class="form-control" formControlName="Remarks"
+                    [(ngModel)]="CounterStockSummaryHeader.Remarks"></td>
+
+              </tr>
+              <tr *ngIf="excess">
+                <td class="float-rt">Receipt By</td>
+                <td> <input type="text" class="form-control" formControlName="ReceiptBy"
+                    [(ngModel)]="CounterStockSummaryHeader.IssuedBy"></td>
+                <td></td>
+              </tr>
+              <tr *ngIf="short">
+                <td class="float-rt">Issued By</td>
+                <td> <input type="text" class="form-control" formControlName="IssuedBy"
+                    [(ngModel)]="CounterStockSummaryHeader.IssuedBy"></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+        <ng-container *ngIf="EnableJson">
+          <pre>{{CounterStockSummaryHeader | json}}</pre>
+        </ng-container>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <div class="input-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button"
+            *ngIf="excess" (click)="CounterExcessPut();"><i class="fal fa-save"></i> Save</button>
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button" *ngIf="short"
+            (click)="CounterShortPut();"><i class="fal fa-save"></i> Save</button>
+          <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" type="button"
+            (click)="closeModal()"><i class="far fa-window-close"></i>
+            Exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="modal overlay" id="GSWiseSummary" role="dialog" data-backdrop="static" data-keyboard="false">
+
+  <div class="modal-dialog modal-lg" style="max-width: 1360px;">
+    <div class="modal-content ">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printCounterStockSummary()><i class="fal fa-print"></i> Print</button>
+
+
+        <div class="col-md-2">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{GSSummaryList}}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal overlay" id="ItemWiseSummary" role="dialog" data-backdrop="static" data-keyboard="false">
+
+  <div class="modal-dialog modal-lg" style="max-width: 1360px;">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printItemWise()><i class="fal fa-print"></i> Print</button>
+
+        <div class="col-md-2">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+      </div>
+
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{ItemWiseList}}</pre>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<div class="modal overlay" id="ClosingStockSummary" role="dialog" data-backdrop="static" data-keyboard="false">
+
+  <div class="modal-dialog modal-lg" style="max-width: 1360px;">
+    <div class="modal-content ">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel"><i class="fal fa-print"></i> Print</button>
+
+
+        <div class="col-md-2">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{ClosingStockSummaryList}}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal overlay" id="CounterSummary" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+
+  <div class="modal-dialog modal-lg" style="max-width: 1400px;">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printCounterSummary()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <span>
+        <div id="DisplayData" class="center" [innerHTML]='CounterSummaryList'></div>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Code</th>
+                                <th> Name</th>
+                                <th>Status</th>
+                                <th>Open</th>
+                                <th>close</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <i class="fas fa-lock-open" title="open"></i>
+                                </td>
+                                <td>
+                                    <i class="fas fa-lock" title="open"></i>
+                                </td>
+                            <tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

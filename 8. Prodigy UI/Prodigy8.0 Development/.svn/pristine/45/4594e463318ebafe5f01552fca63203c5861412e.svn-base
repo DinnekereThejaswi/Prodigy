@@ -1,0 +1,161 @@
+<div class="card">
+  <div class="card-body">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-2 ">
+          <div class="form-group">
+            <label for="OrderNo">Order No</label>
+            <input class="form-control" id="OrderNo" placeholder="Order No"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+              onKeyPress="if(this.value.length==7) return false;" GreenBorder type="number" #OrderNo>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <button class="btn  btn-rounded " (click)="getOrderDetails(OrderNo.value)" style="margin-top: 22px;"><i
+                  class="fal fa-search"></i> Search</button>
+              <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary" type="button"
+                (click)="cancel()" style="margin-top: 22px;"><i class="fal fa-close"></i>&nbsp;Clear</button>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="NoRecordsItemSummary">
+          <div class="col-md-2 ">
+            <div class="form-group">
+              <i class="fal fa-money-bill"></i>&nbsp; <span class="text-muted">Order No</span>
+              <h1 class="font-light">{{itemDetails.NewBillNo}}</h1>
+            </div>
+          </div>
+          <div class="col-md-2 ">
+            <div class="form-group">
+              <i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">Order
+                Date</span>
+              <h1 class="font-light">{{itemDetails.OrderDate | date: 'dd/MM/yyyy'}}</h1>
+            </div>
+          </div>
+          <div class="col-md-2 ">
+            <div class="form-group">
+              <i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">Order Status</span>
+              <h1 class="font-light" [ngClass]="StatusColor ? 'text-green' : 'text-red'">{{status}}</h1>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div class="card-header Pointer " (click)="ToggleCustomerData()" data-toggle="collapse" href="#Customer"
+      [ngClass]="EnableCustomerTab ? 'collapsed' : ''" [attr.data-toggle]="EnableCustomerTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);">
+      <div class="row">
+        <div class="col-md-2 ">
+          <a class="card-title align-middle " style="color:#0096FF">
+            <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+            <span class="align-middle"><ins>Customer Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture the New customer
+                  information and Existing customer information</span>
+              </div>
+            </span>
+          </a>
+        </div>
+
+        <ng-container *ngIf="ToggleCustomer">
+          <ng-container *ngIf="Customer!=null">
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> Customer: {{Customer.CustName}} </span></h4>
+            </div>
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> MobileNo: {{Customer.MobileNo}} </span></h4>
+            </div>
+
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div id="Customer" class="card-body collapse" [collapse]="EnableCustomerTab">
+      <app-customer [filterRadioBtns]="filterRadioBtns">
+      </app-customer>
+    </div>
+  </div>
+  <br>
+  <div id="accordian" class="accordion">
+    <div class="card mb-0">
+      <div class="card-header Pointer" href="#ItemsPayment" [ngClass]="EnableItemsPaymentsTab ? 'collapsed' : ''"
+        (click)="ToggleItemsPaymentData()"
+        style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);"
+        [attr.data-toggle]="EnableItemsPaymentsTab ? '':'collapse'">
+        <div class="row">
+          <div class="col-md-2 ">
+            <a class="card-title align-middle " style="color:#005BFF">
+              <i class="fal fa-file-invoice fa-2x mr-2 align-middle"></i>
+              <span class="align-middle "><ins>Order Details </ins>
+                <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                  <span class="tooltiptext tooltip-top">Capture the information like
+                    Counter code , Item name , Item description ,Qty, Appr.Wt , MC types like MC/gram , MC/piece
+                    etc</span>
+                </div>
+              </span>
+            </a>
+          </div>
+          <ng-container *ngIf="NoRecordsItemSummary">
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> Karat: {{itemDetails.Karat}} </span></h4>
+            </div>
+            <!-- <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> Rate: {{itemDetails.Rate | number : '1.2-2'}} </span></h4>
+            </div> -->
+          </ng-container>
+        </div>
+      </div>
+      <ng-container *ngIf="NoRecordsItemsPayments">
+        <div id="ItemsPayment" class="card-body collapse" [collapse]="EnableItemsPaymentsTab">
+          <app-itemdetails [OrderType]="OrderType"></app-itemdetails>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <br>
+  <div id="accordian" class="accordion">
+    <div class="card mb-0">
+      <div class="card-header Pointer" href="#Payment" (click)="TogglePaymentData()"
+        [ngClass]="EnablePaymentsTab ? 'collapsed' : ''" [attr.data-toggle]="EnablePaymentsTab ? '':'collapse'"
+        style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+        <div class="row">
+          <div class="col-md-2 ">
+            <a class="card-title align-middle" style="color:#FF00C5">
+              <i class="far fa-rupee-sign fa-2x mr-2 align-middle"></i>
+              <span class="align-middle"><ins>Receipt Details </ins>
+                <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                  <span class="tooltiptext tooltip-top">Capture the Receipts
+                    ( Payment collection modes) information like Cash , Cheque , Card , Scheme Adj, Purchase Bill
+                    etc.</span>
+                </div>
+              </span>
+            </a>
+          </div>
+          <ng-container *ngIf="NoRecordsPaymentSummary">
+            <div class="col-md-4 pull-right">
+            </div>
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> Amount: {{PaymentSummary.Amount | number : '1.2-2'}} </span></h4>
+
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <ng-container *ngIf="NoRecordsPayments">
+        <div id="Payment" class="card-body collapse" [collapse]="EnablePaymentsTab">
+          <app-payment [EnableDisPayControls]="EnableDisPayControls"></app-payment>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <br>
+</div>
+<span><b>Note :</b>All Weights are in Grams</span>
+<!-- <pre>{{itemDetails | json}}</pre>  -->

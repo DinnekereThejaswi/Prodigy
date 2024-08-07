@@ -1,0 +1,201 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="GSTPostingSetupForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-2">
+              <!-- <div class="form-group">
+                <select  class="form-control" formControlName="ID" >
+                <label class="control-label" for="GSTGroupCode">Group Code <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span></label>
+                <select class="form-control" 
+                  [(ngModel)]="GSTPostingSetupListData.GSTGroupCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _types of GSTList" [value]="_types.Code">
+                    {{_types.Code}}
+                  </option>
+                </select>
+              </div> -->
+              <div class="form-group">
+                <label class="control-label"> GST Group Code </label>
+                <select class="form-control" formControlName="frmCtrl_GSTGroupCode"
+                  [(ngModel)]="GSTPostingSetupListData.GSTGroupCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _types of GSTList" [value]="_types.Code">
+                    {{_types.Code}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="GSTComponentCode">Component Code<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                  <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top">GST Component Code</span>
+                  </div>
+                </label>
+                <select class="form-control" formControlName="frmCtrl_GSTComponentCode"
+                  [(ngModel)]="GSTPostingSetupListData.GSTComponentCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _ComponentCodeAndCalcList of ComponentCodes"
+                    [ngValue]="_ComponentCodeAndCalcList.name">
+                    {{_ComponentCodeAndCalcList.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="control-label" for="EffectiveDate">Effective Date </label>
+                <input type="text" bsDatepicker class="form-control" [bsConfig]="datePickerConfig"
+                  [(ngModel)]="applicationDate" formControlName="frmCtrl_EffectiveDate"
+                  (ngModelChange)="byDate(applicationDate)" value="{{ applicationDate | date:'dd/MM/yyyy' }}"
+                  placeholder="Enter date" IntegerDecimalFieldValidator />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="control-label" for="GSTPercent">GST %
+                </label>
+                <input type="text" class="form-control" id="Code" [(ngModel)]="GSTPostingSetupListData.GSTPercent"
+                  formControlName="frmCtrl_GSTPercent" IntegerDecimalFieldValidator maxlength="3"
+                  placeholder="Enter GST%" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="CalculationOrder">Calculation Order <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span></label>
+                <select class="form-control" formControlName="frmCtrl_CalculationOrder"
+                  [(ngModel)]="GSTPostingSetupListData.CalculationOrder">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _order of CalculationOrder" [value]="_order.code">
+                    {{_order.code}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="ReceivableAccount">Input Account </label>
+                <select class="form-control" formControlName="frmCtrl_ReceivableAccount"
+                  (change)="LoadInputDetails($event.target.selectedIndex)"
+                  [(ngModel)]="GSTPostingSetupListData.ReceivableAccount">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _InputOutputList of GstPostingSetupAcList" [value]="_InputOutputList.AccCode">
+                    {{_InputOutputList.AccName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label" for="PayableAccount">Output Account </label>
+                <select class="form-control" formControlName="frmCtrl_PayableAccount"
+                  (change)="LoadOutputDetails($event.target.selectedIndex)"
+                  [(ngModel)]="GSTPostingSetupListData.PayableAccount">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _OutputList of GstPostingOutputAcAcList" [ngValue]="_OutputList.AccCode">
+                    {{_OutputList.AccName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="control-label">Is Registered</label>
+                <div class="form-group" style="width: 20px;height: 20px;">
+                  <input type="checkbox" class="chkbxsize" class="form-control"
+                    [(ngModel)]="GSTPostingSetupListData.IsRegistered" formControlName="frmCtrl_IsRegistered"
+                    (change)="IsRegistered($event)" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <ng-container *ngIf="EnableAdd">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="add(GSTPostingSetupForm)">
+                    <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                </ng-container>
+                <ng-container *ngIf="EnableSave">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="save()">
+                    <i class="fal fa-save"></i>&nbsp;Save</button>
+                </ng-container>
+                <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  style="margin-top: 1.2rem !important;" (click)="clear()">
+                  <i class="fal fa-trash"></i>&nbsp;Clear</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <ng-container *ngIf="EnableJson">
+          <pre>{{GSTPostingSetupListData | json}}</pre>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-5">
+        <h3>GST Posting Setup</h3>
+      </div>
+      <h6 class="card-subtitle"></h6>
+      <div class="table-responsive my-custom-scrollbar">
+        <table class="table table-bordered ">
+          <thead class="topbar">
+            <tr>
+              <th>ID</th>
+
+              <th>Group Code</th>
+              <th>Component Code</th>
+              <th>Effective Date</th>
+              <th>GST %</th>
+              <th>Calculation Order</th>
+              <th>Input Account</th>
+              <th>Output Account</th>
+              <th>IsRegistered</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- <tr *ngFor="let kar of Location | search: searchText | paginate: { itemsPerPage:top, totalItems:MainCount, currentPage: p }" [ngClass]="{'btn-primary': cust.ID == currentId }"> -->
+            <tr *ngFor="let List of GstPostingSetupList">
+              <td>{{List.ID}}</td>
+              <td>{{List.GSTGroupCode}}</td>
+              <td>{{List.GSTComponentCode}}</td>
+              <td>{{List.EffectiveDate | date: 'MM-dd-yyyy'}}</td>
+              <td>{{List.GSTPercent}}</td>
+              <td>{{List.CalculationOrder}}</td>
+              <td>{{List.ReceivableAccountName}}</td>
+              <td>{{List.PaybaleAccountName}}</td>
+              <td>{{List.IsRegistered}}</td>
+
+
+              <td>
+                <i class="far fa-pencil-alt pointer mr-4" style="color:orange" title="Edit" (click)="edit(List)"></i>
+              </td>
+              <td><i class="fas fa-trash-alt pointer" style="color:red" title="Delete"
+                  (click)="deletingRecord(List)"></i></td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="EnableJson">
+    <pre>{{GSTPostingSetupListData | json}}</pre>
+  </ng-container>
+</div>

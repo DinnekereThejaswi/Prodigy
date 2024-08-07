@@ -1,0 +1,200 @@
+<div class="card">
+    <div class="card-body">
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <div>
+                            <i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">
+                                Voucher Date</span>
+                            <h2 class="font-light">{{ContraEntryHeader.ChequeDate | date:'dd/MM/yyyy'}}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="VoucherNo">Voucher No.</label>
+                        <input type="number" class="form-control" name="VoucherNo"
+                            [(ngModel)]="ContraEntryHeader.VoucherNo" readonly>
+                    </div>
+                </div>
+
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <label for="">Type</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" name="Type" [(ngModel)]="TypeName"
+                            (change)="onTypeSelected($event.target.value)">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let type of TransTypeList" [value]="type.Name">
+                                {{type.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Master Ledger</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" name="AccountCodeMaster"
+                            [(ngModel)]="ContraEntryHeader.AccountCodeMaster" (change)="getContraEntryTable()">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let ledger of LedgerList" [value]="ledger.Code">
+                                {{ledger.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="topbar">
+                        <tr>
+                            <th>Account Name</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th>Naration</th>
+                            <th>Ref. No.</th>
+                            <th>Cheque No.</th>
+                            <th>Cheque Date</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select class="form-control CustomWidth150" [(ngModel)]="ContraEntryHeader.AccountCode">
+                                    <option [ngValue]="null">Select</option>
+                                    <option *ngFor="let name of ApplicationNameList" [value]="name.Code">
+                                        {{name.Name}}</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <input type="number" class="form-control CustomWidth100"
+                                    [(ngModel)]="ContraEntryHeader.DebitAmount" [readonly]="EnableDebit">
+                            </td>
+
+                            <td>
+                                <input type="number" class="form-control CustomWidth100"
+                                    [(ngModel)]="ContraEntryHeader.CreditAmount" [readonly]="EnableCredit">
+                            </td>
+
+                            <td>
+                                <input list="NarrationList" class="form-control CustomWidth150" name="narration"
+                                    [(ngModel)]="ContraEntryHeader.Narration" />
+                                <datalist id="NarrationList">
+                                    <option [value]="null">Select</option>
+                                    <option *ngFor="let list of NarrationList" [value]="list.Narration">
+                                        {{list.Narration}}</option>
+                                </datalist>
+                            </td>
+
+                            <td>
+                                <input type="number" class="form-control CustomWidth100"
+                                    [(ngModel)]="ContraEntryHeader.ReceiptNo">
+                            </td>
+
+                            <td>
+                                <input type="number" class="form-control CustomWidth100 "
+                                    [(ngModel)]="ContraEntryHeader.ChequeNo" [readonly]="EnableChequeNo">
+                            </td>
+
+                            <td>
+                                <form [formGroup]="contraEntryForm">
+                                    <input type="text" bsDatepicker class="form-control CustomWidth100"
+                                        [bsConfig]="datePickerConfig" placeholder="Select Date"
+                                        [(ngModel)]="applicationDate" formControlName="applicationDate"
+                                        [readonly]="EnableChequeDate">
+                                </form>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="EnableAdd">
+                                    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                        [disabled]="EnableAddRow" (click)="postContraEntry();">
+                                        <i class="far fa-plus-circle" style="padding-right:10px"></i>Add</button>
+                                </ng-container>
+                                <ng-container *ngIf="EnableSave">
+                                    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                        (click)="putContraEntryTable();">
+                                        <i class="far fa-plus-circle" style="padding-right:10px"></i>Save</button>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary"
+                                    type="button" (click)="clear()"><i class="fal fa-close"></i>&nbsp;Clear</button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="topbar">
+                    <tr>
+                        <th>Action</th>
+                        <th>Sl. No.</th>
+                        <th>Voucher No</th>
+                        <th>Account Name</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                        <th>Naration</th>
+                        <th>Ref. No</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let table of ContraEntryList;let i = index">
+                        <td><i class="fas fa-edit" title="Edit" (click)="getContraEntryList(table)"
+                                style="padding-right:10px"></i>
+                            <i class="fal fa-print" (click)="PrintContraEntry(table)"></i>
+                        </td>
+                        <td>{{i+1}}</td>
+                        <td>{{table.VoucherNo}}</td>
+                        <td>{{table.AccName}}</td>
+                        <td>{{table.Debit}}</td>
+                        <td>{{table.Credit}}</td>
+                        <td>{{table.Narration}}</td>
+                        <td>{{table.RefNo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ReprintContraEntry" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print
+                </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="print">
+                <span>
+                    <div id="DisplayData" [innerHTML]='PrintContraDetails'></div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{ ContraEntryHeader | json }}</pre>
+</ng-container>

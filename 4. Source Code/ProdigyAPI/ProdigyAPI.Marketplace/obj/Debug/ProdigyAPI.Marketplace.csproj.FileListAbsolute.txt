@@ -1,0 +1,38 @@
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Marketplace.dll.config
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Marketplace.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Marketplace.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\EntityFramework.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\EntityFramework.SqlServer.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\Newtonsoft.Json.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Model.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.ShipmentIntegration.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.SIGlobals.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\NtoW.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Model.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.ShipmentIntegration.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.SIGlobals.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\EntityFramework.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\EntityFramework.SqlServer.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\Newtonsoft.Json.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\obj\Debug\ProdigyAPI.Marketplace.csprojResolveAssemblyReference.cache
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\obj\Debug\ProdigyAPI.Marketplace.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\obj\Debug\ProdigyAPI.Marketplace.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Marketplace.dll.config
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Marketplace.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Marketplace.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\EntityFramework.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\EntityFramework.SqlServer.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\Newtonsoft.Json.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Model.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.ShipmentIntegration.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.SIGlobals.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\NtoW.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.Model.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.ShipmentIntegration.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\ProdigyAPI.SIGlobals.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\EntityFramework.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\EntityFramework.SqlServer.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\bin\Debug\Newtonsoft.Json.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\obj\Debug\ProdigyAPI.Marketplace.csprojResolveAssemblyReference.cache
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\obj\Debug\ProdigyAPI.Marketplace.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Marketplace\obj\Debug\ProdigyAPI.Marketplace.pdb

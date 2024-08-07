@@ -1,0 +1,7 @@
+import * as ɵngcc0 from '@angular/core';
+export declare class KeyboardShortcutsModule {
+    static ngModuleDef: ɵngcc0.ɵɵNgModuleDefWithMeta<KeyboardShortcutsModule, never, never, never>;
+    static ngInjectorDef: ɵngcc0.ɵɵInjectorDef<KeyboardShortcutsModule>;
+}
+
+//# sourceMappingURL=ng-keyboard-shortcuts.module.d.ts.map

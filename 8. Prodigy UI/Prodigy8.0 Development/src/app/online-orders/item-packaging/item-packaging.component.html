@@ -1,0 +1,204 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="">Assignment No</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" [(ngModel)]="AssignmentNo"
+                            [ngModelOptions]="{standalone: true}">
+                            <option [value]="null">Select</option>
+                            <option *ngFor="let _pickListNumber of PickListNumber" [value]="_pickListNumber.No">
+                                {{_pickListNumber.No}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group" style="display: inline-block;padding-top: 1.8rem;">
+                    <!-- <i class="fa fa-refresh fa-2x" (click)="getPickListNo()"></i> -->
+                    <i class="fa fa-refresh fa-2x" (click)="refreshPickListNo()"></i>
+
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group" style="display: inline-block;padding-top: 1.5rem;">
+                    <button class=" btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        (click)="OrdersForPacking()">
+                        <i class="fal fa-plus-circle"></i> &nbsp;Add </button>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group" style="display: inline-block;padding-top: 1.5rem;">
+                    <button class="btn btn-success btn-rounded" type="button" (click)="GetOrdersForPacking()">
+                        <i>Get Item Details For packaging / Update packaging</i></button>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group" style="display: inline-block;padding-top: 1.5rem;">
+                    <input class="form-control" placeholder="Enter Barcode" type="number">
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="table-responsive my-custom-scrollbar">
+                <table class="table" id="panels">
+                    <thead class="topbar">
+                        <tr>
+                            <th></th>
+                            <th>Order No</th>
+                            <th>Order Source</th>
+                            <th>Central RefNo</th>
+                            <th>Barcode No</th>
+                            <th>Item Name</th>
+                            <th>Qty</th>
+                            <th>Package</th>
+                            <th>Width</th>
+                            <th>Length</th>
+                            <th>Height</th>
+                            <th>Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let _ordersForPackingDets of OrdersForPackingDets;let i=index;">
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="chkbxsize" [checked]="i  === selectedIndex"
+                                    (click)="onCheckboxChange(_ordersForPackingDets,$event,i)" />
+                            </td>
+                            <td>{{_ordersForPackingDets.OrderNo}}</td>
+                            <td>{{_ordersForPackingDets.OrderSource}}</td>
+                            <td>{{_ordersForPackingDets.CentralRefNo}}</td>
+                            <td>{{_ordersForPackingDets.BarcodeNo}}</td>
+                            <td>{{_ordersForPackingDets.ItemName}}</td>
+                            <td>{{_ordersForPackingDets.Qty}}</td>
+                            <td>{{_ordersForPackingDets.PackageCode}}</td>
+                            <td>{{_ordersForPackingDets.Width | number:'1.2-2'}}</td>
+                            <td>{{_ordersForPackingDets.Length | number:'1.2-2'}}</td>
+                            <td>{{_ordersForPackingDets.Height | number:'1.2-2'}}</td>
+                            <td>{{_ordersForPackingDets.Weight | number:'1.3-3'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="row pt-3">
+    <div class="col-md-12 col-lg-5 col-xlg-3">
+        <div class="card" style="border: 1px solid black;">
+            <div class="box">
+                <div class="form-group">
+                    <label class="control-label"> Package </label>
+                    <select class="form-control mr-auto mt-2 mt-lg-0" (change)="PackageMasterAttributes()"
+                        [(ngModel)]="PackageCode">
+                        <option [value]="null">Select</option>
+                        <option *ngFor="let _packageMasterList of packageMasterList" [value]="_packageMasterList.Code">
+                            {{_packageMasterList.Name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="control-label"> Weight </label>
+                            <input class="form-control" [(ngModel)]="postcreatePackage.Weight"
+                                placeholder="Enter Weight" type="number">
+                        </div>
+                    </div>
+                    <div class="col-md-7" *ngIf="PackageMasterAttributesDets!=null">
+                        <li class="list-group-item">Weight : {{PackageMasterAttributesDets.Weight}}
+                            {{PackageMasterAttributesDets.WeightUoM}}</li>
+                        <li class="list-group-item">Width : {{PackageMasterAttributesDets.Width}}
+                            {{PackageMasterAttributesDets.WidthUoM}}</li>
+                        <li class="list-group-item">Height : {{PackageMasterAttributesDets.Height}}
+                            {{PackageMasterAttributesDets.HeightUoM}}</li>
+                        <li class="list-group-item">Length : {{PackageMasterAttributesDets.Length}}
+                            {{PackageMasterAttributesDets.LenghUoM}}</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-7 col-xlg-4">
+        <div class="card card-inverse " style="border: 1px solid black;">
+            <div class="box text-center">
+                <div class="table-responsive">
+                    <form [formGroup]="OTLForm">
+                        <table class="table" id="panels">
+                            <thead class="topbar">
+                                <tr>
+                                    <th>OTL NO </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td colspan="2">
+                                    <input type="text" style="text-transform:uppercase" maxlength="10"
+                                        formControlName="OTLNO"
+                                        onkeypress='return (event.charCode > 96 && event.charCode < 123) || (event.charCode > 64 && event.charCode < 91) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode <= 31'>
+                                    &nbsp;&nbsp;
+                                    <button
+                                        class=" btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        (click)="addOTLNo(OTLForm)">
+                                        <i class="fal fa-plus-circle"></i> &nbsp;Add </button>
+                                    <button
+                                        class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        (click)="clear()">
+                                        <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                                </td>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered ">
+                            <thead class="topbar">
+                                <tr>
+                                    <th>OTL NO </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let _OTLList of OTLList; let i = index">
+                                <tr>
+                                    <td>{{_OTLList.OTLNO}}</td>
+                                    <td>
+                                        <i class="far fa-trash-alt fa-1-5x pointer"
+                                            style='color: red; font-size: 1.5em !important;'
+                                            (click)="deleteOTLNo(i)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-4" style="margin-top: 2px;">
+        <div class="text-right">&nbsp;
+            <button class="btn btn-success btn-rounded" type="button" (click)="AddPackage()"><i
+                    class="fa fa-plus"></i>&nbsp;Add
+                Package</button>
+        </div>
+    </div>
+</div>
+<br>
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{postcreatePackage | json}}</pre>
+</ng-container>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+    <p style="color: white"> Please Wait... </p>
+</ngx-spinner>

@@ -1,0 +1,13 @@
+{
+  "name": "@angular/material/button-toggle",
+  "typings": "../button-toggle.d.ts",
+  "main": "../bundles/material-button-toggle.umd.js",
+  "module": "../esm5/button-toggle.es5.js",
+  "es2015": "../esm2015/button-toggle.js",
+  "sideEffects": false,
+  "es2015_ivy_ngcc": "../__ivy_ngcc__/esm2015/button-toggle.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14"
+  }
+}

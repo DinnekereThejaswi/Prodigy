@@ -1,0 +1,264 @@
+<div style="color: brown; text-align: right; font-style: italic;">
+  <app-lastdocno [routerUrl]="routerUrl"></app-lastdocno>
+</div>
+<br>
+
+<div class="card">
+  <div class="card-body">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-2 ">
+          <div class="form-group">
+            <label for="EstNo">Est No</label>
+            <input class="form-control" id="exampleAccount"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="Est No"
+              min="0" type="text" #estNo (keyup.enter)="getPurchaseEstimationDetails(estNo.value)" GreenBorder autofocus autocomplete="off">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="OrderNo">Sales Person</label>
+            <select class="form-control mr-auto mt-2 mt-lg-0" [(ngModel)]="SalesPerson"
+              [ngModelOptions]="{standalone: true}">
+              <option value="" [disabled]="true">Select</option>
+              <option *ngFor="let _salesman of SalesManList" [disabled]="true" [value]="_salesman.sal_code">
+                {{_salesman.CodeName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="text-left"><i class="fal fa-calendar-alt"></i>&nbsp;
+              <span class="text-muted">Date</span>
+              <h2 class="font-light">{{ApplicationDate}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label *ngFor="let radiobutton of radioItems" class="form-check-inline">
+              <input type="radio" name="option" (click)="OnRadioBtnChnge(radiobutton)" class="form-check-input"
+                [value]="radiobutton" [checked]="radiobutton === model.option">
+              <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div class="card-header Pointer" (click)="ToggleCustomerData()" href="#Customer"
+      [ngClass]="CollapseCustomerDetailsTab ? 'collapsed' : ''"
+      [attr.data-toggle]="CollapseCustomerDetailsTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+      <div class="row">
+        <div class="col-md-2 ">
+          <a class="card-title align-middle Pointer" style="color:#0096FF">
+            <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+            <span class="align-middle Pointer"><ins>Customer Details</ins></span>
+          </a>
+        </div>
+        <!-- <ng-container *ngIf=" ToggleCustomer"> -->
+        <ng-container *ngIf="CollapseCustomerTab">
+          <div class="col-md-1 pull-right">
+            <!-- <h4 ><span class="align-middle"> Total Items: {{SalesData.TotalItems}} </span></h4> -->
+          </div>
+          <div class="col-md-2 pull-right" style="color:#0096FF">
+            <h4><span class="align-middle"></span></h4>
+          </div>
+          <div class="col-md-2 pull-right">
+            <h4><span class="align-middle"> ID: {{CustomerName.ID}}</span></h4>
+          </div>
+          <div class="col-md-3 pull-right">
+            <h4><span class="align-middle"> Customer: {{CustomerName.CustName}}</span></h4>
+          </div>
+        </ng-container>
+        <!-- </ng-container> -->
+      </div>
+    </div>
+    <div id="Customer" class="card-body collapse" [collapse]="CollapseCustomerDetailsTab">
+      <app-customer [filterRadioBtns]="filterRadioBtns">
+      </app-customer>
+    </div>
+  </div>
+  <br>
+  <div class="card mb-0">
+    <div class="card-header Pointer" href="#Purchase" (click)="TogglePurchaseData()"
+      [ngClass]="EnablePurchaseTab ? 'collapsed' : ''" [attr.data-toggle]="EnablePurchaseTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+      <div class="row">
+        <div class="col-md-2 ">
+          <a class="card-title align-middle Pointer" style="color:#FF00C5">
+            <i class="far fa-shopping-cart fa-2x mr-2 align-middle"></i>
+            <span class="align-middle Pointer"><ins>Purchase</ins></span>
+          </a>
+        </div>
+        <ng-container *ngIf="TogglePurchase">
+          <ng-container *ngIf="NoRecordsPurchase">
+            <div class="col-md-2 pull-right">
+              <h4><span class="align-middle"> St. Wt:
+                  {{PurchaseData.StoneWt | number : '1.2-2'}}</span>
+              </h4>
+            </div>
+            <div class="col-md-2 pull-right">
+              <h4><span class="align-middle"> Gr. Wt:
+                  {{PurchaseData.GrossWt | number : '1.3-3'}}</span>
+              </h4>
+            </div>
+            <div class="col-md-2 pull-right">
+              <h4><span class="align-middle"> Net Wt: {{PurchaseData.NtWt | number : '1.3-3'}}</span>
+              </h4>
+            </div>
+            <div class="col-md-2 pull-right">
+              <h4><span class="align-middle"> Amt:
+                  {{PurchaseData.Amount | currencyFormat : PurchaseData.Amount}}</span>
+              </h4>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div id="Purchase" class=" collapse" [collapse]="EnablePurchaseTab" style="padding:10px;">
+      <app-purchase (PurchaseAmountChange)='PurchaseTotalAmountCalculation($event)'></app-purchase>
+    </div>
+  </div>
+  <br>
+  <ng-container *ngIf="EnableDisablePayment">
+    <div class="card mb-0">
+      <div class="card-header Pointer" href="#Payment" (click)="TogglePaymentData()"
+        [ngClass]="EnablePaymentsTab ? 'collapsed' : ''" [attr.data-toggle]="EnablePaymentsTab ? '':'collapse'"
+        style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+        <div class="row">
+          <div class="col-md-2 ">
+            <a class="card-title align-middle" style="color:rgb(0, 204, 255)">
+              <i class="far fa-rupee-sign fa-2x mr-2 align-middle"></i>
+              <span class="align-middle"><ins>Payment Details</ins>
+                <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                  <span class="tooltiptext tooltip-top">Capture the Receipts
+                    ( Payment collection modes) information like Cash , Cheque , Card , Scheme Adj, Purchase Bill
+                    etc</span>
+                </div>
+              </span>
+            </a>
+          </div>
+          <ng-container *ngIf="NoRecordsPaymentSummary">
+            <div class="col-md-1 pull-right">
+            </div>
+            <div class="col-md-2 pull-right">
+
+            </div>
+            <div class="col-md-2 pull-right">
+
+            </div>
+            <div class="col-md-3 pull-right">
+              <ng-container *ngIf="PaymentSummary.Amount">
+                <h4><span class="align-middle"> Received Amount:
+                    {{PaymentSummary.Amount}}</span>
+                </h4>
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div id="Payment" class="card-body collapse" [hidden]="EnablePaymentsTab"
+        [ngClass]="EnablePaymentsTab ? 'hide' : 'show'">
+        <app-payment (PaidAmountChange)="PaidTotalAmountCalculation($event)" [autoFillAmount]="autoFetchAmount"
+          [argPageName]="pageName"></app-payment>
+      </div>
+    </div>
+  </ng-container>
+  <br>
+  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button" (click)="Submit()"
+    [hidden]="EnableSubmitButton"><i class="fal fa-save"></i> Submit</button>
+  <br>
+  <br>
+  <ng-container *ngIf="EnableDisablePayment">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="row">
+            <div class="col-12">
+              <div class="social-widget">
+                <div class="soc-header box-twitter" style="padding: 3px;">
+                  <h3 class="text-white">Purchase Summary</h3>
+                </div>
+                <div class="soc-content">
+                  <div class="col-2 b-r">
+                    <h4 class="font-medium"> <b>0.00</b>
+                    </h4>
+                    <h5 class="text-black">Total SGST</h5>
+                  </div>
+                  <div class="col-2 b-r">
+                    <h4 class="font-medium"><b>0.00</b>
+                    </h4>
+                    <h5 class="text-black">Total CGST</h5>
+                  </div>
+                  <div class="col-2 b-r">
+                    <h4 class="font-medium"><b>
+                        0.00</b>
+                    </h4>
+                    <h5 class="text-black">Total IGST</h5>
+                  </div>
+                  <div class="col-2 b-r">
+                    <h4 class="font-medium"> <b>{{PurchaseTotAmount | number : '1.2-2'}}</b>
+                      <h1 class="float-right">-</h1>
+                    </h4>
+                    <h5 class="text-black">Trade in Amt</h5>
+                  </div>
+                  <div class="col-2 b-r">
+                    <h4 class="font-medium"><b>{{PaidAmount | number : '1.2-2'}}</b>
+                      <h1 class="float-right">=</h1>
+                    </h4>
+                    <h5 class="text-black">Paid Amount</h5>
+                  </div>
+                  <div class="col-2 b-r">
+                    <h4 class="font-medium"><b>
+                        {{BalanceAmount() | number : '1.2-2'}}</b>
+                    </h4>
+                    <h5 class="text-black">Balance Amount</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<!-- <ng-container *ngIf="EnableReprint">
+  <app-reprint-purchasebill [BillNo]="BillNo"></app-reprint-purchasebill>
+</ng-container> -->
+<div class="modal fade" id="ReprintPurchaseBillingModal" tabindex="-1" data-backdrop="static" data-keyboard="false"
+role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button"
+        class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+        id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+      <button type="button" class="close" (click)="closePurBillTab()" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <ng-container *ngIf="PrintTypeBasedOnConfig">
+      <div class="container invoice-box htmlPrint" id="print-closed-section"
+        style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+        <pre>{{PrintDetails}}</pre>
+      </div>
+      <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+        <div id="DisplayData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+      </span>
+    </ng-container>
+  </div>
+</div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+  <pre>{{PurchaseBilling | json}}</pre>
+</ng-container>

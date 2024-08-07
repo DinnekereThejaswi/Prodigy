@@ -1,0 +1,158 @@
+<div class="container">
+  <form [formGroup]="RateForm">
+    <div class="row justify-content-end">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label class="control-label" for="Company">Application Date</label>
+          <input type="text" class="form-control" [bsConfig]="datePickerConfig" bsDatepicker placeholder="Select Date"
+            [(ngModel)]="applicationDate" formControlName="applicationDate"
+            value="{{applicationDate | date:'DD/MM/YYYY' }}" (ngModelChange)="byDate(applicationDate)" />
+        </div>
+      </div>
+    </div>
+    <div id="accordian" class="accordion">
+      <div class="card mb-0">
+        <div class="card-header Pointer" href="#Sales" [ngClass]="EnableSalesRateTab ? 'collapsed' : ''"
+          style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);"
+          (click)="ToggleSalesRate()">
+          <div class="row">
+            <div class="col-md-3 ">
+              <a class="card-title align-middle " style="color:#005BFF">
+                <i class="fas fa-2x fa-rupee-sign mr-2 align-middle"></i>
+                <span class="align-middle Pointer"><ins>Sales Rates </ins>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div id="Sales" class="card-body collapse" [ngClass]="EnableSalesRateTab ? '' : 'show'">
+          <form class="form-horizontal">
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-bordered  table-hover ">
+                  <thead class="topbar">
+                    <tr>
+                      <th>GS Name</th>
+                      <th>Karat</th>
+                      <th>Selling Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let _dailyRate of DailyRate.SellingRates;let i=index">
+                    <tr>
+                      <td>{{_dailyRate.GSName}}</td>
+                      <td>{{_dailyRate.Karat}}</td>
+                      <td>
+                        <input type="text" maxlength="6" class="form-control" (change)="UpdateSalesRate(i,rate.value)"
+                          value="{{_dailyRate.SellingBoardRate}}" IntegerDecimalFieldValidator #rate required />
+                        <span *ngIf="findErrorByField('SellingBoardRate',i) != ''" style="background-color:red; color:white; 
+                            font-size:120%; font-family:Georgia, 'Times New Roman', Times, serif; 
+                            text-align:center"><br>
+                          {{findErrorByField('SellingBoardRate', i)}}
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div id="accordian" class="accordion">
+      <div class="card mb-0">
+        <div class="card-header Pointer" href="#Purchase" [ngClass]="EnablePurchaseRateTab ? 'collapsed' : ''"
+          style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);"
+          (click)="TogglePurchase()">
+          <div class="row">
+            <div class="col-md-3 ">
+              <a class="card-title align-middle " style="color:#ff00f2">
+                <i class="fas fa-2x fa-rupee-sign mr-2 align-middle"></i>
+                <span class="align-middle"><ins>Purchase Rates</ins>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div id="Purchase" class="card-body collapse" [hidden]="EnablePurchaseRateTab"
+          [ngClass]="EnablePurchaseRateTab ? 'hide' : 'show'">
+          <form class="form-horizontal">
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-bordered  table-hover ">
+                  <thead class="topbar">
+                    <tr>
+                      <th>GS Name</th>
+                      <th>Karat</th>
+                      <th>Exchange Rate</th>
+                      <th>BuyingRate</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let _dailyRate of DailyRate.PurchaseRates;let i=index">
+                      <td>{{_dailyRate.GSName}}</td>
+                      <td>{{_dailyRate.Karat}}</td>
+                      <td>
+                        <input type="text" maxlength="6" class="form-control"
+                          (change)="UpdatePurchaseExchngRate(i,ExchangeRates.value)" value="{{_dailyRate.ExchangeRate}}"
+                          IntegerDecimalFieldValidator #ExchangeRates />
+
+                        <span *ngIf="findError('ExchangeRate',i) != ''" style="background-color:red; color:white; 
+                            font-size:120%; font-family:Georgia, 'Times New Roman', Times, serif; 
+                            text-align:center"><br>
+                          {{findError('ExchangeRate', i)}}
+                        </span>
+                      </td>
+                      <td>
+                        <input type="text" maxlength="6" class="form-control"
+                          (change)="UpdatePurchaseRate(i,PurchaseRate.value)" value="{{_dailyRate.CashRate}}"
+                          IntegerDecimalFieldValidator #PurchaseRate />
+                        <span *ngIf="findError('CashRate',i) != ''" style="background-color:red; color:white; 
+                            font-size:120%; font-family:Georgia, 'Times New Roman', Times, serif; 
+                            text-align:center 
+                            "><br>
+                          {{findError('CashRate', i)}}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+      style="margin-top: 1.8rem !important;" (click)="UpdateDailyRates(RateForm)">
+      <i class="fas fa-save"></i>&nbsp;Save</button>
+  </form>
+</div>
+
+<ng-container *ngIf="EnableJson">
+  <pre>{{DailyRate | json}}</pre>
+</ng-container>
+
+<div id="PermissonModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Prodigy</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="BackTodashBoard()">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="PassWord">2. Password</label>
+          <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+            (keyup.enter)="passWord(Pwd.value)" IntegerDecimalFieldValidator #Pwd />{{ Pwd.focus() }}
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+            (click)="passWord(Pwd.value)">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

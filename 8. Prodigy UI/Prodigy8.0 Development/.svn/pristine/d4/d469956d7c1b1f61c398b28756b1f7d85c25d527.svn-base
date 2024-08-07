@@ -1,0 +1,201 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="PackingForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="PCode">Code <span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span> </label>
+                        <input oninput="this.value = this.value.toUpperCase()" class="form-control" 
+                            formControlName="frmctrl_PCode" AlphabetFieldValidator
+                            (input)="TEXT.value = TEXT.value.toUpperCase()" [(ngModel)]="PackingMaterialModel.PCode"
+                            [readonly]="isReadOnly" placeholder="Enter Code" type="text" #TEXT>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Packing Material Name</label>
+                        <input oninput="this.value = this.value.toUpperCase()" type="text" class="form-control"
+                            id="PName"  formControlName="frmctrl_PName" [(ngModel)]="PackingMaterialModel.PName"
+                            AlphabetFieldValidator (input)="TEXT.value = TEXT.value.toUpperCase()"
+                            placeholder="Enter Material Name" #TEXT />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" >Color </label>
+                        <input oninput="this.value = this.value.toUpperCase()" class="form-control" 
+                            formControlName="frmctrl_Color" AlphabetFieldValidator [(ngModel)]="PackingMaterialModel.Color"
+                            (input)="TEXT.value = TEXT.value.toUpperCase()"  
+                            placeholder="Enter Color" type="text" #TEXT>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" >Remarks</label>
+                        <input oninput="this.value = this.value.toUpperCase()" type="text" class="form-control"
+                             formControlName="frmCtrl_Remark" [(ngModel)]="PackingMaterialModel.Remarks"
+                            AlphabetFieldValidator (input)="TEXT.value = TEXT.value.toUpperCase()"
+                            placeholder="Enter Remarks" #TEXT />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label">Length</label>
+                        <div class="input-group mb-3">
+                            <input type="text" name="user" class="form-control" placeholder="Length.." formControlName="frmCtrl_MLength"
+                            [(ngModel)]="PackingMaterialModel.MLength" IntegerDecimalFieldValidator >
+                            <div class="input-group-prepend">
+                                <select class="form-control select2bs4"  formControlName="frmCtrl_MLength_UOM"
+                                    style="width: 100%" [(ngModel)]="PackingMaterialModel.MLengthUOM">
+                                    <option [ngValue]="null">Select</option>
+                                    <option *ngFor="let _measure of HLWuom" [ngValue]="_measure.Code">
+                                      {{_measure.Value}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+
+                    <div class="form-group">
+                        <label class="control-label">Height</label>
+                        <div class="input-group mb-3">
+                            <input type="text" name="user" class="form-control" placeholder="Height..." formControlName="frmCtrl_Height"
+                            [(ngModel)]="PackingMaterialModel.MHeight"  IntegerDecimalFieldValidator>
+                            <div class="input-group-prepend">
+                                <select class="form-control select2bs4"  formControlName="frmCtrl_Height_UOM"  id="height"
+                                    style="width: 100%" [(ngModel)]="PackingMaterialModel.MHeightUOM" >
+                                    <option [ngValue]="null">Select</option>
+                                    <option *ngFor="let _measure of HLWuom" [ngValue]="_measure.Code">
+                                        {{_measure.Value}}
+                                      </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+
+                    <div class="form-group">
+                        <label class="control-label">Width</label>
+                        <div class="input-group mb-3">
+                            <input type="text" name="user" class="form-control" placeholder="Width.." formControlName="frmCtrl_Width" 
+                            [(ngModel)]="PackingMaterialModel.MWidth" IntegerDecimalFieldValidator>
+                            <div class="input-group-prepend">
+                                <select class="form-control select2bs4" formControlName="frmCtrl_Width_UOM"  id="width"
+                                    style="width: 100%" [(ngModel)]="PackingMaterialModel.MWidthUOM" >
+                                    <option [ngValue]="null">Select</option>
+                                    <option *ngFor="let _measure of HLWuom" [ngValue]="_measure.Code">
+                                        {{_measure.Value}}
+                                      </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">Weight</label>
+                        <div class="input-group sm-3">
+                            <input type="text" name="user" class="form-control" placeholder="Weight" 
+                            formControlName="frmCtrl_Weight"  [(ngModel)]="PackingMaterialModel.MWeight" IntegerDecimalFieldValidator/>
+                            <div class="input-group-prepend">
+                                <select class="form-control select2bs4" formControlName="frmCtrl_Weight_UOM"  id="weight"
+                                    style="width: 100%" [(ngModel)]="PackingMaterialModel.MWeightUOM">
+                                    <option [ngValue]="null">Select</option>
+                                    <option *ngFor="let _measure of weightUOM" [ngValue]="_measure.Code">
+                                        {{_measure.Value}}
+                                      </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <ng-container *ngIf="EnableAdd">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="add(PackingForm)">
+                                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                        </ng-container>
+                        <ng-container *ngIf="EnableSave">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="save(PackingForm)">
+                                <i class="fal fa-save"></i>&nbsp;Save</button>
+                        </ng-container>
+                        <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;" (click)="clear()" >
+                            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="table-responsive my-custom-scrollbar">
+          <table class="table table-bordered ">
+            <thead class="topbar">
+              <tr>
+                <th>Code</th>
+                <th>Packing Material </th>
+                <th>Length</th>
+                <th>Height</th>
+                <th>Width</th>
+                <th>Weight</th>
+                <th>Color</th>
+                <th>Remarks</th>
+                <th>Status</th>
+                <th>Edit</th>
+                <th>Open</th>
+                <th>Close</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              <tr *ngFor="let List of packingMaterial">
+                <td>{{List.PCode}}</td>
+                <td>{{List.PName}}</td>
+                <td>{{List.MLength}}-{{List.MLengthUOM }}</td>
+                <!-- <td>{{List.MLengthUOM }}</td> -->
+                <td>{{List.MHeight}}-{{List.MHeightUOM}}</td>
+                <!-- <td>{{List.MHeightUOM}}</td> -->
+                <td>{{List.MWidth}}-{{List.MWidthUOM}}</td>
+                <!-- <td>{{List.MWidthUOM}}</td> -->
+                <td>{{List.MWeight}}-{{List.MWeightUOM}}</td>
+                <!-- <td>{{List.MWeightUOM}}</td> -->
+                <td>{{List.Color}}</td>
+                <td>{{List.Remarks}}</td>
+                <td  [style.color]="getStatusColor(List.ObjStatus)">
+                    <b>{{List.ObjStatus | statusName : List.ObjStatus }}</b>
+                  </td>
+                <td align="center">
+                    <i class="fas fa-edit" title="edit" (click)="editField(List)"></i>
+                  </td>
+                  <td align="center"><i class="fas fa-lock-open" title="open" (click)="openField(List)"></i>
+                  <td align="center">
+                   <i class="fas fa-lock" title="close" (click)="closeField(List)"></i>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="EnableJson">
+      <pre>{{PackingMaterialModel | json}}</pre>
+      </ng-container>
+  </div>

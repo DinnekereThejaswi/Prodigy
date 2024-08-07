@@ -1,0 +1,8 @@
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc1 from './ngx-barcode6.component';
+export declare class NgxBarcode6Module {
+    static ngModuleDef: ɵngcc0.ɵɵNgModuleDefWithMeta<NgxBarcode6Module, [typeof ɵngcc1.NgxBarcode6Component], never, [typeof ɵngcc1.NgxBarcode6Component]>;
+    static ngInjectorDef: ɵngcc0.ɵɵInjectorDef<NgxBarcode6Module>;
+}
+
+//# sourceMappingURL=ngx-barcode6.module.d.ts.map

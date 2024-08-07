@@ -1,0 +1,184 @@
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div id="header" class="card-body show">
+      <form class="form-horizontal">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <label *ngFor="let radiobutton of radioItems" class="form-check-inline">
+                    <input type="radio" name="optionDefault" (click)="OnRadioBtnChnge(radiobutton)"
+                      class="form-check-input" [value]="radiobutton" [checked]="radiobutton === model.option">
+                    <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                  </label>
+                </div>
+                <ng-container *ngIf="model.option === 'Voucher'">
+                  <div class="col-md-6" style="float: right;">
+                    <label *ngFor="let voucherItems of VoucherItems" class="form-check-inline">
+                      <input type="radio" name="optionVoucher" (click)="OnVoucherRadioBtnChnge(voucherItems)"
+                        class="form-check-input" [value]="voucherItems"
+                        [checked]="voucherItems === modelvoucher.option">
+                      <h3 style="margin-top: 5px;">{{voucherItems}}</h3>
+                    </label>
+                  </div>
+                </ng-container>
+              </div>
+              <ng-container *ngIf="model.option === 'Voucher'">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Type</label>
+                      <select class="form-control mr-auto mt-2 mt-lg-0" name="TransType"
+                        (change)="GetTransType(TransType.value)" #TransType>
+                        <option [ngValue]="null">Select</option>
+                        <option *ngFor="let _paymentType of PaymentType" [value]="_paymentType.Code">
+                          {{_paymentType.Name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="modelvoucher.option === 'Cash'">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Cash</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" name="CashType"
+                          (change)="GetCashType(CashType.value)" #CashType>
+                          <option [ngValue]="null">Select</option>
+                          <option *ngFor="let _cashTypeList of CashTypeList" [value]="_cashTypeList.Code">
+                            {{_cashTypeList.Name}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Voucher No</label>
+                    <div class="m-b-10">
+                      <input type="text" class="form-control"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                        (keyup.enter)="getVoucherDets(voucherNo.value)" #voucherNo>
+                    </div>
+                  </div>
+                </div>
+                <ng-container *ngIf="modelvoucher.option === 'Bank'">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Bank</label>
+                      <select class="form-control mr-auto mt-2 mt-lg-0" name="BankType"
+                        (change)="GetBankType(BankType.value)" #BankType>
+                        <option [ngValue]="null">Select</option>
+                        <option *ngFor="let _masterLedgerList of MasterLedgerList" [value]="_masterLedgerList.Code">
+                          {{_masterLedgerList.Name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="EnableJson">
+          <pre>{{ SRHeaderForm | json }}</pre>
+        </ng-container>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+<!--Journal-->
+<ng-container *ngIf="model.option === 'Journal' || (model.option === 'Voucher' && modelvoucher.option === 'Bank')">
+  <div class="card mb-0">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="topbar">
+            <tr>
+              <th>S.No</th>
+              <th>Account Name</th>
+              <th>Debit</th>
+              <th>Credit</th>
+              <th>Narration</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let _dataList of DataList;let i=index;">
+            <tr>
+              <td>{{i+1}}</td>
+              <td>{{_dataList.Partyname}}</td>
+              <td>{{_dataList.DebitAmount | number : '1.2-2'}}</td>
+              <td>{{_dataList.CreditAmount | number : '1.2-2'}}</td>
+              <td>{{_dataList.Narration}}</td>
+            </tr>
+            <tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="model.option === 'Contra' || (model.option === 'Voucher' && modelvoucher.option === 'Cash')">
+  <div class="card mb-0">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="topbar">
+            <tr>
+              <th>S.No</th>
+              <th>Account Name</th>
+              <th>Debit</th>
+              <th>Credit</th>
+              <th>Narration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>{{DataList.Partyname}}</td>
+              <td>{{DataList.DebitAmount | number : '1.2-2'}}</td>
+              <td>{{DataList.CreditAmount | number : '1.2-2'}}</td>
+              <td>{{DataList.Narration}}</td>
+            </tr>
+            <tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<br>
+<div class="card mb-0">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="topbar">
+          <tr>
+            <th>Remarks</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="text" class="form-control" #cancelRemarks>
+            </td>
+            <td>
+              <button class="btn btn-outline-danger waves-effect waves-light btn-rounded btn-outline-secondary"
+                (click)="cancel(cancelRemarks.value)">Cancel</button>
+              <button
+                class="btn btn-outline-danger waves-effect waves-light btn-rounded btn-outline-secondary ">Exit</button>
+            </td>
+          </tr>
+          <tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <ng-container *ngIf="EnableJson">
+    <pre>{{DataList | json}}</pre>
+  </ng-container>

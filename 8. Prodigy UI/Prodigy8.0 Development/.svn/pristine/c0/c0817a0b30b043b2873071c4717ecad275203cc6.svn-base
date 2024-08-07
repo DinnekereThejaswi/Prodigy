@@ -1,0 +1,79 @@
+body{
+    font-size: 5px;
+    line-height: 18px;
+}
+.watermark {
+  -webkit-transform: rotate(331deg);
+  -moz-transform: rotate(331deg);
+  -o-transform: rotate(331deg);
+  transform: rotate(331deg);
+  font-size: 10em;
+  color: rgba(255, 5, 5, 0.37);
+  position: absolute;
+  text-transform:uppercase;
+  padding-left: 10%;
+}
+
+thead > tr {
+  color:black !important;
+  font-weight: 300;
+  background-color: blanchedalmond;
+}
+
+.modal-header{
+padding-left: 20rem !important;
+}
+.material-switch > input[type="checkbox"] {
+display: none;   
+}
+tr.spaceUnder>td {
+padding-bottom: 0px;
+}
+
+.material-switch > label {
+cursor: pointer;
+height: 0px;
+position: relative; 
+width: 40px;  
+}
+.material-switch > label::before {
+background: rgb(0, 0, 0);
+box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+border-radius: 8px;
+content: '';
+height: 16px;
+margin-top: -8px;
+position:absolute;
+opacity: 0.3;
+transition: all 0.4s ease-in-out;
+width: 40px;
+}
+.material-switch > label::after {
+background: rgb(255, 255, 255);
+border-radius: 16px;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+content: '';
+height: 24px;
+left: -4px;
+margin-top: -8px;
+position: absolute;
+top: -4px;
+transition: all 0.3s ease-in-out;
+width: 24px;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+background: inherit;
+opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+background: inherit;
+left: 20px;
+}
+
+  
+
+.center {
+  margin: auto;
+  width: 70%;
+  padding: 5px;
+}

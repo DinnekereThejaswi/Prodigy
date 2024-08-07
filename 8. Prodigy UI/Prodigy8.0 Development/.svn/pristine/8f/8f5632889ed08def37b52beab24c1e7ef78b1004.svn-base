@@ -1,0 +1,1 @@
+{"version":3,"file":"collapse.module.d.ts","sources":["E:/MagnaWeb-Angular8.0/node_modules/ngx-bootstrap/collapse/collapse.module.d.ts"],"sourcesContent":["import { ModuleWithProviders } from '@angular/core';\nexport declare class CollapseModule {\n    static forRoot(): ModuleWithProviders<CollapseModule>;\n}\n"],"names":[],"mappings":"AAAA;;;AACA;;;;AAEA;"}

@@ -1,0 +1,224 @@
+.card-header {
+    border-radius: 15px !important;
+}
+
+.card {
+    border-radius: 15px !important;
+
+}
+
+.card-body {
+    padding      : 10px 30px 0px 30px !important;
+    border-bottom: 2px solid black;
+    border-radius: 15px;
+}
+
+.p-38 {
+    height: 38px;
+}
+
+.text-white {
+    color: white;
+}
+
+.Pointer {
+    cursor: pointer;
+}
+
+.footer {
+    position: fixed;
+    left    : 0;
+    bottom  : 0;
+}
+
+.hide {
+    display: hide;
+}
+
+.show {
+    display: block;
+}
+
+.accordion .card-header.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content    : "\f067";
+    position   : absolute;
+    right      : 20px;
+    font-size  : 20px;
+    font-weight: 400;
+
+    line-height: 1;
+    margin-top : -25px;
+    transition : .3s transform ease-in-out;
+}
+
+.accordion .card-header:after {
+    font-family: 'FontAwesome';
+    content    : "\f068";
+    position   : absolute;
+    right      : 20px;
+    font-size  : 20px;
+    font-weight: 400;
+    line-height: 1;
+    margin-top : -25px;
+}
+
+.text-red {
+    color: red;
+}
+
+.text-green {
+    color: #16d616;
+}
+
+/* .modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 75% 
+  } */
+
+.material-switch>label {
+    cursor  : pointer;
+    height  : 0px;
+    position: relative;
+    width   : 40px;
+}
+
+.material-switch>label::before {
+    background   : rgb(0, 0, 0);
+    box-shadow   : inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    content      : '';
+    height       : 16px;
+    margin-top   : -8px;
+    position     : absolute;
+    opacity      : 0.3;
+    transition   : all 0.4s ease-in-out;
+    width        : 40px;
+}
+
+.material-switch>label::after {
+    background   : rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow   : 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content      : '';
+    height       : 24px;
+    left         : -4px;
+    margin-top   : -8px;
+    position     : absolute;
+    top          : -4px;
+    transition   : all 0.3s ease-in-out;
+    width        : 24px;
+}
+
+.material-switch>input[type="checkbox"] {
+    display: none;
+}
+
+tr.spaceUnder>td {
+    padding-bottom: 0px;
+}
+
+.material-switch>input[type="checkbox"]:checked+label::before {
+    background: inherit;
+    opacity   : 0.5;
+}
+
+.material-switch>input[type="checkbox"]:checked+label::after {
+    background: inherit;
+    left      : 20px;
+}
+
+.center {
+    margin : auto;
+    width  : 70%;
+    padding: 5px;
+}
+
+.modal-header {
+    padding-left: 20rem !important;
+}
+
+.modal-content {
+    position        : relative;
+    display         : flex;
+    flex-direction  : column;
+    width           : 100%;
+    pointer-events  : auto;
+    background-color: #fff;
+    background-clip : padding-box;
+    border          : 1px solid rgba(0, 0, 0, 0.2);
+    border-radius   : 0.3rem;
+    outline         : 0;
+}
+
+p {
+    font-family: Lato;
+}
+
+#elementsPeriodic {
+    font-family    : "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width          : 100%;
+}
+
+#elementsPeriodic td,
+#elementsPeriodic th {
+    border : 1px solid #ddd;
+    padding: 8px;
+}
+
+#elementsPeriodic tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#elementsPeriodic tr:hover {
+    background-color: #ddd;
+}
+
+#elementsPeriodic th {
+    padding-top   : 12px;
+    padding-bottom: 12px;
+    text-align    : left;
+    color         : white;
+}
+
+.modal {
+    overflow-y: auto;
+}
+
+
+.CustomWidth200 {
+    width: 200pt;
+}
+
+.CustomWidth100 {
+    width: 100pt;
+}
+
+.CustomWidth150 {
+    width: 150pt;
+}
+
+.CustomWidth50 {
+    width: 50pt;
+}
+
+.CustomWidth75 {
+    width: 75pt;
+}
+
+@media (min-width:2200px) and (max-width: 2440px) {
+    .table-responsive {
+        overflow-x: hidden !important;
+
+    }
+}
+
+@media (min-width: 300px) and (max-width: 2200px) {
+    .table-responsive {
+        overflow-x: auto !important;
+
+    }
+}

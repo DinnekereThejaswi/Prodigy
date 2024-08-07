@@ -1,0 +1,52 @@
+{
+  "_from": "ng2-smart-table@^1.7.2",
+  "_id": "ng2-smart-table@1.7.2",
+  "_inBundle": false,
+  "_integrity": "sha512-TwREaaTtgaPyxxocoxH4W4BQEpiuYhOhPxDOgR/+O36i7m61c0O+OWx2u7wSHU9UabdQDWwgWU6Eus2tOT3RJA==",
+  "_location": "/ng2-smart-table",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "ng2-smart-table@^1.7.2",
+    "name": "ng2-smart-table",
+    "escapedName": "ng2-smart-table",
+    "rawSpec": "^1.7.2",
+    "saveSpec": null,
+    "fetchSpec": "^1.7.2"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ng2-smart-table/-/ng2-smart-table-1.7.2.tgz",
+  "_shasum": "227efacc243c6d0ba0281281c0841282a604d201",
+  "_spec": "ng2-smart-table@^1.7.2",
+  "_where": "E:\\MagnaWeb-Angular8.0",
+  "author": {
+    "name": "akveo"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "tslib": "^2.0.0"
+  },
+  "deprecated": false,
+  "description": "Angular Smart Table",
+  "es2015": "fesm2015/ng2-smart-table.js",
+  "esm2015": "esm2015/ng2-smart-table.js",
+  "fesm2015": "fesm2015/ng2-smart-table.js",
+  "license": "MIT",
+  "main": "bundles/ng2-smart-table.umd.js",
+  "metadata": "ng2-smart-table.metadata.json",
+  "module": "fesm2015/ng2-smart-table.js",
+  "name": "ng2-smart-table",
+  "peerDependencies": {
+    "ng2-completer": "^9.0.1",
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0",
+    "@angular/forms": "^10.0.0"
+  },
+  "sideEffects": false,
+  "typings": "ng2-smart-table.d.ts",
+  "version": "1.7.2"
+}

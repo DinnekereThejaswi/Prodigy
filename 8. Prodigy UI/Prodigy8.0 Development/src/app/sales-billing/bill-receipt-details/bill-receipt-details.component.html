@@ -1,0 +1,1252 @@
+<div class="card">
+    <div class="card-body">
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <div class="form-group">
+                        <label for="BillNo">Bill No</label>
+                        <input type="text" class="form-control"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            onKeyPress="if(this.value.length==7) return false;" name="BillNo"
+                            (keyup.enter)="getBillReceiptDetails(BillNo.value)" placeholder="Enter Bill Number"
+                            GreenBorder #BillNo autofocus>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary mt-4"
+                                (click)="getBillReceiptDetails(BillNo.value)"><i class="fal fa-search"></i>
+                                Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 float-right" *ngIf="billReceiptDetails">
+                    <div class="">
+                        <div class="text-right"><i class="fal fa-receipt"></i>&nbsp; <span class="text-muted">
+                                Bill No</span>
+                            <h1 class="font-light">{{billReceiptDetails.BillNo}}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 float-right">
+                </div>
+            </div>
+            <div class="row" *ngIf="billReceiptDetails">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="CustomerID">Customer Name</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="billReceiptDetails.CustomerName"
+                                [ngModelOptions]="{standalone: true}" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">Mobile No</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="billReceiptDetails.MobileNo"
+                                [ngModelOptions]="{standalone: true}" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="CustomerID">Address1</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="billReceiptDetails.Address1"
+                                [ngModelOptions]="{standalone: true}" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Address2</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="billReceiptDetails.Address2"
+                                [ngModelOptions]="{standalone: true}" type="text" readonly>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="City">Receipt No</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="billReceiptDetails.RefInvoiceNo"
+                                [ngModelOptions]="{standalone: true}" type="text" readonly>
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        <label for="Mobile">Receipt Date</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="billReceiptDetails.BillDate"
+                                [ngModelOptions]="{standalone: true}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Address">Address3</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="billReceiptDetails.Address3"
+                                [ngModelOptions]="{standalone: true}" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="Address">State</label>
+                            <div class="input-group">
+                                <input class="form-control" [(ngModel)]="billReceiptDetails.State" type="text"
+                                    [ngModelOptions]="{standalone: true}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Address">Phone No</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Address">City</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="billReceiptDetails.City" type="text"
+                                [ngModelOptions]="{standalone: true}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="Advance">PAN No</label>
+                            <div class="input-group">
+                                <input class="form-control" [(ngModel)]="billReceiptDetails.PANNo" type="text"
+                                    [ngModelOptions]="{standalone: true}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Address">Pincode</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="billReceiptDetails.PinCode" type="text"
+                                [ngModelOptions]="{standalone: true}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+
+                        <label for="Advance">Bill Amount</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="billReceiptDetails.BillAmount"
+                                [ngModelOptions]="{standalone: true}" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="Advance">Balance Amount</label>
+                            <div class="input-group">
+                                <input class="form-control" [(ngModel)]="billReceiptDetails.BalanceAmount" type="text"
+                                    [ngModelOptions]="{standalone: true}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+
+                            <label for="Advance">Paid Amount</label>
+                            <div class="input-group">
+                                <input class="form-control" [(ngModel)]="billReceiptDetails.PaidAmount"
+                                    [ngModelOptions]="{standalone: true}" type="text" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--Receipts-->
+
+<ng-container *ngIf="EnableDisablePaymentForOrderAdj">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#Payment" (click)="TogglePaymentData()"
+            [ngClass]="EnablePaymentsTab ? 'collapsed' : ''" [attr.data-toggle]="EnablePaymentsTab ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:rgb(0, 204, 255)">
+                        <i class="far fa-rupee-sign fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle"><ins>Receipts</ins>
+                            <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                <span class="tooltiptext tooltip-bottom">Capture the Receipts
+                                    ( Payment collection modes) information like Cash , Cheque , Card , Scheme Adj,
+                                    Purchase Bill
+                                    etc</span>
+                            </div>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="PaymentForm" class="form-horizontal">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-body">
+                            <div class="row" *ngIf="EnableDisPayControls">
+                                <div class="col-md-4">
+                                    <div class="form-group has-success">
+                                        <label for="PayMode">Payment Mode</label>
+                                        <select class="form-control mr-auto mt-2 mt-lg-0" #PayMode
+                                            formControlName="PayMode" (change)="onchangePaymode(PayMode.value)"
+                                            [(ngModel)]="PaymentHeaders.PayMode">
+                                            <option [ngValue]="null">Select</option>
+                                            <option *ngFor="let _paymentModes of PaymentModes"
+                                                [value]="_paymentModes.PayMode">
+                                                {{_paymentModes.PayName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"
+                                    *ngIf="toggle == 'Others' || toggle == 'SR' || toggle == 'Scheme' || toggle == 'OrdAdj' || toggle == 'PurEst' || toggle == 'PurBill' || toggle == 'SREst' || toggle == 'SRBill'">
+                                    <div class="form-group">
+                                        <label>Ref No</label>
+                                        <ng-container *ngIf="toggle == 'Scheme'">
+                                            <input type="text" class="form-control" (click)="openChitAdjustment()"
+                                                [(ngModel)]="PaymentHeaders.RefBillNo" formControlName="RefBillNo"
+                                                readonly NumberFieldvalidator>
+                                            <p style="color: red">Click textbox to Open Scheme Adj screen</p>
+                                        </ng-container>
+                                        <ng-container *ngIf="toggle == 'OrdAdj'">
+                                            <input type="text" class="form-control" (click)="openOrderAdjustment()"
+                                                [(ngModel)]="PaymentHeaders.RefBillNo" formControlName="RefBillNo"
+                                                readonly NumberFieldvalidator>
+                                            <p style="color: red">Click textbox to Open Order Adj screen</p>
+                                        </ng-container>
+                                        <ng-container *ngIf="toggle == 'PurEst'">
+                                            <input type="text" class="form-control" (click)="openPurEstAdjustment()"
+                                                [(ngModel)]="PaymentHeaders.RefBillNo" formControlName="RefBillNo"
+                                                readonly NumberFieldvalidator>
+                                            <p style="color: red">Click textbox to Open Pur.Est. Adj screen</p>
+                                        </ng-container>
+                                        <ng-container *ngIf="toggle == 'PurBill'">
+                                            <input type="text" class="form-control" (click)="openPurBillAdjustment()"
+                                                [(ngModel)]="PaymentHeaders.RefBillNo" formControlName="RefBillNo"
+                                                readonly NumberFieldvalidator>
+                                            <p style="color: red">Click textbox to Open Pur.Bill. Adj screen</p>
+                                        </ng-container>
+                                        <ng-container *ngIf="toggle == 'SREst'">
+                                            <input type="text" class="form-control" (click)="openSREstAdjustment()"
+                                                [(ngModel)]="PaymentHeaders.RefBillNo" formControlName="RefBillNo"
+                                                readonly NumberFieldvalidator>
+                                            <p style="color: red">Click textbox to Open SR Est. Adj screen</p>
+                                        </ng-container>
+                                        <ng-container *ngIf="toggle == 'SRBill'">
+                                            <input type="text" class="form-control" (click)="openSRBillAdjustment()"
+                                                [(ngModel)]="PaymentHeaders.RefBillNo" formControlName="RefBillNo"
+                                                readonly NumberFieldvalidator>
+                                            <p style="color: red">Click textbox to Open SR Bill. Adj screen</p>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="toggle == 'Card'">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Card No</label>
+                                            <input type="text" class="form-control"
+                                                [(ngModel)]="PaymentHeaders.RefBillNo" maxlength="16"
+                                                formControlName="RefBillNo" placeholder="•••• •••• •••• ••••"
+                                                NumberFieldvalidator>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="col-md-2" *ngIf="toggle == 'Card'">
+                                    <div class="form-group">
+                                        <label>Card Type</label>
+                                        <!-- <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.CardType" formControlName="CardType"
+                      placeholder="Visa/Master/Amex" AlphabetFieldValidator> -->
+                                        <select class="form-control" formControlName="CardType"
+                                            [(ngModel)]="PaymentHeaders.CardType">
+                                            <option [value]="null">Select</option>
+                                            <option *ngFor="let _cardType of CardType" [value]="_cardType.card_name">
+                                                {{_cardType.card_name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-2" *ngIf="toggle == 'Card' || toggle == 'Cheque'">
+                  <div class="form-group">
+                    <label>Bank name</label>
+      
+                    <input *ngIf="argPageName !='OC'"  type="text" class="form-control" [(ngModel)]="PaymentHeaders.BankName"
+                      formControlName="BankName" placeholder="E.g. HDFC Bank" required AlphabetFieldValidator>
+      
+                    <select *ngIf="argPageName=='OC'" class="form-control" formControlName="BankName"
+                      [(ngModel)]="PaymentHeaders.BankName" (change)="getChequeNumber($event.target.value)">
+                      <option [value]="null">Select Bank</option>
+                      <option *ngFor="let _chequeName of ChequeName" [value]="_chequeName.acc_code">
+                        {{_chequeName.acc_name}}
+                      </option>
+                    </select>
+      
+                  </div>
+                </div> -->
+
+                                <!--Added as per eshwar request from BankName to Bank Field.Above code is commented-->
+                                <div class="col-md-2" *ngIf="toggle == 'Card' || toggle == 'Cheque' || toggle == 'DD'">
+                                    <div class="form-group">
+                                        <label>Bank name</label>
+                                        <input *ngIf="argPageName !='OC' && argPageName !='SR'" type="text"
+                                            class="form-control" [(ngModel)]="PaymentHeaders.BankName"
+                                            formControlName="BankName" placeholder="E.g. HDFC Bank" required
+                                            AlphabetFieldValidator>
+                                        <select *ngIf="argPageName == 'OC' || argPageName == 'SR'" class="form-control"
+                                            formControlName="BankName" [(ngModel)]="PaymentHeaders.BankName"
+                                            (change)="getChequeNumber($event.target.value)">
+                                            <option [value]="null">Select Bank</option>
+                                            <option *ngFor="let _chequeName of ChequeName"
+                                                [value]="_chequeName.acc_code">
+                                                {{_chequeName.acc_name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Card'">
+                                    <div class="form-group">
+                                        <label for="Bank">Bank </label>
+                                        <select class="form-control mr-auto mt-2 mt-lg-0" #Bank formControlName="Bank"
+                                            [(ngModel)]="PaymentHeaders.Bank"
+                                            (change)="getBankdetailsonchange(PaymentHeaders.Bank)">
+                                            <option [ngValue]="null">Select</option>
+                                            <option *ngFor="let _BankList of BankList" [value]="_BankList.Code">
+                                                {{_BankList.BankName}}
+                                            </option>
+                                        </select>
+                                        <!-- <select class="form-control mr-auto mt-2 mt-lg-0" #Bank formControlName="BankName"
+                      [(ngModel)]="PaymentHeaders.BankName">
+                      <option [ngValue]="null">Select</option>
+                      <option *ngFor="let _BankList of BankList" [value]="_BankList.Code">
+                        {{_BankList.BankName}}
+                      </option>
+                    </select> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Card'">
+                                    <div class="form-group">
+                                        <label>Expire Date</label>
+                                        <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.ExpiryDate"
+                                            formControlName="ExpiryDate" id="expiry" placeholder="ExpiryDate"
+                                            bsDatepicker [bsConfig]="ExpirydatePickerConfig">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Others' || toggle == 'Card'">
+                                    <div class="form-group">
+                                        <label>Card.AppNo</label>
+                                        <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.CardAppNo"
+                                            formControlName="CardAppNo" placeholder="Card.AppNo" NumberFieldvalidator>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Cheque' || toggle == 'DD'">
+                                    <div class="form-group">
+                                        <label>Chq/ DD No</label>
+                                        <input *ngIf="argPageName!='OC'" type="text" class="form-control"
+                                            [(ngModel)]="PaymentHeaders.ChequeNo" formControlName="ChequeNo"
+                                            placeholder="Enter Chq/ DD No" maxlength="6" required NumberFieldvalidator>
+
+                                        <ng-select *ngIf="argPageName=='OC'" [items]="ChequeNo" bindLabel="chq_no"
+                                            [virtualScroll]="true" bindValue="chq_no" appendTo="body"
+                                            placeholder="Select Cheque No" [(ngModel)]="PaymentHeaders.ChequeNo"
+                                            formControlName="ChequeNo">
+                                        </ng-select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Cheque' || toggle == 'DD'">
+                                    <div class="form-group">
+                                        <label>Chq/ DD Date</label>
+                                        <input type="text" class="form-control" readonly
+                                            [(ngModel)]="PaymentHeaders.ChequeDate" formControlName="ChequeDate"
+                                            placeholder="Cheque Date" bsDatepicker [bsConfig]="datePickerConfig">
+                                    </div>
+                                </div>
+                                <div class="col-md-2"
+                                    *ngIf="toggle == 'Card' || toggle == 'Cash' || toggle == 'Scheme' || toggle == 'Cheque' 
+                      || toggle == 'DD' || toggle == 'BC' || toggle == 'GV' || toggle == 'SR' || toggle == 'EP' || toggle == 'OrdAdj' || toggle == 'PurEst' || toggle == 'PurBill' || toggle == 'SREst' || toggle == 'SRBill' || toggle == 'SalesPromotion' || toggle == 'UPI Payment' || toggle == 'CREDIT NOTE'">
+                                    <div class="form-group">
+                                        <label>Details/Remarks</label>
+                                        <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.PayDetails"
+                                            formControlName="PayDetails" placeholder="Enter Details/Remarks"
+                                            AlphaNumericFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="col-md-2"
+                                    *ngIf="toggle == 'Card' || toggle == 'Cash' || toggle == 'Scheme' || toggle == 'Cheque' || 
+                      toggle == 'DD' || toggle == 'BC' || toggle == 'GV' || toggle == 'SR' || toggle == 'EP' || toggle == 'OrdAdj' || toggle == 'PurEst' || toggle == 'PurBill' || toggle == 'SREst' || toggle == 'SRBill' || toggle == 'SalesPromotion' || toggle == 'UPI Payment' || toggle == 'CREDIT NOTE'
+                      || toggle == 'DKN' || toggle == 'UDP' || toggle == 'KRM' || toggle == 'JNR'
+                       || toggle == 'HBR' || toggle == 'MNG' || toggle == 'HSN' || toggle == 'PNX' || toggle == 'DKNBS' || toggle == 'MRT' || toggle == 'SMG'">
+                                    <div class="form-group">
+                                        <label>Amount</label>
+                                        <ng-container
+                                            *ngIf="toggle == 'OrdAdj' || toggle == 'PurEst' || toggle == 'PurBill' || toggle == 'SREst' || toggle == 'SRBill'">
+                                            <input type="number" min="0" class="form-control"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                placeholder="{{placeholder}}" [(ngModel)]="PaymentHeaders.PayAmount"
+                                                formControlName="PayAmount" readonly>
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="toggle != 'OrdAdj' && toggle != 'PurEst' && toggle != 'PurBill' && toggle != 'SREst' && toggle != 'SRBill'">
+                                            <input type="number" min="0" class="form-control"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                placeholder="{{placeholder}}" [readonly]="readonly"
+                                                [(ngModel)]="PaymentHeaders.PayAmount" formControlName="PayAmount">
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Others' || toggle == 'Card'">
+                                    <div class="form-group">
+                                        <label>Card Charges</label>
+                                        <input type="text" class="form-control" readonly
+                                            [(ngModel)]="PaymentHeaders.CardCharges" formControlName="CardCharges"
+                                            placeholder="Card Charges" IntegerDecimalFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Card'">
+                                    <div class="form-group">
+                                        <label>Card Swiped By</label>
+                                        <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="CardSwipedBy"
+                                            [(ngModel)]="PaymentHeaders.CardSwipedBy">
+                                            <option *ngFor="let _salesman of SalesManList" [value]="_salesman.sal_code">
+                                                {{_salesman.CodeName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Others' || toggle == 'Scheme'">
+                                    <div class="form-group">
+                                        <label>Scheme Code</label>
+                                        <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.SchemeCode"
+                                            formControlName="SchemeCode" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Others' || toggle == 'Scheme'">
+                                    <div class="form-group">
+                                        <label>Group Code</label>
+                                        <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.GroupCode"
+                                            formControlName="GroupCode" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="toggle == 'Others' || toggle == 'Scheme'">
+                                    <div class="form-group">
+                                        <label>Branch</label>
+                                        <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.CTBranch"
+                                            formControlName="CTBranch" AlphabetFieldValidator readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-2"
+                                    *ngIf="toggle == 'DKN' || toggle == 'UDP' || toggle == 'KRM' || toggle == 'JNR'
+                || toggle == 'HBR' || toggle == 'MNG' || toggle == 'HSN' || toggle == 'PNX' || toggle == 'DKNBS' || toggle == 'MRT' || toggle == 'SMG'">
+                                    <div class="form-group">
+                                        <label>Ref No</label>
+                                        <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.RefBillNo"
+                                            formControlName="RefBillNo" NumberFieldvalidator>
+                                    </div>
+                                </div>
+                                <div class="col-md-2"
+                                    *ngIf="toggle == 'DKN' || toggle == 'UDP' || toggle == 'KRM' || toggle == 'JNR'
+                || toggle == 'HBR' || toggle == 'MNG' || toggle == 'HSN' || toggle == 'PNX' || toggle == 'DKNBS' || toggle == 'MRT' || toggle == 'SMG'">
+                                    <div class="form-group">
+                                        <label>Narration</label>
+                                        <input type="text" class="form-control" [(ngModel)]="PaymentHeaders.PayDetails"
+                                            formControlName="PayDetails" placeholder="Enter Narration"
+                                            AlphaNumericFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <div class="form-actions pd-5" [hidden]="toggle=='Invalid'">
+                                            <button type="submit" style="margin-top:20px;"
+                                                class=" btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                                                (click)="addRow(PaymentForm)">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="topbar">
+                        <tr>
+                            <th>Payment Mode</th>
+                            <th>Card No/Ref.No</th>
+                            <th>Chq/DD No</th>
+                            <th>Amount</th>
+                            <th>Details</th>
+                            <th>Scheme</th>
+                            <th>Card Swiped By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let _arrayList of ArrayList; let i = index">
+                        <td>{{_arrayList.PayMode | payment:_arrayList.PayMode}}</td>
+                        <td>{{_arrayList.RefBillNo}}</td>
+                        <td>{{_arrayList.ChequeNo}}</td>
+                        <td>{{_arrayList.PayAmount | number : '1.2-2'}}</td>
+                        <td>{{_arrayList.PayDetails | uppercase}}</td>
+                        <td>{{_arrayList.SchemeCode}}</td>
+                        <td>{{_arrayList.CardSwipedBy}}</td>
+                        <td *ngIf="_arrayList.PayMode != 'PB' ">
+                            <i class="fas fa-edit fa-1-5x pointer"
+                                style='color: rgba(0, 217, 255, 0.986); font-size: 1.5em !important;'
+                                (click)="EditRow(i,_arrayList)"></i>
+                            <i class="far fa-trash-alt fa-1-5x pointer" style='color: red; font-size: 1.5em !important;'
+                                (click)="DeleteRow(i,PaymentForm)"></i>
+                        </td>
+                    </tbody>
+                    <tr>
+                        <td class="border-none"></td>
+                        <td class="border-none"></td>
+                        <td class="border-none"><b>Total:</b></td>
+                        <td class="border-none">{{Amount(ArrayList) | number : '1.2-2'}}</td>
+                        <td class="border-none"></td>
+                        <td class="border-none"></td>
+                        <td class="border-none"></td>
+                        <td class="border-none"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <ng-container *ngIf="EnableJson">
+            <pre>{{ParentJSON | json}}</pre>
+        </ng-container>
+        <!-- <ng-container *ngIf="!EnableSubmitButton && EnableDisPayControls">
+      <button class="btn btn-success btn-rounded" type="button" (click)="Submit()"><i
+        class="fal fa-save"></i>Submit</button>
+      </ng-container> -->
+        <!-- <pre>{{PaymentHeaders | json}}</pre>  -->
+        <!-- <pre>{{ArrayList | json}}</pre>  -->
+        <!-- <pre>{{OrderDetails | json}}</pre> -->
+
+        <!-- Scheme Details-->
+
+        <!-- The Modal -->
+        <form [formGroup]="SchemeAdjustmentForm">
+            <div class="modal fade" id="ChitAdjustment">
+                <div class="modal-dialog" style="max-width: 750px;">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h3 class="modal-title">Scheme Adjustment <div class="tooltipdesign"> <i
+                                        class="fal fa-question-circle"></i>
+                                    <span class="tooltiptext ">Captures information like Saving scheme members, scheme
+                                        amount,
+                                        closed
+                                        amount with Bonus information like Ref.no as Membership number , Scheme Code,
+                                        Group
+                                        code
+                                        etc.</span>
+                                </div>
+                            </h3>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 my-6">
+                                        <div class="card ">
+                                            <div class="card-body">
+                                                <div class="form-group row">
+                                                    <label
+                                                        class="col-md-3 col-form-label form-control-label pull-right">Branch
+                                                        Code <div class="tooltipdesign"> <i
+                                                                class="fal fa-question-circle"></i>
+                                                            <span class="tooltiptext ">Enrolled Branch of the
+                                                                customer</span>
+                                                        </div></label>
+                                                    <div class="col-md-9">
+                                                        <select class="form-control"
+                                                            (change)="getScheme($event.target.value)"
+                                                            formControlName="BranchCode"
+                                                            [(ngModel)]="SchemeAdjusment.BranchCode">
+                                                            <option [value]="null">Select Branch Code</option>
+                                                            <option *ngFor="let Branch of BranchList"
+                                                                [value]="Branch.BranchCode">
+                                                                {{Branch.BranchCode}}
+                                                            </option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-3 col-form-label form-control-label">Scheme
+                                                        Code
+                                                        <div class="tooltipdesign">
+                                                            <i class="fal fa-question-circle"></i>
+                                                            <span class="tooltiptext ">Enrolled Scheme of the
+                                                                customer</span>
+                                                        </div>
+                                                    </label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control"
+                                                            (change)="getGroup($event.target.value)"
+                                                            formControlName="SchemeCode"
+                                                            [(ngModel)]="SchemeAdjusment.SchemeCode">
+                                                            <option [value]="null">Select Scheme Code</option>
+                                                            <option *ngFor="let Scheme of SchemeList"
+                                                                [value]="Scheme.SchemeCode">
+                                                                {{Scheme.SchemeCode}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-3 col-form-label form-control-label">Group Code
+                                                        <div class="tooltipdesign">
+                                                            <i class="fal fa-question-circle"></i>
+                                                            <span class="tooltiptext ">Group joined by the
+                                                                customer</span>
+                                                        </div>
+                                                    </label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control"
+                                                            (change)="getMSNNo($event.target.value)"
+                                                            formControlName="GroupCode"
+                                                            [(ngModel)]="SchemeAdjusment.GroupCode">
+                                                            <option [value]="null">Select Group Code</option>
+                                                            <option *ngFor="let Group of GroupList"
+                                                                [value]="Group.GroupCode">
+                                                                {{Group.GroupCode}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-3 col-form-label form-control-label">Start MSNo
+                                                        <div class="tooltipdesign">
+                                                            <i class="fal fa-question-circle"></i>
+                                                            <span class="tooltiptext ">Starting Membership Number of the
+                                                                Customer</span>
+                                                        </div>
+                                                    </label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control"
+                                                            (change)="getStartMSNo($event.target.value)"
+                                                            formControlName="StartMSNNo"
+                                                            [(ngModel)]="SchemeAdjusment.StartMSNNo">
+                                                            <option [value]="null">Select Start MSNo</option>
+                                                            <option *ngFor="let MSNNo of MSNNoList"
+                                                                [value]="MSNNo.ChitMembShipNo">
+                                                                {{MSNNo.ChitMembShipNo}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-3 col-form-label form-control-label">End MSNo
+                                                        <div class="tooltipdesign"> <i
+                                                                class="fal fa-question-circle"></i>
+                                                            <span class="tooltiptext ">Ending Membership Number of the
+                                                                Customer</span>
+                                                        </div>
+                                                    </label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control"
+                                                            (change)="getchitAmount($event.target.value)"
+                                                            formControlName="EndMSNNo"
+                                                            [(ngModel)]="SchemeAdjusment.EndMSNNo">
+                                                            <option [value]="null">Select End MSNo</option>
+                                                            <option *ngFor="let MSNNo of MSNNoList"
+                                                                [value]="MSNNo.ChitMembShipNo">
+                                                                {{MSNNo.ChitMembShipNo}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-3 col-form-label form-control-label">Scheme
+                                                        Amount</label>
+                                                    <div class="col-lg-9">
+                                                        <input formControlName="ChitAmount"
+                                                            [(ngModel)]="SchemeAdjusment.ChitAmount"
+                                                            class="form-control" min="0" type="number" readonly />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-3 col-form-label form-control-label">Total
+                                                        Amount</label>
+                                                    <div class="col-lg-9">
+                                                        <input formControlName="TotalAmount"
+                                                            [(ngModel)]="SchemeAdjusment.TotalAmount"
+                                                            class="form-control" type="text" readonly />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-3 col-form-label form-control-label">Bonus
+                                                        Amount
+                                                        <div class="tooltipdesign">
+                                                            <i class="fal fa-question-circle"></i>
+                                                            <span class="tooltiptext ">Amount given on paying all the
+                                                                installments</span>
+                                                        </div>
+                                                    </label>
+                                                    <div class="col-lg-9">
+                                                        <input formControlName="BonusAmount"
+                                                            [(ngModel)]="SchemeAdjusment.BonusAmount"
+                                                            class="form-control" type="text" readonly />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-3 col-form-label form-control-label">Winner
+                                                        Amount
+                                                        <div class="tooltipdesign"> <i
+                                                                class="fal fa-question-circle"></i>
+                                                            <span class="tooltiptext ">Amount given for winning in lucky
+                                                                draw</span>
+                                                        </div>
+                                                    </label>
+                                                    <div class="col-lg-9">
+                                                        <input formControlName="WinnerAmount"
+                                                            [(ngModel)]="SchemeAdjusment.WinnerAmount"
+                                                            class="form-control" type="text" readonly />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                                                    <div class="col-lg-9">
+                                                        <input type="button"
+                                                            class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                                                            value="Save Changes" (click)="saveSchemeAdjustment()">
+                                                        <input type="reset"
+                                                            class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary"
+                                                            value="Cancel" (click)="CancelSchemeAdjustment()">
+                                                    </div>
+                                                </div>
+                                                <ng-container *ngIf="EnableJson">
+                                                    {{SchemeAdjusment | json}}
+                                                </ng-container>
+                                            </div><!-- card body -->
+                                        </div> <!-- card-outline -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!--Order Adjustment screen-->
+
+        <form [formGroup]="AttachOrderForm">
+            <div class="modal fade" id="OrderAdjustment">
+                <div class="modal-dialog " style="max-width: 750px;">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Attach Customer Orders</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="salesPerson">Search By</label>
+                                                <select class="form-control mr-auto mt-2 mt-lg-0"
+                                                    formControlName="searchby">
+                                                    <option [ngValue]="null">Select</option>
+                                                    <option value="OrderNo">OrderNo</option>
+                                                    <option value="Customer">Customer</option>
+                                                    <option value="Date">Date</option>
+                                                    <option value="Amount">Amount</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="searchText">Search Text</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="searchText" formControlName="searchText"
+                                                    placeholder="Search Text" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="Search"></label>
+                                            <div class="input-group">
+                                                <button
+                                                    class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                                    (click)="getSearchParamsForOrderAdj(AttachOrderForm)"><i
+                                                        class="fal fa-search"></i>
+                                                    Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead class="topbar">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Order No</th>
+                                                        <th>Ref No</th>
+                                                        <th>Customer</th>
+                                                        <th>Date</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody
+                                                    *ngFor="let _OrderList of AttachOrderList | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }; let i = index;">
+                                                    <tr (click)="OrdAdjselectRecord(_OrderList)" class="pointer">
+                                                        <td>{{i + 1 }}</td>
+                                                        <td>{{_OrderList.OrderNo}}</td>
+                                                        <td>{{_OrderList.RefNo}}</td>
+                                                        <td>{{_OrderList.Customer}}</td>
+                                                        <td>{{_OrderList.Date | date:'dd-MMM-yyyy'}}</td>
+                                                        <td>{{_OrderList.Amount | number : '1.2-2'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <pagination-controls (pageChange)="onOrdAdjPageChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+        <!--Pur.Est Adjustment screen-->
+
+        <form [formGroup]="AttachOldGoldForm">
+            <div class="modal fade" id="PurEstAdj">
+                <div class="modal-dialog " style="max-width: 750px;">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Attach Old Gold Estimate</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="salesPerson">Search By</label>
+                                            <div class="form-group">
+                                                <select class="form-control mr-auto mt-2 mt-lg-0"
+                                                    formControlName="searchby">
+                                                    <option [ngValue]="null">Select</option>
+                                                    <option *ngFor="let _searchParamsList of SearchParamsList"
+                                                        [value]="_searchParamsList.Key">
+                                                        {{_searchParamsList.Value}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="searchText">Search Text</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="searchText" formControlName="searchText"
+                                                    placeholder="Search Text" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="Search"></label>
+                                            <div class="input-group">
+                                                <button
+                                                    class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                                    (click)="getSearchParamsforPurEstAdj(AttachOldGoldForm)"><i
+                                                        class="fal fa-search"></i>
+                                                    Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead class="topbar">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>EstNo</th>
+                                                        <th>Customer</th>
+                                                        <th>Date</th>
+                                                        <th>Amount</th>
+                                                        <th>Gross Wt</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody
+                                                    *ngFor="let _OldGoldList of AttachOldGoldList | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }; let i = index;">
+                                                    <tr (click)="PurEstAdjselectRecord(_OldGoldList)" class="pointer">
+                                                        <td>{{i + 1 }}</td>
+                                                        <td>{{_OldGoldList.EstNo}}</td>
+                                                        <td>{{_OldGoldList.Customer}}</td>
+                                                        <td>{{_OldGoldList.Date | date:'MM/dd/yyyy'}}</td>
+                                                        <td>{{_OldGoldList.Amount | number : '1.2-2'}}</td>
+                                                        <td>{{_OldGoldList.GrossWt | number : '1.3-3'}}</td>
+                                                        <td>{{_OldGoldList.Qty}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <pagination-controls (pageChange)="PurEstAdjonPageChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        <!--Pur.Bill Adjustment screen-->
+
+        <form [formGroup]="AttachPurBillForm">
+            <div class="modal fade" id="PurBillAdj">
+                <div class="modal-dialog " style="max-width: 750px;">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Attach Purchase Bill</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="salesPerson">Search By</label>
+                                            <div class="form-group">
+                                                <select class="form-control mr-auto mt-2 mt-lg-0"
+                                                    formControlName="searchby">
+                                                    <option [ngValue]="null">Select</option>
+                                                    <option *ngFor="let _searchParamsPurBill of SearchParamsPurBill"
+                                                        [value]="_searchParamsPurBill.Key">
+                                                        {{_searchParamsPurBill.Value}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="searchText">Search Text</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="searchText" formControlName="searchText"
+                                                    placeholder="Search Text" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="Search"></label>
+                                            <div class="input-group">
+                                                <button
+                                                    class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                                    (click)="getSearchParamsforPurBillAdj(AttachPurBillForm)"><i
+                                                        class="fal fa-search"></i>
+                                                    Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead class="topbar">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>BillNo</th>
+                                                        <th>Customer</th>
+                                                        <th>Date</th>
+                                                        <th>Amount</th>
+                                                        <th>Gross Wt</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody
+                                                    *ngFor="let _PurBillList of AttachPurBillList | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }; let i = index;">
+                                                    <tr (click)="PurBillAdjselectRecord(_PurBillList)" class="pointer">
+                                                        <td>{{i + 1 }}</td>
+                                                        <td>{{_PurBillList.BillNo}}</td>
+                                                        <td>{{_PurBillList.Customer}}</td>
+                                                        <td>{{_PurBillList.Date | date:'MM/dd/yyyy'}}</td>
+                                                        <td>{{_PurBillList.Amount | number : '1.2-2'}}</td>
+                                                        <td>{{_PurBillList.GrossWt | number : '1.3-3'}}</td>
+                                                        <td>{{_PurBillList.Quantity}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <pagination-controls (pageChange)="PurBillAdjonPageChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+        <!--SR Est Adjustment screen-->
+
+        <form [formGroup]="AttachSREstForm">
+            <div class="modal fade" id="SREstModal">
+                <div class="modal-dialog " style="max-width: 900px;">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Attach SR Estimate</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="salesPerson">Search By</label>
+                                            <div class="form-group">
+                                                <select class="form-control mr-auto mt-2 mt-lg-0"
+                                                    formControlName="searchby">
+                                                    <option [ngValue]="null">Select</option>
+                                                    <option *ngFor="let _searchSEParamsList of SearchSEParamsList"
+                                                        [value]="_searchSEParamsList.Key">
+                                                        {{_searchSEParamsList.Value}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="searchText">Search Text</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="searchText" formControlName="searchText"
+                                                    placeholder="Search Text" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="Search"></label>
+                                            <div class="input-group">
+                                                <button
+                                                    class="btn waves-effect waves-light btn-rounded btn-outline-secondary"><i
+                                                        class="fal fa-search"></i> Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead class="topbar">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>SR EstNo</th>
+                                                        <th>Date</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody
+                                                    *ngFor="let _SalesReturnList of AttachSalesReturnList | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }; let i = index;">
+                                                    <tr (click)="SREstselectRecord(_SalesReturnList)" class="pointer">
+                                                        <td>{{i + 1 }}</td>
+                                                        <td>{{_SalesReturnList.SrEstNo}}</td>
+                                                        <td>{{_SalesReturnList.Date}}</td>
+                                                        <td>{{_SalesReturnList.Amount | number : '1.2-2'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <pagination-controls (pageChange)="SREstonPageChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+
+        <!--SR Bill Adjustment screen-->
+
+        <form [formGroup]="AttachSRBillForm">
+            <div class="modal fade" id="SRBillAdj">
+                <div class="modal-dialog " style="max-width: 900px;">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Attach SR Bill</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="salesPerson">Search By</label>
+                                            <div class="form-group">
+                                                <select class="form-control mr-auto mt-2 mt-lg-0"
+                                                    formControlName="searchby">
+                                                    <option [ngValue]="null">Select</option>
+                                                    <option
+                                                        *ngFor="let _searchSRBillParamsList of SearchSRBillParamsList"
+                                                        [value]="_searchSRBillParamsList.Key">
+                                                        {{_searchSRBillParamsList.Value}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="searchText">Search Text</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="searchText" formControlName="searchText"
+                                                    placeholder="Search Text" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="Search"></label>
+                                            <div class="input-group">
+                                                <button
+                                                    class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                                    (click)="getSearchParamsforSRBillAdj(AttachSRBillForm)"><i
+                                                        class="fal fa-search"></i>
+                                                    Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead class="topbar">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>SR No</th>
+                                                        <th>Date</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody
+                                                    *ngFor="let _SRBillList of AttachSRBillList | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }; let i = index;">
+                                                    <tr (click)="SRBillAdjselectRecord(_SRBillList)" class="pointer">
+                                                        <td>{{i + 1 }}</td>
+                                                        <td>{{_SRBillList.SRNo}}</td>
+                                                        <td>{{_SRBillList.Date}}</td>
+                                                        <td>{{_SRBillList.Amount | number : '1.2-2'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <pagination-controls (pageChange)="SRBillAdjonPageChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-container>
+<br>
+<ng-container *ngIf="EnableDisablePaymentForOrderAdj">
+    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button"
+        (click)="Submit()"><i class="fal fa-save"></i> Submit</button>
+</ng-container>
+<br><br>
+<pre *ngIf="EnableJson">
+    {{BillReceipt | json}}
+</pre>

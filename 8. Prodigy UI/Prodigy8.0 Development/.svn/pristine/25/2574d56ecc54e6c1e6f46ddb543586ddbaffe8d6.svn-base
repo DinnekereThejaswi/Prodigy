@@ -1,0 +1,1 @@
+{"version":3,"file":"duration.pipe.d.ts","sources":["E:/MagnaWeb-Angular8.0/node_modules/angular2-moment/duration.pipe.d.ts"],"sourcesContent":["import { PipeTransform } from '@angular/core';\r\nexport declare class DurationPipe implements PipeTransform {\r\n    transform(value: any, ...args: string[]): string;\r\n}\r\n"],"names":[],"mappings":"AAAA;;AACA;;;AAEA;"}

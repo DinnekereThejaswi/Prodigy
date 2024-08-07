@@ -1,0 +1,13 @@
+{
+  "name": "@angular/material/stepper",
+  "typings": "../stepper.d.ts",
+  "main": "../bundles/material-stepper.umd.js",
+  "module": "../esm5/stepper.es5.js",
+  "es2015": "../esm2015/stepper.js",
+  "sideEffects": false,
+  "es2015_ivy_ngcc": "../__ivy_ngcc__/esm2015/stepper.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14"
+  }
+}

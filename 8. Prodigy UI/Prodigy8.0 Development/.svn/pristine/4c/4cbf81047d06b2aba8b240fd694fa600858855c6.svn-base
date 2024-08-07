@@ -1,0 +1,117 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="ReceiptCancelForm" class="form-horizontal">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="ReceiptNo">Receipt No</label>
+            <input type="text" class="form-control"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+              onKeyPress="if(this.value.length==7) return false;" GreenBorder name="ReceiptNo"
+              placeholder="Enter Receipt Number" #ReceiptNo>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary mt-4"
+                (click)="getReceiptDetails(ReceiptNo.value)"><i class="fal fa-search"></i> Search</button>
+              <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary" type="button"
+                (click)="clear()" style="margin-top: 22px;"><i class="fal fa-close"></i>&nbsp;Clear</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 float-right" *ngIf="hasReceiptDetails">
+          <div class="">
+            <div class="text-right"><i class="fal fa-rupee-sign"></i>&nbsp; <span class="text-muted">
+                Advance Amount</span>
+              <h1 class="font-light">{{ReceiptCancelObj.PayAmount | number : '1.2-2'}}</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 float-right" *ngIf="hasReceiptDetails">
+          <div class="">
+            <div class="text-right"><i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">Receipt
+                Date</span>
+              <h1 class="font-light">{{ReceiptCancelObj.PayDate | date:'dd/MM/yyyy'}}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="hasReceiptDetails">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="Name">Customer ID</label>
+            <div class="input-group">
+              <input class="form-control" formControlName="ID" [(ngModel)]="customerDtls.ID" type="text" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="City">Phone</label>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="customerDtls.PhoneNo" formControlName="Phone" type="text"
+                readonly>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="Address">Customer Name</label>
+            <div class="input-group">
+              <input class="form-control" formControlName="CustName" [(ngModel)]="customerDtls.CustName" type="text"
+                readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group">
+              <label for="Advance">Mobile</label>
+              <div class="input-group">
+                <input class="form-control" [(ngModel)]="customerDtls.MobileNo" type="text"
+                  [ngModelOptions]="{standalone: true}" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="Address">Area</label>
+            <div class="input-group">
+              <input class="form-control" formControlName="Area" type="text" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Advance">City</label>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="ReceiptCancelObj.EmailID" type="text"
+                [ngModelOptions]="{standalone: true}" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="hasReceiptDetails">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label">Remarks</label>
+            <div class="input-group">
+              <input type="text" class="form-control" formControlName="Remarks" placeholder="Enter Remarks/Details"
+                [(ngModel)]="ReceiptCancelObj.CancelledRemarks" [readonly]="EnableReadOnlyControls">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="hasReceiptDetails">
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" (click)="submitPost()">
+                <i class="far fa-ban "></i> Cancel Order Receipt</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<ng-container *ngIf="EnableJson">
+  <pre>{{ReceiptCancelObj | json}}</pre>
+</ng-container>

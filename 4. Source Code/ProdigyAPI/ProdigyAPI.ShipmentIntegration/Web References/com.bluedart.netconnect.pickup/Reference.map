@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd0" filename="PickupRegistrationService.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd3" filename="PickupRegistrationService0.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd4" filename="PickupRegistrationService1.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?disco" filename="PickupRegistrationService.disco" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd1" filename="PickupRegistrationService2.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?wsdl" filename="PickupRegistration.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd5" filename="PickupRegistrationService3.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd2" filename="PickupRegistrationService4.xsd" />
+  </Results>
+</DiscoveryClientResultsFile>

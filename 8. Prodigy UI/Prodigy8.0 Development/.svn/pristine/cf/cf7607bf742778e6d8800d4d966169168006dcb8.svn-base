@@ -1,0 +1,26 @@
+import { Pipe } from "@angular/core";
+import * as ɵngcc0 from '@angular/core';
+var LimitToPipe = /** @class */ (function () {
+    function LimitToPipe() {
+    }
+    LimitToPipe.prototype.transform = function (array, itemsCount, startIndex) {
+        if (startIndex === void 0) { startIndex = 0; }
+        if (!Array.isArray(array) || itemsCount === 0) {
+            return array;
+        }
+        return array.slice(startIndex, startIndex + itemsCount);
+    };
+    /** @nocollapse */
+    LimitToPipe.ctorParameters = function () { return []; };
+LimitToPipe.ngPipeDef = ɵngcc0.ɵɵdefinePipe({ name: "limitTo", type: LimitToPipe, factory: function LimitToPipe_Factory(t) { return new (t || LimitToPipe)(); }, pure: true });
+/*@__PURE__*/ ɵngcc0.ɵsetClassMetadata(LimitToPipe, [{
+        type: Pipe,
+        args: [{
+                name: "limitTo"
+            }]
+    }], function () { return []; }, { transform: [] });
+    return LimitToPipe;
+}());
+export { LimitToPipe };
+
+//# sourceMappingURL=limit-to.pipe.js.map

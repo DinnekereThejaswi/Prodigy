@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{69842FF8-9782-4E8C-9A2A-0C65B8C2A375}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProdigyAPI.ShipmentIntegration</RootNamespace>
+    <AssemblyName>ProdigyAPI.ShipmentIntegration</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BL\BluedartIntegrationBL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\com.bluedart.netconnect.pickup\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\com.bluedart.netconnect.waybill\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://netconnect.bluedart.com/Ver1.9/demo/ShippingAPI/Pickup/PickupRegistrationService.svc">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\com.bluedart.netconnect.pickup\</RelPath>
+      <UpdateFromURL>http://netconnect.bluedart.com/Ver1.9/demo/ShippingAPI/Pickup/PickupRegistrationService.svc</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ProdigyAPI_ShipmentIntegration_com_bluedart_netconnect_pickup_PickupRegistration</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://netconnect.bluedart.com/Ver1.9/demo/ShippingAPI/WayBill/WayBillGeneration.svc">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\com.bluedart.netconnect.waybill\</RelPath>
+      <UpdateFromURL>http://netconnect.bluedart.com/Ver1.9/demo/ShippingAPI/WayBill/WayBillGeneration.svc</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ProdigyAPI_ShipmentIntegration_com_bluedart_netconnect_waybill_WayBillGeneration</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\CancelPickupResponseEntity.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\GetAllProductsAndSubProductsResponseEntity.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\PickupRegistration.wsdl" />
+    <None Include="Web References\com.bluedart.netconnect.pickup\PickupRegistrationResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\PickupRegistrationService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\PickupRegistrationService0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\PickupRegistrationService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\PickupRegistrationService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\PickupRegistrationService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\PickupRegistrationService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.pickup\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.waybill\AWBCancelationResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.waybill\EwayBillResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.waybill\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.waybill\WayBillGeneration.wsdl" />
+    <None Include="Web References\com.bluedart.netconnect.waybill\WayBillGeneration.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.waybill\WayBillGeneration0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.waybill\WayBillGeneration1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.waybill\WayBillGeneration2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.waybill\WayBillGeneration3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.bluedart.netconnect.waybill\WayBillGenerationResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\com.bluedart.netconnect.pickup\PickupRegistrationService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\com.bluedart.netconnect.waybill\WayBillGeneration.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

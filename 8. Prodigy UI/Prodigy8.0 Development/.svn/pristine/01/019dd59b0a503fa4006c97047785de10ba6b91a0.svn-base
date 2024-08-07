@@ -1,0 +1,141 @@
+<!-- <div class="modal fade" id="ChangePasswordModel" tabindex="-1" role="contentinfo" data-backdrop="static"
+    data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="position: sticky;">
+                <h4 class="modal-title">Change Password</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="changePasswordform" class="form-horizontal">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label" for="search">Operator Code
+                                        <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                    </label>
+                                    <input class="form-group" type="text" placeholder="Enter Operator Code"
+                                        class="form-control" maxlength="14" minlength="14" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="search">Old Password<span class="textRed"> <i
+                                                class="fas fa-star-of-life"></i></span> </label>
+                                    <input class="form-group" type="text" placeholder="Enter Old Password"
+                                        class="form-control" maxlength="14" minlength="14" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="search">New Password
+                                        <span class="textRed"> <i class="fas fa-star-of-life"></i></span> </label>
+                                    <input class="form-group" type="text" placeholder="Enter New Password"
+                                        class="form-control" maxlength="14" minlength="14" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="search">Confirm Password
+                                        <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                    </label>
+                                    <input class="form-group" type="text" placeholder="Enter Confirm Password"
+                                        class="form-control" maxlength="14" minlength="14" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container my-3 bg-light">
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fal fa-plus"></i>
+                                    Add</button>
+                                <button
+                                    class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"><i
+                                        class="fal fa-trash"></i> Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
+
+
+
+<!-----------------------------Change password-->
+
+<div class="modal fade" id="ChangePasswordModel" tabindex="-1" role="contentinfo" data-backdrop="static"
+    data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="position: sticky;">
+
+                <h4 class="modal-title">
+                    <strong>Change Password </strong>
+                </h4>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="changePasswordform" class="form-horizontal">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Operator Code</label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>{{LoggedIn}}</strong>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="search">Old Password<span class="textRed"> <i
+                                                class="fas fa-star-of-life"></i></span> </label>
+                                    <input class="form-group" type="password" placeholder="Enter Old Password"
+                                        formControlName="FrmCtrl_OldPassword" class="form-control"
+                                        [(ngModel)]="ChangePasswordModel.OldPassword" maxlength="14" minlength="14"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="search">New Password
+                                        <span class="textRed"> <i class="fas fa-star-of-life"></i></span> </label>
+                                    <input class="form-group" type="password" placeholder="Enter New Password"
+                                        formControlName="FrmCtrl_NewPassword" class="form-control"
+                                        [(ngModel)]="ChangePasswordModel.NewPassword" maxlength="14" minlength="14"
+                                        required >
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="Karat">Confirm Password
+                                        <span class="textRed"> <i class="fas fa-star-of-life"></i></span> </label>
+                                    <input class="form-group" class="form-control" [(ngModel)]="confirmPassword"
+                                        formControlName="FormCtr_ConfirmPswd" type="password"
+                                        (change)="ValidatePassword(ConfirmPassword.value)"
+                                        placeholder="Enter Confirm Password" required autocomplete="off"
+                                        #ConfirmPassword>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container my-3 bg-light">
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                                    (click)="ChangePassword(changePasswordform)"><i class="fal fa-save"></i>
+                                    Save</button>
+                                <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                    (click)="ChangePasswordClear()"><i class="fal fa-trash"></i>
+                                    Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <ng-container *ngIf=EnableJson>
+            <pre>{{ ChangePasswordModel |json}}</pre>
+        </ng-container>
+    </div>
+</div>
+<!-- <ng-container *ngIf="EnableJson">
+            <pre>{{AddipDataModel|json}}</pre>
+        </ng-container> -->

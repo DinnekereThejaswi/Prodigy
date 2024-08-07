@@ -1,0 +1,20 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import { NgModule } from '@angular/core';
+var KeyboardShortcutsModule = /** @class */ (function () {
+    function KeyboardShortcutsModule() {
+    }
+    KeyboardShortcutsModule.decorators = [
+        { type: NgModule, args: [{
+                    imports: [],
+                    declarations: [],
+                    exports: []
+                },] },
+    ];
+    return KeyboardShortcutsModule;
+}());
+export { KeyboardShortcutsModule };
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmcta2V5Ym9hcmQtc2hvcnRjdXRzLm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL25nLWtleWJvYXJkLXNob3J0Y3V0cy8iLCJzb3VyY2VzIjpbImxpYi9uZy1rZXlib2FyZC1zaG9ydGN1dHMubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDOzs7OztnQkFFeEMsUUFBUSxTQUFDO29CQUNSLE9BQU8sRUFBRSxFQUNSO29CQUNELFlBQVksRUFBRSxFQUFFO29CQUNoQixPQUFPLEVBQUUsRUFBRTtpQkFDWjs7a0NBUEQ7O1NBUWEsdUJBQXVCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmdNb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuQE5nTW9kdWxlKHtcbiAgaW1wb3J0czogW1xuICBdLFxuICBkZWNsYXJhdGlvbnM6IFtdLFxuICBleHBvcnRzOiBbXVxufSlcbmV4cG9ydCBjbGFzcyBLZXlib2FyZFNob3J0Y3V0c01vZHVsZSB7IH1cbiJdfQ==

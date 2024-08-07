@@ -1,0 +1,692 @@
+<!-- {{CustomerDets | json}} -->
+<form [formGroup]="SalesForm" class="form-horizontal" (ngSubmit)="onSubmit()">
+  <div class="row" *ngIf="EnableDisablectrls">
+    <div class="col-md-3 ">
+      <div class="form-group">
+        <label for="salesPerson">Sales Person</label>
+        <div class="form-group">
+          <select class="form-control mr-auto mt-2 mt-lg-0" Autofocus formControlName="salesPerson"
+            [(ngModel)]="SalesPersonModel.salesPerson">
+            <option [ngValue]="null">Select</option>
+            <option *ngFor="let _salesman of SalesManList" [value]="_salesman.sal_code">
+              {{_salesman.CodeName}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 ">
+      <div class="form-group">
+        <label for="barcode">Barcode/Tag No.</label>
+        <div class="input-group">
+          <!-- <input class="form-control" id="barcode" formControlName="barcode" [(ngModel)]="SalesPersonModel.barcode"
+            placeholder="Search by Barcode" type="text" (keyup.enter)="getDetails(SalesForm)"> -->
+          <input class="form-control" id="barcode" formControlName="barcode" [(ngModel)]="SalesPersonModel.barcode"
+            placeholder="Search by Barcode" type="text" maxlength="10"
+            onkeypress='return (event.charCode > 96 && event.charCode < 123) || (event.charCode > 64 && event.charCode < 91) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode <= 31'
+            (keyup.enter)="getDetails(SalesForm)" GreenBorder>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <label for="barcode"></label>
+        <div class="input-group">
+          <a href="javascript:void(0)" class="btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right"
+            (click)="AddBarcode(SalesForm)" GreenBorder><i class="fas fa-barcode"></i> Add Barcode</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 ">
+      <div class="form-group">
+        <label for="salesPerson">Place of Supply</label>
+        <div class="form-group">
+          <select class="form-control" formControlName="StateCode" [(ngModel)]="SalesLinesPost.Pos"
+            (change)="SetInterState(SalesLinesPost.Pos)">
+            <option [ngValue]="null" [disabled]="EnablePos">Select State</option>
+            <option *ngFor="let State of StateList" [ngValue]="State.TINNo" [disabled]="EnablePos">
+              {{State.StateName}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <div class="text-right">&nbsp;
+        <button class="btn btn-success btn-rounded" type="button" (click)="EditPos()"><i
+            class="fal fa-edit"></i>Edit</button>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="table-responsive" *ngIf="ToggleCalculation">
+  <table class="table" id="panels">
+    <thead class="topbar">
+      <tr>
+        <th *ngIf="EnableDisablectrls">Action</th>
+        <th>Barcode</th>
+        <th>Item </th>
+        <th>Qty</th>
+        <th>Gr.Wt</th>
+        <th>Nt.Wt</th>
+        <th>Rate/gram</th>
+        <th>VA%</th>
+        <th>Metal Amt</th>
+        <th>St Amt</th>
+        <th>Dia Amt</th>
+        <th>VA Amt</th>
+        <th>Item Total</th>
+        <th>SGST</th>
+        <th>CGST</th>
+        <th>IGST</th>
+        <th>Sales Total</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let _GetBarcodeList of GetBarcodeList; let i = index">
+      <tr>
+        <td *ngIf="EnableDisablectrls">
+          <!-- <i class="far fa-eye fa-1-5x pointer" aria-hidden="true" style='color: #009688; font-size: 1.5em !important;'
+            data-toggle="modal" data-target="#myModal" (click)="GetBarcodeInfo(_GetBarcodeList)"></i> -->
+          <i class="far fa-pen fa-1-5x pointer" style='color: orange; font-size: 1.5em !important;'
+            (click)="EditTagRow(i,_GetBarcodeList)"></i>
+          <i class="far fa-trash-alt fa-1-5x pointer" style='color: red; font-size: 1.5em !important;'
+            (click)="DeleteTagRow(i,_GetBarcodeList)"></i>
+        </td>
+        <td>{{_GetBarcodeList.BarcodeNo}}</td>
+        <td>{{_GetBarcodeList.ItemName}}</td>
+        <td>{{_GetBarcodeList.ItemQty}}</td>
+        <td *ngIf="_GetBarcodeList.VaporLossWeight != null">{{ _GetBarcodeList.Grosswt + _GetBarcodeList.AddWt -
+          _GetBarcodeList.DeductWt - _GetBarcodeList.VaporLossWeight | number : '1.3-3' }}</td>
+        <td *ngIf="_GetBarcodeList.VaporLossWeight == null">{{ _GetBarcodeList.Grosswt + _GetBarcodeList.AddWt -
+          _GetBarcodeList.DeductWt | number : '1.3-3' }}</td>
+        <td *ngIf="_GetBarcodeList.VaporLossWeight != null">
+          {{_GetBarcodeList.Grosswt + _GetBarcodeList.AddWt - _GetBarcodeList.Stonewt - _GetBarcodeList.DeductWt -
+          _GetBarcodeList.VaporLossWeight |
+          number : '1.3-3'}}
+        </td>
+        <td *ngIf="_GetBarcodeList.VaporLossWeight == null">
+          {{_GetBarcodeList.Grosswt + _GetBarcodeList.AddWt - _GetBarcodeList.Stonewt - _GetBarcodeList.DeductWt |
+          number : '1.3-3'}}
+        </td>
+        <td>{{_GetBarcodeList.Rate | number : '1.2-2'}}</td>
+        <td>{{_GetBarcodeList.McPercent | number : '1.2-2'}}</td>
+        <td>{{_GetBarcodeList.GoldValue | number : '1.2-2'}}</td>
+        <td>{{_GetBarcodeList.StoneCharges | number : '1.2-2' }}</td>
+        <td>{{_GetBarcodeList.DiamondCharges | number : '1.2-2'}}</td>
+        <td>{{_GetBarcodeList.VaAmount | number : '1.2-2' }}</td>
+        <td>{{_GetBarcodeList.ItemTotalAfterDiscount | number : '1.2-2'}}</td>
+        <td>{{_GetBarcodeList.SGSTAmount | number : '1.2-2'}}</td>
+        <td>{{_GetBarcodeList.CGSTAmount | number : '1.2-2'}}</td>
+        <td>{{_GetBarcodeList.IGSTAmount | number : '1.2-2'}}</td>
+        <td>{{_GetBarcodeList.ItemFinalAmount | number : '1.2-2'}}</td>
+      </tr>
+    </tbody>
+    <tr>
+      <td *ngIf="EnableDisablectrls" class="border-none"><b>Grand Total</b></td>
+      <td class="border-none"></td>
+      <td class="border-none"><b>No. of items:</b></td>
+      <td class="border-none"><b>{{total_items(GetBarcodeList) | number}}</b></td>
+      <td class="border-none"><b>{{grossWT(GetBarcodeList) | number : '1.3-3'}}</b></td>
+      <td class="border-none"><b>{{netWT(GetBarcodeList) | number : '1.3-3'}}</b></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"><b>{{metal_amount(GetBarcodeList) | number : '1.2-2'}}</b></td>
+      <td class="border-none"><b>{{stone_amount(GetBarcodeList) | number : '1.2-2'}}</b></td>
+      <td class="border-none"><b>{{diamond_amount(GetBarcodeList) | number : '1.2-2'}}</b></td>
+      <td class="border-none"><b>{{va_amount(GetBarcodeList) | number : '1.2-2'}}</b></td>
+      <td class="border-none"><b>{{taxable_amount(GetBarcodeList) | number : '1.2-2'}}</b></td>
+      <td class="border-none"><b>{{SGST_amount(GetBarcodeList) | number:'1.2-2'}}</b></td>
+      <td class="border-none"><b>{{CGST_amount(GetBarcodeList) | number:'1.2-2'}}</b></td>
+      <td class="border-none"><b>{{IGST_amount(GetBarcodeList) | number:'1.2-2'}}</b></td>
+      <td class="border-none"><b>{{SalesTotal_amount(GetBarcodeList) | number:'1.2-2'}}</b></td>
+    </tr>
+    <!-- <tr>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none Heading"></td>
+      <td class="border-none"></td>
+      <td class="border-none Heading"><span class="Heading">Taxable Amt</span></td>
+      <td class="border-none">{{taxable_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+
+    </tr>
+    <tr style=" border: none;">
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none Heading"><span class="Heading">SGST </span> (1.5%) :</td>
+      <td class="border-none">{{SGST_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+      <td class="border-none Heading"><span class="Heading">CGST </span> (1.5%) :</td>
+      <td class="border-none">{{CGST_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+      <td class="border-none Heading"><span class="Heading">IGST:</span> (3.0%):</td>
+      <td class="border-none">{{IGST_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+      <td class="border-none Heading"><span class="Heading">Sales Total:</span></td>
+      <td class="border-none">{{SalesTotal_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+      <td class="border-none"></td>
+    </tr> -->
+  </table>
+</div>
+
+<div class="modal" id="myModal" *ngIf="Toggle">
+  <div class="modal-dialog modal-lg" style="max-width: 1000px;">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title"> BarcodeNo : {{modalPopUPBarcode.BarcodeNo}} </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="columns">
+                <div class="row">
+                  <div class="col-md-5">
+                    <ul class="price">
+                      <li>
+                        <span class="float-left">Item Qty</span>
+                        <span class="float-right">{{modalPopUPBarcode.ItemQty}}</span>
+                      </li>
+                      <li>
+                        <span class="float-left">Gr. Wt(g)</span>
+                        <span class="float-right">{{modalPopUPBarcode.Grosswt | number : '1.3-3'}}</span>
+                      </li>
+                      <li>
+                        <span class="float-left">St Wt(g)</span>
+                        <span class="float-right">{{modalPopUPBarcode.Stonewt | number : '1.3-3'}}</span>
+                      </li>
+                      <li>
+                        <span class="float-left">N wt(g)</span>
+                        <span class="float-right">{{modalPopUPBarcode.Netwt | number : '1.3-3'}}</span>
+                      </li>
+                      <li>
+                        <span class="float-left">Bill Qty</span>
+                        <span class="float-right">{{modalPopUPBarcode.ItemQty}}</span>
+                      </li>
+                      <li>
+                        <span class="float-left">Bill Gr Wt</span>
+                        <span class="float-right">{{modalPopUPBarcode.Grosswt | number : '1.3-3'}}</span>
+                      </li>
+                      <li>
+                        <span class="float-left font">Rate</span>
+                        <span class="float-right">{{modalPopUPBarcode.Rate | number : '1.2-2'}}</span>
+                      </li>
+                      <li>
+                        <span class="float-left">Karat</span>
+                        <span class="float-right">{{modalPopUPBarcode.Karat}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- <pre>{{SalesPersonModel | json}}</pre> -->
+                  <div class="col-md-7">
+                    <form [formGroup]="SalesGSForm" class="form-horizontal">
+
+                      <div class="form-group">
+                        <label for="GS">GS</label>
+                        <div class="form-group">
+                          <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="GS"
+                            [(ngModel)]="SalesPersonModel.GS">
+                            <option *ngFor="let _GSList of GSList" [value]="_GSList.gs_code" [disabled]="readonly">
+                              {{_GSList.GSName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="ItemName">Item</label>
+                        <div class="form-group">
+                          <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="ItemName"
+                            [(ngModel)]="SalesPersonModel.ItemName">
+                            <option *ngFor="let _ItemName of ItemName" [value]="_ItemName.item_name"
+                              [disabled]="readonly">
+                              {{_ItemName.CodeName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                    <ul class="price">
+                      <li>
+                        <span class="float-left">Design</span>
+                        <span class="float-right">{{modalPopUPBarcode.DesignName}}</span>
+                      </li>
+
+                      <li>
+                        <span class="float-left">Counter</span>
+                        <span class="float-right">{{modalPopUPBarcode.CounterCode}}</span>
+                      </li>
+                      <li>
+                        <span class="float-left">Size</span>
+                        <span class="float-right">{{modalPopUPBarcode.ItemSize}}</span>
+                      </li>
+                      <li>
+                        <span class="float-left">Piece Item</span>
+                        <span class="float-right">{{modalPopUPBarcode.PieceRate}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-4">
+                    <ul class="price">
+                      <li>
+                        <span class="float-left font">Order No</span>
+                        <span class="float-right"></span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-4">
+                    <ul class="price">
+                      <li>
+                        <span class="float-left font">Order Rate</span>
+                        <span class="float-right"></span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-4">
+                    <ul class="price">
+                      <li>
+                        <span class="float-left font">Order Karat</span>
+                        <span class="float-right"></span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4 class="modal-title">MC Details of BarcodeNo : {{modalPopUPBarcode.BarcodeNo}} </h4>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead class="topbar">
+                          <tr>
+                            <th>MC Type</th>
+                            <th>MC/Gram</th>
+                            <th>MC/Piece</th>
+                            <th>MC%</th>
+                            <th>Wast.%</th>
+                            <th>MC Amt</th>
+                            <th>Wastage Grams</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{{McType}}</td>
+                            <td></td>
+                            <td>{{modalPopUPBarcode.McPerPiece | number : '1.2-2'}}</td>
+                            <td>{{modalPopUPBarcode.McPercent | number : '1.2-2'}}</td>
+                            <td>{{modalPopUPBarcode.WastPercent | number : '1.2-2'}}</td>
+                            <td>{{modalPopUPBarcode.McAmount | number : '1.2-2'}}</td>
+                            <td>{{modalPopUPBarcode.WastageGrms | number : '1.3-3'}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4 class="modal-title">Stone Details of BarcodeNo : {{modalPopUPBarcode.BarcodeNo}} </h4>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead class="topbar">
+                          <tr>
+                            <th>Name</th>
+                            <th>Qty</th>
+                            <th>Carat</th>
+                            <th>Stone Wt</th>
+                            <th>Rate/gram</th>
+                            <th>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="!NoRecords">
+                          <tr>
+                            <td colspan="10">
+                              <h6 style="text-align: center">No Stone Records Found</h6>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tbody *ngIf="NoRecords">
+                          <tr *ngFor="let _stoneList of GetStoneList">
+                            <td>{{_stoneList.Name}}</td>
+                            <td>{{_stoneList.Qty}}</td>
+                            <td>{{_stoneList.Carrat}}</td>
+                            <td>{{_stoneList.StoneWt | number : '1.3-3'}}</td>
+                            <td>{{_stoneList.Rate | number : '1.2-2'}}</td>
+                            <td>{{_stoneList.Amount | number : '1.2-2'}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="columns">
+                <ul class="price">
+                  <li>
+                    <span class="float-left font">Billing N.Wt</span>
+                    <span class="float-right">{{modalPopUPBarcode.Netwt | number : '1.3-3'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left">Discount MC%</span>
+                    <span class="float-right">{{modalPopUPBarcode.DiscountMc | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left">Total Sales Mc</span>
+                    <span class="float-right">{{modalPopUPBarcode.TotalSalesMc | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left">Mc Discount Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.McDiscountAmt | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left">Metal Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.GoldValue | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left">MC Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.VaAmount | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left">Stone Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.StoneCharges | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left">Diamond Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.DiamondCharges | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left">Item Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.ItemTotalAfterDiscount | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left font">SGST Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.SGSTAmount | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left font">CGST Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.CGSTAmount | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left font">IGST Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.IGSTAmount | number : '1.2-2'}}</span>
+                  </li>
+                  <li>
+                    <span class="float-left font">CESS Amt</span>
+                    <span class="float-right"></span>
+                  </li>
+                </ul>
+                <ul class="price mt-3">
+                  <li>
+                    <span class="float-left font">Total Amt</span>
+                    <span class="float-right">{{modalPopUPBarcode.ItemFinalAmount | number : '1.2-2'}}</span>
+                  </li>
+                </ul>
+                <ul class="price mt-3">
+                  <li>
+                    <span class="float-left">Discount</span>
+                    <span class="float-right">{{modalPopUPBarcode.ItemAdditionalDiscount | number : '1.2-2'}}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="addBarcode" data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;
+overflow-x: hidden;">
+  <div class="modal-dialog" style="max-width: 1360px;">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h3 class="modal-title">BarCode Details <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+            <span class="tooltiptext ">BarCode Details.</span>
+          </div>
+        </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <app-add-barcode [BarCodeNo]="BarCodeNo"></app-add-barcode>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="EnableDisablectrls">
+  <div class="row" *ngIf="ToggleCalculation">
+    <div class="col-md-3 ">
+      <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+        style="margin-top: 1.8rem !important;" (click)="Submit()">
+        <i class="far fa-save"></i> Submit</button>
+    </div>
+    <ng-container *ngIf="ApplyFab2020Offer">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for=""></label>
+          <div class="input-group">
+            <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+              style="margin-top: 5px;" (click)="ApplyFab2022Offer()">
+              <i class="fa fa-plus"></i>&nbsp;Apply FAB-2020 Offer Discount</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for=""></label>
+          <div class="input-group">
+            <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+              style="margin-top: 7px;" (click)="RemoveFab2022Offer()">
+              <i class="fa fa-times"></i>&nbsp;Remove FAB-2020 Offer Discount</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<br>
+<!--   -->
+<ng-container *ngIf="EnableJson">
+  <div class="row">
+    <div class="col-sm-4">
+      <pre>{{SalesLinesPost | json}}</pre>
+    </div>
+    <div class="col-sm-4">
+      <pre>{{OfferModel2022 | json}}</pre>
+    </div>
+  </div>
+</ng-container>
+
+<div id="PermissonModalPos" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Prodigy</h4>
+        <button type="button" class="close" (click)="closePos()" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="OrderNo">90. Password</label>
+          <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+            (keyup.enter)="passWordPos(PwdInterState.value)" #PwdInterState>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+            (click)="passWordPos(PwdInterState.value)">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="PermissonModalAddbarcode" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Prodigy</h4>
+        <button type="button" class="close" (click)="closeAddbarcode()" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="OrderNo">40. Password</label>
+          <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+            (keyup.enter)="passWordAddbarcode(PwdAddBarcode.value)" #PwdAddBarcode>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+            (click)="passWordAddbarcode(PwdAddBarcode.value)">Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Group Barcoding-->
+
+<div class="modal overlay" id="GroupBarcodingModal" role="dialog" data-backdrop="static" data-keyboard="false">
+
+  <div class="modal-dialog modal-lg" style="max-width: 1000px">
+    <div class="modal-content ">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Barcode Details</h4>
+        <button type="button" class="close" (click)="closeGroupBarcode()" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form [formGroup]="GroupBarcodingForm">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td class="float-rt">Barcode No</td>
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="groupBarcodingModel.BarcodeNo"
+                    formControlName="BarcodeNo" readonly>
+                </td>
+                <td class="float-rt">
+                  Item Name
+                </td>
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="groupBarcodingModel.ItemName"
+                    formControlName="ItemName" readonly>
+                </td>
+              </tr>
+              <tr>
+                <td class="float-rt">Available Qty</td>
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="groupBarcodingModel.ItemQty"
+                    formControlName="ItemQty" readonly>
+                </td>
+                <td class="float-rt">Billing Qty</td>
+                <td><input type="number" min="0" class="form-control" [(ngModel)]="groupBarcodingModel.Quantity"
+                    formControlName="Quantity"
+                    onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" >
+                </td>
+              </tr>
+              <tr>
+                <td class="float-rt">Available Gwt</td>
+                <td><input type="text" class="form-control" formControlName="Grosswt"
+                    [(ngModel)]="groupBarcodingModel.Grosswt" readonly>
+                </td>
+                <td class="float-rt">Billing Gwt</td>
+                <td><input type="number" min="0" class="form-control" [(ngModel)]="groupBarcodingModel.BillingGrossWt"
+                    formControlName="BillingGrossWt" (change)="CalNtWt()"
+                    onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" >
+                </td>
+              </tr>
+              <tr>
+                <td class="float-rt">Available Swt</td>
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="groupBarcodingModel.Stonewt"
+                    formControlName="Stonewt" readonly>
+                </td>
+                <td class="float-rt">Billing Swt</td>
+                <td><input type="number" min="0" class="form-control" [(ngModel)]="groupBarcodingModel.BillingStoneWt"
+                    formControlName="BillingStoneWt" (change)="CalNtWt()"
+                    onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" >
+                </td>
+              </tr>
+              <tr>
+                <td class="float-rt">Available Nwt</td>
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="groupBarcodingModel.Netwt"
+                    formControlName="Netwt" readonly>
+                </td>
+                <td class="float-rt">Billing Nwt</td>
+                <td><input type="text" class="form-control" [(ngModel)]="groupBarcodingModel.BillingNetWt"
+                    formControlName="BillingNetWt" readonly>
+                </td>
+              </tr>
+              <tr>
+                <td class="float-rt">Available St.Amt</td>
+                <td>
+                  <input type="text" class="form-control" readonly>
+                </td>
+                <td class="float-rt">Stone Amt</td>
+                <td><input type="text" class="form-control" readonly>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <div class="input-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" (click)="Save()"
+            type="button"><i class="fal fa-save"></i> Save</button>
+          <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" type="button"
+            data-dismiss="modal" (click)="closeGroupBarcode()"><i class="far fa-window-close"></i>
+            Exit</button>
+        </div>
+      </div>
+      <ng-container *ngIf="EnableJson">
+        <pre>{{groupBarcodingModel | json}}</pre>
+      </ng-container>
+    </div>
+  </div>
+</div>

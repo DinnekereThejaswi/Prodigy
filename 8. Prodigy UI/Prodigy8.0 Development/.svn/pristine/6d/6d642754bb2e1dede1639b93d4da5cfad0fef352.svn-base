@@ -1,0 +1,170 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="fixedOrderTypeForm" class="form-horizontal">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="control-label">Booking Name</label>
+            <select class="form-control" formControlName="fromCtrl_BookingName"
+              [(ngModel)]="FixedOrderTypeData.BookingCode" (change)="getFixedOrderList($event)" [disabled]="disabled">
+              <option [ngValue]="null" [disabled]="disabled">Select</option>
+              <option *ngFor="let _Types of plantypes" [disabled]="disabled" [value]="_Types.Code">
+                {{_Types.Name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="control-label">Order Advance %</label>
+            <input type="number" class="form-control" formControlName="fromCtrl_AdvAmountPer"
+              [(ngModel)]="FixedOrderTypeData.AdvAmountPer" IntegerDecimalFieldValidator [readonly]="isReadOnly"
+              placeholder="Order Advance %">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label">Description </label>
+            <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+              formControlName="fromCtrl_Description" [(ngModel)]="FixedOrderTypeData.Description"
+              (input)="TEXT.value = TEXT.value.toUpperCase()" placeholder="Enter Description" type="text" #TEXT>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="control-label">Fixed Days</label>
+            <input type="number" class="form-control" formControlName="fromCtrl_FixedDays"
+              [(ngModel)]="FixedOrderTypeData.FixedDays" IntegerDecimalFieldValidator placeholder="Enter Fixed Days" />
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="control-label">Min.Weight </label>
+            <input type="number" class="form-control" formControlName="fromCtrl_MinWeight" IntegerDecimalFieldValidator
+              [(ngModel)]="FixedOrderTypeData.MinWeight" placeholder="Enter Color">
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <ng-container *ngIf="EnableAdd">
+              <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                style="margin-top: 1.2rem !important;" (click)="add(fixedOrderTypeForm)">
+                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+            </ng-container>
+            <ng-container *ngIf="EnableSave">
+              <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                style="margin-top: 1.2rem !important;" (click)="save(fixedOrderTypeForm)">
+                <i class="fal fa-save"></i>&nbsp;Save</button>
+            </ng-container>
+            <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+              style="margin-top: 1.2rem !important;" (click)="clear()">
+              <i class="fal fa-trash"></i>&nbsp;Clear</button>
+
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <button type="button" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+            style="margin-top: 1.2rem !important;" (click)=Print() id="exampleModalLabel"><i class="fal fa-print"></i>
+            Print</button>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="table-responsive my-custom-scrollbar">
+        <table class="table table-bordered ">
+          <thead class="topbar">
+            <tr>
+              <th>Booking Name</th>
+              <th>Order Advance % </th>
+              <th>Description</th>
+              <th>Fixed Days</th>
+              <th>Min Weight</th>
+              <th>Status</th>
+              <th>Edit</th>
+              <th>Open</th>
+              <th>Close</th>
+
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let List of fixedOrders">
+              <td>{{List.BookingName}}</td>
+              <td>{{List.AdvAmountPer}}</td>
+              <td>{{List.Description}}</td>
+              <td>{{List.FixedDays}}</td>
+              <td>{{List.MinWeight}}</td>
+              <td [style.color]="getStatusColor(List.Cflag)">
+                <b>{{List.Cflag | statusName : List.Cflag }}</b>
+              </td>
+              <td align="center">
+                <i class="fas fa-edit" title="edit" (click)="editField(List)"></i>
+              </td>
+              <td align="center"><i class="fas fa-lock-open" title="open" (click)="openField(List)"></i>
+              <td align="center">
+                <i class="fas fa-lock" title="close" (click)="closeField(List)"></i>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="EnableJson">
+    <pre>{{FixedOrderTypeData | json}}</pre>
+  </ng-container>
+</div>
+
+
+<div class="modal fade" id="FixedOrderDetailsTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i>
+          Print</button>
+        <h3 class="modal-title">{{bcode}}-Order Advance Percent</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive" id="TableData">
+              <table class="table table-bordered table-hover">
+                <thead class="topbar">
+                  <tr>
+                    <th>Booking Name</th>
+                    <th>Order Advance % </th>
+                    <th>Description</th>
+                    <th>Fixed Days</th>
+                    <th>Min Weight</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let List of printData;let i=index">
+                  <tr>
+                    <td>{{List.BookingName}}</td>
+                    <td>{{List.AdvAmountPer}}</td>
+                    <td>{{List.Description}}</td>
+                    <td>{{List.FixedDays}}</td>
+                    <td>{{List.MinWeight}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,338 @@
+<!-- <div class="row">
+  <div class="col-md-12">
+    <div class="form-group float-right" style="display: inline-block;">
+      <button class="btn btn-success waves-effect waves-light btn-box btn-secondary MT-2" type="submit"
+        (click)="Add()"><i class="fal fa-add"></i>Set Offer</button>
+    
+    </div>
+  </div>
+</div> -->
+
+<!-- <---OfferItemsForm--> 
+<!-- <div class="card">
+  <div class="card-header">
+    Offer Schems
+  </div>
+  <div class="card-body">
+    <form [formGroup]="OfferItemsForm">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="gram">From Gram </label>
+            <input type="text" class="form-control" [(ngModel)]="OfferCoins.OfferOnHeader" formControlName="OfferOn"
+              maxlength="30" placeholder="Enter From Gram">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="gram">To Gram </label>
+            <input type="text" class="form-control" [(ngModel)]="OfferCoins.OfferOnHeader" formControlName="OfferOn"
+              maxlength="30" placeholder="From Gram">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="gram">From Carat </label>
+            <input type="text" class="form-control" [(ngModel)]="OfferCoins.OfferOnHeader" formControlName="OfferOn"
+              maxlength="30" placeholder="From Carat">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="gram">To Carat </label>
+            <input type="text" class="form-control" [(ngModel)]="OfferCoins.OfferOnHeader" formControlName="OfferOn"
+              maxlength="30" placeholder="To Carat">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="gram">From Amount </label>
+            <input type="text" class="form-control" [(ngModel)]="OfferCoins.OfferOnHeader" formControlName="OfferOn"
+              maxlength="30" placeholder=" From Amount">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="gram">To Amount </label>
+            <input type="text" class="form-control" [(ngModel)]="OfferCoins.OfferOnHeader" formControlName="OfferOn"
+              maxlength="30" placeholder="To Amount">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="gram">Dis.Amt(C/G) </label>
+            <input type="text" class="form-control" [(ngModel)]="OfferCoins.OfferOnHeader" formControlName="OfferOn"
+              maxlength="30" placeholder="Discount percent">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="gram">Percentage </label>
+            <input type="text" class="form-control" [(ngModel)]="OfferCoins.OfferOnHeader" formControlName="OfferOn"
+              maxlength="30" placeholder="Percentage">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="gram">Status </label>
+            <br>
+            <input type="checkbox">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <br>
+          <div class="form-group">
+            <button class="btn btn-success waves-effect waves-light btn-box btn-secondary MT-2 "
+              (click)="add(OfferItemsForm)">
+              <i class="fas fa-save" style="padding-right:10px"></i>Save</button>
+            <button class="btn btn-warning  aves-effect waves-light btn-box btn-secondary MT-2 ">
+              <i class="far fa-window-close" style="padding-right:10px"></i>Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered  table-hover ">
+          <thead class="topbar">
+            <tr>
+              <th>From Gram</th>
+              <th>To Gram</th>
+              <th>From Carat</th>
+              <th>To Carat</th>
+              <th>From Amount</th>
+              <th>To Amount</th>
+              <th>Discount Amount</th>
+              <th>Discount %</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0.001</td>
+              <td>7.990</td>
+              <td>0.000</td>
+              <td>0.000</td>
+              <td>0.000</td>
+              <td>0.000</td>
+              <td>0.000</td>
+              <td>0.000</td>
+
+
+              <td>Y</td>
+            </tr>
+            <tr>
+              <td>0.001</td>
+              <td>7.990</td>
+              <td>0.000</td>
+              <td>0.000</td>
+              <td>0.000</td>
+              <td>0.000</td>
+              <td>0.000</td>
+              <td>0.000</td>
+
+
+              <td>Y</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
+</div> -->
+
+<!-- Offer Options -->
+<div class="card">
+  <div class="card-header">
+    <marquee>Offer Options</marquee>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="OfferOptionsForm">
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="gram">From Date </label>
+            <input type="text" class="form-control" [bsConfig]="datePickerConfig" bsDatepicker
+              placeholder="Select Start Date" value="{{OfferOptions.StartDate | date:'dd/MM/yyyy' }}"
+              [(ngModel)]="OfferOptions.StartDate" formControlName="OfferStartDate" />
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="gram">End
+              Date </label>
+            <input type="text" class="form-control" formControlName="OfferEndtDate" [(ngModel)]="OfferOptions.EndDate"
+              bsDatepicker [bsConfig]="datePickerConfig" value="{{OfferOptions.EndDate  | date:'dd/MM/yyyy' }}"
+              placeholder="Select End Date" />
+          </div>
+        </div>
+        <div class="col-md-4">
+          <br>
+          <div class="form-group">
+            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2 "
+              (click)="add()">
+              <i class="fas fa-save" style="padding-right:10px"></i>&nbsp;Save</button>
+            <button class="btn btn-warning  aves-effect waves-light btn-rounded btn-secondary MT-2 "
+              (click)="getOfferOptions()">
+              <i class="far fa-window-close" style="padding-right:10px"></i>&nbsp;Default</button>
+          </div>
+        </div>
+      </div>
+      <hr>
+
+
+      <div class="table-responsive">
+        <table class="table table-bordered  table-hover ">
+          <thead class="topbar">
+          <tbody>
+            <tr>
+              <!-- <div class="form-group"> -->
+              <input type="checkbox" [checked]="OfferOptions.SRDiscount == 'Y'"
+               [(ngModel)]="OfferOptions.SRDiscount"
+                formControlName="SRDiscount" (change)="checkkboxchng($event)" />
+              <label for="SRdiscount">Allow discount on SalesReturn Adjusted</label>
+              <!-- </div> -->
+            </tr>
+            <hr>
+            <tr *ngIf="OfferOptions.SRDiscount =='Y' ">
+              <!-- <div class="form-group"> -->
+              <input type="checkbox" [checked]="OfferOptions.StWtDeduction == 'Y'"
+                [(ngModel)]="OfferOptions.StWtDeduction" formControlName="StWtDeduction"
+                (change)="checkkboxchng3($event)" />
+              <!-- </div> -->
+              <label for="StWtDeduction">Allow discount after deduction of SalesReturn wt or Amount</label>
+              <hr>
+            </tr>
+
+            <tr>
+              <!-- <div class="form-group"> -->
+              <input type="checkbox" [checked]="OfferOptions.PurDiscount == 'Y'" 
+              [(ngModel)]="OfferOptions.PurDiscount"
+                formControlName="PurDiscount" (change)="checkkboxchng1($event)" />
+              <label for="Purchasbill">Allow discount on Purchase Bill Adjusted</label>
+              <!-- </div> -->
+            </tr>
+            <hr>
+            <tr>
+              <!-- <div class="form-group"> -->
+              <input type="checkbox" [checked]="OfferOptions.OrderDiscount == 'Y'"
+                [(ngModel)]="OfferOptions.OrderDiscount" formControlName="OrderDiscount"
+                (change)="checkkboxchng2($event)" />
+              <label for="order">Allow discount on Order Adjusted</label>
+              <!-- </div> -->
+            </tr>
+            <hr>
+
+
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<form [formGroup]="DiscModelForm" class="form-horizontal">
+  <div class="modal overlay" id="DiscountMasterModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h4 class="modal-title"> Offers</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label" for="Supplier">Offer On</label>
+                <select class="form-control" >
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _coins of GetOfferOn" [value]="_coins.Id">
+                    {{_coins.Name}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label" for="Supplier">Offer Type</label>
+                <select class="form-control" >
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _types of Types" [value]="_types.Id">
+                    {{_types.Name}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label" for="Supplier">GS Code</label>
+                <select class="form-control" >
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _gscode of GSList" [value]="_gscode.GSCode">
+                    {{_gscode.GSName}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label" for="Supplier">Counter</label>
+                <select class="form-control" >
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _coins of GetOfferOn" [value]="_coins.Id">
+                    {{_coins.Name}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label class="control-label" for="Supplier">Item</label>
+                <select class="form-control" >
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _coins of GetOfferOn" [value]="_coins.Id">
+                    {{_coins.Name}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <br>
+              <div class="form-group">
+                <button class="btn btn-success waves-effect waves-light btn-box btn-secondary MT-2 ">
+                  <i class="fas fa-save" style="padding-right:10px"></i>Save</button>
+                <button class="btn btn-warning  aves-effect waves-light btn-box btn-secondary MT-2 ">
+                  <i class="far fa-window-close" style="padding-right:10px"></i>Clear</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead class="topbar">
+                    <tr>
+                      <th>GS</th>
+                      <th>Counter</th>
+                      <th>Item</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>NGO</td>
+                      <td>B</td>
+                      <td>BGBB</td>
+                      <td>DELETE</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<ng-container *ngIf="EnableJson">
+  <pre>{{OfferOptions|json}}</pre>
+</ng-container>
+

@@ -1,0 +1,39 @@
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#BarcodeUpdate" (click)="ToggleBarcodeUpdate()"
+            [ngClass]="EnableBarcodeUpdate ? 'collapsed' : ''" [attr.data-toggle]="EnableBarcodeUpdate ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#005BFF">
+                        <i class="fa fa-barcode fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Barcode Update</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="BarcodeUpdate" class="card-body collapse" [collapse]="EnableBarcodeUpdate">
+            <app-update-barcode></app-update-barcode>
+        </div>
+    </div>
+</div>
+<br>
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#CoinsUpdate" (click)="ToggleCoinsUpdate()"
+            [ngClass]="EnableCoinsUpdate ? 'collapsed' : ''" [attr.data-toggle]="EnableCoinsUpdate ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#FF00C5">
+                        <i class="fas fa-coins  fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Coins Update</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body collapse" [collapse]="EnableCoinsUpdate">
+            <app-update-coins></app-update-coins>
+        </div>
+    </div>
+</div>

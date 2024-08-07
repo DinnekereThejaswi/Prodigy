@@ -1,0 +1,38 @@
+{
+    "apiBaseUrl": "http://192.168.10.8/MagnaWebPOSNV5/",
+    "apiAccessTokenUrl": "http://192.168.10.8/MagnaWebPOSNV5/auth/token",
+    "apiRefreshTokenUrl": "http://192.168.10.8/MagnaWebPOSNV5/auth/refresh-token",
+    "telerikReportUrl": "http://192.168.10.19/TelerikRestService/api/reports/",
+    "clientID": "MagnaWeb",
+    "clientSecret": "WebMagna@2020",
+    "RowRevisionBilling": true,
+    "UseJWAuth": "true",
+    "Pwd": "#SDAQ@$%^&*BNHJK",
+    "GST": "1.5",
+    "IGST": "3",
+    "BcFormat": "Code-39",
+    "ShipmentEndDate": 15,
+    "EnableJson": false,
+    "UseRoleBasedPermissions": "false",
+    "ElevatedPermissionCodes": {
+        "OrderRateEdit": "2",
+        "PlaceOfSupplyEdit": "90",
+        "SalesEstRateEdit": "2",
+        "MCRateEdit": "51",
+        "StoneDetailsEdit": "13",
+        "AddBarcodePermission": "40",
+        "SalesReturnPermission": "3",
+        "MergeEstimationPermission": "6",
+        "OrderAttachmentPermission": "20",
+        "RepairReceiptCancelPermission": "9",
+        "SalesBillPermission": "9",
+        "DailyRatesPermission": "2",
+        "VaporLessPermission": "751",
+        "ReceiptCancelPermission": "9",
+        "AutoBarcodeReceipt": "25"
+    },
+    "AmazonAPI": {
+        "AmazonBaseUrl": "http://192.168.10.8/smartconnect/",
+        "Grant": "Z3JhbnRfdHlwZT1wYXNzd29yZCZjbGllbnRfaWQ9QW1hem9uLVlvamFrYSZjbGllbnRfc2VjcmV0PVIyOWtJR2x6SUdkeVpXRjBJQ1lnU1c1a2FXRWdkMmxzYkNCd2NtOXpjR1Z5TGc9PSZ1c2VybmFtZT1zaSZwYXNzd29yZD0xOEdSRUFUQkhJTUExOTI1"
+    }
+}

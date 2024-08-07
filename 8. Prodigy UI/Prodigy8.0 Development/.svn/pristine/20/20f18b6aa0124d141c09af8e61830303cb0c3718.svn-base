@@ -1,0 +1,114 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="fixedOrderForm" class="form-horizontal">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="control-label">Rate Type</label>
+            <select class="form-control" formControlName="fromCtrl_Ptype"
+              [(ngModel)]="FixedOrderListData.OrderRateType">
+              <option [value]="null">Select</option>
+              <option *ngFor="let _Type of ratetypes" [value]="_Type.Code">
+                {{_Type.Name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="control-label">Plan Code</label>
+            <input oninput="this.value = this.value.toUpperCase()" type="text" class="form-control"
+              formControlName="fromCtrl_Pcode" [(ngModel)]="FixedOrderListData.BookingCode"
+              (input)="TEXT.value = TEXT.value.toUpperCase()" [readonly]="isReadOnly" placeholder="Enter Material Name"
+              #TEXT />
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="control-label">Plan Name </label>
+            <input oninput="this.value = this.value.toUpperCase()" class="form-control" formControlName="fromCtrl_Pname"
+              AlphabetFieldValidator [(ngModel)]="FixedOrderListData.BookingName"
+              (input)="TEXT.value = TEXT.value.toUpperCase()" placeholder="Enter Color" type="text" #TEXT>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="control-label">Map to (Ledger)</label>
+            <select class="form-control" formControlName="fromCtrl_MapedLedger"
+              [(ngModel)]="FixedOrderListData.AccCode">
+              <option [value]="null">Select</option>
+              <option *ngFor="let _Types of ledgers" [value]="_Types.AccCode">
+                {{_Types.AccName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <ng-container *ngIf="EnableAdd">
+              <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                style="margin-top: 1.2rem !important;" (click)="add(fixedOrderForm)">
+                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+            </ng-container>
+            <ng-container *ngIf="EnableSave">
+              <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                style="margin-top: 1.2rem !important;" (click)="save(fixedOrderForm)">
+                <i class="fal fa-save"></i>&nbsp;Save</button>
+            </ng-container>
+            <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+              style="margin-top: 1.2rem !important;" (click)="clear()">
+              <i class="fal fa-trash"></i>&nbsp;Clear</button>
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="table-responsive ">
+        <table class="table table-bordered ">
+          <thead class="topbar">
+            <tr>
+              <th>Rate Type</th>
+              <th>Plan code </th>
+              <th>Plan Name</th>
+              <th>Map to(ledger)</th>
+              <th>Status</th>
+              <th>Edit</th>
+              <th>Close</th>
+              <!-- <th>Delete</th> -->
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let _orders of fixedOrders">
+              <td>{{_orders.OrderRateType}}</td>
+              <td>{{_orders.BookingCode}}</td>
+              <td>{{_orders.BookingName}}</td>
+              <td>{{_orders.AccName}}</td>
+              <td [style.color]="getStatusColor(_orders.ObjStatus)">
+                <b>{{_orders.ObjStatus | statusName : _orders.ObjStatus }}</b>
+              </td>
+              <td align="center">
+                <i class="fas fa-edit" title="edit" (click)="editField(_orders)"></i>
+              </td>
+              <td align="center">
+                <i class="fas fa-lock" title="Close" (click)="closeField(_orders)"></i>
+              </td>
+              <!-- <td align="center">
+                <i class="fas fa-trash" title="Delete" (click)="delete(_orders)"></i>
+              </td> -->
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="EnableJson">
+    <pre>{{FixedOrderListData | json}}</pre>
+  </ng-container>
+</div>

@@ -1,0 +1,13 @@
+{
+  "name": "@angular/cdk/scrolling",
+  "typings": "../scrolling.d.ts",
+  "main": "../bundles/cdk-scrolling.umd.js",
+  "module": "../esm5/scrolling.es5.js",
+  "es2015": "../esm2015/scrolling.js",
+  "sideEffects": false,
+  "es2015_ivy_ngcc": "../__ivy_ngcc__/esm2015/scrolling.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14"
+  }
+}

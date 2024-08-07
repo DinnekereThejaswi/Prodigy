@@ -1,0 +1,122 @@
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div id="header" class="card-body show">
+      <form [formGroup]="TaxInvoiceForm" class="form-horizontal">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="form-group">
+              <div class="form-group">
+                <label for="">Assignment No</label>
+                <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="AssignmentNo"
+                  [(ngModel)]="TaxInvoiceJson.AssignmentNo">
+                  <option [value]="null" [disabled]="EnableAssignmentNo">Select</option>
+                  <option *ngFor="let _pickListNumber of PickListNumber" [value]="_pickListNumber.No"
+                    [disabled]="EnableAssignmentNo">
+                    {{_pickListNumber.No}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <div class="form-group" style="display: inline-block;padding-top: 1.8rem;">
+              <!-- <i class="fa fa-refresh fa-2x" (click)="getPickListNo()"></i> -->
+              <i class="fa fa-refresh fa-2x" (click)="refreshPickListNo()"></i>
+
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group" style="display: inline-block;padding-top: 1.5rem;">
+              <button class="btn btn-success btn-rounded" (click)="orderstobeinvoiced()">
+                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="gram">Start Ship Date</label>
+              <input type="text" class="form-control" [bsConfig]="datePickerConfig" bsDatepicker
+                placeholder="Select Start Date" formControlName="StartShipDate"
+                [(ngModel)]="TaxInvoiceJson.StartShipDate" />
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="gram">End Ship Date</label>
+              <input type="text" class="form-control" formControlName="EndShipDate"
+                [(ngModel)]="TaxInvoiceJson.EndShipDate" bsDatepicker [bsConfig]="datePickerConfig"
+                placeholder="Select End Date" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group" style="display: inline-block;padding-top: 1.3rem;">
+              <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                (click)="getorderstobeinvoicedbasedondates()">
+                <i class="fa fa-search"></i>&nbsp;Search</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive my-custom-scrollbar">
+          <table class="table table-bordered ">
+            <thead class="topbar">
+              <tr>
+                <th>Order No</th>
+                <th>Order Source</th>
+                <th>Central RefNo</th>
+                <th>Bill No</th>
+                <th>SKU</th>
+                <th>GST Amount</th>
+                <th>Invoice Amount</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let _orderToBeInvoiced of orderToBeInvoiced;let i=index;">
+              <tr>
+                <td>{{_orderToBeInvoiced.OrderNo}}</td>
+                <td>{{_orderToBeInvoiced.OrderSource}}</td>
+                <td>{{_orderToBeInvoiced.CentralRefNo}}</td>
+                <td>{{_orderToBeInvoiced.BillNo}}</td>
+                <td>{{_orderToBeInvoiced.SKU}}</td>
+                <td>{{_orderToBeInvoiced.GSTAmt | number:'1.2-2'}}</td>
+                <td>{{_orderToBeInvoiced.TotalAmount | number:'1.2-2'}}</td>
+                <td colspan="2">
+                  <button type="button" class="btn btn-success btn-rounded"
+                    (click)="generateInvoice(_orderToBeInvoiced)">Generate Tax
+                    Invoice</button>
+                  <button type="button" class="btn btn-success btn-rounded"
+                    (click)="generateShipLabel(_orderToBeInvoiced)">Ship
+                    Label</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <ng-container *ngIf="EnableJson">
+    <pre>{{invoiceData | json}}</pre>
+  </ng-container>
+  <ng-container *ngIf="EnableJson">
+    <pre>{{TaxInvoiceJson | json}}</pre>
+  </ng-container>
+
+</div>
+
+<!-- <ng-container *ngIf="DisplayData">
+  <div id="DisplayOrderData" class="center" [innerHTML]='orderDetails | safeHtml'></div>
+</ng-container> -->
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  <p style="color: white"> Please Wait... </p>
+</ngx-spinner>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SAPI.Entities.Pickup" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Pickup" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Enums.Pickup" />
+  <xs:complexType name="PickupRegistrationRequest">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AWBNo" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="AreaCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CISDDN" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ContactPersonName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerAddress1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerAddress2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerAddress3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerPincode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerTelephoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DoxNDox" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsForcePickup" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsReversePickup" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MobileTelNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumberofPieces" type="xs:int" />
+      <xs:element minOccurs="0" name="OfficeCloseTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PackType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReferenceNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RouteCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShipmentPickupDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ShipmentPickupTime" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SubProducts" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element minOccurs="0" name="VolumeWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="WeightofShipment" type="xs:double" />
+      <xs:element minOccurs="0" name="isToPayShipper" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PickupRegistrationRequest" nillable="true" type="tns:PickupRegistrationRequest" />
+  <xs:complexType name="PickupRegistrationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ShipmentPickupDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="tns:ArrayOfResponseStatus" />
+      <xs:element minOccurs="0" name="TokenNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PickupRegistrationResponse" nillable="true" type="tns:PickupRegistrationResponse" />
+  <xs:complexType name="ArrayOfResponseStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ResponseStatus" nillable="true" type="tns:ResponseStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfResponseStatus" nillable="true" type="tns:ArrayOfResponseStatus" />
+  <xs:complexType name="ResponseStatus">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SAPI.Entities.Enums.Pickup" minOccurs="0" name="StatusCode" type="q3:PickupRegistrationStatus" />
+      <xs:element minOccurs="0" name="StatusInformation" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseStatus" nillable="true" type="tns:ResponseStatus" />
+  <xs:complexType name="CancelPickupRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PickupRegistrationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TokenNumber" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CancelPickupRequest" nillable="true" type="tns:CancelPickupRequest" />
+  <xs:complexType name="CancelPickupResponseEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="tns:ArrayOfCancelPickupResponseStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CancelPickupResponseEntity" nillable="true" type="tns:CancelPickupResponseEntity" />
+  <xs:complexType name="ArrayOfCancelPickupResponseStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CancelPickupResponseStatus" nillable="true" type="tns:CancelPickupResponseStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCancelPickupResponseStatus" nillable="true" type="tns:ArrayOfCancelPickupResponseStatus" />
+  <xs:complexType name="CancelPickupResponseStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StatusCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StatusInformation" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CancelPickupResponseStatus" nillable="true" type="tns:CancelPickupResponseStatus" />
+  <xs:complexType name="GetAllProductsAndSubProductsResponseEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProductList" nillable="true" type="tns:ArrayOfProduct" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetAllProductsAndSubProductsResponseEntity" nillable="true" type="tns:GetAllProductsAndSubProductsResponseEntity" />
+  <xs:complexType name="ArrayOfProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Product" nillable="true" type="tns:Product" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProduct" nillable="true" type="tns:ArrayOfProduct" />
+  <xs:complexType name="Product">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ProductDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SubProducts" nillable="true" type="q4:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Product" nillable="true" type="tns:Product" />
+</xs:schema>

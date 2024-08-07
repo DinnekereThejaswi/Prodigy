@@ -1,0 +1,197 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="OrderCloseForm" class="form-horizontal">
+      <div class="row">
+        <div class="col-md-2 ">
+          <div class="form-group">
+            <label for="OrderNo">Order No</label>
+            <input type="number" class="form-control" #OrderNo name="OrderNo" placeholder="Enter Order Number"
+              GreenBorder>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <div class="input-group">
+              <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary mt-4"
+                (click)="getOrderDetails(OrderNo.value)"><i class="fal fa-search"></i> Search</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 float-right" *ngIf="hasOrderDetails">
+          <div class="">
+            <div class="text-right"><i class="fas fa-file-invoice"></i>&nbsp; <span class="text-muted">
+                Order No</span>
+              <h1 class="font-light">{{OrderCloseObj.OrderNo }}</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 float-right" *ngIf="hasOrderDetails">
+          <div class="">
+            <div class="text-right"><i class="far fa-rupee-sign"></i>&nbsp; <span class="text-muted">
+                Advance Amount</span>
+              <h1 class="font-light">{{OrderCloseObj.AdvacnceOrderAmount | number : '1.2-2'}}</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 float-right" *ngIf="hasOrderDetails">
+          <div class="">
+            <div class="text-right"><i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">Order
+                Date</span>
+              <h1 class="font-light">{{OrderCloseObj.OrderDate | date:'dd/MM/yyyy'}}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div class="card-header Pointer" (click)="ToggleCustomerData()"
+      [attr.data-toggle]="EnableCustomerTab ? '':'collapse'" href="#Customer"
+      style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);"
+      [ngClass]="EnableCustomerTab ? 'collapsed' : ''">
+      <div class="row">
+        <div class="col-md-2 ">
+          <a class="card-title align-middle Pointer" style="color:#0096FF">
+            <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+            <span class="align-middle Pointer"><ins>Customer Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture the New customer
+                  information and Existing customer information</span>
+              </div>
+            </span>
+          </a>
+        </div>
+        <!-- <ng-container *ngIf=" ToggleCustomer"> -->
+        <ng-container *ngIf="ToggleCustomer">
+          <div class="col-md-4 pull-right">
+            <h4><span class="align-middle"> Customer: {{Customer.CustName}} </span></h4>
+          </div>
+          <div class="col-md-4 pull-right">
+            <h4><span class="align-middle"> MobileNo: {{Customer.MobileNo}} </span></h4>
+          </div>
+
+        </ng-container>
+        <!-- </ng-container> -->
+      </div>
+    </div>
+    <div id="Customer" class="card-body collapse" [hidden]="EnableCustomerTab">
+      <app-customer>
+      </app-customer>
+    </div>
+  </div>
+  <br>
+  <div class="card mb-0">
+    <div class="card-header Pointer" href="#Payment" [ngClass]="EnablePaymentsTab ? 'collapsed' : ''"
+      [attr.data-toggle]="EnablePaymentsTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);" (click)="TogglePaymentData()">
+      <div class="row">
+        <div class="col-md-2 ">
+          <a class="card-title align-middle" style="color:#005BFF">
+            <!-- <i class="fal fa-cash-register "></i> -->
+            <i class="fal fa-rupee-sign fa-2x mr-2 align-middle"></i>
+            <span class="align-middle Pointer"><ins>Payment Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture the Receipts
+                  ( Payment collection modes) information like Cash , Cheque , Card , Scheme Adj, Purchase Bill
+                  etc.</span>
+              </div>
+            </span>
+          </a>
+        </div>
+        <div class="col-md-4 pull-right">
+        </div>
+        <div class="col-md-4 pull-right">
+          <ng-container *ngIf="paymentPaidAmt > 0">
+            <h4><span class="align-middle"> Amount: {{paymentPaidAmt | number : '1.2-2'}} </span></h4>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div id="Payment" class="card-body collapse" [hidden]="EnablePaymentsTab">
+      <app-payment [argPageName]="pageName" [autoFillAmount]="autoFetchAmount" [OrderAmount]="OrderAmount">
+      </app-payment>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="row " *ngIf="hasOrderDetails">
+  <div class="col-md-6">
+    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" (click)="submitPost()">
+      <i class="far fa-ban "></i> Close Order</button>
+    <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary" type="button"
+      (click)="Clear()"><i class="fal fa-close"></i>&nbsp;Clear</button>
+  </div>
+
+  <!-- <div class="col-lg-6 col-md-6">
+      <div class="card">
+        <div class="row">
+          <div class="col-12">
+            <div class="social-widget">
+              <div class="soc-header box-twitter" style="padding: 3px;">
+                <h3 class="text-white">Tax Summary</h3>
+              </div>
+              <div class="soc-content">
+                <div class="col-4 b-r">
+                  <h3 class="font-medium">
+                  </h3>
+                  <h5 class="text-black">SGST 1.5%</h5>
+                </div>
+                <div class="col-4 b-r">
+                  <h3 class="font-medium">
+                  </h3>
+                  <h5 class="text-black">CGST 1.5%</h5>
+                </div>
+                <div class="col-4 b-r">
+                  <h3 class="font-medium"><b></b></h3>
+                  <h5 class="text-black">IGST 3%</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  <div class="col-lg-6 col-md-6">
+    <div class="card">
+      <div class="row">
+        <div class="col-12">
+          <div class="social-widget">
+            <div class="soc-header box-twitter" style="padding: 3px;">
+              <h3 class="text-white">Amount Summary</h3>
+            </div>
+            <div class="soc-content">
+              <div class="col-4 b-r">
+                <h3 class="font-medium"> {{OrderCloseObj.AdvacnceOrderAmount | number : '1.2-2'}}
+                </h3>
+                <h5 class="text-black">Order Amount </h5>
+              </div>
+              <div class="col-4 b-r">
+                <h3 class="font-medium"> {{paymentPaidAmt | number : '1.2-2'}}
+                </h3>
+                <h5 class="text-black">Paid Amount</h5>
+              </div>
+              <div class="col-4 b-r">
+                <h3 class="font-medium"><b>{{totalOrderAmt | number : '1.2-2'}}</b></h3>
+                <h5 class="text-black">Balance Amount</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="hasOrderDetails">
+
+</div>
+
+<ng-container *ngIf="EnableReprintClosedOrderNo">
+  <app-reprint-order [ClosedOrderNo]="ClosedOrderNo"></app-reprint-order>
+</ng-container>
+
+<ng-container *ngIf="EnableJson">
+  <pre>{{OrderCloseObj | json}}</pre>
+</ng-container>

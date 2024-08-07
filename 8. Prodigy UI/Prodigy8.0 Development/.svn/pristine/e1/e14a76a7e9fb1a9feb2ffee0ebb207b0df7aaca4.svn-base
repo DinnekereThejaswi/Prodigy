@@ -1,0 +1,75 @@
+{
+  "_from": "ngx-barcode6@^1.0.13",
+  "_id": "ngx-barcode6@1.0.13",
+  "_inBundle": false,
+  "_integrity": "sha512-ekrUn2N9GSdtyCsLi8Ov4fxOUU91hB4hoCOO/aTYtWFET7xaeOlcUZEYwMk15ysKkn/w3af+46uScAAF/YAyYw==",
+  "_location": "/ngx-barcode6",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "ngx-barcode6@^1.0.13",
+    "name": "ngx-barcode6",
+    "escapedName": "ngx-barcode6",
+    "rawSpec": "^1.0.13",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.13"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ngx-barcode6/-/ngx-barcode6-1.0.13.tgz",
+  "_shasum": "03ec6122789c3a734f6e267bdc7419fe772c5a28",
+  "_spec": "ngx-barcode6@^1.0.13",
+  "_where": "E:\\MagnaWeb-Angular8.0",
+  "author": {
+    "name": "Edgar Giese",
+    "email": "edgar@egiese.de"
+  },
+  "bugs": {
+    "url": "https://github.com/efgiese/ngx-barcode6/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "deprecated": false,
+  "description": "An angular component for Angular 6+ for creating 1-D barcodes based on Lindell's JsBarcode",
+  "es2015": "fesm2015/ngx-barcode6.js",
+  "esm2015": "esm2015/ngx-barcode6.js",
+  "fesm2015": "fesm2015/ngx-barcode6.js",
+  "homepage": "https://github.com/efgiese/ngx-barcode6#readme",
+  "keywords": [
+    "Angular",
+    "Angular6",
+    "Angular7",
+    "Angular8",
+    "Angular9",
+    "Angular10",
+    "barcode",
+    "jsbarcode"
+  ],
+  "license": "MIT",
+  "main": "bundles/ngx-barcode6.umd.js",
+  "metadata": "ngx-barcode6.metadata.json",
+  "module": "fesm2015/ngx-barcode6.js",
+  "name": "ngx-barcode6",
+  "peerDependencies": {
+    "@angular/common": ">=6.0.0 <11.0.0",
+    "@angular/core": ">=6.0.0 <11.0.0",
+    "jsbarcode": "^3.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efgiese/ngx-barcode6.git"
+  },
+  "sideEffects": false,
+  "typings": "ngx-barcode6.d.ts",
+  "version": "1.0.13",
+  "es2015_ivy_ngcc": "__ivy_ngcc__/fesm2015/ngx-barcode6.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14",
+    "module": "8.2.14"
+  }
+}

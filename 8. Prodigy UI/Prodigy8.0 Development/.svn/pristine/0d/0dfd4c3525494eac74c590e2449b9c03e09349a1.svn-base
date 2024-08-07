@@ -1,0 +1,93 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @record
+ */
+export function ShortcutBase() { }
+function ShortcutBase_tsickle_Closure_declarations() {
+    /**
+     * callback to be called when shortcut is pressed.
+     * \@param event - the event out
+     * @type {?}
+     */
+    ShortcutBase.prototype.command;
+    /**
+     * Description for the command can be used for rendering help menu.
+     * @type {?|undefined}
+     */
+    ShortcutBase.prototype.description;
+    /**
+     * How much time to throttle in ms.
+     * @type {?|undefined}
+     */
+    ShortcutBase.prototype.throttleTime;
+    /**
+     * textarea, select and input are ignored by default, this is used to override
+     * this behavior.
+     * allow in node names, accepts: ["TEXTAREA", "SELECT", "INPUT]
+     * @type {?|undefined}
+     */
+    ShortcutBase.prototype.allowIn;
+    /**
+     * Label, can be used for grouping commands.
+     * @type {?|undefined}
+     */
+    ShortcutBase.prototype.label;
+    /**
+     * Only trigger the command when the target is in focus.
+     * @type {?|undefined}
+     */
+    ShortcutBase.prototype.target;
+    /**
+     * Prevent browser default, default: false
+     * @type {?|undefined}
+     */
+    ShortcutBase.prototype.preventDefault;
+}
+/**
+ * @record
+ */
+export function Shortcut() { }
+function Shortcut_tsickle_Closure_declarations() {
+    /** @type {?} */
+    Shortcut.prototype.key;
+    /** @type {?|undefined} */
+    Shortcut.prototype.component;
+}
+/**
+ * @record
+ */
+export function ShortcutInput() { }
+function ShortcutInput_tsickle_Closure_declarations() {
+    /** @type {?} */
+    ShortcutInput.prototype.key;
+}
+/**
+ * @record
+ */
+export function ParsedShortcut() { }
+function ParsedShortcut_tsickle_Closure_declarations() {
+    /** @type {?} */
+    ParsedShortcut.prototype.predicates;
+    /** @type {?|undefined} */
+    ParsedShortcut.prototype.priority;
+    /** @type {?|undefined} */
+    ParsedShortcut.prototype.event;
+}
+/**
+ * @record
+ */
+export function ShortcutEventOutput() { }
+function ShortcutEventOutput_tsickle_Closure_declarations() {
+    /**
+     * The browser keyboard event
+     * @type {?}
+     */
+    ShortcutEventOutput.prototype.event;
+    /** @type {?} */
+    ShortcutEventOutput.prototype.key;
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmcta2V5Ym9hcmQtc2hvcnRjdXRzLmludGVyZmFjZXMuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9uZy1rZXlib2FyZC1zaG9ydGN1dHMvIiwic291cmNlcyI6WyJsaWIvbmcta2V5Ym9hcmQtc2hvcnRjdXRzLmludGVyZmFjZXMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBpbnRlcmZhY2UgU2hvcnRjdXRCYXNlIHtcbiAgICAvKipcbiAgICAgKiBjYWxsYmFjayB0byBiZSBjYWxsZWQgd2hlbiBzaG9ydGN1dCBpcyBwcmVzc2VkLlxuICAgICAqIEBwYXJhbSBldmVudCAtIHRoZSBldmVudCBvdXRcbiAgICAgKi9cbiAgICBjb21tYW5kKGV2ZW50OiBTaG9ydGN1dEV2ZW50T3V0cHV0KTogYW55O1xuXG4gICAgLyoqXG4gICAgICogRGVzY3JpcHRpb24gZm9yIHRoZSBjb21tYW5kIGNhbiBiZSB1c2VkIGZvciByZW5kZXJpbmcgaGVscCBtZW51LlxuICAgICAqL1xuICAgIGRlc2NyaXB0aW9uPzogc3RyaW5nO1xuXG4gICAgLyoqXG4gICAgICogSG93IG11Y2ggdGltZSB0byB0aHJvdHRsZSBpbiBtcy5cbiAgICAgKi9cbiAgICB0aHJvdHRsZVRpbWU/OiBudW1iZXI7XG5cbiAgICAvKipcbiAgICAgKiB0ZXh0YXJlYSwgc2VsZWN0IGFuZCBpbnB1dCBhcmUgaWdub3JlZCBieSBkZWZhdWx0LCB0aGlzIGlzIHVzZWQgdG8gb3ZlcnJpZGVcbiAgICAgKiB0aGlzIGJlaGF2aW9yLlxuICAgICAqIGFsbG93IGluIG5vZGUgbmFtZXMsIGFjY2VwdHM6IFtcIlRFWFRBUkVBXCIsIFwiU0VMRUNUXCIsIFwiSU5QVVRdXG4gICAgICovXG4gICAgYWxsb3dJbj86IHN0cmluZ1tdO1xuXG4gICAgLyoqXG4gICAgICogTGFiZWwsIGNhbiBiZSB1c2VkIGZvciBncm91cGluZyBjb21tYW5kcy5cbiAgICAgKi9cbiAgICBsYWJlbD86IHN0cmluZztcblxuICAgIC8qKlxuICAgICAqIE9ubHkgdHJpZ2dlciB0aGUgY29tbWFuZCB3aGVuIHRoZSB0YXJnZXQgaXMgaW4gZm9jdXMuXG4gICAgICovXG4gICAgdGFyZ2V0PzogSFRNTEVsZW1lbnQ7XG5cbiAgICAvKipcbiAgICAgKiBQcmV2ZW50IGJyb3dzZXIgZGVmYXVsdCwgZGVmYXVsdDogZmFsc2VcbiAgICAgKi9cbiAgICBwcmV2ZW50RGVmYXVsdD86IGJvb2xlYW47XG59XG5cbmV4cG9ydCBpbnRlcmZhY2UgU2hvcnRjdXQgZXh0ZW5kcyBTaG9ydGN1dEJhc2Uge1xuICAgIGtleTogc3RyaW5nW107XG4gICAgY29tcG9uZW50PzogYW55O1xufVxuXG5leHBvcnQgaW50ZXJmYWNlIFNob3J0Y3V0SW5wdXQgZXh0ZW5kcyBTaG9ydGN1dEJhc2Uge1xuICAgIGtleTogc3RyaW5nIHwgc3RyaW5nW107XG59XG5cbmV4cG9ydCBpbnRlcmZhY2UgUGFyc2VkU2hvcnRjdXQgZXh0ZW5kcyBTaG9ydGN1dCB7XG4gICAgcHJlZGljYXRlczogRnVuY3Rpb25bXVtdO1xuICAgIHByaW9yaXR5PzogbnVtYmVyO1xuICAgIGV2ZW50PzogS2V5Ym9hcmRFdmVudDtcbn1cbmV4cG9ydCBpbnRlcmZhY2UgU2hvcnRjdXRFdmVudE91dHB1dCB7XG4gICAgLyoqXG4gICAgICogVGhlIGJyb3dzZXIga2V5Ym9hcmQgZXZlbnRcbiAgICAgKi9cbiAgICBldmVudDogS2V5Ym9hcmRFdmVudDtcbiAgICBrZXk6IHN0cmluZ1tdO1xufSJdfQ==

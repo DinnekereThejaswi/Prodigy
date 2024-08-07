@@ -1,0 +1,384 @@
+<div class="card mb-0">
+    <div class="card-body">
+        <form [formGroup]="Headerform" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <label for="salesPerson">Est No</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" Autofocus formControlName="estno">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <label for="salesPerson">Sales Person</label>
+                        <div class="form-group">
+                            <select class="form-control mr-auto mt-2 mt-lg-0" Autofocus formControlName="salesPerson">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let _salesman of SalesManList" [value]="_salesman.sal_code">
+                                    {{_salesman.CodeName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <label for="salesPerson">Remarks </label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" Autofocus formControlName="date">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <label for="salesPerson">Date </label>
+                        <div class="form-group">
+                            <input type="date" class="form-control" Autofocus formControlName="remarks">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br>
+
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer " (click)="ToggleCustomerData()" data-toggle="collapse" href="#EnableCustomer"
+            [ngClass]="EnableCustomerTab ? 'collapsed' : ''" [attr.data-toggle]="EnableCustomerTab ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);">
+            <div class="row">
+                <div class="col-md-4 ">
+                    <a class="card-title align-middle " style="color:#0096FF">
+                        <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+                        <span class="align-middle"><ins>Customer Details </ins>
+                            <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                <span class="tooltiptext tooltip-top">Capture the New customer
+                                    information and Existing customer information</span>
+                            </div>
+                        </span>
+                    </a>
+                </div>
+                <!-- <ng-container>
+                    <ng-container *ngIf="Customer!=null">
+                        <div class="col-md-4 pull-right">
+                            <h4><span class="align-middle"> Customer: {{Customer.CustName}} </span></h4>
+                        </div>
+                        <div class="col-md-4 pull-right">
+                            <h4><span class="align-middle"> Mobile No: {{Customer.MobileNo}} </span></h4>
+                        </div>
+                    </ng-container>
+                </ng-container> -->
+            </div>
+        </div>
+        <div id="EnableCustomer" class="card-body collapse show" [hidden]="EnableCustomerTab">
+            <app-customer></app-customer>
+        </div>
+    </div>
+</div>
+
+<br>
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#SalesTab" (click)="ToggleSalesDetailsTab()"
+            [ngClass]="EnableSalesTab ? 'collapsed' : ''" [attr.data-toggle]="EnableSalesTab ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-5 ">
+                    <a class="card-title align-middle" style="color:#005BFF">
+                        <i class="fal fa-hand-receiving fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Sales Details</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="SalesTab" class="card-body collapse" [collapse]="EnableSalesTab">
+            <form [formGroup]="StoneSalesForm" class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label for="barcode">Barcode/Tag No.</label>
+                            <div class="input-group">
+                                <input class="form-control" id="barcode" formControlName="barcode"
+                                    placeholder="Search by Barcode" type="text"
+                                    onKeyPress="if(this.value.length==10) return false;" GreenBorder>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label for="gs">Gs Types</label>
+                            <div class="form-group">
+                                <select class="form-control mr-auto mt-2 mt-lg-0" Autofocus
+                                    formControlName="salesPerson">
+                                    <option [ngValue]="null">Select</option>
+                                    <!-- <option *ngFor="let _salesman of SalesManList" [value]="_salesman.sal_code">
+                                        {{_salesman.CodeName}}
+                                    </option> -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="addbarcode"></label>
+                            <div class="input-group">
+                                <a href="javascript:void(0)"
+                                    class="btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right"
+                                    GreenBorder><i class="fas fa-barcode"></i> Add
+                                    Barcode</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-2">
+                        <div class="form-group">
+                            <button class="btn btn-success btn-rounded" (click)="getPickListDetails()">
+                                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                        <button class="btn btn-success btn-rounded" (click)="getPickListDetails()">
+                            <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                            </div>
+                    </div> -->
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="barcode">Name</label>
+
+                            <select class="form-control">
+                                <option>Select</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="barcode">Batch No</label>
+                            <div class="form-group">
+                                <input type="text" placeholder="0" class="form-control">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="barcode">Qty</label>
+
+                            <input type="text" placeholder="0" class="form-control">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="barcode">Carats</label>
+
+                            <input type="text" placeholder="0.00" class="form-control">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="barcode">Weight</label>
+                            <div class="form-group">
+                                <input type="text" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="barcode">Rate/Carat</label>
+
+                            <input type="text" placeholder="0.00" class="form-control">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="barcode">Amount</label>
+
+                            <input type="text" placeholder="0.00" class="form-control">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <br>
+                        <button class="btn btn-success btn-rounded">
+                            <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                    </div>
+                    <div class="col-sm-1">
+                        <br>
+                        <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2">
+                            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="topbar">
+                                    <th>Barcode No</th>
+                                    <th>Name</th>
+                                    <th>HSN</th>
+                                    <th>GroupCode </th>
+                                    <th>Qty </th>
+                                    <th>Carat</th>
+                                    <th>Weight</th>
+                                    <th>Rate/Carat</th>
+                                    <th>Weight</th>
+                                    <th>SGST %</th>
+                                    <th>CGST %</th>
+                                    <th>CGST Amount</th>
+                                    <th>IGST %</th>
+                                    <th>IGST Amount</th>
+                                    <th>Delete</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#PurchaseTab" (click)="TogglePurchaseDetailsTab()"
+            [ngClass]="EnablePurchaseTab ? 'collapsed' : ''" [attr.data-toggle]="EnablePurchaseTab ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-5 ">
+                    <a class="card-title align-middle" style="color:#FF00C5">
+                        <i class="fas fa-2x fa-gem mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins> Purchase Details</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="PurchaseTab" class="card-body collapse" [collapse]="EnablePurchaseTab">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="barcode">Name</label>
+
+                        <select class="form-control">
+                            <option>Select</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <label for="barcode">Qty</label>
+
+                        <input type="text" placeholder="0" class="form-control">
+
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <label for="barcode">Carats</label>
+
+                        <input type="text" placeholder="0.00" class="form-control">
+
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <label for="barcode">Weight</label>
+                        <div class="form-group">
+                            <input type="text" placeholder="0.00" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <label for="barcode">Rate/Carat</label>
+
+                        <input type="text" placeholder="0.00" class="form-control">
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="barcode">Amount</label>
+
+                        <input type="text" placeholder="0.00" class="form-control">
+
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <br>
+                    <button class="btn btn-success btn-rounded">
+                        <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                </div>
+                <div class="col-sm-1">
+                    <br>
+                    <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2">
+                        <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="topbar">
+                                <th>Barcode No</th>
+                                <th>Name</th>
+                                <th>HSN</th>
+                                <th>GroupCode </th>
+                                <th>Qty </th>
+                                <th>Carat</th>
+                                <th>Weight</th>
+                                <th>Rate/Carat</th>
+                                <th>Weight</th>
+                                <th>Delete</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

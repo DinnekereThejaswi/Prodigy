@@ -1,0 +1,111 @@
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div id="header" class="card-body show">
+      <form class="form-horizontal">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-body">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="control-label">Bank</label>
+                    <div class="m-b-10">
+                      <select class="form-control mr-auto mt-2 mt-lg-0" (change)="getChqList(BankName.value)" #BankName>
+                        <option [ngValue]="null">SELECT</option>
+                        <option *ngFor="let _masterLedgerList of MasterLedgerList" [value]="_masterLedgerList.Code">
+                          {{_masterLedgerList.Name}}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-6">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="EnableJson">
+          <pre>{{ SRHeaderForm | json }}</pre>
+        </ng-container>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+<div class="card mb-0">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="topbar">
+          <tr>
+            <th>Cheque</th>
+            <th>Remarks</th>
+            <th>Status</th>
+            <th>Open</th>
+            <th>Close</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let _chequeList of ChequeList">
+          <tr>
+            <td>{{_chequeList.ChequeNo}}</td>
+            <td>{{_chequeList.ClosedRemarks}}</td>
+            <td>{{_chequeList.ChqStatus}}</td>
+            <td><button class="btn btn-default btn-rounded" type="button" (click)="open(_chequeList)"><i
+                  class="far fa-lock-open"></i>
+                Open</button></td>
+            <td>
+              <button class="btn btn-default btn-rounded" type="button" (click)="close(_chequeList)"><i
+                  class="far fa-window-close"></i>
+                Close</button>
+            </td>
+          </tr>
+          <tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal overlay" id="ChqClosing" role="dialog" data-backdrop="static" data-keyboard="false">
+
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content ">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Cheque Closing Remarks</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <!-- <form [formGroup]="ModelForm"> -->
+        <table class="table">
+          <tbody>
+            <tr>
+              <td class="float-rt">Remarks</td>
+              <td>
+                <input type="text" class="form-control" #Remarks>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- </form> -->
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <div class="input-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button"
+            (click)="SaveRemaks(Remarks.value)"><i class="fal fa-save"></i> Save</button>
+          <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" type="button"
+            (click)="Cancel()"><i class="far fa-window-close"></i>
+            Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

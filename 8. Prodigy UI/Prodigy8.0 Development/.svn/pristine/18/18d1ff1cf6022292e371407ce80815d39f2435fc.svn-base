@@ -1,0 +1,179 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="CounterForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="MainCounter">Main Counter
+                  <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="frmCtrl_MaincounterCode" Autofocus
+                  (change)="ByMainCounter($event)" [(ngModel)]="CounterHeader.Maincountercode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let MainCode of MainLocation" [value]="MainCode.MainCounterCode">
+                    {{MainCode.MainCounterName}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="SubCounter">Sub Counter Code<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input (input)="Codes.value = Codes.value.toUpperCase()" class="form-control" id="subcountercode"
+                  placeholder="Enter SubCounterCode" formControlName="frmCtrl_CounterCode"
+                  oninput="this.value = this.value.toUpperCase()" [(ngModel)]="CounterHeader.CounterCode"
+                  AlphaNumericValidator maxlength="7" [readonly]="isReadOnly" type="text" #Codes />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="SubCounterName">Sub Counter Name<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input (input)="Codes.value = Codes.value.toUpperCase()" class="form-control" id="SubCounterName"
+                  placeholder="Enter SubCounterName" formControlName="frmCtrl_CounterName"
+                  oninput="this.value = this.value.toUpperCase()" [(ngModel)]="CounterHeader.CounterName"
+                  AlphaNumericValidator maxlength="20" type="text" #Codes />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="TearWt">Tear Wt
+                </label>
+                <input type="text" class="form-control" id="TearWt" placeholder="Enter Tear.Wt"
+                  formControlName="frmCtrl_TearWt" IntegerDecimalFieldValidator maxlength="7" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="OtherWt">Other Wt
+                </label>
+                <input type="text" class="form-control" id="OtherWt" placeholder="Enter Other.Wt"
+                  formControlName="frmCtrl_OtherWt" IntegerDecimalFieldValidator maxlength="9" />
+
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <ng-container *ngIf="EnableAdd">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="add(CounterForm)">
+                    <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                </ng-container>
+                <ng-container *ngIf="EnableSave">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="save(CounterForm)">
+                    <i class="fal fa-save"></i>&nbsp;Save</button>
+                </ng-container>
+                <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  style="margin-top: 1.2rem !important;" (click)="clear()">
+                  <i class="fal fa-trash"></i>&nbsp;Clear</button>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                style="margin-top: 1.2rem !important;" (click)="Print()" id="exampleModalLabel"><i
+                  class="fal fa-print"></i>
+                Print</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="topbar">
+              <th>Main Counter</th>
+              <th>Sub Counter</th>
+              <th>Sub Counter Name</th>
+              <th>Tear Wt</th>
+              <th>Other Wt</th>
+              <th>Status </th>
+              <th>Edit</th>
+              <th>Open</th>
+              <th>Close</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let _details of ListOfAllCounter;">
+                <td>{{_details.MaincounterCode }}</td>
+                <td>{{_details.CounterCode }}</td>
+                <td>{{_details.CounterName }}</td>
+                <td>0</td>
+                <td>0</td>
+                <td [style.color]="getStatusColor(_details.ObjectStatus)">
+                  <b>{{_details.ObjectStatus | statusName :_details.ObjectStatus }}</b>
+                </td>
+                <td align="center">
+                  <i class="fas fa-edit" title="edit" (click)="editField(_details)"></i>
+                </td>
+                <td align="center">
+                  <i class="fas fa-lock-open" title="open" (click)="openField(_details)"></i>
+                </td>
+                <td align="center">
+                  <i class="fas fa-lock" title="close" (click)="closeField(_details)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="EnableJson">
+    <pre>{{CounterHeader | json}}</pre>
+  </ng-container>
+</div>
+
+<div class="modal fade" id="CounterDetailsTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i>
+          Print</button>
+        <h3 class="modal-title">{{bcode}}-SubCounter List</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive" id="TableData">
+              <table class="table table-bordered table-hover">
+                <thead class="topbar">
+                  <th>Main Counter</th>
+                  <th>Sub Counter</th>
+                  <th>Sub Counter Name</th>
+
+                  <th>Status </th>
+
+                </thead>
+                <tbody>
+                  <tr *ngFor="let _details of printData;">
+                    <td>{{_details.MaincounterCode }}</td>
+                    <td>{{_details.CounterCode }}</td>
+                    <td>{{_details.CounterName }}</td>
+                    <td [style.color]="getStatusColor(_details.ObjectStatus)">
+                      <b>{{_details.ObjectStatus | statusName :_details.ObjectStatus }}</b>
+                    </td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

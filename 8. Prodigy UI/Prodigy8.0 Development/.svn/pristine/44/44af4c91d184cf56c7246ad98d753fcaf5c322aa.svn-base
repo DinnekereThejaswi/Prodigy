@@ -1,0 +1,233 @@
+<div class="card">
+
+    <div class="card-body">
+        <form [formGroup]="OrderCPCForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="stock">Stocks</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" (change)="getGS(OrderCPCForm)"
+                            formControlName="stock">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _metalList of metalList" [value]="_metalList.Code">
+                                {{_metalList.Name}}
+                            </option>
+                            <option [ngValue]="ALL">ALL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="counterCode">Counter</label>
+                        <select class="form-control" formControlName="counterCode" [(ngModel)]="postOrderList.Counter">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _counterList of counterList" [value]="_counterList.CounterCode">
+                                {{_counterList.CounterName}}
+                            </option>
+                            <option [ngValue]="ALL">ALL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="gsCode">GS</label>
+                        <select class="form-control" formControlName="gsCode" [(ngModel)]="postOrderList.GSCode">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _GSList of GSList" [value]="_GSList.Code">
+                                {{_GSList.Name}}
+                            </option>
+                            <option [ngValue]="ALL">ALL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label" for="GS">Karat</label>
+                        <select class="form-control" formControlName="karat" [(ngModel)]="postOrderList.Karat">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _karatList of karatList" [value]="_karatList.karat">
+                                {{_karatList.karat}}
+                            </option>
+                            <option [ngValue]="ALL">ALL</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="GS">Order Type</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="orderType"
+                            [(ngModel)]="postOrderList.OrderType">
+                            <option [ngValue]="null" [disabled]="true">Select</option>
+                            <option *ngFor="let _RateTypeData of OrderTypeData" [value]="_RateTypeData.value"
+                                [disabled]="true">
+                                {{_RateTypeData.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="GS">Issued By</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="issuedBy"
+                            [(ngModel)]="postOrderList.IssuedUser">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _SalesManList of SalesManList" [value]="_SalesManList.sal_code">
+                                {{_SalesManList.CodeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-1" style="padding-top:28px;">
+                    <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        href="javascript:void(0)" (click)="Go(OrderCPCForm)">
+                        Go
+                    </a>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#OrderDetails" (click)="ToggleOrderDetails()"
+            [ngClass]="EnableOrderDetails ? 'collapsed' : ''" [attr.data-toggle]="EnableOrderDetails ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle Pointer" style="color:#00c8d6b9" data-toggle="collapse"
+                        href="#Orders">
+                        <i class="fal fa-file-invoice fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Order Details</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="OrderDetails" class="card-body collapse" [collapse]="EnableOrderDetails">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table" id="panels">
+                        <thead class="topbar">
+                            <tr>
+                                <th> <input type="checkbox" name="all" class="chkbxsize" [checked]="isAllChecked()"
+                                        (change)="checkAll($event)" /> </th>
+                                <th>OrderNo </th>
+                                <th>GS</th>
+                                <th>Purity</th>
+                                <th>Rate/Gram</th>
+                                <th>SalesMan</th>
+                                <th>Counter</th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Item Type</th>
+                                <th>Quantity</th>
+                                <th>From.Wt</th>
+                                <th>To.Wt</th>
+                                <th>St.Wt</th>
+                                <th>Name </th>
+                                <th>Mobile No </th>
+                                <th>Date </th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let _orderList of OrderList;let i=index;">
+                            <tr>
+                                <td> <input type="checkbox" name="sizecb[]" value="{{_orderList.id}}"
+                                        [(ngModel)]="_orderList.state"
+                                        (click)="onCheckboxChange(_orderList,$event,i)" /></td>
+                                <td>{{_orderList.OrderNo}}</td>
+                                <td>{{_orderList.GSCode}}</td>
+                                <td>{{_orderList.Karat}}</td>
+                                <td>{{_orderList.Rate}}</td>
+                                <td>{{_orderList.Salesman}}</td>
+                                <td>{{_orderList.Counter}}</td>
+                                <td>{{_orderList.Item}}</td>
+                                <td>{{_orderList.Description}}</td>
+                                <td>{{_orderList.ItemType}}</td>
+                                <td>{{_orderList.Qty}}</td>
+                                <td>{{_orderList.FromWeight | number:'1.3-3'}}</td>
+                                <td>{{_orderList.ToWeight | number:'1.3-3'}}</td>
+                                <td>{{_orderList.StoneWeight | number:'1.3-3'}}</td>
+                                <td>{{_orderList.CustomerName}}</td>
+                                <td>{{_orderList.MobileNo}}</td>
+                                <td>{{_orderList.OrderDate | date:'dd/MM/yyyy'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#StoneDetails" (click)="ToggleStoneDetails()"
+            [ngClass]="EnableStoneDetails ? 'collapsed' : ''" [attr.data-toggle]="EnableStoneDetails ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-3 ">
+                    <a class="card-title align-middle" style="color:#FF00C5">
+                        <i class="fas fa-gem  fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Stone Details</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="StoneDetails" class="card-body collapse" [collapse]="EnableStoneDetails">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table" id="panels">
+                        <thead class="topbar">
+                            <tr>
+                                <th>SNo</th>
+                                <th>OrderNo</th>
+                                <th>SubOrderNo </th>
+                                <th>Type </th>
+                                <th>Name</th>
+                                <th>App.Qty</th>
+                                <th>App.Carat</th>
+                                <th>App.Wt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="input-group">
+                <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" (click)="Submit()">
+                    <i class="fas fa-save"></i>&nbsp;Issue To CPC</button>
+                <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary" (click)="clear()"
+                    type="button"><i class="fal fa-close"></i>&nbsp;Clear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <div class="col-md-3">
+        <pre>{{postOrderList | json}}</pre>
+    </div>
+</ng-container>

@@ -1,0 +1,101 @@
+<div class="row" style="display:block;margin: auto;width: 30%;">
+    <form [formGroup]="CancelForm" class="form-horizontal">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="OrderNo">Date</label>&nbsp;
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <input type="text" class="form-control" [(ngModel)]="applicationDate"
+                                            formControlName="applicationDate" readonly
+                                            value="{{applicationDate | date:'dd/MM/yyyy' }}" style="width: 300px;" />
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="form-group">
+                                <!-- <div class="input-group" *ngFor="let radiobutton of radioItems">
+                                    <ul class="list-group">
+                                        <div class="col-md-12">
+                                            <label class="form-check-inline">
+                                                <input type="radio" class="form-check-input" [value]="radiobutton"
+                                                    (change)="Changed(radiobutton)"
+                                                    [checked]="radiobutton === model.option">
+                                                <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                                            </label>
+                                        </div>
+                                    </ul>
+                                </div> -->
+                                <label for="OrderNo">Type</label>&nbsp;
+                                <div class="input-group">
+                                    <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="type">
+                                        <option [ngValue]="null">Select</option>
+                                        <option *ngFor="let _type of type" [value]="_type.Code">
+                                            {{_type.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="OrderNo">Receipt No</label>&nbsp;
+                                <div class="input-group">
+                                    <input type="text" class="form-control" style="width: 300px;"
+                                        formControlName="receiptno" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="OrderNo">Cancel Remarks</label>&nbsp;
+                                <div class="input-group">
+                                    <input type="text" class="form-control" style="width: 300px;"
+                                        formControlName="remarks" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                                        type="button" (click)="print(CancelForm)"><i
+                                            class="fa fa-eye"></i>&nbsp;Preview</button>
+                                    <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary"
+                                        (click)="cancel(CancelForm)">
+                                        <i class="fa fa-close"></i>&nbsp;Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<div class="row" style="display:block;margin: auto;width: 30%;">
+
+    <div class="modal fade" id="DetailsTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                        class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                        id="exampleModalLabel" (click)=printDetails()><i class="fal fa-print"></i> Print</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <ng-container *ngIf="PrintTypeBasedOnConfig">
+                    <div class="container invoice-box htmlPrint" id="print-closed-section"
+                        style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+                        <pre>{{printData}}</pre>
+                    </div>
+                    <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                        <div id="DisplayData" class="center" [innerHTML]='printData | safeHtml'></div>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

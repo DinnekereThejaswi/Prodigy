@@ -1,0 +1,182 @@
+<div class="row" style="display:block;margin: auto;width: 30%;" *ngIf="ShowHide">
+  <form class="form-horizontal">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="exampleAccount">Purchase Est No:</label>
+                <div class="input-group">
+                  <input class="form-control" id="exampleAccount" placeholder="Est No" type="number" #estNo>
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="getPurchaseEstimationDetails(estNo.value)"><i class="fal fa-print"></i>
+                  Reprint </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="modal fade" id="PurchaseModal"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" *ngIf="EnablePurchaseReprintHeaders">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printPurchase()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" (click)="closePurEstTab()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-sectionPurchase"
+        style="max-width: 1100px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">{{heading}}</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="row mb-4 ">
+                <div class="col-md-6 ">
+                  <h5 class="mb-3 "> CustName: <span>{{estPurchaseDetails.CustName}}</span></h5>
+                </div>
+                <div class="col-md-5 ">
+                  <h5 class="mb-3 ">Purchase Estimate: <span>{{estPurchaseDetails.EstNo}}</span></h5>
+                </div>
+                <div class="col-md-1">
+                </div>
+              </div>
+              <div class="row margin">
+                <div class="col-lg-12">
+                  <div class="table-responsive-sm">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="classname">Description</th>
+                          <th class="classname">Rate</th>
+                          <th class="classname">Gr.Wt</th>
+                          <th class="classname">St.Wt</th>
+                          <th class="classname">Net Wt</th>
+                          <th class="classname">St.Amt</th>
+                          <th class="classname">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="PurchaseDetails">
+                        <tr *ngFor="let _PurchaseDetails of PurchaseDetails">
+                          <td class="classname">{{_PurchaseDetails.ItemDescription}}</td>
+                          <td class="classname">{{_PurchaseDetails.PurchaseRate | number : '1.2-2'}}</td>
+                          <td class="classname">{{_PurchaseDetails.GrossWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_PurchaseDetails.StneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_PurchaseDetails.NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_PurchaseDetails.DiamondAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{_PurchaseDetails.ItemAmount | number : '1.2-2'}}</td>
+                        </tr>
+                        <tr *ngIf="getPurchaseTotForPrint">
+                          <td class="classname">Grand Total</td>
+                          <td class="classname"></td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].GrossWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].StneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].DiamondAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{getPurchaseTotForPrint[0].ItemAmount | number : '1.2-2'}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row mb-4 margin">
+                  <div class="col-md-5">
+                    <h5 class="mb-3"> EstDate:
+                      <span>{{estPurchaseDetails.PDate | date :'dd-MMM-yy h:mm:ss a '}}</span></h5>
+                  </div>
+                  <div class="col-md-3">
+                    <h5 class="mb-3">SalCode: <span>{{PurchaseDetails[0].SalCode}}</span></h5>
+                  </div>
+                  <div class="col-md-2">
+                    <h5 class="mb-3"> OpCode: <span>{{estPurchaseDetails.OperatorCode}}</span></h5>
+                  </div>
+                  <div class="col-md-2">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <ng-container
+                  *ngFor="let _PurchaseStoneDetails of PurchaseDetails[0].lstPurchaseEstStoneDetailsVM;let i=index">
+                  <div class="row mb-2 margin">
+                    <div class="col-md-6">
+                      <h5 class="mb-3">
+                        # {{_PurchaseStoneDetails.Name}}\{{_PurchaseStoneDetails.Rate | number : '1.2-2'}} *
+                        {{_PurchaseStoneDetails.Carrat | number : '1.3-3'}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container
+                  *ngFor="let _PurchaseDiamondDetails of PurchaseDetails[0].lstPurchaseEstDiamondDetailsVM;let i=index">
+                  <div class="row mb-2 margin">
+                    <div class="col-md-6">
+                      <h5 class="mb-3">
+                        # {{_PurchaseDiamondDetails.Name}}\{{_PurchaseDiamondDetails.Rate | number : '1.2-2'}} *
+                        {{_PurchaseDiamondDetails.Carrat | number : '1.3-3'}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+<!-- Added for Plain Text printing-->
+
+<div class="modal fade" id="PurEstPlainTextTab" tabindex="-1" role="dialog" aria-labelledby="PurEstPlainTextTabLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <<div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="PurEstPlainTextTabLabel" (click)=printPurEst()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <ng-container *ngIf="PrintTypeBasedOnConfig">
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em"
+        *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+        <pre>{{purEstPlainTextDetails}}</pre>
+      </div>
+      <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+        <div id="DisplayData" class="center" [innerHTML]='purEstPlainTextDetails | safeHtml'></div>
+      </span>
+    </ng-container>
+  </div>
+</div>
+</div>
+
+<!-- Ends here -->
+
+
+<!-- {{PurchaseDetails | json}} -->

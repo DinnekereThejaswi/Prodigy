@@ -1,0 +1,184 @@
+<div class="row" style="display:block;margin: auto;width: 30%;">
+    <form [formGroup]="reprintform" class="form-horizontal">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <!-- <div class="col-md-12"> -->
+                                        <label for="date">Date</label>
+                                        <ng-container>
+                                            <input type="text" class="form-control" bsDatepicker
+                                                [bsConfig]="datePickerConfig" [(ngModel)]="applicationDate"
+                                                formControlName="frmCtrl_applicationDate" readonly
+                                                (ngModelChange)="byDate(applicationDate)"
+                                                value="{{applicationDate | date:'dd/MM/yyyy' }}"
+                                                style="width: 200px;" />
+                                        </ng-container>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-check-inline" *ngFor="let radiobutton of radioItems">
+                                    <input type="radio" class="form-check-input" [value]="radiobutton"
+                                        (change)="Changed(radiobutton)" [checked]="radiobutton === model.option">
+                                    <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check">
+                                <input type="checkbox" class="chkbxsize" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Detailed</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" formControlName="frmCtrl_IssueNo"
+                            [(ngModel)]="reprintHeaders.selectedIssueNo">
+                            <option [value]="null">Select</option>
+                            <option *ngFor="let _List of IssueNumbers" [value]="_List.IssueNo">
+                                {{_List.IssueNo}}-{{_List.Name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                                (click)="onPrint()"><i class="fal fa-print"></i>
+                                Reprint </button>
+                        </div>
+                        <div class="col-md-5">
+                            <button class="printMe btn btn-danger waves-effect waves-light btn-rounded btn-secondary"
+                                (click)=cancel()><i class="fa fa-times"></i>Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<ng-container *ngIf="EnableJson">
+    <div class="col-md-3">
+        <pre>{{reprintHeaders | json}}</pre>
+    </div>
+</ng-container>
+<!--Added permisison modal-->
+
+<div id="PermissonModals" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Prodigy</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="PassWord">9. Password</label>
+                    <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+                        (keyup.enter)="passWord(Pwd.value)" IntegerDecimalFieldValidator #Pwd />{{ Pwd.focus() }}
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                        (click)="passWord(Pwd.value)">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Ends here -->
+
+<!--BRANCH ISSUE PRINT------>
+
+
+<div class="modal fade" id="TAGIssueTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=printTagIssue()><i class="fal fa-print"></i> Print</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <ng-container *ngIf="PrintTypeBasedOnConfig">
+                <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                    <div id="DisplaytagIssueData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+                </span>
+                <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                    <div id="DisplaytagIssueData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+                </span>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+
+<!--opgIssueData  PRINT------>
+<div class="row" style="display:block;margin: auto;width: 30%;">
+    <div class="modal fade" id="OPGIssueTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                        class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                        id="exampleModalLabel" (click)=printOPGIssue()><i class="fal fa-print"></i> Print</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <ng-container *ngIf="PrintTypeBasedOnConfig">
+                    <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                        <div id="DisplayopgIssueData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+                    </span>
+                    <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                        <div id="DisplayopgIssueData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ENDS opgIssueData  PRINT------>
+
+<!--SR issue  PRINT------>
+<div class="row" style="display:block;margin: auto;width: 30%;">
+    <div class="modal fade" id="SRIssueTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                        class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                        id="exampleModalLabel" (click)=printSRIssue()><i class="fal fa-print"></i> Print</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <ng-container *ngIf="PrintTypeBasedOnConfig">
+                    <div class="container invoice-box htmlPrint" id="DisplaysrIssueData"
+                        style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+                        <pre>{{PrintDetails}}</pre>
+                    </div>
+                    <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                        <div id="DisplaysrIssueData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<!--ENDS SR issue  PRINT------>

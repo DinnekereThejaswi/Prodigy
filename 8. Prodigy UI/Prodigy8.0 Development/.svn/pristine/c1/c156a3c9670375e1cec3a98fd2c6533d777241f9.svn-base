@@ -1,0 +1,401 @@
+<div style="color: brown; text-align: right; font-style: italic;">
+  <app-lastdocno [routerUrl]="routerUrl"></app-lastdocno>
+</div>
+<br>
+<div class="card">
+  <div class="card-body">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-3 ">
+          <div class="form-group">
+            <label for="">Repair Receipt Number</label>
+            <input class="form-control" name="RepairNo" #RepairNo placeholder="Receipt No"
+              (keyup.enter)="getDetails(RepairNo.value)" GreenBorder
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+              onKeyPress="if(this.value.length==7) return false;" [(ngModel)]="repairDeliverySummaryHeader.RepairNo">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="card" *ngIf="hadRPDetails">
+  <div class="card-body">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="">Issued By</label>
+            <select class="form-control mr-auto mt-2 mt-lg-0" name="SalCode"
+              [(ngModel)]="repairDeliverySummaryHeader.SalCode">
+              <option [ngValue]="null">select</option>
+              <option *ngFor="let _salesman of SalesManList" [value]="_salesman.sal_code">
+                {{_salesman.CodeName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <div class="">
+              <div class="text-right"><i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">
+                  Receipt Date</span>
+                <h2 class="font-light">{{RDDetails.RepairDate | date:'dd/MM/yyyy'}}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <div class="">
+              <div class="text-right"><i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">
+                  Cust Due Date</span>
+                <h2 class="font-light">{{RDDetails.DueDate | date:'dd/MM/yyyy'}}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <div class="">
+              <div class="text-right"><i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">
+                  Delivery Date</span>
+                <h2 class="font-light">{{RDDetails.DueDate | date:'dd/MM/yyyy'}}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="IsTrading" class="text-right">L</label>
+            <div class="form-group">
+              <input type="checkbox" [disabled]="isDisabled" class="chkbxsize" checked />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Remarks</label>
+            <input class="form-control" placeholder="Remarks" name="Remarks" type="text"
+              [(ngModel)]="repairDeliverySummaryHeader.Remarks">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="accordian" class="accordion" *ngIf="hadRPDetails">
+  <div class="card mb-0">
+    <div class="card-header Pointer" (click)="ToggleCustomerData()"
+      [attr.data-toggle]="EnableCustomerTab ? '':'collapse'" href="#Customer"
+      style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);"
+      [ngClass]="EnableCustomerTab ? 'collapsed' : ''">
+      <div class="row">
+        <div class="col-md-4">
+          <a class="card-title align-middle Pointer" style="color:#0096FF">
+            <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+            <span class="align-middle Pointer"><ins>Customer Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture the New customer
+                  Information and Existing customer information</span>
+              </div>
+            </span>
+          </a>
+        </div>
+        <!-- <ng-container *ngIf=" ToggleCustomer"> -->
+        <ng-container *ngIf="ToggleCustomer">
+          <div class="col-md-4 pull-right">
+            <h4><span class="align-middle"> Customer: {{Customer.CustName}} </span></h4>
+          </div>
+          <div class="col-md-4 pull-right">
+            <h4><span class="align-middle"> MobileNo: {{Customer.MobileNo}} </span></h4>
+          </div>
+
+        </ng-container>
+        <!-- </ng-container> -->
+      </div>
+    </div>
+    <div id="Customer" class="card-body collapse" [hidden]="EnableCustomerTab">
+      <app-customer></app-customer>
+    </div>
+  </div>
+  <br>
+
+  <div class="card mb-0">
+    <div class="card-header Pointer" href="#Items" [ngClass]="EnableItemsTab ? 'collapsed' : ''"
+      [attr.data-toggle]="EnableItemsTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);" (click)="ToggleItemsData()">
+      <div class="row">
+        <div class="col-md-4">
+          <a class="card-title align-middle" style="color:rgb(234, 0, 255)">
+            <!-- <i class="fal fa-cash-register "></i> -->
+            <i class="fas fa-italic fa-2x mr-2 align-middle"></i>
+            <span class="align-middle Pointer"><ins>Items Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture additional payment advance receiving
+                  details</span>
+              </div>
+            </span>
+          </a>
+        </div>
+        <ng-container>
+          <div class="col-md-4 pull-right" *ngIf="ToggleItems">
+          </div>
+          <div class="col-md-4 pull-right">
+            <h4><span class="align-middle">Total Net Wt {{NtWt(fieldArray) | number : '1.2-2'}} </span></h4>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div id="Items" class="card-body collapse" [collapse]="EnableItemsTab">
+      <div class="table-responsive">
+        <table class="table table-bordered" style="width: 2000px;">
+          <thead class="topbar">
+            <tr>
+              <th>Item</th>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>Gross Wt</th>
+              <th>St Wt</th>
+              <th>N Wt</th>
+              <th>D cts</th>
+              <th>App Charges</th>
+              <th>Repair Amt</th>
+              <th>SGST%</th>
+              <th>CGST%</th>
+              <th>IGST%</th>
+              <th>SGST Amt</th>
+              <th>CGST Amt</th>
+              <th>IGST Amt</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let field of fieldArray; let i = index">
+              <td style="width:125px;">
+                <p>{{field.Item}}</p>
+              </td>
+
+              <td style="width:125px;">
+                <p>{{field.Description}}</p>
+              </td>
+
+              <td style="width:125px;">
+                <p>{{field.Units}}</p>
+              </td>
+
+              <td style="width:125px;">
+                <p>{{field.GrossWt}}</p>
+              </td>
+
+              <td style="width:125px;">
+                <p>{{field.StoneWt}}</p>
+              </td>
+
+              <td style="width:125px;">
+                <p>{{field.NetWt}}</p>
+              </td>
+
+              <td style="width:125px;">
+                <p>{{field.Dcts}}</p>
+              </td>
+              <td style="width:125px;">
+                <p>{{field.Rate}}</p>
+              </td>
+              <td style="width:125px;">
+                <input type="text" [(ngModel)]="field.RepairAmount" name="{{field.RepairAmount}}" class="form-control"
+                  [readonly]="readonly[i]" (change)="saveDataFieldValue(i)">
+              </td>
+              <td style="width:125px;">
+                <p>{{field.SGSTPercent}}</p>
+              </td>
+              <td style="width:125px;">
+                <p>{{field.CGSTPercent}}</p>
+              </td>
+              <td style="width:125px;">
+                <p>{{field.IGSTPercent}}</p>
+              </td>
+              <td style="width:125px;">
+                <p>{{field.SGSTAmount}}</p>
+              </td>
+              <td style="width:125px;">
+                <p>{{field.CGSTAmount}}</p>
+              </td>
+              <td style="width:125px;">
+                <p>{{field.IGSTAmount}}</p>
+              </td>
+              <td style="width:125px;">
+                <ng-container *ngIf="EnableEditDelbtn[i]">
+                  <button class="btn btn-default btn-rounded wd" type="button" (click)="editFieldValue(i)"><i
+                      class="fal fa-pencil-alt"></i> Edit</button>
+                </ng-container>
+                <ng-container *ngIf="EnableSaveCnlbtn[i]">
+                  <button class="btn btn-success btn-rounded wd" type="button" (click)="saveDataFieldValue(i)"><i
+                      class="fal fa-save"></i> Save</button>
+                  <button class="btn btn-warning btn-rounded wd" type="button" (click)="cancelDataFieldValue(i)"><i
+                      class="far fa-window-close"></i> Cancel</button>
+                </ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <br>
+      <div class="row" style="padding-bottom: 15px;">
+        <div class="col-md-6">
+          <button class="btn btn-success btn-rounded mt-20" style="margin-bottom: 20px;" type="button"
+            (click)="SendItemDetsToPaymentComp()">
+            <i class="fal fa-toggle-on "></i> Switch to Payments</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <br>
+  <div class="card mb-0">
+    <div class="card-header Pointer" href="#Payment" [ngClass]="EnablePaymentsTab ? 'collapsed' : ''"
+      [attr.data-toggle]="EnablePaymentsTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);" (click)="TogglePaymentData()">
+      <div class="row">
+        <div class="col-md-2 ">
+          <a class="card-title align-middle" style="color:#005BFF">
+            <!-- <i class="fal fa-cash-register "></i> -->
+            <i class="fal fa-rupee-sign fa-2x mr-2 align-middle"></i>
+            <span class="align-middle Pointer"><ins>Receipt Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture additional payment advance receiving
+                  details</span>
+              </div>
+            </span>
+          </a>
+        </div>
+        <div class="col-md-4 pull-right">
+        </div>
+        <div class="col-md-4 pull-right">
+          <ng-container *ngIf="paymentPaidAmt > 0">
+            <h4><span class="align-middle"> Amount: {{paymentPaidAmt | number : '1.2-2'}} </span></h4>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div id="Payment" class="card-body collapse" [collapse]="EnablePaymentsTab">
+      <app-payment [argPageName]="pageName" [autoFillAmount]="autoFetchAmount"></app-payment>
+    </div>
+  </div>
+</div>
+<br>
+<div class="col-lg-2 col-md-2" *ngIf="hadRPDetails">
+  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+    (click)="submitPost()">Submit</button>
+</div>
+<br>
+
+<div class="row " *ngIf="hadRPDetails">
+
+  <div class="col-lg-3 col-md-3">
+    <div class="card">
+      <div class="row">
+        <div class="col-12">
+          <div class="social-widget">
+            <div class="soc-header box-facebook" style="padding: 3px;">
+              <h3 class="text-white">Total N.Wt</h3>
+            </div>
+            <div class="soc-content">
+              <div class="col-12 b-r">
+                <h3 class="font-medium">{{NtWt(fieldArray) | number : '1.2-2'}}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-9 col-md-9">
+    <div class="card">
+      <div class="row">
+        <div class="col-12">
+          <div class="social-widget">
+            <div class="soc-header box-facebook" style="padding: 3px;">
+              <h3 class="text-white">Summary</h3>
+            </div>
+            <div class="soc-content">
+              <div class="col-3 b-r">
+                <h3 class="font-medium">{{RepairAmt(fieldArray) | number : '1.2-2'}}<h1 class="float-right">+</h1>
+                </h3>
+                <h5 class="text-black">Repair Amount </h5>
+              </div>
+              <div class="col-3 b-r">
+                <h3 class="font-medium">{{GST(fieldArray) | currencyFormat}}<h1 class="float-right">=</h1>
+                </h3>
+                <h5 class="text-black">GST Amount</h5>
+              </div>
+              <div class="col-2 b-r">
+                <h3 class="font-medium">{{RepairAmt(fieldArray) + GST(fieldArray) | currencyFormat }}<h1
+                    class="float-right">-</h1>
+                </h3>
+                <h5 class="text-black">Total Amount</h5>
+              </div>
+              <div class="col-2 b-r">
+                <h3 class="font-medium"> {{paymentPaidAmt | number : '1.2-2'}}<h1 class="float-right">=</h1>
+                </h3>
+                <h5 class="text-black">Paid</h5>
+              </div>
+              <div class="col-2 b-r">
+                <h3 class="font-medium"><b>{{totalRepairAmt | number : '1.2-2'}}</b></h3>
+                <h5 class="text-black">Balance</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+
+
+<ng-container *ngIf="EnableReprintDelivery">
+  <app-repair-reprint></app-repair-reprint>
+</ng-container>
+
+<!-- <div class="col-md-2 col-lg-2 col-xlg-2">
+    <div class="card card-inverse card-warning">
+      <div class="box text-center">
+        <h4 class="font-light text-white">{{NtWt(fieldArray) | number : '1.2-2'}} <b></b></h4>
+        <h5 class="text-white">Total Nt Wt</h5>
+      </div>
+    </div>
+  </div> -->
+<!-- <div class="col-md-2 col-lg-2 col-xlg-2">
+    <div class="card card-inverse card-warning">
+      <div class="box text-center">
+        <h4 class="font-light text-white">{{RepairAmt(fieldArray) + GST(fieldArray) | number : '1.2-2' }}<b></b></h4>
+        <h5 class="text-white">Total Amt</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2 col-lg-2 col-xlg-2">
+    <div class="card card-inverse card-success">
+      <div class="box text-center">
+        <h4 class="font-light text-white"><b></b></h4>
+        <h5 class="text-white">Paid</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2 col-lg-2 col-xlg-2">
+    <div class="card card-inverse card-primary">
+      <div class="box text-center">
+        <h4 class="font-light text-white"> <b></b></h4>
+        <h5 class="text-white">Balance</h5>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<ng-container *ngIf="EnableJson">
+  <pre>{{repairDeliverySummaryHeader | json}}</pre>
+</ng-container>

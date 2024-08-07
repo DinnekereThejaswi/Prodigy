@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+  <link rel="stylesheet" href="./assets/css/font-awesome-animation.min.css">
+  <link rel="stylesheet" href="https://valor-software.com/ng2-select/assets/css/ng2-select.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+
+
+
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+
+
+  <base href="./">
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Prodigy</title>
+
+  <style>
+    .btn {
+      margin-right: 5px !important;
+    }
+
+    .pointer {
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .no-wrap {
+      white-space: pre !important;
+    }
+
+    tbody,
+    th {
+      white-space: nowrap !important;
+      font-size: 14px;
+    }
+
+    .table-responsive {
+      display: block;
+      width: 99.9999% !important;
+      overflow-x: auto;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /*Toottip*/
+    .tooltipdesign {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltipdesign .tooltiptext {
+      visibility: hidden;
+      width: 250px;
+      background-color: #FF9800;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      font-size: 15px;
+
+      /* Position the tooltip */
+      position: absolute;
+      z-index: 1;
+    }
+
+    .tooltipdesign:hover .tooltiptext {
+      visibility: visible;
+    }
+
+    .tooltip-top {
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+    }
+
+
+    .textRed {
+      color: red;
+      font-size: 13px;
+      padding: 5px;
+    }
+
+    /* .tooltip-top::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #00BCD4 transparent transparent transparent;
+} */
+
+    .text-turquoise {
+      color: turquoise;
+    }
+  </style>
+
+<link rel="stylesheet" href="styles.4bed1f8b78ea941246e8.css"></head>
+
+<body class="card-no-border">
+  <app-root></app-root>
+<script src="runtime-es2015.42edcfd1ff555e6ab673.js" type="module"></script><script src="runtime-es5.42edcfd1ff555e6ab673.js" nomodule defer></script><script src="polyfills-es5.1ebc82caa3892d4cffea.js" nomodule defer></script><script src="polyfills-es2015.9807df94aa350ae46d43.js" type="module"></script><script src="scripts.11e515b907edaa61dbc9.js" defer></script><script src="main-es2015.894dc0fc3b83e6da01d4.js" type="module"></script><script src="main-es5.894dc0fc3b83e6da01d4.js" nomodule defer></script></body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js?ver3.3.1"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+</html>

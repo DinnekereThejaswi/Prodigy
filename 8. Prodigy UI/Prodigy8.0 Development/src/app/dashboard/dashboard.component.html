@@ -1,0 +1,240 @@
+<!-- <div class="row" style="display:block;margin: auto;width: 30%;">
+  <div class="card">
+    <div class="card-body">
+      <h1>
+        <div class="center">Welcome to Prodigy</div>
+      </h1>
+      <br>
+      <div class="align-center">
+        Application Date {{ApplicationDate | date: 'dd-MMM-yyyy'}}
+      </div>
+      <br>
+      <div class="align-center">
+        <div class="row">
+          <div class="col-md-4">
+            <table style="text-align:center;" class="table table-bordered">
+              <thead class="topbar">
+                <tr>
+                  <th>Commodity</th>
+                  <th>Karat</th>
+                  <th>Rate/gram (Rs)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Gold</td>
+                  <td>22K</td>
+                  <td>3,550.00</td>
+                </tr>
+                <tr>
+                  <td>Gold</td>
+                  <td>24K</td>
+                  <td>3,890.00</td>
+                </tr>
+                <tr>
+                  <td>Gold</td>
+                  <td>18K</td>
+                  <td>3,125.00</td>
+                </tr>
+                <tr>
+                  <td>Silver</td>
+                  <td>-</td>
+                  <td>46.50</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="row">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-1">
+  </div>
+
+
+  <div class="col-md-5" style="text-align: right;">
+    <h3 class="font-light">Date : {{applicationDate | date:'dd-MMM-yyyy'}}</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-8" style="text-align: center;">
+    <h2>Welcome to Prodigy</h2>
+  </div>
+  <div class="col-md-2">
+  </div>
+</div>
+
+
+
+<!-- <div class="content"> -->
+<!-- <div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fa fa-globe fa-lg text-warning"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Sales</p>
+                <p class="card-title">1522.25gm
+                <p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer ">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-refresh"></i> Update Now
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fa fa-first-order fa-lg text-success"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Orders</p>
+                <p class="card-title">196.96gm
+                <p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer ">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-calendar-o"></i> Last day
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fa fa-shopping-cart fa-lg text-danger"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Purchase</p>
+                <p class="card-title">110gm
+                <p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer ">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-clock-o"></i> In the last 5 hour
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fa fa-users fa-lg text-primary"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Customers</p>
+                <p class="card-title">+45K
+                <p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer ">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-refresh"></i> Update now
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+<div class="row">
+  <div class="col-md-3">
+    <div class="dbox dbox--color-1">
+      <div class="dbox__icon">
+        <i class="fa fa-inr"></i>
+      </div>
+      <div class="dbox__body">
+        <span class="dbox__title">Gold Rate (22k)</span>
+        <span class="dbox__count">{{Gold22k}}/ gram</span>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="dbox dbox--color-2">
+      <div class="dbox__icon">
+        <i class="fa fa-inr"></i>
+      </div>
+      <div class="dbox__body">
+        <span class="dbox__title">Gold Rate (18k)</span>
+        <span class="dbox__count">{{Gold18k}}/ gram</span>
+
+      </div>
+
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="dbox dbox--color-3">
+      <div class="dbox__icon">
+        <i class="fa fa-inr"></i>
+      </div>
+      <div class="dbox__body">
+        <span class="dbox__title">Gold Rate (24k)</span>
+        <span class="dbox__count">{{Gold24k}}/ gram</span>
+
+      </div>
+
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="dbox dbox--color-4">
+      <div class="dbox__icon">
+        <i class="fa fa-inr"></i>
+      </div>
+      <div class="dbox__body">
+        <span class="dbox__title">Silver</span>
+        <span class="dbox__count">{{Silver}}/ gram</span>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- </div> -->

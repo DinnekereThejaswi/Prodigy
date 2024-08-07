@@ -1,0 +1,53 @@
+import { OnChanges, Renderer2, ElementRef } from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+export declare class NgxBarcode6Component implements OnChanges {
+    private renderer;
+    elementType: 'svg' | 'img' | 'canvas';
+    cssClass: string;
+    format: '' | 'CODE128' | 'CODE128A' | 'CODE128B' | 'CODE128C' | 'EAN13' | 'UPC' | 'EAN8' | 'EAN5' | 'EAN2' | 'CODE39' | 'ITF14' | 'MSI' | 'MSI10' | 'MSI11' | 'MSI1010' | 'MSI1110' | 'pharmacode' | 'codabar';
+    lineColor: string;
+    width: number;
+    height: number;
+    displayValue: boolean;
+    fontOptions: string;
+    font: string;
+    textAlign: string;
+    textPosition: string;
+    textMargin: number;
+    fontSize: number;
+    background: string;
+    margin: number;
+    marginTop: number;
+    marginBottom: number;
+    marginLeft: number;
+    marginRight: number;
+    value: string;
+    bcElement: ElementRef;
+    valid: () => boolean;
+    get options(): {
+        format: "" | "CODE128" | "CODE128A" | "CODE128B" | "CODE128C" | "EAN13" | "UPC" | "EAN8" | "EAN5" | "EAN2" | "CODE39" | "ITF14" | "MSI" | "MSI10" | "MSI11" | "MSI1010" | "MSI1110" | "pharmacode" | "codabar";
+        lineColor: string;
+        width: number;
+        height: number;
+        displayValue: boolean;
+        fontOptions: string;
+        font: string;
+        textAlign: string;
+        textPosition: string;
+        textMargin: number;
+        fontSize: number;
+        background: string;
+        margin: number;
+        marginTop: number;
+        marginBottom: number;
+        marginLeft: number;
+        marginRight: number;
+        valid: () => boolean;
+    };
+    constructor(renderer: Renderer2);
+    ngOnChanges(): void;
+    createBarcode(): void;
+    static ngComponentDef: ɵngcc0.ɵɵComponentDefWithMeta<NgxBarcode6Component, "ngx-barcode6", never, { 'elementType': "bc-element-type", 'cssClass': "bc-class", 'format': "bc-format", 'lineColor': "bc-line-color", 'width': "bc-width", 'height': "bc-height", 'displayValue': "bc-display-value", 'fontOptions': "bc-font-options", 'font': "bc-font", 'textAlign': "bc-text-align", 'textPosition': "bc-text-position", 'textMargin': "bc-text-margin", 'fontSize': "bc-font-size", 'background': "bc-background", 'margin': "bc-margin", 'marginTop': "bc-margin-top", 'marginBottom': "bc-margin-bottom", 'marginLeft': "bc-margin-left", 'marginRight': "bc-margin-right", 'value': "bc-value", 'valid': "bc-valid" }, {}, never>;
+}
+
+//# sourceMappingURL=ngx-barcode6.component.d.ts.map

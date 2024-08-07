@@ -1,0 +1,90 @@
+<form [formGroup]="ChequeForm" class="form-horizontal">
+  <div class="card mb-0">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="topbar">
+            <tr>
+              <th>Bank</th>
+              <th>No of Cheques</th>
+              <th>Cheque Start No</th>
+              <th>Cheque End No</th>
+              <th>Max Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <select class="form-control mr-auto mt-2 mt-lg-0" [(ngModel)]="ChequeModel.AccCode"
+                  formControlName="AccCode">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _masterLedgerList of MasterLedgerList" [value]="_masterLedgerList.Code">
+                    {{_masterLedgerList.Name}}
+                  </option>
+                </select>
+              </td>
+              <td><input type="text" class="form-control"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                  onKeyPress="if(this.value.length==4) return false;" [(ngModel)]="ChequeModel.NoOfChqs"
+                  formControlName="NoOfCheques"></td>
+              <td><input type="text" class="form-control"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                  onKeyPress="if(this.value.length==6) return false;" [(ngModel)]="ChequeModel.ChqStartNo"
+                  formControlName="ChqStart" (change)="calcChqEndNo()"></td>
+              <td><input type="text" class="form-control" [(ngModel)]="ChequeModel.ChqEndNo" formControlName="ChqEnd"
+                  readonly></td>
+              <td><input type="text" class="form-control" [(ngModel)]="ChequeModel.MaxAmount"
+                  formControlName="MaxAmount"></td>
+              <td>
+                <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                  (click)="add(ChequeForm)">ADD</button>
+                <!-- <button class="btn btn-outline-danger waves-effect waves-light btn-rounded btn-outline-secondary "
+                  (click)="clear()">CLEAR</button> -->
+                <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary" type="button"
+                  (click)="clear()"><i class="fal fa-close"></i>&nbsp;Clear</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="card mb-0">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="topbar">
+            <tr>
+              <th>Bank</th>
+              <th>No of Cheques</th>
+              <th>Cheque Start</th>
+              <th>Cheque End</th>
+              <th>Max Amount</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let _chequeList of ChequeList;">
+            <tr>
+              <td>{{_chequeList.AccName}}</td>
+              <td>{{_chequeList.Nos}}</td>
+              <td>{{_chequeList.StartNo}}</td>
+              <td>{{_chequeList.EndNo}}</td>
+              <td>{{_chequeList.MaxAmt}}</td>
+              <td>
+                <button class="btn btn-default btn-rounded" type="button" (click)="DeleteRow(_chequeList)"><i
+                    class="far fa-window-close"></i>
+                  Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="EnableJson">
+    <pre>
+  {{ChequeModel | json}}
+</pre>
+  </ng-container>

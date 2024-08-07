@@ -1,0 +1,115 @@
+<form [formGroup]="GSStockForm" class="form-horizontal">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+
+          <div class="col-md-2">
+            <div class="form-group">
+              <label class="control-label" for="Date"><i class="fal fa-calendar-alt"></i>&nbsp;Date</label>
+              <h2 class="font-light">{{applicationDate | date:'dd/MM/yyyy'}}</h2>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="form-group">
+              <label class="control-label" for="UOM">UOM Type</label>
+              <select class="form-control" formControlName="UOM" (change)="onChange(GSStockForm.value.UOM)">
+                <!-- <option [ngValue]="null">Select</option> -->
+                <option *ngFor="let _uom of UOM" [ngValue]="_uom.UOMCode">
+                  {{_uom.UOMName}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-2" style="padding-top:22px;">
+            <div class="form-group">
+              <label class="control-label" for="UOM"></label>
+              <button class="form-control" (click)="ExportTOExcel()" class="btn btn-success">
+                Excel</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="table-responsive">
+              <table class="table table-bordered" *ngIf="p" #TABLE>
+                <thead class="topbar">
+                  <tr>
+                    <th> Item</th>
+                    <th>Opening Qty</th>
+                    <th>Receipt Qty</th>
+                    <th>Issue Qty</th>
+                    <th>Closing Qty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let  stockList of GSStockList">
+                    <td align="left">{{stockList.Item}}</td>
+                    <td align="right">{{stockList.OpeningQty}}</td>
+                    <td align="right">{{stockList.ReceiptQty}}</td>
+                    <td align="right">{{stockList.IssueQty}}</td>
+                    <td align="right">{{stockList.ClosingQty}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-bordered" *ngIf="w" #TABLE>
+                <thead class="topbar">
+                  <tr>
+                    <th> Item</th>
+                    <th>Opening Gross Wt</th>
+                    <th>Opening Net Wt</th>
+                    <th>Receipt Gross Wt</th>
+                    <th>Receipt Net Wt</th>
+                    <th>Issue Gross Wt</th>
+                    <th>Issue Net Wt</th>
+                    <th>Closing Gross Wt</th>
+                    <th>Closing Net Wt</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let  stockList of GSStockList">
+                    <td align="left">{{stockList.Item}}</td>
+                    <td align="right">{{stockList.OpeningGrossWt | number : '1.3-3'}}</td>
+                    <td align="right">{{stockList.OpeningNetWt | number : '1.3-3'}}</td>
+                    <td align="right">{{stockList.ReceiptGrossWt | number : '1.3-3'}}</td>
+                    <td align="right">{{stockList.ReceiptNetWt | number : '1.3-3'}}</td>
+                    <td align="right">{{stockList.IssueGrossWt | number : '1.3-3'}}</td>
+                    <td align="right">{{stockList.IssueNetWt | number : '1.3-3'}}</td>
+                    <td align="right">{{stockList.ClosingGrossWt | number : '1.3-3'}}</td>
+                    <td align="right">{{stockList.ClosingNetWt | number : '1.3-3'}}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-bordered" *ngIf="c" #TABLE>
+                <thead class="topbar">
+                  <tr>
+                    <th> Item</th>
+                    <th>Opening Carets</th>
+                    <th>Receipt Carets</th>
+                    <th>Issue Carets</th>
+                    <th>Closing Carets</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let  stockList of GSStockList">
+                    <td align="left">{{stockList.Item}}</td>
+                    <td align="right">{{stockList.OpeningCarets}}</td>
+                    <td align="right">{{stockList.ReceiptCarets}}</td>
+                    <td align="right">{{stockList.IssueCarets}}</td>
+                    <td align="right">{{stockList.ClosingCarets}}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

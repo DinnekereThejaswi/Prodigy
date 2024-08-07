@@ -1,0 +1,440 @@
+<div class="row">
+  <div class="col-md-12">
+    <div align="right">
+      <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary" (click)="LoadSearchData()"
+        [disabled]="EnableDisableCustFields"><i class="fal fa-search"></i>
+        Search</button>
+    </div>
+    <form [formGroup]="CustomerForm" class="form-horizontal">
+      <!-- <div class="card"> -->
+      <!-- <div class="card-body"> -->
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group1">
+            <label class="control-label" for="MobileNo">Mobile Number</label><span class="textRed"> <i
+                class="fas fa-star-of-life"></i></span>
+            <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+              class="form-control" id="MobileNo" [readonly]="EnableDisableCustFields" (keyup.enter)="getDetsByMobNo()"
+              (change)="getDetsByMobNo()" maxlength="10" [(ngModel)]="CustomerListData.MobileNo"
+              formControlName="MobileNo" placeholder="Please Enter Mobile no" autocomplete="off" GreenBorder
+              autofocus />
+          </div>
+          <div class="form-group1">
+            <input type="hidden" class="form-control" formControlName="ID" [(ngModel)]="CustomerListData.ID">
+            <label for="Salutation">Salutation</label><span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+            <select class="form-control" formControlName="Salutation" [(ngModel)]="CustomerListData.Salutation"
+              #Salutation>
+              <option value="null" [disabled]="EnableDisableCustFields">Select Salutation</option>
+              <option value="MR." [disabled]="EnableDisableCustFields"> MR.</option>
+              <option value="MRS." [disabled]="EnableDisableCustFields">MRS.</option>
+              <option value="MISS." [disabled]="EnableDisableCustFields">MISS.</option>
+              <option value="DR." [disabled]="EnableDisableCustFields">DR.</option>
+              <option value="BABY." [disabled]="EnableDisableCustFields">BABY.</option>
+              <option value="M/S." [disabled]="EnableDisableCustFields">M/S.</option>
+            </select>
+          </div>
+          <div class="form-group1">
+            <label class="control-label" for="CustName"> Customer Name </label><span class="textRed"> <i
+                class="fas fa-star-of-life"></i></span>
+            <input type="text" class="form-control" id="CustName" [(ngModel)]="CustomerListData.CustName"
+              formControlName="CustName" (keydown.enter)="$event.preventDefault()" maxlength="100"
+              [readonly]="EnableDisableCustFields" autocomplete="off" AlphabetFieldValidator />
+            <span class="textRed" *ngIf="findErrorByField('CustName', null) != ''">
+              {{findErrorByField('CustName', null)}}
+            </span>
+          </div>
+          <div class="form-group1">
+            <label class="control-label" for="Address1">Address 1 </label><span class="textRed"> <i
+                class="fas fa-star-of-life"></i></span>
+            <input type="text" class="form-control" id="Address1" maxlength="100"
+              [(ngModel)]="CustomerListData.Address1" (keydown.enter)="$event.preventDefault()"
+              [readonly]="EnableDisableCustFields" formControlName="Address1" autocomplete="off" />
+            <span class="textRed" *ngIf="findErrorByField('Address1', null) != ''">
+              {{findErrorByField('Address1', null)}}
+            </span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group1">
+            <label class="control-label" for="Address2">Address 2 </label>
+            <input type="text" class="form-control" id="Address2" (keydown.enter)="$event.preventDefault()"
+              [(ngModel)]="CustomerListData.Address2" formControlName="Address2" maxlength="100"
+              [readonly]="EnableDisableCustFields" autocomplete="off" />
+            <span class="textRed" *ngIf="findErrorByField('Address2', null) != ''">
+              {{findErrorByField('Address2', null)}}
+            </span>
+          </div>
+          <div class="form-group1">
+            <label class="control-label" for="Address3">Address 3 </label>
+            <input type="text" class="form-control" id="Address3" (keydown.enter)="$event.preventDefault()"
+              [(ngModel)]="CustomerListData.Address3" formControlName="Address3" maxlength="100"
+              [readonly]="EnableDisableCustFields" autocomplete="off" />
+            <span class="textRed" *ngIf="findErrorByField('Address3', null) != ''">
+              {{findErrorByField('Address3', null)}}
+            </span>
+          </div>
+          <div class="form-group1">
+            <label class="control-label" for="StateCode">State</label><span class="textRed"> <i
+                class="fas fa-star-of-life"></i></span>
+            <select class="form-control" formControlName="StateCode" [(ngModel)]="CustomerListData.StateCode">
+              <option [ngValue]="null" [disabled]="EnableDisableCustFields">Select State</option>
+              <option *ngFor="let State of StateList" [ngValue]="State.TINNo" [disabled]="EnableDisableCustFields">
+                {{State.StateName}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group1">
+            <label class="control-label" for="City">City </label>
+            <input type="text" class="form-control" id="City" (keydown.enter)="$event.preventDefault()"
+              [(ngModel)]="CustomerListData.City" formControlName="City" maxlength="50"
+              [readonly]="EnableDisableCustFields" autocomplete="off" AlphabetFieldValidator />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group1">
+            <label class="control-label" for="Pincode">Pin Code </label>
+            <input type="text" class="form-control" id="Pincode" [(ngModel)]="CustomerListData.Pincode"
+              formControlName="Pincode" (keydown.enter)="$event.preventDefault()" [readonly]="EnableDisableCustFields"
+              NumberFieldvalidator maxlength="6" placeholder="e.g. 560009" autocomplete="off" />
+          </div>
+          <div class="form-group1">
+            <label class="control-label" for="PhoneNo">Phone Number</label>
+            <input type="text" class="form-control" id="PhoneNo" [(ngModel)]="CustomerListData.PhoneNo"
+              formControlName="PhoneNo" (keydown.enter)="$event.preventDefault()" maxlength="11"
+              [readonly]="EnableDisableCustFields" NumberFieldvalidator autocomplete="off" />
+          </div>
+          <div class="form-group1">
+            <label class="control-label" for="EmailID">Email-Id </label>
+            <input type="text" class="form-control" id="EmailID" [(ngModel)]="CustomerListData.EmailID"
+              formControlName="EmailID" (keydown.enter)="$event.preventDefault()" maxlength="200"
+              [readonly]="EnableDisableCustFields" EmailFieldValidator autocomplete="off" />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group1">
+            <label class="control-label" for="TIN">GSTIN <div class="tooltipdesign"> <i
+                  class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top"> GSTIN or Goods and Services Tax Identification Number is a
+                  unique 20-digit number, which has replaced the Tax Identification Number (TIN) </span>
+              </div></label>
+            <input type="text" class="form-control" id="TIN" [(ngModel)]="CustomerListData.TIN"
+              onKeyPress="if(this.value.length==15) return false;" formControlName="TIN"
+              placeholder="e.g. 22AAAAA0000A1Z5" (keydown.enter)="$event.preventDefault()" AlphaNumericValidator
+              (change)=" ValidateGSTIN(tin.value)" #tin maxlength="15" [readonly]="EnableDisableCustFields"
+              style="text-transform:uppercase" autocomplete="off" />
+          </div>
+          <div class="form-group1">
+            <label class="control-label" for="DateOfBirth">Date Of Birth </label>
+            <input type="text" bsDatepicker class="form-control" [bsConfig]="datePickerConfig"
+              [(ngModel)]="CustomerListData.DateOfBirth" [readonly]="EnableDisableCustFields"
+              formControlName="DateOfBirth" placeholder="Select Date Of Birth" />
+          </div>
+          <div class="form-group1">
+            <div *ngIf="isCheckedForm60 == false">
+              <label class="control-label" for="PANNo">PAN <div class="tooltipdesign"> <i
+                    class="fal fa-question-circle"></i>
+                  <span class="tooltiptext tooltip-top"> Permanent Account Number is an unique identification number
+                    assigned to all taxpayers in India. </span>
+                </div></label>
+              <input type="text" class="form-control" style="text-transform:uppercase" id="PANNo"
+                [(ngModel)]="CustomerListData.PANNo" formControlName="PANNo" maxlength="10" readonly />
+            </div>
+            <input type="checkbox" (change)="isChecked($event)"> Form No 60
+            <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+              <span class="tooltiptext tooltip-top"> Form 60 is a declaration to be filed by an individual or a
+                person (not being a company or firm) who does not have a PAN </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="UploadDocForm" class="form-horizontal">
+        <div class="row">
+          <div class="col-md-3 ">
+            <div class="form-group">
+              <label class="control-label" for="IDType">ID Type <div class="tooltipdesign"> <i
+                    class="fal fa-question-circle"></i>
+                  <span class="tooltiptext tooltip-top"> An identity document is any document which may be used
+                    to
+                    prove a person's identity </span>
+                </div></label>
+              <select class="form-control" formControlName="DocCode" [(ngModel)]="CustomerIDProofdets.DocCode"
+                (change)="IdNumbersOf(CustomerIDProofdets.DocCode)">
+                <option [ngValue]="null" [disabled]="EnableDisableCustFields">Select</option>
+                <option *ngFor="let IDType of IDTypeList" [ngValue]="IDType.DocCode"
+                  [disabled]="EnableDisableCustFields">
+                  {{IDType.DocName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 ">
+            <div class="form-group">
+              <label class="control-label" for="IDDetails">ID No </label>
+
+              <ng-container *ngIf=" SelecctedId ==='AAD'">
+                <input type="text" class="form-control" style="text-transform:uppercase"
+                  [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo"
+                  autocomplete="off"
+                  placeholder="XXXX XXXX XXXX" NumberFieldvalidator
+                  [readonly]="EnableDisableCustFields" maxlength="12"  onKeyPress="if(this.value.length==12)"
+                   />
+              </ng-container>
+
+              <ng-container *ngIf=" SelecctedId ==='ARM'">
+                <input type="text" class="form-control"  style="text-transform:uppercase"
+                  [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo"
+                  autocomplete="off" placeholder="ARM License no" NumberFieldvalidator
+                  [readonly]="EnableDisableCustFields" min="0" maxlength="8"/>
+              </ng-container>
+
+              <ng-container *ngIf=" SelecctedId ==='DRI'">
+                <input type="text" class="form-control"  style="text-transform:uppercase"
+                  [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo"
+                  autocomplete="off" placeholder="Driving License No" AlphaNumericValidator
+                  [readonly]="EnableDisableCustFields" maxlength="15"
+                  (change)="ValidateLicense(CustomerIDProofdets.DocNo)"
+                />
+              </ng-container>
+
+              <ng-container *ngIf=" SelecctedId ==='OTH'">
+                <input type="text" class="form-control"  style="text-transform:uppercase"
+                  [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo" maxlength="30"
+                 autocomplete="off" placeholder="Other Details"
+                  [readonly]="EnableDisableCustFields" />
+              </ng-container>
+
+              <ng-container *ngIf=" SelecctedId ==='PAN'">
+                <input type="text" class="form-control"  style="text-transform:uppercase"
+                  [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo"
+                  autocomplete="off" maxlength="10"  AlphaNumericValidator pattern="^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"
+                  [readonly]="EnableDisableCustFields"  placeholder="PAN NUMBER"  (input)="code.value=$event.target.value.toUpperCase()"
+                  (change)="ValidatePan(CustomerIDProofdets.DocNo)" id="code" #code/>
+              </ng-container>
+
+              <ng-container *ngIf=" SelecctedId ==='PAS'">
+                <input type="text" class="form-control" style="text-transform:uppercase"
+                  [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo" maxlength="8"
+                   autocomplete="off" placeholder="Passport No" 
+                  [readonly]="EnableDisableCustFields" 
+                    (change)="ValidatePassport(CustomerIDProofdets.DocNo)"/>
+              </ng-container>
+
+              <ng-container *ngIf=" SelecctedId ==='RAT'">
+                <input type="text" class="form-control"  style="text-transform:uppercase"
+                  [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo"
+                 autocomplete="off"
+                  [readonly]="EnableDisableCustFields" placeholder="Ration Card" />
+              </ng-container>
+              <ng-container *ngIf=" SelecctedId ==='VOT'">
+                <input type="text" class="form-control"  style="text-transform:uppercase"
+                  [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo"
+                 autocomplete="off"
+                  [readonly]="EnableDisableCustFields" placeholder="Voter details" />
+              </ng-container>
+
+              <ng-container *ngIf=" SelecctedId =='' ||  SelecctedId ==null">
+                <input type="text" class="form-control"  style="text-transform:uppercase"
+                  [(ngModel)]="CustomerIDProofdets.DocNo" formControlName="DocNo"
+                 autocomplete="off"
+                  [readonly]="EnableDisableCustFields" placeholder="Enter Doc No" />
+              </ng-container>
+
+            </div>
+          </div>
+          <div class="col-md-3 ">
+            <div class="form-group">
+              <label for="barcode">Image</label>
+              <div class="input-group">
+                <input type="file" id="file" formControlName="DocImagePath" [readonly]="EnableDisableCustFields"
+                  [(ngModel)]="CustomerIDProofdets.DocImagePath" (change)="handleBrowse1($event)">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="barcode"></label>
+              <div class="input-group">
+                <a href="javascript:void(0)"
+                  class="btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right"
+                  (click)="Add(UploadDocForm)" [class.disabled]="EnableDisableCustFields">Add</a>
+                <a href="javascript:void(0)"
+                  class="btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right" (click)="Clear()"
+                  [class.disabled]="EnableDisableCustFields">Clear</a>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="table-responsive">
+            <table class="table" id="panels">
+              <thead class="topbar">
+                <tr>
+                  <th *ngIf="!EnableDisableCustFields"></th>
+                  <th>SNo</th>
+                  <th>ID Type</th>
+                  <th>Doc No</th>
+                  <th>Doc Img</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let _customerIDProofDetails of CustomerListData.lstOfProofs; let i = index">
+                <tr>
+                  <td *ngIf="!EnableDisableCustFields">
+                    <i class="far fa-trash-alt fa-1-5x pointer" style='color: red; font-size: 1.5em !important;'
+                      (click)="Delete(_customerIDProofDetails,i)"></i>
+                  </td>
+                  <td>{{i+1}}</td>
+                  <td>{{_customerIDProofDetails.DocCode | IDType : _customerIDProofDetails.DocCode}}</td>
+                  <td>{{_customerIDProofDetails.DocNo | uppercase}}</td>
+                  <td><img [src]="_customerIDProofDetails.DocImagePath" height="100"
+                      *ngIf="_customerIDProofDetails.DocImagePath"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </form>
+      <!-- </div> -->
+      <!-- </div> -->
+      <br>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+              (click)="onSubmit(CustomerForm)" [disabled]="EnableDisableCustFields"><i class="fal fa-save"></i>
+              Submit</button>
+          </div>
+        </div>
+        <div class="col-md-6" style="text-align:right">
+          <span class="textRed"> <i class="fas fa-star-of-life"></i></span> Mandatory fields
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="SearchModal" data-backdrop="static" data-keyboard="false" tabindex="-1">
+  <div class="modal-dialog " style="max-width: 1300px;">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Search Customers</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-10">
+                  <form [formGroup]="Searchform">
+                    <div class="row">
+                      <!-- Column -->
+                      <div class="col-md-3 col-lg-3 col-xlg-3">
+                        <div class="form-group">
+                          <select formControlName="type" Autofocus class="form-control" (change)="Clear()"
+                            [(ngModel)]="SearchFilterData.type">
+                            <option value="null">Select</option>
+                            <option value="NAME">Name</option>
+                            <option value="MOBILENO">Mobile-No</option>
+                            <option value="EMAILID">Email-Id</option>
+                            <option value="PAN">Pan-No</option>
+                          </select>
+                        </div>
+                      </div>
+                      <ng-container *ngIf="SearchFilterData.type != 'MOBILENO'">
+                        <div class="col-lg-3">
+                          <input type="text" formControlName="searchParam" placeholder="Enter Text" class="form-control"
+                            [(ngModel)]="SearchFilterData.searchParam" (change)="GetDataBySearch(Searchform)">
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="SearchFilterData.type == 'MOBILENO'">
+                        <div class="col-lg-3">
+                          <input type="text"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            formControlName="searchParam" maxlength="10" placeholder="Enter Text" class="form-control"
+                            [(ngModel)]="SearchFilterData.searchParam" (change)="GetDataBySearch(Searchform)"
+                            autocomplete="off">
+                        </div>
+                      </ng-container>
+                      <!-- Column -->
+                      <!-- Column -->
+                      <div class="col-lg-4">
+                        <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                          (click)="GetDataBySearch(Searchform)"><i class="fal fa-search"></i> Search</button>
+                        <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                          (click)="clear()"><i class="fal fa-trash"></i> Clear</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-md-2">
+
+                </div>
+              </div>
+              <h6 class="card-subtitle"></h6>
+              <div class="table-responsive">
+                <table class="table  table-bordered">
+                  <thead class="topbar">
+                    <tr>
+                      <th *ngIf="ShowHide">Action</th>
+                      <th>Name</th>
+                      <th>Address 1</th>
+                      <th>Address 2</th>
+                      <th>City</th>
+                      <th>Postal Code</th>
+                      <th>State</th>
+                      <th>Mobile No</th>
+                      <th>PAN</th>
+                      <!-- <th>Action</th> -->
+
+                      <!-- <th>Blocked</th> -->
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="!NoRecords">
+                    <tr>
+                      <td colspan="10">
+                        <h6 style="text-align: center">No Records Found</h6>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="NoRecords">
+                    <tr class="pointer"
+                      *ngFor="let customer of CustomerListData | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }"
+                      [ngClass]="{'btn-primary': customer.ID == currentId }" (click)="selectRecord(customer)">
+                      <td>
+                        {{customer.CustName}}
+                      </td>
+                      <td>{{customer.Address1}}</td>
+                      <td>{{customer.Address2}}</td>
+                      <td>{{customer.City}}</td>
+                      <td>{{customer.PostalCode}}</td>
+                      <td>{{customer.State}}</td>
+                      <td>{{customer.MobileNo}}</td>
+                      <td>{{customer.PANNo}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <br>
+              <div *ngIf="NoRecords">
+                <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-container *ngIf="EnableJson">
+  <pre>
+{{CustomerListData | json}}
+</pre>
+</ng-container>

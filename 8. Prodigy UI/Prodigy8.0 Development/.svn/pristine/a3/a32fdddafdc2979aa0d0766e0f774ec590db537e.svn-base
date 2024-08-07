@@ -1,0 +1,335 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="filterform" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Allowed/Denied</label>
+                                <select class="form-control" formControlName="FrmCtrl_active"
+                                    [(ngModel)]="ipDataList.AllowDeny">
+
+                                    <option [ngValue]="null">Select</option>
+                                    <option *ngFor="let _data of AllowedOrDenied" [ngValue]="_data.code">
+                                        {{_data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Enabled</label>
+                                <select class="form-control" formControlName="FrmCtrl_status"
+                                    [(ngModel)]="ipDataList.Active">
+                                    <option [ngValue]="null">Select</option>
+                                    <option *ngFor="let _data of Enabled" [ngValue]="_data.code">
+                                        {{_data.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <br>
+                                <ng-container *ngIf="EnableAdd">
+                                    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                        (click)="getApibySearch(filterform)"><i class="fal fa-search"></i>
+                                        Search</button>
+                                    <button
+                                        class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        (click)="ClearSearch()"><i class="fal fa-trash"></i> Clear</button>
+                                </ng-container>
+
+                                <ng-container *ngIf="EnableSave">
+                                    <button
+                                        class="btn btn-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                                        (click)="save(filterform)">
+                                        <i class="fal fa-save"></i>&nbsp;Save</button>
+                                    <button
+                                        class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        (click)="ClearSearch()"><i class="fal fa-trash"></i> Clear</button>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md" style="float: right;">
+                            <br>
+                            <button type="button"
+                                class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" id="add"
+                                style="float: right;" (click)="AddnewIP()"><i class="fal fa-plus"></i>
+                                Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <ng-container *ngIf="EnableJson">
+                <!-- <pre>{{ipDataList|json}}</pre> -->
+            </ng-container>
+        </div>
+    </div>
+</div>
+<form [formGroup]="Searchform" class="form-horizontal">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="control-label" for="search">Search IP Address </label>
+            <input class="form-group" type="text" formControlName="FrmCtrl_SerachText" IntegerDecimalFieldValidator
+                placeholder="***.***.***.***" class="form-control" [(ngModel)]="userFilter.FromIP" maxlength="14"
+                minlength="14" required
+                pattern="^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$">
+        </div>
+    </div>
+</form>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered  table-hover ">
+                        <thead class="topbar">
+                            <tr>
+                                <th style="text-align:center">From IP</th>
+                                <th style="text-align:center">To IP</th>
+                                <th style="text-align:center">Remarks</th>
+                                <th style="text-align:center">Allowed/Denied</th>
+                                <th style="text-align:center">Enabled</th>
+                                <th style="text-align:center">Edit</th>
+                                <th style="text-align:center">Enable</th>
+                                <th style="text-align:center">Disable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let  _apidata of apidata | filterBy: userFilter">
+                                <td style="text-align:center">{{_apidata.FromIP}}</td>
+                                <td style="text-align:center">{{_apidata.ToIP}}</td>
+                                <td style="text-align:center">{{_apidata.Remarks}}</td>
+                                <td style="text-align:center">{{_apidata.AllowDeny}}</td>
+                                <!-- <td style="text-align:center"> {{_apidata.Active}}</td> -->
+                                <td style="text-align:center"
+                                    [ngStyle]="{ color:  _apidata.Active  ? 'hsla(103, 86%, 37%, 1)' : 'hsla(105, 71%, 32%, 1)' }">
+                                    <b>{{ _apidata.Active | yesNo }}</b>
+                                </td>
+                                <td align=" center">
+                                    <i class="fas fa-edit" style='font-size:16px;color:black' title="edit"
+                                        (click)="editSelectedIp(_apidata)"></i>
+                                </td>
+                                <td align="center">
+                                    <i class="fas fa-check" style='font-size:20px;color:rgb(17, 197, 41)'
+                                        aria-hidden="true" (click)="openIP(_apidata)" title="Enable"></i>
+
+                                </td>
+                                <td align="center">
+                                    <i class="fas fa-lock" style='font-size:16px;color:red' aria-hidden="true"
+                                        (click)="closeIP(_apidata)" title="Disable"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="NewIPAddModel" tabindex="-1" role="contentinfo" data-backdrop="static" data-keyboard="false"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="position: sticky;">
+                <h4 class="modal-title">Add IP Address</h4>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    (click)="closeIPModel()">Close</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form [formGroup]="AddIPform" class="form-horizontal">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="fromip">From IP
+                                            <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                            <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                                <span class="tooltiptext tooltip-top">Enter the From IP Address</span>
+                                            </div>
+                                        </label>
+                                        <input type="text" class="form-group" formControlName="FrmCtrl_fromIptext"
+                                            placeholder="***.***.***.***" class="form-control"
+                                            [(ngModel)]="AddipDataModel.FromIP" (change)="IPadressValidations($event)"
+                                            IntegerDecimalFieldValidator maxlength="14" minlength="14" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="toip"> To IP address
+                                            <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                            <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                                <span class="tooltiptext tooltip-top">To IP
+                                                    Address</span>
+                                            </div>
+                                        </label>
+                                        <input class="form-group" type="text" formControlName="FrmCtrl_ToIptext"
+                                            placeholder="***.***.***.***" class="form-control"
+                                            [(ngModel)]="AddipDataModel.ToIP" (change)="IPadressValidations($event)"
+                                            IntegerDecimalFieldValidator maxlength="14" minlength="14">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-md-center">
+                                <div class="col col-lg-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Allowed/Denied</label>
+                                        <select class="form-control" formControlName="FrmCtrl_allowOrDenied"
+                                            [(ngModel)]="AddipDataModel.AllowDeny">
+                                            <option [ngValue]="null">Select</option>
+                                            <option *ngFor="let _data of AllowedOrDeniedForEditAndAdd"
+                                                [ngValue]="_data.code">
+                                                {{_data.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-auto">
+                                    <label>Remarks</label>
+                                    <input class="form-group" type="search" formControlName="FrmCtrl_remarks"
+                                        placeholder="Please Enter Remarks" class="form-control"
+                                        [(ngModel)]="AddipDataModel.Remarks">
+                                </div>
+                                <div class="col col-lg-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Branch</label>
+                                        <select class="form-control" formControlName="FrmCtrl_branch"
+                                            [(ngModel)]="AddipDataModel.BranchCode">
+                                            <option [ngValue]="null">Select</option>
+                                            <option *ngFor="let _Data of allbranches" [value]="_Data.BranchCode">
+                                                {{_Data.BranchCode}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container my-3 bg-light">
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                                        (click)="addNeIPaddress(AddIPform)"><i class="fal fa-plus"></i> Add</button>
+                                    <button
+                                        class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        (click)="Clear(AddIPform)"><i class="fal fa-trash"></i> Clear</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="EnableJson">
+            <!-- <pre>{{AddipDataModel|json}}</pre> -->
+        </ng-container>
+
+    </div>
+</div>
+
+<div class="modal fade" id="EditIPAddModel" tabindex="-1" role="contentinfo" data-backdrop="static"
+    data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="position: sticky;">
+                <h4 class="modal-title">Edit IP Address</h4>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    (click)="closEditIPAddModel()">Close</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form [formGroup]="EditIPform" class="form-horizontal">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="fromip">From IP
+                                            <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                            <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                                <span class="tooltiptext tooltip-top">Enter the From IP Address</span>
+                                            </div>
+                                        </label>
+                                        <input type="text" class="form-group" formControlName="FrmCtrl_fromIptext"
+                                            placeholder="***.***.***.***" class="form-control"
+                                            [(ngModel)]="EditIpDataModel.FromIP" (change)="IPadressValidations($event)"
+                                            IntegerDecimalFieldValidator maxlength="14" minlength="14" required>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="toip"> To IP address
+                                            <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                            <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                                <span class="tooltiptext tooltip-top">To IP
+                                                    Address</span>
+                                            </div>
+                                        </label>
+                                        <input class="form-group" type="text" formControlName="FrmCtrl_ToIptext"
+                                            placeholder="***.***.***.***" class="form-control"
+                                            [(ngModel)]="EditIpDataModel.ToIP" (change)="IPadressValidations($event)"
+                                            IntegerDecimalFieldValidator maxlength="14" minlength="14">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-md-center">
+                                <div class="col col-lg-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Allowed/Denied</label>
+                                        <select class="form-control" formControlName="FrmCtrl_allowOrDenied"
+                                            [(ngModel)]="EditIpDataModel.AllowDeny">
+                                            <option [ngValue]="null">Select</option>
+                                            <!-- <option [selected]="ipDataList.status==Allow">Allow</option>
+                                                                    <option [selected]="ipDataList.status==Deny">Deny</option> -->
+                                            <option *ngFor="let _data of AllowedOrDeniedForEditAndAdd"
+                                                [ngValue]="_data.code">
+                                                {{_data.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-auto">
+                                    <label>Remarks</label>
+                                    <input class="form-group" type="search" formControlName="FrmCtrl_remarks"
+                                        placeholder="Please Enter Remarks" class="form-control"
+                                        [(ngModel)]="EditIpDataModel.Remarks">
+                                </div>
+                                <div class="col col-lg-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Branch</label>
+                                        <select class="form-control" formControlName="FrmCtrl_branch"
+                                            [(ngModel)]="EditIpDataModel.BranchCode" aria-readonly="true">
+                                            <option [ngValue]="null">Select</option>
+                                            <option *ngFor="let _Data of allbranches" [value]="_Data.BranchCode">
+                                                {{_Data.BranchCode}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container my-3 bg-light">
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                                        (click)="EditAnDSave(EditIPform)"><i class="fal fa-plus"></i>
+                                        Save</button>
+                                    <button
+                                        class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        (click)="Clear(EditIPform)"><i class="fal fa-trash"></i> Clear</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="EnableJson">
+            <!-- <pre>{{EditIpDataModel|json}}</pre> -->
+        </ng-container>
+
+    </div>
+</div>

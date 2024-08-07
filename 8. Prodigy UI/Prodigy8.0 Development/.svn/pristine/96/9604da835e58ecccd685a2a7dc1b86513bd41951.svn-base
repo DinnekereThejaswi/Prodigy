@@ -1,0 +1,24 @@
+{
+  "name": "ngx-bootstrap/positioning",
+  "version": "6.2.0",
+  "description": "Native Angular Bootstrap Components",
+  "private": true,
+  "main": "bundles/ngx-bootstrap-positioning.umd.js",
+  "module": "fesm5/ngx-bootstrap-positioning.js",
+  "es2015": "fesm2015/ngx-bootstrap-positioning.js",
+  "esm5": "esm5/ngx-bootstrap-positioning.js",
+  "esm2015": "esm2015/ngx-bootstrap-positioning.js",
+  "fesm5": "fesm5/ngx-bootstrap-positioning.js",
+  "fesm2015": "fesm2015/ngx-bootstrap-positioning.js",
+  "typings": "ngx-bootstrap-positioning.d.ts",
+  "metadata": "ngx-bootstrap-positioning.metadata.json",
+  "sideEffects": false,
+  "peerDependencies": {
+    "tslib": "^1.10.0"
+  },
+  "es2015_ivy_ngcc": "../__ivy_ngcc__/positioning/fesm2015/ngx-bootstrap-positioning.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14"
+  }
+}

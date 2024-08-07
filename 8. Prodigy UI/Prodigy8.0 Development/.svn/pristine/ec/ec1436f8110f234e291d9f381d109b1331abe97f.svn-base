@@ -1,0 +1,102 @@
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="col-md-12">
+            <h4 class="modal-title"></h4>
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border"><i class="fas fa-gem align-middle"></i> Stone/Diamond Details
+                    <div class="table-responsive">
+                        <table class="table table-bordered" style="width: 1150px;">
+                            <thead class="topbar">
+                                <tr>
+                                    <th>GS</th>
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Carat</th>
+                                    <th>Weight</th>
+                                    <th>Rate/Carat</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                    <th> <button (click)="addrow()"
+                                            class=" pull-right btn waves-effect waves-light btn-rounded btn-outline-secondary wd"
+                                            [disabled]="EnableAddRow">Add
+                                        </button></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let field of fieldArray; let i = index">
+                                    <td style="width: 250px;">
+                                        <select [(ngModel)]="field.Type" name="{{field.Type}}" class="form-control"
+                                            #gstype (change)="getStoneName(gstype.value,i)">
+                                            <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                            <option *ngFor="let _stoneType of stoneType" [disabled]="readonly[i]"
+                                                [value]="_stoneType.gs_code">
+                                                {{_stoneType.GSName}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 250px;">
+                                        <select [(ngModel)]="field.Name" name="{{field.Name}}" class="form-control">
+                                            <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                            <option *ngFor="let _stoneName of stoneName[i]" [disabled]="readonly[i]"
+                                                [value]="_stoneName.stone_name">
+                                                {{_stoneName.stone_name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <input type="number" [(ngModel)]="field.Qty" name="{{field.Qty}}"
+                                            class="form-control" placeholder="Quantity" [readonly]="readonly[i]">
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <input type="number" [(ngModel)]="field.Carrat" name="{{field.Carrat}}"
+                                            class="form-control" placeholder="Carat" [readonly]="readonly[i]" BlueBorder
+                                            (change)="getStoneWt(i)">
+                                    </td>
+
+
+                                    <td style="width: 125px;">
+                                        <input type="text"
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                            [(ngModel)]="field.Weight" name="{{field.Weight}}" class="form-control"
+                                            placeholder="Weight" [readonly]="readonly[i]" (change)="getStoneCarat(i)">
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <input type="number" [(ngModel)]="field.Rate" name="{{field.Rate}}"
+                                            class="form-control" placeholder="Rate/Carat" [readonly]="readonly[i]"
+                                            BlueBorder (change)="getAmount(i)">
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <input type="number" [(ngModel)]="field.Amount" name="{{field.Amount}}"
+                                            class="form-control" [readonly]="readonly[i]" placeholder="Amount">
+                                    </td>
+
+                                    <td style="width: 25px;" colspan="2">
+
+                                        <ng-container *ngIf="EnableEditDelbtn[i]">
+                                            <button class="btn btn-default btn-rounded" type="button"
+                                                (click)="editFieldValue(i)"><i class="fal fa-pencil-alt"></i>
+                                                Edit</button>
+                                            <button class="btn btn-danger btn-rounded" type="button"
+                                                (click)="deleteFieldValue(i)"><i class="fal fa-trash-alt"></i>
+                                                Delete</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="EnableSaveCnlbtn[i]">
+                                            <button class="btn btn-success btn-rounded" type="button"
+                                                (click)="saveDataFieldValue(i)"><i class="fal fa-save"></i>
+                                                Save</button>
+                                            <button class="btn btn-warning btn-rounded" type="button"
+                                                (click)="cancelDataFieldValue(i)"><i class="far fa-window-close"></i>
+                                                Cancel</button>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </legend>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+<pre>{{NTReceiptsLinesDetails | json}}</pre>

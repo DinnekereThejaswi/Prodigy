@@ -1,0 +1,253 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <form [formGroup]="StoneMasterFormNew" class="form-horizontal" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="gs">GS <span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span></label>
+                            <select type="text" class="form-control" id="gs" formControlName="Gs"
+                                (change)="Changed($event)" [(ngModel)]="StoneMasterNewListData.Type">
+                                <option [value]="null">Select</option>
+                                <option *ngFor="let list of StoneLsit" [value]="list.Code">{{list.Name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <label *ngFor="let radiobutton of radioItems">
+                            <input type="radio" name="options" (click)="model.option = radiobutton"
+                                [checked]="radiobutton === model.option" (change)="ChangedOption(radiobutton)"
+                                style="height:25px; width:25px; vertical-align: middle;">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <u><strong>{{radiobutton}}</strong></u>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </label>
+                    </div>
+                    <div class="col-md-2" style="float: right;">
+                        <br>
+                        <button type="button"
+                            class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            id="exampleModalLabel" (click)="Print()"><i class="fal fa-print"></i> Print</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="UOM">UOM </label>
+                            <select type="text" class="form-control" id="UOM" formControlName="UOM"
+                                [(ngModel)]="StoneMasterNewListData.Uom">
+                                <option value="null">Select</option>
+                                <option *ngFor="let _uom of uom" [ngValue]="_uom.code">
+                                    {{_uom.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="TDS">Name</label>
+                            <input type="text" class="form-control" id="Name" formControlName="Name"
+                                [(ngModel)]="StoneMasterNewListData.StoneName" placeholder="Enter Name">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label class="control-label" for="Batch">Batch</label>
+                            <input type="text" class="form-control" id="Batch" formControlName="batch"
+                                [(ngModel)]="StoneMasterNewListData.Batch" placeholder="Batch">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label class="control-label" for="Code">Code</label>
+                            <input type="text" class="form-control" id="Code" formControlName="code"
+                                [(ngModel)]="StoneMasterNewListData.Code" placeholder="Code">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="Counter">Counter </label>
+                            <select type="text" class="form-control" id="Counter" formControlName="Counter"
+                                [(ngModel)]="StoneMasterNewListData.CounterCode">
+                                <option [value]="null">Select</option>
+                                <option *ngFor="let _counter of counterList" [ngValue]="_counter.CounterCode">
+                                    {{_counter.CounterCode}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label class="control-label" for="Brand">Brand</label>
+                            <input type="text" class="form-control" id="Brand" formControlName="Brand"
+                                [(ngModel)]="StoneMasterNewListData.BrandName" placeholder="Brand">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="GST">GST Type </label>
+                            <select type="text" class="form-control" id="GST" formControlName="GSTtype"
+                                [(ngModel)]="StoneMasterNewListData.GSTGroupCode">
+                                <option value="null">Select</option>
+                                <option *ngFor="let _gst of gst" [value]="_gst.code">
+                                    {{_gst.Description}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="HSN">HSN </label>
+                            <select type="text" class="form-control" id="HSN" formControlName="hsn"
+                                [(ngModel)]="StoneMasterNewListData.HSN">
+                                <option [value]="null">Select</option>
+                                <option *ngFor="let _hsn of HSN" [ngValue]="_hsn.Code">
+                                    {{_hsn.Code}}-{{_hsn.Description}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <ng-container *ngIf="EnableAdd">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="Add(StoneMasterFormNew)">
+                                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                        </ng-container>
+                        <ng-container *ngIf="EnableSave">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="save(StoneMasterFormNew)">
+                                <i class="fal fa-save"></i>&nbsp;Save</button>
+                        </ng-container>
+                        <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;" (click)="Clear()">
+                            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+
+
+                    </div>
+                </div>
+            </form>
+            <ng-container *ngIf="EnableJson">
+                <pre>{{StoneMasterNewListData |json}}</pre>
+            </ng-container>
+
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>UOM</th>
+                                <th>Name</th>
+                                <th>Batch</th>
+                                <th>Code</th>
+                                <th>Counter </th>
+                                <th>Brand </th>
+                                <th>GST Type</th>
+                                <th>HSN </th>
+                                <th>Status </th>
+                                <th>Edit</th>
+                                <th>Open</th>
+                                <th>Close</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let List of NewList">
+                            <tr>
+                                <td>{{List.Uom}}</td>
+                                <td>{{List.StoneName}}</td>
+                                <td>{{List.Batch}}</td>
+                                <td>{{List.Code}}</td>
+                                <td>{{List.CounterCode}}</td>
+                                <td>{{List.BrandName}}</td>
+
+                                <td>{{List.GSTGroupCode}}</td>
+                                <td>{{List.HSN}}</td>
+                                <td [style.color]="getStatusColor(List.Status)" data-toggle="tooltip"
+                                    data-placement="top" title="Tooltip on top"><b>{{List.Status}}</b></td>
+
+                                <td>
+                                    <i class="fas fa-edit" title="edit" (click)="edit(List)"></i>
+                                </td>
+                                <td>
+                                    <i class="fas fa-lock-open" title="open" (click)="Activate(List)"></i>
+                                </td>
+                                <td>
+                                    <i class="fas fa-lock" title="close" (click)="Deactivate(List)"></i>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="StoneMAsterNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Stone List</h4>
+
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=printStonedData()><i class="fal fa-print"></i>
+                    Print</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" id="DisplayntStoneData">
+                            <table class="table table-bordered">
+                                <thead class="TableHead">
+                                    <th>UOM</th>
+                                    <th>Type</th>
+                                    <th>Stone Type</th>
+                                    <th>Stone Name</th>
+                                    <th>Batch</th>
+                                    <th>Code</th>
+                                    <th>Counter </th>
+                                    <th>Brand </th>
+                                    <th>Color</th>
+                                    <th>Cut</th>
+                                    <th>Clarity</th>
+
+                                    <th>Status </th>
+                                </thead>
+                                <tbody *ngFor="let List of printStoneData">
+                                    <tr>
+                                        <td>
+                                            {{List.Uom}}</td>
+                                        <td>{{List.Type}}</td>
+                                        <td>{{List.StoneType}}</td>
+                                        <td>{{List.StoneName}}</td>
+                                        <td>{{List.Batch}}</td>
+                                        <td>{{List.Code}}</td>
+                                        <td>{{List.CounterCode}}</td>
+                                        <td>{{List.BrandName}}</td>
+                                        <td>{{List.Color}}</td>
+                                        <td>{{List.Cut}}</td>
+                                        <td>{{List.Clarity}}</td>
+                                        <td>{{List.Status}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

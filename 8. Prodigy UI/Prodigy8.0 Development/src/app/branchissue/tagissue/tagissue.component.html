@@ -1,0 +1,284 @@
+<div class="row">
+    <div class="col-sm-8">
+
+    </div>
+    <div class="col-sm-4">
+        <app-lastdocno [routerUrl]="routerUrl" style="color: brown; text-align: right; font-style: italic;">
+        </app-lastdocno>
+    </div>
+</div>
+
+<form [formGroup]="TagIssueForm" class="form-horizontal">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="issueTo">Issue To</label>
+                        <select class="form-control" formControlName="issueTo" [(ngModel)]="barcodeIssuePost.IssueTo">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _issueTo of IssueTo" [value]="_issueTo.Code">
+                                {{_issueTo.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="issueType">Issued Type</label>
+                        <select class="form-control" formControlName="issueType"
+                            [(ngModel)]="barcodeIssuePost.IssueType">
+                            <option [ngValue]="null">Select</option>
+                            <option [value]="B">Branch</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="gsType">GS Type</label>
+                        <select class="form-control" formControlName="gscode" [(ngModel)]="barcodeIssuePost.GSCode">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _GSList of GSList" [value]="_GSList.gs_code">
+                                {{_GSList.GSName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="remarks">Remarks</label>
+                        <input class="form-control" type="text" formControlName="remarks"
+                            [(ngModel)]="barcodeIssuePost.Remarks">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="issueTo">Issued By</label>
+                        <input class="form-control" type="text" formControlName="IssuedBy" value="Admin" readonly>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="issueType">Date</label>
+                        <input class="form-control" type="text" formControlName="Date" [(ngModel)]="date"
+                            value="{{ date }}" readonly disabled>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="accordian" class="accordion">
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#issueDetails" [ngClass]="CollapseItemDetailsTab ? 'collapsed' : ''"
+                [attr.data-toggle]="CollapseItemDetailsTab ? '':'collapse'" (click)="ToggleissueDetails()"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <a class="card-title align-middle " style="color:#005BFF">
+                            <i class="fal fa-file-invoice fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle "><ins>Issue Details</ins>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="issueDetails" class="card-body collapse" [collapse]="CollapseItemDetailsTab">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="GS">Tag No</label>
+                            <input class="form-control" formControlName="barcode" type="text"
+                                (keyup.enter)="getDetails(TagIssueForm)" maxlength="10"
+                                onkeypress='return (event.charCode > 96 && event.charCode < 123) || (event.charCode > 64 && event.charCode < 91) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode <= 31'
+                                GreenBorder #barcodeNo>
+                        </div>
+                    </div>
+                    <div class="col-md-1" style="padding-top:24px;">
+                        <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            href="javascript:void(0)" (click)="getDetails(TagIssueForm)"
+                            (keyup.enter)="getDetails(TagIssueForm)">
+                            Go
+                        </a>
+                    </div>
+                    <!-- <div class="col-md-2" style=" border-style: groove;border-color:rgb(13, 13, 14);">
+
+                    </div> -->
+                    <!-- <div class="col-md-2">
+                        <label class="control-label" for="ReceiptNo">Recceipt No</label>
+                        <input type="text" class="form-control">
+
+                    </div>
+                    <div class="col-md-2">
+
+
+                    </div> -->
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="panels">
+                        <thead class="topbar">
+                            <tr>
+                                <th>SNo</th>
+                                <th>Barcode</th>
+                                <th>Item </th>
+                                <th>Counter </th>
+                                <th>Qty</th>
+                                <th>Gross.Wt</th>
+                                <th>St.Wt</th>
+                                <th>N.Wt</th>
+                                <th>D.Cts</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let _barcodeDetails of finalBarcodeDetails; let i = index">
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <td>{{_barcodeDetails.BarcodeNo}}</td>
+                                <td>{{_barcodeDetails.ItemCode}}</td>
+                                <td>{{_barcodeDetails.CounterCode}}</td>
+                                <td>{{_barcodeDetails.Qty}}</td>
+                                <td>{{_barcodeDetails.GrossWt | number : '1.3-3'}}</td>
+                                <td>{{_barcodeDetails.StoneWt | number : '1.3-3'}}</td>
+                                <td>{{_barcodeDetails.NetWt | number : '1.3-3' }}</td>
+                                <td>{{_barcodeDetails.Dcts | number : '1.3-3'}}</td>
+                                <td>{{_barcodeDetails.AmountAfterTax | number : '1.2-2' }}</td>
+                                <td>
+                                    <i class="far fa-trash-alt fa-1-5x pointer"
+                                        style='color: red; font-size: 1.5em !important;'
+                                        (click)="DeleteTagRow(i,_barcodeDetails)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tr *ngIf="finalBarcodeDetails.length > '0'">
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"><b>Total</b></td>
+                            <td class="border-none"><b>{{total_items(finalBarcodeDetails) | number}}</b></td>
+                            <td class="border-none"><b>{{grossWT(finalBarcodeDetails) | number : '1.3-3'}}</b></td>
+                            <td class="border-none"><b>{{stoneWt(finalBarcodeDetails) | number : '1.3-3'}}</b></td>
+                            <td class="border-none"><b>{{netWT(finalBarcodeDetails) | number : '1.3-3'}}</b></td>
+                            <td class="border-none"><b>{{dcts(finalBarcodeDetails) | number : '1.3-3'}}</b></td>
+                            <td class="border-none"><b>{{amount(finalBarcodeDetails) | number : '1.2-2'}}</b></td>
+                            <td class="border-none"></td>
+                        </tr>
+                        <tr *ngIf="finalBarcodeDetails.length > '0'">
+                            <td class=" border-none">CGST Amount @ 0.00%: <b>0.00</b></td>
+                            <td class="border-none"></td>
+                            <td class="border-none">SGST Amount @ 0.00%: <b>0.00</b></td>
+                            <td class="border-none"></td>
+                            <td class="border-none">IGST Amount @ 0.00%: <b>0.00</b></td>
+                            <td class="border-none"></td>
+                            <td class="border-none">Final Amount: <b>{{amount(finalBarcodeDetails) | number :
+                                    '1.2-2'}}</b></td>
+                            <td class="border-none"></td>
+                            <td class="border-none"></td>
+                            <td class="border-none">Tag Wt: <b>{{tagWeight(finalBarcodeDetails)}}</b></td>
+                            <td class="border-none"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#stoneDetails" [ngClass]="CollapseStoneDetailsTab ? 'collapsed' : ''"
+                [attr.data-toggle]="CollapseStoneDetailsTab ? '':'collapse'" (click)="TogglestoneDetails()"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <a class="card-title align-middle Pointer" style="color:#ff00ff">
+                            <i class="fas fa-2x fa-gem mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Stone/Diamond Details</ins></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="stoneDetails" class="card-body collapse" [collapse]="CollapseStoneDetailsTab">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <th>SNo</th>
+                            <th>Type</th>
+                            <th>Barcode No</th>
+                            <th>Name</th>
+                            <th>Qty </th>
+                            <th>Carat</th>
+                            <th>Amount</th>
+                        </thead>
+                        <tbody *ngFor="let _stoneDetails of StoneDetails;let i= index">
+                            <tr>
+                                <td>{{_stoneDetails.SlNo}}</td>
+                                <td>{{_stoneDetails.Type}}</td>
+                                <td>{{_stoneDetails.BarcodeNo}}</td>
+                                <td>{{_stoneDetails.Name}}</td>
+                                <td>{{_stoneDetails.Qty}}</td>
+                                <td>{{_stoneDetails.Carrat}}</td>
+                                <td>{{_stoneDetails.Amount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3 ">
+            <button type="button"
+                class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+                style="margin-top: 1.8rem !important;" (click)="Submit()">
+                <i class="far fa-save"></i> Submit</button>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+
+
+    </div>
+    <div style="float: right;">
+        <span style="color: red;">Note : All weights are in Grams</span>
+    </div>
+</form>
+
+
+<div class="row" style="display:block;margin: auto;width: 30%;">
+
+    <div class="modal fade" id="TAGIssueTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                        class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                        id="exampleModalLabel" (click)=printTagIssue()><i class="fal fa-print"></i> Print</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <ng-container *ngIf="PrintTypeBasedOnConfig">
+                    <div class="container invoice-box htmlPrint" id="print-closed-section"
+                        style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+                        <pre>{{tagIssuePrint}}</pre>
+                    </div>
+                    <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                        <div id="DisplaytagIssueData" class="center" [innerHTML]='tagIssuePrint | safeHtml'></div>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-container *ngIf="EnableJson">
+    <pre>
+    {{barcodeIssuePost | json}}
+</pre>
+    <pre>{{finalBarcodeDetails | json}} </pre>
+</ng-container>

@@ -1,0 +1,202 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="opgissueHeaderForm" class="form-horizontal">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="no">Bin No </label>
+                            <input class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="control-label" for="no">Issued To</label>
+                            <select class="form-control" formControlName="frmctrl_ReceiptFrom"
+                                [(ngModel)]="HeaderFormModel.issueTo">
+                                <option [ngValue]="null">Select</option>
+                                <!-- <option *ngFor="let _GSList of GSList" [value]="_GSList.GSCode">
+                                                    {{_GSList.GSName}} </option> -->
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="no">Issued By</label>
+                            <select class="form-control" formControlName="frmctrl_ReceiptFrom"
+                                [(ngModel)]="HeaderFormModel.issueTo">
+                                <option [ngValue]="null">Select</option>
+                                <!-- <option *ngFor="let _GSList of GSList" [value]="_GSList.GSCode">
+                                                                            {{_GSList.GSName}} </option> -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <!-- <input type="date" class="form-control" /> -->
+                            <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig"
+                                [(ngModel)]="applicationDate" readonly
+                                value="{{applicationDate | date:'dd/MM/yyyy' }}" />
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <br>
+                        <div class="form-group">
+                            <label for="IsTrading">Age Validation</label>
+                            <input type="checkbox" class="chkbxsize" [(ngModel)]="HeaderFormModel.AgeValidation"
+                                formControlName="" />
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#itemDetails" (click)="ToggleitemDetails()"
+            [ngClass]="EnableItemDetails ? 'collapsed' : ''" [attr.data-toggle]="EnableItemDetails ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#005BFF">
+                        <i class="fal fa-hand-receiving fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Product Details</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="itemDetails" class="card-body collapse" [collapse]="EnableItemDetails">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="barcode">Barcode/Tag No</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="BarcodeNo" #tagno GreenBorder
+                                placeholder="Barcode/Tagno">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="topbar">
+                                <th>Bill.No</th>
+                                <th>SNo</th>
+                                <th>Item</th>
+                                <th>Qty </th>
+                                <th>Gr.Wt(g)</th>
+                                <th>St.Wt(g)</th>
+                                <th>M loss.(g)</th>
+
+                                <th>N.Wt(g)</th>
+
+
+                            </thead>
+                            <!-- <tbody *ngFor="let _list of scannedtags">
+                                <tr>
+                                    <td>{{_list.SlNo}}</td>
+                                    <td>{{_list.BarcodeNo}}</td>
+                                    <td>{{_list.Qty}}</td>
+                                    <td>{{_list.GrossWt}}</td>
+                                    <td>{{_list.StoneWt}}</td>
+                                    <td>{{_list.NetWt}}</td>
+                                    <td>{{_list.Dcts}}</td>
+                                    <td>{{_list.Amount}}</td>
+                                    <td>{{_list.CounterCode}}</td>
+                                </tr>
+                                <br>
+                                <tr style=" border-style: solid;border-color:rgb(13, 13, 14); border-width:initial;">
+                                    <td colspan="2">
+                                        <b>Total of :{{_list.TotalLineCount}} </b>
+                                    </td>
+                                    <td>{{_list.TotalQty}}</td>
+                                    <td>{{_list.TotalGrossWt}}</td>
+                                    <td>{{_list.TotalStoneWt}}</td>
+                                    <td>{{_list.TotalNetWt}}</td>
+                                    <td>{{_list.TotalDcts}}</td>
+                                    <td>{{_list.TotalAmount}}</td>
+                                    <td></td>
+                                </tr>
+                            </tbody> -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- <pre> {{ScannedBarcodesList | json}} </pre> -->
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<br>
+
+<br>
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-12">
+                    <div class="social-widget">
+                        <div class="soc-header box-facebook" style="padding: 3px;">
+                            <h3 class="text-white">Summary</h3>
+                        </div>
+                        <div class="soc-content">
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium">
+                                    <h1 class="float-right">one</h1>
+                                </h4>
+                                <h5 class="text-black">100 </h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium">
+                                    <h1 class="float-right">one</h1>
+                                </h4>
+                                <h5 class="text-black">100 </h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium">
+                                    <h1 class="float-right">one</h1>
+                                </h4>
+                                <h5 class="text-black">100 </h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium">
+                                    <h1 class="float-right">one</h1>
+                                </h4>
+                                <h5 class="text-black">100 </h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium">
+                                    <h1 class="float-right">one</h1>
+                                </h4>
+                                <h5 class="text-black">100 </h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium">
+                                    <h1 class="float-right">one</h1>
+                                </h4>
+                                <h5 class="text-black">100 </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

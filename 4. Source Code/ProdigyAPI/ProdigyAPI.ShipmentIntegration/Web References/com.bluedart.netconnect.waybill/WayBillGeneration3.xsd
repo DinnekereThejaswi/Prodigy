@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SAPI.Entities.Enums.AWBGeneration" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Enums.AWBGeneration" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="OTPBasedDelivery">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="LastMileFixedOTPAutoGenerate" />
+      <xs:enumeration value="LastMileFixedOTPpredefined" />
+      <xs:enumeration value="LastMileDynamicOTP" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OTPBasedDelivery" nillable="true" type="tns:OTPBasedDelivery" />
+  <xs:simpleType name="PrinterLableSize">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LabelSizeA4S" />
+      <xs:enumeration value="LabelSizeA4T" />
+      <xs:enumeration value="LabelSize55X30" />
+      <xs:enumeration value="LabelSize89X60" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PrinterLableSize" nillable="true" type="tns:PrinterLableSize" />
+  <xs:simpleType name="ProductType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Docs" />
+      <xs:enumeration value="Dutiables" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProductType" nillable="true" type="tns:ProductType" />
+</xs:schema>

@@ -1,0 +1,93 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="chitupdate" class="form-horizontal">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <select class="form-control mr-auto mt-2 mt-lg-0" (change)="UpdateStatus(chitupdate)"
+                                formControlName="status">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let _status of status" [value]="_status.Code">
+                                    {{_status.Name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label" for="no"></label>
+                            <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig"
+                                formControlName="date" [(ngModel)]="date" (ngModelChange)="byDate(date)" readonly
+                                value="{{date | date:'dd/MM/yyyy' }}" />
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <button
+                            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+                            (click)="Go(chitupdate)">
+                            <i class="far fa-plus"></i> Go</button>
+                    </div>
+                    <div class="col-sm-2" *ngIf="pendingChitList.length > '0'">
+                        <button
+                            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+                            (click)="billUpdate(chitupdate)">
+                            <i class="far fa-save"></i> Bill Update Nos</button>
+                    </div>
+                    <div class="col-sm-2" *ngIf="pendingChitList.length > '0'">
+                        <button
+                            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                            (click)="download(chitupdate)">
+                            <i class="far fa-download"></i> Download Closed Members</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="col-md-12" *ngIf="pendingChitList.length > '0'">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" style="width: 3200px;">
+                            <thead class="topbar">
+                                <tr>
+                                    <th>Scheme</th>
+                                    <th>Group</th>
+                                    <th>MSNo</th>
+                                    <th>Amt Rcvd</th>
+                                    <th>Bonus Amt</th>
+                                    <th>Chit Amt</th>
+                                    <th>Winner Amt</th>
+                                    <th>Scheme</th>
+                                    <th>Cls Date</th>
+                                    <th>Cls Branch</th>
+                                    <th>Cls Mode</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let _pendingChitList of pendingChitList;let i=index;">
+                                <tr>
+                                    <td>{{_pendingChitList.SchemeCode}}</td>
+                                    <td>{{_pendingChitList.GroupCode}}</td>
+                                    <td>{{_pendingChitList.MembershipNo}}</td>
+                                    <td>{{_pendingChitList.AmountReceived | number:'1.2-2'}}</td>
+                                    <td>{{_pendingChitList.BonusAmount | number:'1.2-2'}}</td>
+                                    <td>{{_pendingChitList.ChitAmount | number:'1.2-2'}}</td>
+                                    <td>{{_pendingChitList.WinnerAmount | number:'1.2-2'}}</td>
+                                    <td>{{_pendingChitList.DiscountAmount | number:'1.2-2'}}</td>
+                                    <td>{{_pendingChitList.ClosingDate | date:'dd/MM/yyyy'}}</td>
+                                    <td>{{_pendingChitList.BranchCode}}</td>
+                                    <td>{{_pendingChitList.ClosingMode}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>

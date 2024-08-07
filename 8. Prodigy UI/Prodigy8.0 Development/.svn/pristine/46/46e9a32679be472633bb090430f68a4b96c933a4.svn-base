@@ -1,0 +1,13 @@
+{
+  "name": "@angular/cdk/a11y",
+  "typings": "../a11y.d.ts",
+  "main": "../bundles/cdk-a11y.umd.js",
+  "module": "../esm5/a11y.es5.js",
+  "es2015": "../esm2015/a11y.js",
+  "sideEffects": false,
+  "es2015_ivy_ngcc": "../__ivy_ngcc__/esm2015/a11y.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14"
+  }
+}

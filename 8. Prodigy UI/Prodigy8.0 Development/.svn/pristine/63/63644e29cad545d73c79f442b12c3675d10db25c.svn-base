@@ -1,0 +1,212 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="CompanyForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label" for="Header">Header
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.Header1" formControlName="frmCtrl_Header1"
+                   />
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="companyData.Header2" formControlName="frmCtrl_Header2"
+                  />
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="companyData.Header3" formControlName="frmCtrl_Header3"
+                   />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label" for="Header">Header
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.Header4" formControlName="frmCtrl_Header4"
+                   />
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="companyData.Header5" formControlName="frmCtrl_Header5"
+                    />
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="companyData.Header6" formControlName="frmCtrl_Header6"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label" for="Code">Code<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.CompanyCode" formControlName="frmCtrl_CompanyCode"
+                  readonly />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label" for="Currency">Currency Symbol<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control" placeholder="en-IN"
+                 readonly />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label" for="CurrencyCode">Currency Code<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.DefaultCurrencyCode"
+                  formControlName="frmCtrl_DefaultCurrencyCode" readonly />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Name">Name<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.CompanyName" formControlName="frmCtrl_CompanyName"
+                  AlphaNumericValidator />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Address">Address1<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.Address1"
+                  formControlName="frmCtrl_Address1" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Address2">Address2
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.Address2"
+                  formControlName="frmCtrl_Address2" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Area" >Area 
+                </label>
+                <input type="text" class="form-control" formControlName="frmCtrl_Area" [(ngModel)]="CompanyListData.Address3"/>
+              </div>
+              <!-- [(ngModel)]="CompanyListData.Address3" formControlName="Area"  -->
+              <div class="form-group">
+                <label class="control-label" for="Pin">PIN<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control"  [(ngModel)]="companyData.Pin" 
+                  PincodeFieldValidator />
+              </div>
+            </div>
+            <!-- [(ngModel)]="companyData.Pin" formControlName="frmCtrl_Pin" -->
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" >City<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control" formControlname="frmCtrl_city" [(ngModel)]="companyData.city" 
+                   />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="State">State <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="frmCtrl_State" [(ngModel)]="companyData.State">
+                  <option [value]="">Select State</option>
+                    <option *ngFor="let State of states" [ngValue]="State.ID">
+                      {{State.StateName}}
+                    </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Country">Country<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span></label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.CountryName" formControlName="frmCtrl_CountryName"
+                formControlName="frmCtrl_CountryName"  />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Branch">Branch</label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.Branch" formControlName="frmCtrl_BranchName" />
+              </div>
+
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="BranchName">Branch Name</label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.BranchName"
+                  formControlName="frmCtrl_BranchName" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Phone">Phone No<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span></label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.PhoneNo" formControlName="frmCtrl_PhoneNo" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Mobile">Mobile No</label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.MobileNo" formControlName="frmCtrl_MobileNo"
+                  MobileFieldValidator />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Fax">Fax No</label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.FAX" formControlName="frmCtrl_FAX" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Email">Email ID</label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.EMailID" formControlName="frmCtrl_EMailID"
+                  EmailFieldValidator />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Website">Website</label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.Website"
+                  formControlName="frmCtrl_Website" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="GSTIN">GSTIN</label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.TinNo" formControlName="frmCtrl_TinNo"
+                  AlphaNumericValidator />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="Website">PAN</label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.PAN" formControlName="frmCtrl_PAN"
+                  AlphaNumericValidator />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label" for="Footer">Footer </label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.Footer2" formControlName="frmCtrl_Footer1" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label" for="Footer2">Footer 2</label>
+                <input type="text" class="form-control" [(ngModel)]="companyData.Footer2"
+                  formControlName="frmCtrl_Footer2" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="onSubmit(CompanyForm)"><i class="fal fa-save"></i> Save</button>
+                <button type="submit"
+                  class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <ng-container *ngIf="EnableJson"> <pre>{{companyData | json}}</pre></ng-container> -->

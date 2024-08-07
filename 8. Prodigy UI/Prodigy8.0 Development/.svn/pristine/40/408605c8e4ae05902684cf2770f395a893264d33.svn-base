@@ -1,0 +1,9 @@
+.center {
+    margin : auto;
+    width  : 70%;
+    padding: 5px;
+}
+
+.modal {
+    overflow-y: auto;
+}

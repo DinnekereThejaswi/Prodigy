@@ -1,0 +1,72 @@
+<form [formGroup]="PickUpRegisterForm">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group ">
+                    <label for="OrderNo">Order No</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="OrderNo"
+                            [(ngModel)]="PickUpRegisterModel.OrderNo" (change)="getAwb(PickUpRegisterForm)" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="AWBNo">AWB No</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="AWBNo" [(ngModel)]="AWBNo" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="ContactPerson">Contact Person</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="ContactPerson"
+                            [(ngModel)]="PickUpRegisterModel.ContactPerson" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="MobileNo">Contact Mobile</label>
+                    <div class="input-group">
+                        <input type="number" maxlength="10" class="form-control" formControlName="ContactPersonMobileNo"
+                            [(ngModel)]="PickUpRegisterModel.ContactPersonMobileNo"
+                            onKeyPress="if(this.value.length==10) return false;" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="PickupDateTime">Pickup Date and Time</label>
+                    <div class="input-group">
+                        <input [owlDateTime]="dt5" class="form-control" formControlName="PickupDate"
+                            [(ngModel)]="applicationDate" (ngModelChange)="byDate(applicationDate)" readonly>
+                        &nbsp;
+                        <span [owlDateTimeTrigger]="dt5"><i class="fa fa-calendar fa-2x"></i></span>
+                        <owl-date-time #dt5></owl-date-time>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                        (click)="pickUpRegister()"><i class="fal fa-save"></i>
+                        Pick Up </button>
+                    <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" type="button"
+                        (click)="clearPickUpRegister()"><i class="far fa fa-trash"></i>&nbsp;Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{PickUpRegisterModel | json}}</pre>
+</ng-container>

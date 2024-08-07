@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Pickup" />
+  <xs:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+  <xs:element name="RegisterPickup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SAPI.Entities.Pickup" minOccurs="0" name="request" nillable="true" type="q1:PickupRegistrationRequest" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" minOccurs="0" name="profile" nillable="true" type="q2:UserProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterPickupResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SAPI.Entities.Pickup" minOccurs="0" name="RegisterPickupResult" nillable="true" type="q3:PickupRegistrationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelPickup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SAPI.Entities.Pickup" minOccurs="0" name="request" nillable="true" type="q4:CancelPickupRequest" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" minOccurs="0" name="profile" nillable="true" type="q5:UserProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelPickupResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SAPI.Entities.Pickup" minOccurs="0" name="CancelPickupResult" nillable="true" type="q6:CancelPickupResponseEntity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllProductsAndSubProducts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" minOccurs="0" name="profile" nillable="true" type="q7:UserProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllProductsAndSubProductsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/SAPI.Entities.Pickup" minOccurs="0" name="GetAllProductsAndSubProductsResult" nillable="true" type="q8:GetAllProductsAndSubProductsResponseEntity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

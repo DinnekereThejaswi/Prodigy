@@ -1,0 +1,72 @@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="KaratForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Karat">Karat <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                  <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                    <span class="tooltiptext tooltip-top">Karat Name</span>
+                  </div>
+                </label>
+                <input type="text" class="form-control" id="karat"  oninput="this.value = this.value.toUpperCase()" formControlName="frmCtrl_Karat"
+                  [(ngModel)]="karatListData.Karat" (input)="Codes.value = Codes.value.toUpperCase()" placeholder="Enter Karat"
+                  AlphaNumericValidator  maxlength="3" #Codes
+                  onkeypress='return (event.charCode > 96 && event.charCode < 123) || (event.charCode > 64 && event.charCode < 91) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode <= 31' />
+              </div>
+            </div>
+            <div class="col-md-3" style="padding-top:22px">
+              <div class="form-group">
+                <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="onSubmit(KaratForm)"><i class="fal fa-save"></i>&nbsp; Add</button>
+                <button type="submit"
+                  class="btn btn-danger  waves-effect waves-light btn-rounded btn-secondary" (click)="Clear()">&nbsp;Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="topbar">
+              <tr>
+                <th>Karat</th>
+                <th>Status</th>
+                <th>Open</th>
+                <th>Close</th>
+              </tr>
+            </thead>
+            <tbody >
+             <tr *ngFor="let _karats of KaratList; ">
+                 <td>{{_karats.Karat}}</td>
+                 <td [style.color]="getStatusColor(_karats.ObjStatus)">
+                  <b>{{_karats.ObjStatus  | statusName :_karats.ObjStatus  }}</b>
+                </td>
+                <td>
+                  <i class="fas fa-lock-open" title="open" (click)="openField(_karats)"></i>              
+                <td>
+                  <i class="fas fa-lock" title="close" (click)="closeField(_karats)"></i>              
+                </td>
+                
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="EnableJson">
+    <pre>{{karatListData | json}}</pre>
+  </ng-container>
+</div>
+

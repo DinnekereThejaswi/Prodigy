@@ -1,0 +1,82 @@
+export class ReportViewer {
+    constructor(element: Element, options: TelerikReportViewerOptions);
+}
+
+interface TelerikReportViewerOptions {
+    id?: string;
+    serviceUrl?: string;
+    reportServer?: ReportServerOptions;
+    trvTemplateUrl?: string;
+    reportSource?: ReportSourceOptions;
+    sendEmail?: SendEmailOptions;
+    scale?: number;
+    scaleMode?: string;
+    viewMode?: string;
+    pageMode?: string;
+    printMode?: string;
+    parametersAreaPosition?: string;
+    documentMapAreaPosition?: string;
+    persistSession?: boolean;
+    parameters?: ParametersOptions;
+    parameterEditors?: ParameterEditor[];
+    authenticationToken?: string;
+    enableAccessibility?: boolean;
+    parametersAreaVisible?: boolean;
+    documentMapVisible?: boolean;
+    searchMetadataOnDemand?: boolean;
+    initialPageAreaImageUrl?: string;
+    selector?: string;
+    disabledButtonClass?: string;
+    checkedButtonClass?: string;
+    ready?: Function;
+    exportBegin?: Function;
+    exportEnd?: Function;
+    printBegin?: Function;
+    printEnd?: Function;
+    sendEmailBegin?: Function;
+    sendEmailEnd?: Function;
+    renderingBegin?: Function;
+    renderingEnd?: Function;
+    updateUi?: Function;
+    pageReady?: Function;
+    error?: Function;
+    viewerToolTipOpening?: Function;
+    interactiveActionExecuting?: Function;
+    interactiveActionEnter?: Function;
+    interactiveActionLeave?: Function;
+}
+
+interface ReportServerOptions {
+    url?: string;
+    username?: string;
+    password?: string;
+}
+
+interface ReportSourceOptions {
+    report?: string;
+    parameters?: any;
+}
+
+interface SendEmailOptions {
+    enabled?: boolean;
+    from?: string;
+    to?: string;
+    cc?: string;
+    subject?: string;
+    body?: string;
+    format?: string;
+}
+
+interface ParametersOptions {
+    editors?: EditorsOptions;
+}
+
+interface EditorsOptions {
+    singleSelect?: string;
+    multiSelect?: string;
+}
+
+interface ParameterEditor {
+    match?: Function;
+    createEditor?: Function;
+}

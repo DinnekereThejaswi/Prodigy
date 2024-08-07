@@ -1,0 +1,532 @@
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div id="header" class="card-body show">
+      <form [formGroup]="VAMasterForm">
+        <div class="row">
+          <div class="col-sm-2">
+
+          </div>
+          <div class="col-sm-2">
+
+          </div>
+          <div class="col-sm-2">
+
+          </div>
+          <div class="col-sm-3">
+          </div>
+          <div class="col-sm-1" >
+            <button type="button"
+              class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+              id="exampleModalLabel" (click)="printVADetails()"><i class="fal fa-print"></i> Print</button>
+          </div>
+          <div class="col-sm-1" >
+            <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary" type="submit"
+              (click)="View()"><i class="fa fa-envelope-open-o"></i>&nbsp;View</button>
+          </div>
+          <div class="col-sm-1" >
+            <button type="button"
+              class="btn btn-light-success waves-effect waves-light btn-rounded btn-outline-secondary"
+              id="exampleModalLabel" (click)=copy()><i class="fas fa-copy"></i> copy</button>
+          </div>
+
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label" for="Supplier">Supplier</label>
+              <select class="form-control" formControlName="Supplier" [(ngModel)]="SellingVASummaryHeader.PartyCode">
+                <option [ngValue]="null">Select</option>
+                <option *ngFor="let _supplier of SupplierList1" [value]="_supplier.SupplierCode">
+                  {{_supplier.SupplierName}} </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label" for="GS">GS</label>
+              <select class="form-control" formControlName="GS" (change)="getItemsByGs(VAMasterForm)"
+                [(ngModel)]="SellingVASummaryHeader.GSCode">
+                <option [ngValue]="null">Select</option>
+                <option *ngFor="let _GSList of GSList" [value]="_GSList.GSCode">
+                  {{_GSList.GSName}} </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label">Item Name</label>
+              <select class="form-control" formControlName="ItemName" [(ngModel)]="SellingVASummaryHeader.ItemName">
+                <option [ngValue]="null">Select</option>
+                <option *ngFor="let Item of ItemLists" [ngValue]="Item.ItemCode">
+                  {{Item.ItemName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label">Design Name</label>
+              <select class="form-control" formControlName="DesignName" (change)="getTable(VAMasterForm)"
+                [(ngModel)]="SellingVASummaryHeader.DesignCode">
+                <option [ngValue]="null">Select</option>
+                <option *ngFor="let Design of DesignList" [ngValue]="Design.DesignCode">
+                  {{Design.DesignName}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- <ng-container *ngIf="EnableJson">
+          <pre>{{SellingVASummaryHeader | json}}</pre>
+        </ng-container> -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive" style="width: 1200;">
+              <table class="table table-bordered">
+                <thead class="topbar">
+                  <tr>
+                    <th style="width: 200;">MC Type</th>
+                    <th style="width: 100;">From Weight</th>
+                    <th style="width: 150px;">To Weight</th>
+                    <th style="width: 150px;">MC/Piece</th>
+                    <th style="width: 150px;">MC/Gram</th>
+                    <th style="width: 150px;">MC%</th>
+                    <th style="width: 150px;">Minimum VA</th>
+                    <th style="width: 150px;">Action</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="width: 200px;">
+                      <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="McType" #OptionMode
+                        (change)="onchangeOption(OptionMode.value)" [(ngModel)]="SellingVASummaryHeader.TypeID">
+                        <!-- <option value="null">Select</option> -->
+                        <option disabled [value]="null">Select</option>
+                        <option *ngFor="let MC of MCList" [value]="MC.MCTypeID">
+                          {{MC.MCTypeName}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="form-group" style="width: 100px;">
+                      <input type="text" class="form-control" formControlName="fromWt"
+                        [(ngModel)]="SellingVASummaryHeader.FromWt" IntegerDecimalFieldValidator
+                        [readonly]="isReadOnly">
+                    </td>
+                    <td style="width: 150px;">
+                      <input type="text" class="form-control" formControlName="ToWt" placeholder="0.000"
+                        [(ngModel)]="SellingVASummaryHeader.ToWt" IntegerDecimalFieldValidator>
+                    </td>
+                    <td style="width: 150px;">
+                      <input type="text" class="form-control" [(ngModel)]="SellingVASummaryHeader.McPerPiece"
+                        placeholder="0.000" formControlName="McPerPiece" maxlength="5" IntegerDecimalFieldValidator
+                        [readonly]="toggle === 'MC%' || toggle =='MC PER GRAM' || toggle ==='NA' || toggle === 'MC Amount - Wastg'" />
+                    </td>
+                    <td style="width: 150px;">
+                      <input type="text" class="form-control" [(ngModel)]="SellingVASummaryHeader.McPerGram"
+                        placeholder="0.000" formControlName="McPerGram" maxlength="5" IntegerDecimalFieldValidator
+                        [readonly]="toggle === 'NA' || toggle === 'MC%'  || toggle == 'NA' || toggle == 'MC PER PIECE' || toggle == 'MC Amount - Wastg'" />
+                    </td>
+                    <td style="width: 150px;">
+                      <input type="text" class="form-control" [(ngModel)]="SellingVASummaryHeader.McPercent"
+                        placeholder="0.000" formControlName="McPercent" maxlength="5" IntegerDecimalFieldValidator
+                        [readonly]="toggle === 'MC PER GRAM' || toggle ==='NA' || toggle ==='NA' || toggle == 'MC PER PIECE' || toggle == 'MC Amount - Wastg'" />
+                    </td>
+                    <td style="width: 150px;">
+                      <input type="text" class="form-control" [(ngModel)]="SellingVASummaryHeader.ValueAdded"
+                        placeholder="0.000" formControlName="ValueAdded" maxlength="5" IntegerDecimalFieldValidator
+                        [readonly]="toggle == 'NA'" />
+
+                    </td>
+                    <td>
+                      <ng-container>
+                        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                          (click)="add()">
+                          <i class="fas fa-save" style="padding-right:10px"></i>Save</button>
+                      </ng-container>
+                      <ng-container>
+                        <button class="btn btn-warning  aves-effect waves-light btn-rounded btn-secondary MT-2 "
+                          (click)="VaformClear()">
+                          <i class="far fa-window-close" style="padding-right:10px"></i>Clear</button>
+                      </ng-container>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+<div class="card mb-0">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="topbar">
+          <tr>
+            <th>Item Name</th>
+            <th>Design Name</th>
+            <th>From Weight</th>
+            <th>To Weight</th>
+            <th>MC/Piece</th>
+            <th>MC/Gram</th>
+            <th>MC%</th>
+            <th>Minimum VA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let VAmaster of VAmasterTab | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }">
+            <td>{{VAmaster.ItemName}}</td>
+            <td>{{VAmaster.DesignName}}</td>
+            <td>{{VAmaster.FromWt}}</td>
+            <td>{{VAmaster.ToWt}}</td>
+            <td>{{VAmaster.McPerPiece}}</td>
+            <td>{{VAmaster.McPerGram}}</td>
+            <td>{{VAmaster.McPercentage}}</td>
+            <td>{{VAmaster.ValueAdded}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div [hidden]="EnablePagination">
+        <pagination-controls (pageChange)="onPageChangeForParent($event)"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+
+
+
+
+
+
+<form [formGroup]="VaModelForm" class="form-horizontal">
+  <div class="modal overlay" id="VaMaster" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h4 class="modal-title"> VA DETAILS</h4>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        <div class="modal-body">
+          <div class="container invoice-box htmlPrint" id="print-section" style="max-width: 1400px;border-width: 2em">
+            <div class="row">
+              <div class="col-md-8">
+                <label *ngFor="let radiobutton of radioItems" class="form-check-inline">
+                  <input type="radio" name="options" class="form-check-input" [value]="radiobutton"
+                    (change)="ModelChanged(radiobutton)" [checked]="radiobutton === model.option">
+                  <h3 style="margin-top: 5px;">{{radiobutton}}
+                  </h3>
+                </label>
+              </div>
+              <!-- <div class="col-md-4">
+                <button type="button"
+                  class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                  id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+              </div> -->
+            </div>
+            <div class="row">
+              <div class="col-sm-4" *ngIf="model.option =='SupplierWise'">
+                <div class="form-group">
+                  <label class="control-label" for="PartyName">Supplier</label>
+                  <select class="form-control" formControlName="PartyName" (change)="selectchanges($event)" #PartyName>
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let _supplier of SupplierList" [value]="_supplier.SupplierCode">
+                      {{_supplier.SupplierName}} </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-8" *ngIf="model.option =='SupplierWise'">
+                <br>
+                <a class="btn btn-success waves-effect waves-light btn-box btn-secondary MT-2" href="javascript:void(0)"
+                  (click)="getVADetailsBySupplier(VAMasterForm)">
+                  Go
+                </a>
+              </div>
+              <div class="col-sm-4" *ngIf="model.option =='Itemwise'">
+                <div class="form-group">
+                  <label class="control-label" for="GsName">GS</label>
+                  <select class="form-control" formControlName="GsName" (change)="getGsAndItem(GsName.value)" #GsName>
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let _GSList of GSList" [value]="_GSList.GSCode">
+                      {{_GSList.GSName}} </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="model.option =='Itemwise'">
+                <div class="form-group">
+                  <label class="control-label">Item Name</label>
+                  <select class="form-control" formControlName="ItemName" (change)="getItemValue(Item.value)" #Item>
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let Item of ItemList" [value]="Item.ItemCode">
+                      {{Item.ItemName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="model.option =='Itemwise'">
+                <br>
+                <a class="btn btn-success waves-effect waves-light btn-box btn-secondary MT-2" href="javascript:void(0)"
+                  (click)="getVADetailsByGSandItem()">
+                  Go
+                </a>
+              </div>
+            </div>
+            <!---------print table now print comming from api-->
+            <!-- <div class="row">
+              <div class="input-group">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3">
+                  <h4>{{SellingVASummaryHeader.BranchCode}} - Report</h4>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead class="topbar">
+                      <tr>
+                        <th>Smith</th>
+                        <th>Item Name</th>
+                        <th>Design Name</th>
+                        <th>From Weight</th>
+                        <th>To Weight</th>
+                        <th>MC/Piece</th>
+                        <th>MC/Gram</th>
+                        <th>MC%</th>
+                        <th>Minimum VA</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container
+                        *ngFor="let _VaBySupplier of VaBySupplier | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber };">
+                        <tr class="bg-info">
+                          {{_VaBySupplier.ItemName}}
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>{{_VaBySupplier.DesignName}}</td>
+                          <td>{{_VaBySupplier.FromWt}}</td>
+                          <td>{{_VaBySupplier.ToWt}}</td>
+                          <td>{{_VaBySupplier.McPerPiece}}</td>
+                          <td>{{_VaBySupplier.McPerGram}}</td>
+                          <td>{{_VaBySupplier.McPercentage}}</td>
+                          <td>{{_VaBySupplier.ValueAdded}}</td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <pagination-controls *ngIf="this.model.option =='SupplierWise'"
+                    (pageChange)="onPageChangedModelBySupplr($event) "></pagination-controls>
+                  <pagination-controls *ngIf="this.model.option =='Itemwise'"
+                    (pageChange)="onPageChangedModelByGdAndItm($event) ">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div> -->
+            <!---------print table now print comming from api-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!---copy supplier modal -->
+<div class="modal overlay" id="CopyVaModel" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h4 class="modal-title"> Selling MC Master</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal" >&times;</button> -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal"
+          (click)="closecopyVaModelForm()">Close</button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="copyVAForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-xlg-12">
+              <div class="card card-inverse " style="border: 1px solid black;">
+                <div class="box text-center">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label class="control-label" for="Supplier">From Supplier</label>
+                        <select class="form-control" formControlName="frmCtrl_Frmsupplier"
+                          [(ngModel)]="copyVADataModel.FromSupplierCode">
+                          <option [ngValue]="null">Select</option>
+                          <option *ngFor="let _supplier of SupplierList1" [value]="_supplier.SupplierCode">
+                            {{_supplier.SupplierName}} </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-2"><br>
+                      <i class="far fa-arrow-alt-from-left"></i>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label class="control-label" for="Supplier"> To Supplier</label>
+                        <select class="form-control" formControlName="frmCtrl_toSuplier"
+                          [(ngModel)]="copyVADataModel.ToSupplierCode">
+                          <option [ngValue]="null">Select</option>
+                          <option *ngFor="let _supplier of SupplierList1" [value]="_supplier.SupplierCode">
+                            {{_supplier.SupplierName}} </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="control-label" for="GS">GS</label>
+                        <select class="form-control" formControlName="frmCTrl_Gs"
+                          (change)="getItemsByGsToCopyForm($event)" [(ngModel)]="copyVADataModel.GSCode">
+                          <option [ngValue]="null">Select</option>
+                          <option *ngFor="let _GSList of GSList" [value]="_GSList.GSCode">
+                            {{_GSList.GSName}} </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="control-label">Item Name</label>
+                        <select class="form-control" formControlName="frmCtrl_ItemName"
+                          [(ngModel)]="copyVADataModel.ItemCode">
+                          <option [ngValue]="null">Select</option>
+                          <option *ngFor="let Item of Itemsdata" [ngValue]="Item.ItemCode">
+                            {{Item.ItemName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="control-label">Design Name</label>
+                        <select class="form-control" formControlName="frmCtrl_Design"
+                          [(ngModel)]="copyVADataModel.DesignCode" (change)="getCopyTable()">
+                          <option [ngValue]="null">Select</option>
+                          <option *ngFor="let Design of DesignList" [ngValue]="Design.DesignCode">
+                            {{Design.DesignName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-12 col-lg-12 col-xlg-12">
+              <div class="card card-inverse " style="border: 1px solid black;">
+                <div class="box text-center">
+                </div>
+              </div>
+            </div> -->
+            <div class="col-md-12 col-lg-12 col-xlg-12">
+              <div class="card card-inverse " style="border: 1px solid black;">
+                <div class="box text-center">
+                  <!-- <table class="table table-bordered ">
+                    <thead class="topbar">
+                      <tr>
+                        <th>Item Name</th>
+                        <th>Design Name</th>
+                        <th>From Wt</th>
+                        <th>To Wt</th>
+                        <th>MC/Piece</th>
+                        <th>MC/gram</th>
+                        <th>MC %</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                      </tr>
+                    </tbody>
+                  </table> -->
+
+
+                  <table class="table table-bordered">
+                    <thead class="topbar">
+                      <tr>
+                        <th>Item Name</th>
+                        <th>Design Name</th>
+                        <th>From Weight</th>
+                        <th>To Weight</th>
+                        <th>MC/Piece</th>
+                        <th>MC/Gram</th>
+                        <th>MC%</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let VAmaster of VAmasterCopyTabl | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }">
+                        <td>{{VAmaster.ItemName}}</td>
+                        <td>{{VAmaster.DesignName}}</td>
+                        <td>{{VAmaster.FromWt}}</td>
+                        <td>{{VAmaster.ToWt}}</td>
+                        <td>{{VAmaster.McPerPiece}}</td>
+                        <td>{{VAmaster.McPerGram}}</td>
+                        <td>{{VAmaster.McPercentage}}</td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- <div [hidden]="EnablePagination">
+                      <pagination-controls (pageChange)="onPageChangeForParent($event)"></pagination-controls>
+                    </div> -->
+
+
+
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 text-center">
+              <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                (click)="copyFromSuplrToSuplr(copyVAForm)">
+                <i class="fas fa-save" style="padding-right:10px"></i>Copy</button>
+              <button class="btn btn-warning  aves-effect waves-light btn-rounded btn-secondary MT-2 "
+                (click)="Cancel(copyVAForm)">
+                <i class="far fa-window-close" style="padding-right:10px"></i>Clear</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <ng-container *ngIf="EnableJson">
+          <pre>{{copyVADataModel | json}}</pre>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<!---copy supplier modal -->
+<!---print -->
+<div class="modal fade" id="PrintVAModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="print">
+        <span>
+          <div id="DisplayData" [innerHTML]='PrintDetails | safeHtml'></div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

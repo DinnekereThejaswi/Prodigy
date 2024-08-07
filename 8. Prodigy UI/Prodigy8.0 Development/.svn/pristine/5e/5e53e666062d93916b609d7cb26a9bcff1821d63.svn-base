@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="StoneRateForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="GS">GS
+                  <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="GS" [(ngModel)]="StoneRateListData.GS">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let list of StoneLsit" [value]="list.Code">{{list.Name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="StoneName">Stone/Diamond Name
+                  <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                </label>
+                <select class="form-control" formControlName="StoneName" [(ngModel)]="StoneRateListData.StoneName">
+                  <option [ngValue]="null">Select</option>
+                  <option [ngValue]="">
+                    test
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Caratfrom">Carat From<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+
+                </label>
+                <input type="text" class="form-control" id="Caratfrom" [(ngModel)]="StoneRateListData.Caratfrom"
+                  formControlName="Caratfrom" IntegerDecimalFieldValidator maxlength="7" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="CaratTo">Carat To <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+                </label>
+                <input type="text" class="form-control" id="CaratTo" [(ngModel)]="StoneRateListData.CaratTo"
+                  formControlName="CaratTo" IntegerDecimalFieldValidator maxlength="7" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="Amount">Amount/Carat<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span>
+
+                </label>
+                <input type="text" class="form-control" id="Amount" [(ngModel)]="StoneRateListData.Amount"
+                  formControlName="Amount" IntegerDecimalFieldValidator maxlength="9" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="MinAmount">Min Amount/Carat
+
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="StoneRateListData.MinAmount"
+                  formControlName="MinAmount" IntegerDecimalFieldValidator maxlength="9" />
+              </div>
+            </div>
+            <div class="col-md-3" style="padding-top:22px">
+              <div class="form-group">
+                <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="onSubmit(StoneRateForm)"><i class="fal fa-save"></i> Add</button>
+                <button type="submit"
+                  class="btn btn-danger  waves-effect waves-light btn-rounded btn-secondary">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="topbar">
+              <tr>
+                <th>Stone/Diamond Name</th>
+                <th>Carat From</th>
+                <th>Carat To</th>
+                <th>Amount/Carat</th>
+                <th>Min Amount/Carat </th>
+                <th> </th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let _list of StoneRates">
+              <tr>
+                <td>{{_list.DmName}}</td>
+                <td>{{_list.KaratFrom}}</td>
+                <td>{{_list.KaratTo}}</td>
+                <td>{{_list.Rate}}</td>
+                <td>{{_list.MinAmount}}</td>
+                <td><i class="fas fa-edit" title="Edit"></i></td>
+                <td><i class="fas fa-trash-alt" title="Delete"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <pre>{{ StoneRateListData | json }}</pre> -->
+</div>

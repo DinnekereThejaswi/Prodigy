@@ -1,0 +1,139 @@
+<div class="card">
+    <div class="card-body">
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <div class="form-group">
+                        <label for="OrderNo">Order No</label>
+                        <input type="text" class="form-control"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            onKeyPress="if(this.value.length==7) return false;" GreenBorder name="OrderNo"
+                            placeholder="Enter Order Number" #OrderNo>
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-4 float-right">
+
+                </div>
+                <div class="col-md-4 float-right">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="CustomerID">Customer ID</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">Address</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">State Code</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">SGST 1.5%</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">Bill No</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Name">Order Date</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Mobile">City</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Mobile">Mobile</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">CGST 1.5%</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">Bill Date</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Address">Name</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="Advance">State</label>
+                            <div class="input-group">
+                                <input class="form-control" type="text" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Mobile">Amount</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">IGST 3%</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">Billed Branch</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0">
+                            <option [ngValue]="null">Select</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary">
+                                <i class="far fa-window-close"></i>&nbsp;Close Order</button>
+                            <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary"
+                                type="button"><i class="fal fa-close"></i>&nbsp;Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

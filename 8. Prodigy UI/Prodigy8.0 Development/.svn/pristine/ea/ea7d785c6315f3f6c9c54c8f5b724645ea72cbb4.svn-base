@@ -1,0 +1,9 @@
+import { PipeTransform } from '@angular/core';
+import * as moment from 'moment';
+import * as ɵngcc0 from '@angular/core';
+export declare class DifferencePipe implements PipeTransform {
+    transform(value: Date | moment.Moment, otherValue: Date | moment.Moment, unit?: moment.unitOfTime.Diff, precision?: boolean): number;
+    static ngPipeDef: ɵngcc0.ɵɵPipeDefWithMeta<DifferencePipe, "amDifference">;
+}
+
+//# sourceMappingURL=difference.pipe.d.ts.map

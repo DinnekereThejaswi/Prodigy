@@ -1,0 +1,244 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="SalesbillingCancelForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="OrderNo">Bill No</label>
+                        <input type="text" class="form-control" #BillNo name="BillNo" placeholder="Enter Bill Number"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            (change)="getSalesBillDetails(BillNo.value)" BlueBorder>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-1">
+                    <!-- <div class="form-group">
+                        <div class="input-group">
+                            <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary mt-4"
+                                (click)="getSalesBillNos()">?</button>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary mt-4"
+                                (click)="getSalesBillDetails(BillNo.value)"><i class="fal fa-search"></i>
+                                Load</button>
+                            <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary"
+                                type="button" (click)="Clear()" style="margin-top: 22px;"><i
+                                    class="fal fa-close"></i>&nbsp;Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 float-right" *ngIf="hasSalesBillDetails">
+                    <div class="">
+                        <div class="text-right"><i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">
+                                Bill Date</span>
+                            <h1 class="font-light">{{SalesBillingData.BillDate | date:'dd/MM/yyyy'}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="hasSalesBillDetails">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="CustomerID">Name</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" [(ngModel)]="SalesBillingData.CustomerName"
+                                [ngModelOptions]="{standalone: true}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City">Address3</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" [(ngModel)]="SalesBillingData.Address3"
+                                [ngModelOptions]="{standalone: true}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Name">Address1</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" [(ngModel)]="SalesBillingData.Address1"
+                                [ngModelOptions]="{standalone: true}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Phone</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Address">Address2</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" [(ngModel)]="SalesBillingData.Address2"
+                                [ngModelOptions]="{standalone: true}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Mobile</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" [(ngModel)]="SalesBillingData.MobileNo"
+                                [ngModelOptions]="{standalone: true}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="Advance">Item Amount</label>
+                            <div class="input-group">
+                                <input class="form-control" type="text" [(ngModel)]="SalesBillingData.TotalSaleAmount"
+                                    [ngModelOptions]="{standalone: true}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="Advance">Remarks</label>
+                            <div class="input-group">
+                                <input class="form-control" formControlName="Remarks"
+                                    [(ngModel)]="SalesBillingCancelObj.CancelRemarks" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="hasSalesBillDetails">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary"
+                                (click)="submitPost()">
+                                <i class="far fa-window-close"></i> Cancel Sales Bill</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade" id="mySalesBillNoModal">
+    <form [formGroup]="AttachSalesBillForm" class="form-horizontal" (ngSubmit)="onSubmit()">
+        <div class="modal-dialog " style="max-width: 750px;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="close()" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="salesPerson">Search By</label>
+                                    <div class="form-group">
+                                        <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="searchby">
+                                            <option [value]="null">Select</option>
+                                            <option *ngFor="let _searchParamsList of SearchParams"
+                                                [value]="_searchParamsList.Value">
+                                                {{_searchParamsList.Key}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="searchText">Search Text</label>
+                                    <div class="input-group">
+                                        <input class="form-control" id="searchText" formControlName="searchText"
+                                            placeholder="Search Text" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Search"></label>
+                                    <div class="input-group">
+                                        <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                            (click)="getSearchParams(AttachSalesBillForm)"><i class="fal fa-search"></i>
+                                            Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="topbar">
+                                            <tr>
+                                                <th>SNo</th>
+                                                <th>BillNo</th>
+                                                <th>Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let _ReprintbillNo of ReprintbillNo; let i = index;">
+                                            <tr (click)="selectRecord(_ReprintbillNo)" class="pointer">
+                                                <td>{{i + 1 }}</td>
+                                                <td>{{_ReprintbillNo.BillNo }}</td>
+                                                <td>{{_ReprintbillNo.CustName }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="ModalClose()"
+                        data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div id="PermissonSalesBillingModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Prodigy</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="OrderNo">9. Password</label>
+                    <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+                        (keyup.enter)="passWord(Pwd.value)" #Pwd>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                        (click)="passWord(Pwd.value)">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{SalesBillCancelObj | json}}</pre>
+</ng-container>

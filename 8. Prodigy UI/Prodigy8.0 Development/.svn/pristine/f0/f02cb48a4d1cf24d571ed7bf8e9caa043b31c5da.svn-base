@@ -1,0 +1,8 @@
+Report Name : <input type="text" (change)="chng()" #fileName>&nbsp;
+<button type="button" (click)="Search(fileName.value)">Search</button><br><br>
+<ng-container *ngIf="EnableViewer">
+  <tr-viewer [containerStyle]="viewerContainerStyle" [serviceUrl]="telerikreportURL" [reportSource]="dataSource"
+    [templateUrl]="'assets/telerikReportViewerTemplate.html'" [viewMode]="'INTERACTIVE'" [scaleMode]="'SPECIFIC'"
+    [scale]="1.0" [ready]="ready" [viewerToolTipOpening]="viewerToolTipOpening" [enableAccessibility]="false">
+  </tr-viewer>
+</ng-container>

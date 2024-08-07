@@ -1,0 +1,240 @@
+import { Component, Input, ViewEncapsulation, ViewChild } from '@angular/core';
+import '../dependencies/initExtDeps';
+import { ReportViewer } from '../dependencies/telerikReportViewer';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc1 from '@angular/common';
+
+const _c0 = ["container"];
+const _c1 = [3, "ngStyle"];
+const _c2 = ["container", ""];
+var TelerikReportViewerComponent = /** @class */ (function () {
+    function TelerikReportViewerComponent() {
+    }
+    TelerikReportViewerComponent.prototype.ngOnInit = function () {
+        this.reportViewerID = this.id || "reportViewer1";
+    };
+    TelerikReportViewerComponent.prototype.ngAfterViewInit = function () {
+        this.viewerObject = new ReportViewer(this.container.nativeElement, {
+            id: this.reportViewerID,
+            serviceUrl: this.serviceUrl,
+            reportServer: this.reportServer,
+            trvTemplateUrl: this.templateUrl,
+            initialPageAreaImageUrl: this.initialPageAreaImageUrl,
+            reportSource: this.reportSource,
+            sendEmail: this.sendEmail,
+            scale: this.scale,
+            scaleMode: this.scaleMode,
+            viewMode: this.viewMode,
+            pageMode: this.pageMode,
+            parameters: this.parameters,
+            persistSession: this.persistSession,
+            parameterEditors: this.parameterEditors,
+            authenticationToken: this.authenticationToken,
+            ready: this.ready,
+            printMode: this.printMode,
+            selector: this.selector,
+            disabledButtonClass: this.disabledButtonClass,
+            checkedButtonClass: this.checkedButtonClass,
+            exportBegin: this.exportBegin,
+            exportEnd: this.exportEnd,
+            printBegin: this.printBegin,
+            printEnd: this.printEnd,
+            renderingBegin: this.renderingBegin,
+            renderingEnd: this.renderingEnd,
+            sendEmailBegin: this.sendEmailBegin,
+            sendEmailEnd: this.sendEmailEnd,
+            updateUi: this.updateUi,
+            pageReady: this.pageReady,
+            error: this.error,
+            interactiveActionExecuting: this.interactiveActionExecuting,
+            interactiveActionEnter: this.interactiveActionEnter,
+            interactiveActionLeave: this.interactiveActionLeave,
+            viewerToolTipOpening: this.viewerToolTipOpening,
+            enableAccessibility: this.enableAccessibility,
+            searchMetadataOnDemand: this.searchMetadataOnDemand,
+            parametersAreaVisible: this.parametersAreaVisible,
+            documentMapVisible: this.documentMapVisible,
+            documentMapAreaPosition: this.documentMapAreaPosition,
+            parametersAreaPosition: this.parametersAreaPosition
+        });
+        this.commands = this.viewerObject.commands;
+    };
+    TelerikReportViewerComponent.prototype.refreshReport = function () { return this.viewerObject.refreshReport(); };
+    TelerikReportViewerComponent.prototype.getReportSource = function () { return this.viewerObject.reportSource(); };
+    TelerikReportViewerComponent.prototype.setReportSource = function (rs) { return this.viewerObject.reportSource(rs); };
+    TelerikReportViewerComponent.prototype.getViewMode = function () { return this.viewerObject.viewMode(); };
+    TelerikReportViewerComponent.prototype.setViewMode = function (vm) { return this.viewerObject.viewMode(vm); };
+    TelerikReportViewerComponent.prototype.getScale = function () { return this.viewerObject.scale(); };
+    TelerikReportViewerComponent.prototype.setScale = function (scale) { return this.viewerObject.scale(scale); };
+    TelerikReportViewerComponent.prototype.pageCount = function () { return this.viewerObject.pageCount(); };
+    TelerikReportViewerComponent.prototype.currentPage = function () { return this.viewerObject.currentPage(); };
+    TelerikReportViewerComponent.prototype.setAuthenticationToken = function (token) { return this.viewerObject.authenticationToken(token); };
+    TelerikReportViewerComponent.prototype.getAccessibilityKeyMap = function () { return this.viewerObject.accessibilityKeyMap(); };
+    TelerikReportViewerComponent.prototype.setAccessibilityKeyMap = function (keyMap) { return this.viewerObject.accessibilityKeyMap(keyMap); };
+    TelerikReportViewerComponent.prototype.bind = function (eventName, eventHandler) { this.viewerObject.bind(eventName, eventHandler); };
+    TelerikReportViewerComponent.prototype.unbind = function (eventName, eventHandler) { this.viewerObject.unbind(eventName, eventHandler); };
+    TelerikReportViewerComponent.prototype.unbindAll = function (eventName) { this.viewerObject.unbind(eventName); };
+    TelerikReportViewerComponent.prototype.getPageMode = function () { return this.viewerObject.pageMode(); };
+    TelerikReportViewerComponent.prototype.setPageMode = function (psm) { return this.viewerObject.pageMode(psm); };
+    TelerikReportViewerComponent.prototype.clearReportSource = function () { return this.viewerObject.clearReportSource(); };
+    /** @nocollapse */
+    TelerikReportViewerComponent.ctorParameters = function () { return []; };
+    TelerikReportViewerComponent.propDecorators = {
+        'id': [{ type: Input },],
+        'serviceUrl': [{ type: Input },],
+        'reportServer': [{ type: Input },],
+        'templateUrl': [{ type: Input },],
+        'initialPageAreaImageUrl': [{ type: Input },],
+        'reportSource': [{ type: Input },],
+        'sendEmail': [{ type: Input },],
+        'parameters': [{ type: Input },],
+        'scale': [{ type: Input },],
+        'scaleMode': [{ type: Input },],
+        'viewMode': [{ type: Input },],
+        'pageMode': [{ type: Input },],
+        'persistSession': [{ type: Input },],
+        'parameterEditors': [{ type: Input },],
+        'authenticationToken': [{ type: Input },],
+        'printMode': [{ type: Input },],
+        'selector': [{ type: Input },],
+        'disabledButtonClass': [{ type: Input },],
+        'checkedButtonClass': [{ type: Input },],
+        'enableAccessibility': [{ type: Input },],
+        'searchMetadataOnDemand': [{ type: Input },],
+        'parametersAreaVisible': [{ type: Input },],
+        'documentMapVisible': [{ type: Input },],
+        'ready': [{ type: Input },],
+        'error': [{ type: Input },],
+        'parametersAreaPosition': [{ type: Input },],
+        'documentMapAreaPosition': [{ type: Input },],
+        'exportBegin': [{ type: Input },],
+        'exportEnd': [{ type: Input },],
+        'sendEmailBegin': [{ type: Input },],
+        'sendEmailEnd': [{ type: Input },],
+        'pageReady': [{ type: Input },],
+        'printBegin': [{ type: Input },],
+        'printEnd': [{ type: Input },],
+        'renderingBegin': [{ type: Input },],
+        'renderingEnd': [{ type: Input },],
+        'updateUi': [{ type: Input },],
+        'interactiveActionExecuting': [{ type: Input },],
+        'interactiveActionEnter': [{ type: Input },],
+        'interactiveActionLeave': [{ type: Input },],
+        'viewerToolTipOpening': [{ type: Input },],
+        'container': [{ type: ViewChild, args: ['container',] },],
+        'containerStyle': [{ type: Input },],
+    };
+TelerikReportViewerComponent.ngComponentDef = ɵngcc0.ɵɵdefineComponent({ type: TelerikReportViewerComponent, selectors: [["tr-viewer"]], factory: function TelerikReportViewerComponent_Factory(t) { return new (t || TelerikReportViewerComponent)(); }, viewQuery: function TelerikReportViewerComponent_Query(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵviewQuery(_c0, true);
+    } if (rf & 2) {
+        var _t;
+        ɵngcc0.ɵɵqueryRefresh(_t = ɵngcc0.ɵɵloadViewQuery()) && (ctx.container = _t.first);
+    } }, inputs: { id: "id", serviceUrl: "serviceUrl", reportServer: "reportServer", templateUrl: "templateUrl", initialPageAreaImageUrl: "initialPageAreaImageUrl", reportSource: "reportSource", sendEmail: "sendEmail", parameters: "parameters", scale: "scale", scaleMode: "scaleMode", viewMode: "viewMode", pageMode: "pageMode", persistSession: "persistSession", parameterEditors: "parameterEditors", authenticationToken: "authenticationToken", printMode: "printMode", selector: "selector", disabledButtonClass: "disabledButtonClass", checkedButtonClass: "checkedButtonClass", enableAccessibility: "enableAccessibility", searchMetadataOnDemand: "searchMetadataOnDemand", parametersAreaVisible: "parametersAreaVisible", documentMapVisible: "documentMapVisible", ready: "ready", error: "error", parametersAreaPosition: "parametersAreaPosition", documentMapAreaPosition: "documentMapAreaPosition", exportBegin: "exportBegin", exportEnd: "exportEnd", sendEmailBegin: "sendEmailBegin", sendEmailEnd: "sendEmailEnd", pageReady: "pageReady", printBegin: "printBegin", printEnd: "printEnd", renderingBegin: "renderingBegin", renderingEnd: "renderingEnd", updateUi: "updateUi", interactiveActionExecuting: "interactiveActionExecuting", interactiveActionEnter: "interactiveActionEnter", interactiveActionLeave: "interactiveActionLeave", viewerToolTipOpening: "viewerToolTipOpening", containerStyle: "containerStyle" }, consts: 3, vars: 2, template: function TelerikReportViewerComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵelementStart(0, "div", _c1, _c2);
+        ɵngcc0.ɵɵtext(2, "Loading Report Viewer...");
+        ɵngcc0.ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵngcc0.ɵɵproperty("ngStyle", ctx.containerStyle);
+        ɵngcc0.ɵɵattribute("id", ctx.reportViewerID);
+    } }, directives: [ɵngcc1.NgStyle], encapsulation: 2 });
+/*@__PURE__*/ ɵngcc0.ɵsetClassMetadata(TelerikReportViewerComponent, [{
+        type: Component,
+        args: [{
+                selector: 'tr-viewer',
+                template: '<div [ngStyle]="containerStyle" [attr.id]="reportViewerID" #container>Loading Report Viewer...</div>',
+                styleUrls: [],
+                encapsulation: ViewEncapsulation.None
+            }]
+    }], function () { return []; }, { ngOnInit: [], reportViewerID: [], ngAfterViewInit: [], viewerObject: [], commands: [], refreshReport: [], getReportSource: [], setReportSource: [], getViewMode: [], setViewMode: [], getScale: [], setScale: [], pageCount: [], currentPage: [], setAuthenticationToken: [], getAccessibilityKeyMap: [], setAccessibilityKeyMap: [], bind: [], unbind: [], unbindAll: [], getPageMode: [], setPageMode: [], clearReportSource: [], id: [{
+            type: Input
+        }], serviceUrl: [{
+            type: Input
+        }], reportServer: [{
+            type: Input
+        }], templateUrl: [{
+            type: Input
+        }], initialPageAreaImageUrl: [{
+            type: Input
+        }], reportSource: [{
+            type: Input
+        }], sendEmail: [{
+            type: Input
+        }], parameters: [{
+            type: Input
+        }], scale: [{
+            type: Input
+        }], scaleMode: [{
+            type: Input
+        }], viewMode: [{
+            type: Input
+        }], pageMode: [{
+            type: Input
+        }], persistSession: [{
+            type: Input
+        }], parameterEditors: [{
+            type: Input
+        }], authenticationToken: [{
+            type: Input
+        }], printMode: [{
+            type: Input
+        }], selector: [{
+            type: Input
+        }], disabledButtonClass: [{
+            type: Input
+        }], checkedButtonClass: [{
+            type: Input
+        }], enableAccessibility: [{
+            type: Input
+        }], searchMetadataOnDemand: [{
+            type: Input
+        }], parametersAreaVisible: [{
+            type: Input
+        }], documentMapVisible: [{
+            type: Input
+        }], ready: [{
+            type: Input
+        }], error: [{
+            type: Input
+        }], parametersAreaPosition: [{
+            type: Input
+        }], documentMapAreaPosition: [{
+            type: Input
+        }], exportBegin: [{
+            type: Input
+        }], exportEnd: [{
+            type: Input
+        }], sendEmailBegin: [{
+            type: Input
+        }], sendEmailEnd: [{
+            type: Input
+        }], pageReady: [{
+            type: Input
+        }], printBegin: [{
+            type: Input
+        }], printEnd: [{
+            type: Input
+        }], renderingBegin: [{
+            type: Input
+        }], renderingEnd: [{
+            type: Input
+        }], updateUi: [{
+            type: Input
+        }], interactiveActionExecuting: [{
+            type: Input
+        }], interactiveActionEnter: [{
+            type: Input
+        }], interactiveActionLeave: [{
+            type: Input
+        }], viewerToolTipOpening: [{
+            type: Input
+        }], container: [{
+            type: ViewChild,
+            args: ['container']
+        }], containerStyle: [{
+            type: Input
+        }] });
+    return TelerikReportViewerComponent;
+}());
+export { TelerikReportViewerComponent };
+
+//# sourceMappingURL=telerik-report-viewer.component.js.map

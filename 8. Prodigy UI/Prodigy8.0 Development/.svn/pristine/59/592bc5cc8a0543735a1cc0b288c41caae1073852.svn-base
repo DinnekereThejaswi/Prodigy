@@ -1,0 +1,102 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <form [formGroup]="PaymentTypesForm" class="form-horizontal" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="Code">Code<span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span></label>
+                            <input type="text" class="form-control" id="Code" formControlName="frmCtrl_Code"
+                                [(ngModel)]="PaymentModel.PaymentCode" placeholder="Enter code"
+                                onkeypress='return (event.charCode > 96 && event.charCode < 123) || (event.charCode > 64 && event.charCode < 91) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode <= 31'
+                                maxlength="3" autofocus>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="Name">Name<span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span></label>
+                            <input type="text" class="form-control" id="Name" formControlName="frmCtrl_Name"
+                                [(ngModel)]="PaymentModel.PaymentName" placeholder="Enter Name">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="AccName">Acc Name</label>
+                            <select type="text" class="form-control" id="AccName" formControlName="frmCtrl_AccCode"
+                                (change)="AccChanged(Code.value)" [(ngModel)]="PaymentModel.AccCode" #Code>
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let _InputOutputList of AcList" [value]="_InputOutputList.AccCode">
+                                    {{_InputOutputList.AccName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <ng-container *ngIf="EnableAdd">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="Add(PaymentTypesForm)">
+                                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                        </ng-container>
+                        <ng-container *ngIf="EnableSave">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="save(PaymentTypesForm)">
+                                <i class="fal fa-save"></i>&nbsp;Save</button>
+                        </ng-container>
+                        <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;" (click)="Clear()">
+                            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <ng-container *ngIf="EnableJson">
+        <pre> {{ PaymentModel | json }}</pre>
+    </ng-container>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Account Name</th>
+                                <th>Status</th>
+                                <th>Edit</th>
+                                <!-- <th>Open</th> -->
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let List of PaymentTypes">
+                                <td>{{List.PaymentCode}}</td>
+                                <td>{{List.PaymentName}}</td>
+                                <td>00</td>
+                                <td [style.color]="getStatusColor(List.Active)"><b>{{List.Active}}</b></td>
+
+                                <td>
+                                    <i class="fas fa-edit" title="edit" (click)="edit(List)"></i>
+                                </td>
+                                <!-- <td>
+                                    <i class="fas fa-lock-open" title="open" (click)="Activate(List)"></i>
+                                </td> -->
+                                <td>
+                                    <i class="fas fa-trash" title="close" (click)="delete(List)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

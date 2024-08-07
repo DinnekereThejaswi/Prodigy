@@ -1,0 +1,201 @@
+<div style="color: brown; text-align: right; font-style: italic;">
+  <app-lastdocno [routerUrl]="routerUrl"></app-lastdocno>
+</div>
+<br>
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="CreditrecieptForm">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="input-group" *ngFor="let radiobutton of radioItems">
+              <ul class="list-group">
+                <div class="col-md-12">
+                  <label class="form-check-inline">
+                    <input type="radio" name="option" class="form-check-input" [value]="radiobutton"
+                      [checked]="radiobutton === model.option" (change)="Changed(radiobutton)">
+                    <h4 style="margin-top: 5px;"> {{radiobutton}}</h4>
+                  </label>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div *ngIf="model.option == 'Current Fin Year'">
+            <div class="form-group">
+              <label class="control-label" for="FinancialYear">Finacial Year</label>
+              <select class="form-control" formControlName="FinancialYear">
+                <option *ngFor="let _uom of CurYear" [ngValue]="_uom.FinYear">
+                  {{_uom.FinYear}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div *ngIf="model.option == 'Previous Fin Years'">
+            <div class="form-group">
+              <label class="control-label" for="UOM">Finacial Year</label>
+              <select class="form-control" formControlName="FinancialYear">
+                <option [ngValue]="null">Select</option>
+                <option *ngFor="let _fin of PrevYear" [ngValue]="_fin">
+                  {{_fin}}
+                </option>
+                <!-- <option *ngFor="let _fin of PrevYear" [ngValue]="_fin.YearCode">
+                  {{_fin.YearCode}}
+                </option> -->
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label" for="BillNo">Bill Number</label>
+            <!--  -->
+            <input type="number" onwheel="this.blur()" autofocus class="form-control" formControlName="BillNo"
+              (keyup.enter)="getvalues(CreditrecieptForm)" 
+              onKeyPress="if(this.value.length==7) return false;"   GreenBorder
+              [(ngModel)]="CreditrecieptSummaryHeader.BillNo" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="CustomerName">Customer Name</label>
+                <input type="text" class="form-control" readonly formControlName="CustomerName"
+                  [(ngModel)]="CreditrecieptSummaryHeader.CustomerName" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="SalesAmount">Sales Amount</label>
+                <input type="text" class="form-control" readonly formControlName="SalesAmount"
+                  [(ngModel)]="CreditrecieptSummaryHeader.SalesAmount" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="PaidAmount">Paid Amount</label>
+                <input type="text" class="form-control" readonly formControlName="PaidAmount"
+                  [(ngModel)]="CreditrecieptSummaryHeader.PaidAmount" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="BalanceAmount">Balance Amount</label>
+                <input type="text" class="form-control" readonly formControlName="BalanceAmount"
+                  [(ngModel)]="CreditrecieptSummaryHeader.BalanceAmount" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label" for="ReceiptDate">Receipt Date</label>
+            <input type="text" class="form-control" readonly formControlName="ReceiptDate"
+              [(ngModel)]="CreditrecieptSummaryHeader.ReceiptDate" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="ReceiptDate">Current Balance</label>
+            <input type="text" class="form-control" readonly formControlName="CurrentBalance"
+              [(ngModel)]="CreditrecieptSummaryHeader.CurrentBalance" />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="accordian" class="accordion">
+  <ng-Container *ngIf="EnableCustomer">
+    <div class="card mb-0">
+      <div class="card-header Pointer" (click)="ToggleCustomerData()"
+        [attr.data-toggle]="EnableCustomerTab ? '':'collapse'" href="#Customer"
+        style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);"
+        [ngClass]="EnableCustomerTab ? 'collapsed' : ''">
+        <div class="row">
+          <div class="col-md-2 ">
+            <a class="card-title align-middle Pointer" style="color:#0096FF">
+              <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+              <span class="align-middle Pointer"><ins>Customer Details </ins>
+                <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                  <span class="tooltiptext tooltip-top">Capture the New customer
+                    information and Existing customer information</span>
+                </div>
+              </span>
+            </a>
+          </div>
+          <!-- <ng-container *ngIf=" ToggleCustomer"> -->
+          <ng-container *ngIf="ToggleCustomer">
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> Customer: {{Customer.CustName}} </span></h4>
+            </div>
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> MobileNo: {{Customer.MobileNo}} </span></h4>
+            </div>
+
+          </ng-container>
+          <!-- </ng-container> -->
+        </div>
+      </div>
+      <div id="Customer" class="card-body collapse" [hidden]="EnableCustomerTab">
+        <app-customer>
+        </app-customer>
+      </div>
+    </div>
+  </ng-Container>
+  <br>
+  <ng-Container *ngIf="EnablePayments">
+    <div class="card mb-0">
+      <div class="card-header Pointer" href="#Payment" [ngClass]="EnablePaymentsTab ? 'collapsed' : ''"
+        [attr.data-toggle]="EnablePaymentsTab ? '':'collapse'"
+        style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);"
+        (click)="TogglePaymentData()">
+        <div class="row">
+          <div class="col-md-2 ">
+            <a class="card-title align-middle" style="color:#005BFF">
+              <!-- <i class="fal fa-cash-register "></i> -->
+              <i class="fal fa-rupee-sign fa-2x mr-2 align-middle"></i>
+              <span class="align-middle Pointer"><ins>Receipt Details </ins>
+                <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                  <span class="tooltiptext tooltip-top">Capture additional payment advance receiving
+                    details</span>
+                </div>
+              </span>
+            </a>
+          </div>
+          <div class="col-md-4 pull-right">
+          </div>
+          <div class="col-md-4 pull-right">
+            <ng-container *ngIf="paymentPaidAmt > 0">
+              <h4><span class="align-middle"> Amount: {{paymentPaidAmt | number : '1.2-2'}} </span></h4>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div id="Payment" class="card-body collapse" [hidden]="EnablePaymentsTab">
+        <app-payment [RepairBalanceAmount]="BalanceAmount" [argPageName]="pageName"></app-payment>
+      </div>
+    </div>
+  </ng-Container>
+
+  <div class="row" style="margin-top:25px;">
+    <div class="col-md-2">
+      <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" (click)="CreditPost()"
+        [hidden]="EnableSubmitButton"><i class="fal fa-save"></i>&nbsp;Submit</button>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="EnableReprint">
+  <app-reprint-credit-receipt></app-reprint-credit-receipt>
+</ng-container>
+
+<ng-container *ngIf="EnableJson">
+  <pre>{{CreditrecieptSummaryHeader.lstOfPayment | json}}</pre>
+</ng-container>

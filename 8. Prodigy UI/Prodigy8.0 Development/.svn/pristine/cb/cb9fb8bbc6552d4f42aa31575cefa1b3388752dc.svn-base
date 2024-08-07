@@ -1,0 +1,99 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-horizontal" [formGroup]="ApplicationPasswordform">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label" for="no">No <span class="textRed"> <i
+                                            class="fas fa-star-of-life"></i></span>
+                                    <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                        <span class="tooltiptext tooltip-top">Enter No </span>
+                                    </div>
+                                </label>
+                                <input type="text" class="form-control" id="no"
+                                    oninput="this.value = this.value.toUpperCase()" formControlName="frmCtrl_PasswordNo"
+                                    [(ngModel)]="PasswordPostModel.PasswordNo"
+                                    (input)="Codes.value = Codes.value.toUpperCase()" placeholder="Enter No"
+                                    IntegerDecimalFieldValidator maxlength="3" #Codes autocapitalize="off" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="password">Password <span class="textRed"> <i
+                                            class="fas fa-star-of-life"></i></span>
+                                    <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                        <span class="tooltiptext tooltip-top">Enter Password </span>
+                                    </div>
+                                </label>
+                                <input type="password" class="form-control" id="password"
+                                    formControlName="frmCtrl_Password" [(ngModel)]="PasswordPostModel.Password"
+                                    placeholder="Enter Password" AlphaNumericValidator />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="ConFrmpassword">Confirm Password <span
+                                        class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                                    <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                                        <span class="tooltiptext tooltip-top">Confirm Password </span>
+                                    </div>
+                                </label>
+                                <input type="password" class="form-control" id="ConFrmpassword"
+                                    formControlName="frmCtrl_ConfirmPassword" [(ngModel)]="confirmPassword"
+                                    placeholder="Enter Confirm Password" AlphaNumericValidator />
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-top:22px">
+                            <div class="form-group">
+                                <button type="submit"
+                                    class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                                    (click)="add(ApplicationPasswordform)"><i class="fal fa-save"></i>&nbsp;
+                                    Add</button>
+                                <button type="submit"
+                                    class="btn btn-danger  waves-effect waves-light btn-rounded btn-secondary"
+                                    (click)="clear()">&nbsp;Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <ng-container *ngIf="EnableJson">
+                    <pre>{{PasswordPostModel | json}}</pre>
+                    <pre>{{pasword}}</pre>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>No</th>
+                                <th>Password</th>
+                                <th>Delete</th>
+
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let _list of PasswordList; let i=index">
+                            <tr>
+                                <td>{{_list.PasswordNo}}</td>
+                                <td>{{_list.Password}}</td>
+                                <td (click)="deletePassword(_list)">
+                                    <i class="far fa-trash" title="open"></i>
+                                </td>
+
+                            <tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

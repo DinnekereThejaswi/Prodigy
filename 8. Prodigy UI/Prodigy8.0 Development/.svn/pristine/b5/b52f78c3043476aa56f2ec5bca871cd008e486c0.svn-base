@@ -1,0 +1,11 @@
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc1 from './tabset';
+import * as ɵngcc2 from '@angular/common';
+export { NgbTabset, NgbTab, NgbTabContent, NgbTabTitle, NgbTabChangeEvent } from './tabset';
+export { NgbTabsetConfig } from './tabset-config';
+export declare class NgbTabsetModule {
+    static ngModuleDef: ɵngcc0.ɵɵNgModuleDefWithMeta<NgbTabsetModule, [typeof ɵngcc1.NgbTabset, typeof ɵngcc1.NgbTab, typeof ɵngcc1.NgbTabContent, typeof ɵngcc1.NgbTabTitle], [typeof ɵngcc2.CommonModule], [typeof ɵngcc1.NgbTabset, typeof ɵngcc1.NgbTab, typeof ɵngcc1.NgbTabContent, typeof ɵngcc1.NgbTabTitle]>;
+    static ngInjectorDef: ɵngcc0.ɵɵInjectorDef<NgbTabsetModule>;
+}
+
+//# sourceMappingURL=tabset.module.d.ts.map

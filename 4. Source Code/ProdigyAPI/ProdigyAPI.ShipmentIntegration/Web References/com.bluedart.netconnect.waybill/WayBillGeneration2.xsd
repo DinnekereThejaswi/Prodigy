@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Enums.AWBGeneration" />
+  <xs:complexType name="WayBillGenerationRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Consignee" nillable="true" type="tns:Consignee" />
+      <xs:element minOccurs="0" name="Returnadds" nillable="true" type="tns:ReturnAddress" />
+      <xs:element minOccurs="0" name="Services" nillable="true" type="tns:Services" />
+      <xs:element minOccurs="0" name="Shipper" nillable="true" type="tns:Shipper" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WayBillGenerationRequest" nillable="true" type="tns:WayBillGenerationRequest" />
+  <xs:complexType name="Consignee">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AvailableDays" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AvailableTiming" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeAddress1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeAddress2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeAddress3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeAddressType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeAddressinfo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeAttention" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeCityName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeCountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeEmailID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeFiscalID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeFiscalIDType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeFullAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeGSTNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeIDType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeLatitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeLongitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeMaskedContactNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeMobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneePincode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeStateCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConsigneeTelephone" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Consignee" nillable="true" type="tns:Consignee" />
+  <xs:complexType name="ReturnAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ManifestNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnAddress1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnAddress2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnAddress3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnAddressinfo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnContact" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnEmailID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnLatitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnLongitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnMaskedContactNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnMobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnPincode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnTelephone" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnAddress" nillable="true" type="tns:ReturnAddress" />
+  <xs:complexType name="Services">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AWBNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ActualWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="AuthorizedDealerCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BillingReference1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BillingReference2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CollectableAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="Commodity" nillable="true" type="tns:CommodityDetail" />
+      <xs:element minOccurs="0" name="CreditReferenceNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditReferenceNo2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditReferenceNo3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrencyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerEDD" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DeclaredValue" type="xs:double" />
+      <xs:element minOccurs="0" name="DeferredDeliveryDays" type="xs:int" />
+      <xs:element minOccurs="0" name="DeliveryTimeSlot" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Dimensions" nillable="true" type="tns:ArrayOfDimension" />
+      <xs:element minOccurs="0" name="DynamicQCDetails" nillable="true" type="tns:ArrayOfDynamicQCDetails" />
+      <xs:element minOccurs="0" name="EsellerPlatformName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExchangeWaybillNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExportImportCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FavouringName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ForwardAWBNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ForwardLogisticCompName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IncotermCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InsuranceAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="InsurancePaidBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InvoiceNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsChequeDD" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsDedicatedDeliveryNetwork" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsEcomUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsForcePickup" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsIntlEcomCSBUser" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPartialPickup" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsReversePickup" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ItemCount" type="xs:int" />
+      <xs:element minOccurs="0" name="MarketplaceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MarketplaceURL" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SAPI.Entities.Enums.AWBGeneration" minOccurs="0" name="OTPBasedDelivery" type="q1:OTPBasedDelivery" />
+      <xs:element minOccurs="0" name="OTPCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Officecutofftime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderURL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PDFOutputNotRequired" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PDFPrintContent" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="PackType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParcelShopCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PayableAt" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PickupDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PickupMode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PickupTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PickupType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PieceCount" type="xs:int" />
+      <xs:element minOccurs="0" name="PreferredDeliveryDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PreferredPickupTimeSlot" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SAPI.Entities.Enums.AWBGeneration" minOccurs="0" name="PrinterLableSize" type="q2:PrinterLableSize" />
+      <xs:element minOccurs="0" name="ProductCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductFeature" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SAPI.Entities.Enums.AWBGeneration" minOccurs="0" name="ProductType" type="q3:ProductType" />
+      <xs:element minOccurs="0" name="RegisterPickup" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SpecialInstruction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubProductCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SupplyOfIGST" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SupplyOfwoIGST" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TermsOfTrade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TotalCashPaytoCustomer" type="xs:double" />
+      <xs:element minOccurs="0" name="Total_IGST_Paid" type="xs:double" />
+      <xs:element minOccurs="0" name="itemImg" nillable="true" type="tns:ArrayOfItemImage" />
+      <xs:element minOccurs="0" name="itemdtl" nillable="true" type="tns:ArrayOfItemDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Services" nillable="true" type="tns:Services" />
+  <xs:complexType name="CommodityDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommodityDetail1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CommodityDetail2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CommodityDetail3" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CommodityDetail" nillable="true" type="tns:CommodityDetail" />
+  <xs:complexType name="ArrayOfDimension">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Dimension" nillable="true" type="tns:Dimension" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDimension" nillable="true" type="tns:ArrayOfDimension" />
+  <xs:complexType name="Dimension">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Breadth" type="xs:double" />
+      <xs:element minOccurs="0" name="Count" type="xs:int" />
+      <xs:element minOccurs="0" name="Height" type="xs:double" />
+      <xs:element minOccurs="0" name="Length" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Dimension" nillable="true" type="tns:Dimension" />
+  <xs:complexType name="ArrayOfDynamicQCDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DynamicQCDetails" nillable="true" type="tns:DynamicQCDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDynamicQCDetails" nillable="true" type="tns:ArrayOfDynamicQCDetails" />
+  <xs:complexType name="DynamicQCDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExpectedAnswers" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsQCMandate" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ItemID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuestionDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuestionId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuestionValue" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DynamicQCDetails" nillable="true" type="tns:DynamicQCDetails" />
+  <xs:complexType name="ArrayOfItemImage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ItemImage" nillable="true" type="tns:ItemImage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfItemImage" nillable="true" type="tns:ArrayOfItemImage" />
+  <xs:complexType name="ItemImage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AWBNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImageURL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ItemID" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ItemImage" nillable="true" type="tns:ItemImage" />
+  <xs:complexType name="ArrayOfItemDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ItemDetails" nillable="true" type="tns:ItemDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfItemDetails" nillable="true" type="tns:ArrayOfItemDetails" />
+  <xs:complexType name="ItemDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CGSTAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="HSCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IGSTAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="Instruction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InvoiceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="InvoiceNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsMEISS" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ItemID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ItemName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ItemValue" type="xs:double" />
+      <xs:element minOccurs="0" name="Itemquantity" type="xs:int" />
+      <xs:element minOccurs="0" name="PerUnitRate" type="xs:double" />
+      <xs:element minOccurs="0" name="PieceID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlaceofSupply" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductDesc1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductDesc2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SGSTAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="SKUNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerGSTNNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubProduct1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubProduct2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubProduct3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubProduct4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaxableAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="TotalValue" type="xs:double" />
+      <xs:element minOccurs="0" name="Unit" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cessAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="countryOfOrigin" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="docType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="eWaybillDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="eWaybillNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="subSupplyType" type="xs:int" />
+      <xs:element minOccurs="0" name="supplyType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ItemDetails" nillable="true" type="tns:ItemDetails" />
+  <xs:complexType name="Shipper">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CustomerAddress1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerAddress2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerAddress3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerAddressinfo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerEmailID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerFiscalID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerFiscalIDType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerGSTNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerLatitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerLongitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerMaskedContactNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerMobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerPincode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerTelephone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsToPayCustomer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OriginArea" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sender" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VendorCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Shipper" nillable="true" type="tns:Shipper" />
+  <xs:complexType name="WayBillGenerationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AWBNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AWBPrintContent" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="CCRCRDREF" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DestinationArea" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DestinationLocation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsErrorInPU" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ShipmentPickupDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="tns:ArrayOfWayBillGenerationStatus" />
+      <xs:element minOccurs="0" name="TokenNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WayBillGenerationResponse" nillable="true" type="tns:WayBillGenerationResponse" />
+  <xs:complexType name="ArrayOfWayBillGenerationStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WayBillGenerationStatus" nillable="true" type="tns:WayBillGenerationStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWayBillGenerationStatus" nillable="true" type="tns:ArrayOfWayBillGenerationStatus" />
+  <xs:complexType name="WayBillGenerationStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StatusCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StatusInformation" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WayBillGenerationStatus" nillable="true" type="tns:WayBillGenerationStatus" />
+  <xs:complexType name="ArrayOfWayBillGenerationRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WayBillGenerationRequest" nillable="true" type="tns:WayBillGenerationRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWayBillGenerationRequest" nillable="true" type="tns:ArrayOfWayBillGenerationRequest" />
+  <xs:complexType name="ArrayOfWayBillGenerationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WayBillGenerationResponse" nillable="true" type="tns:WayBillGenerationResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWayBillGenerationResponse" nillable="true" type="tns:ArrayOfWayBillGenerationResponse" />
+  <xs:complexType name="AWBCancelationRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AWBNo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AWBCancelationRequest" nillable="true" type="tns:AWBCancelationRequest" />
+  <xs:complexType name="AWBCancelationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AWBNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CCRCRDREF" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="tns:ArrayOfWayBillGenerationStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AWBCancelationResponse" nillable="true" type="tns:AWBCancelationResponse" />
+  <xs:complexType name="EwayBillRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InvoiceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="InvoiceNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerGSTNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Waybillnumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="eWaybillDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="eWaybillNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EwayBillRequest" nillable="true" type="tns:EwayBillRequest" />
+  <xs:complexType name="EwayBillResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="tns:ArrayOfWayBillGenerationStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EwayBillResponse" nillable="true" type="tns:EwayBillResponse" />
+</xs:schema>

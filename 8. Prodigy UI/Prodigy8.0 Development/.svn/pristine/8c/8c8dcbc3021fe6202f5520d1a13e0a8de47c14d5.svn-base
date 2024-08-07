@@ -1,0 +1,216 @@
+body {
+  font-size  : 5px;
+  line-height: 18px;
+}
+
+.watermark {
+  -webkit-transform: rotate(331deg);
+  -moz-transform   : rotate(331deg);
+  -o-transform     : rotate(331deg);
+  transform        : rotate(331deg);
+  font-size        : 10em;
+  color            : rgba(255, 5, 5, 0.37);
+  position         : absolute;
+  text-transform   : uppercase;
+  padding-left     : 10%;
+}
+
+.modal-header {
+  padding-left: 20rem !important;
+}
+
+.material-switch>input[type="checkbox"] {
+  display: none;
+}
+
+tr.spaceUnder>td {
+  padding-bottom: 0px;
+}
+
+.material-switch>label {
+  cursor  : pointer;
+  height  : 0px;
+  position: relative;
+  width   : 40px;
+}
+
+.material-switch>label::before {
+  background   : rgb(0, 0, 0);
+  box-shadow   : inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  content      : '';
+  height       : 16px;
+  margin-top   : -8px;
+  position     : absolute;
+  opacity      : 0.3;
+  transition   : all 0.4s ease-in-out;
+  width        : 40px;
+}
+
+.material-switch>label::after {
+  background   : rgb(255, 255, 255);
+  border-radius: 16px;
+  box-shadow   : 0px 0px 5px rgba(0, 0, 0, 0.3);
+  content      : '';
+  height       : 24px;
+  left         : -4px;
+  margin-top   : -8px;
+  position     : absolute;
+  top          : -4px;
+  transition   : all 0.3s ease-in-out;
+  width        : 24px;
+}
+
+.material-switch>input[type="checkbox"]:checked+label::before {
+  background: inherit;
+  opacity   : 0.5;
+}
+
+.material-switch>input[type="checkbox"]:checked+label::after {
+  background: inherit;
+  left      : 20px;
+}
+
+.card-header {
+  border-radius: 15px !important;
+}
+
+.card {
+  border-radius: 15px !important;
+
+}
+
+.card-body {
+  padding      : 10px 30px 0px 30px !important;
+  border-bottom: 2px solid black;
+  border-radius: 15px;
+}
+
+.p-38 {
+  height: 38px;
+}
+
+.text-white {
+  color: white;
+}
+
+.Pointer {
+  cursor: pointer;
+}
+
+.footer {
+  position: fixed;
+  left    : 0;
+  bottom  : 0;
+}
+
+.hiddenRow {
+  padding: 0 !important;
+}
+
+.wrapper {
+  margin: auto 3em auto 3em;
+}
+
+
+.table-responsive {
+  display   : block;
+  width     : 99.9999% !important;
+  overflow-x: auto;
+}
+
+.hide {
+  display: hide;
+}
+
+.show {
+  display: block;
+}
+
+.accordion .card-header.collapsed:after {
+  /* symbol for "collapsed" panels */
+  content    : "\f067";
+  position   : absolute;
+  right      : 20px;
+  font-size  : 20px;
+  font-weight: 400;
+
+  line-height: 1;
+  margin-top : -25px;
+  transition : .3s transform ease-in-out;
+}
+
+.accordion .card-header:after {
+  font-family: 'FontAwesome';
+  content    : "\f068";
+  position   : absolute;
+  right      : 20px;
+  font-size  : 20px;
+  font-weight: 400;
+  line-height: 1;
+  margin-top : -25px;
+}
+
+.text-red {
+  color: red;
+}
+
+.text-green {
+  color: #16d616;
+}
+
+fieldset.scheduler-border {
+  border            : 2px groove #ddd !important;
+  padding           : 0 1.4em 1.4em 1.4em !important;
+  margin            : 0 0 1.5em 0 !important;
+  -webkit-box-shadow: 0px 0px 0px 0px #000;
+  box-shadow        : 0px 0px 0px 0px #000;
+  border-radius     : 15px;
+}
+
+legend.scheduler-border {
+  font-size    : 20px !important;
+  text-align   : left !important;
+  width        : auto;
+  padding      : 0 10px;
+  border-bottom: none;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .columns {
+    width: 100%;
+  }
+}
+
+@media (min-width:2200px) and (max-width: 2440px) {
+  .table-responsive {
+    overflow-x: hidden !important;
+
+  }
+}
+
+@media (min-width: 300px) and (max-width: 2200px) {
+  .table-responsive {
+    overflow-x: auto !important;
+
+  }
+}
+
+
+.CustomWidth200 {
+  width: 200pt;
+}
+
+.CustomWidth100 {
+  width: 100pt;
+}
+
+.CustomWidth50 {
+  width: 50pt;
+}
+
+.CustomWidth150 {
+  width: 50pt;
+}

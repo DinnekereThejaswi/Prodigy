@@ -1,0 +1,560 @@
+<div class="card mb-0">
+    <div class="card-body">
+        <form [formGroup]="ExpenseHeaderForms" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label *ngFor="let radiobutton of radioItems" class="form-check-inline">
+                            <input type="radio" name="option" (click)="Changed(radiobutton)" class="form-check-input"
+                                [value]="radiobutton" [checked]="radiobutton === model.option">
+                            <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">Voucher No </label>
+                        <input type="text" class="form-control" formControlName="voucherno"
+                            [(ngModel)]="ExpnsHeaderListData.voucherNo" readonly />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">Voucher Date
+                        </label>
+                        <input type="text" class="form-control" readonly formControlName="voucherdate"
+                            [(ngModel)]="applicationDate" bsDatepicker [bsConfig]="datePickerConfig"
+                            value="{{applicationDate | date:'dd/MM/yyyy' }}" disabled>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">Last Voucher No
+                        </label>
+                        <input class="form-control" formControlName="lastvoucherno"
+                            [(ngModel)]="ExpnsHeaderListData.lastvoucherNo" readonly type="text" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5" *ngIf="model.option =='Journal'">
+                    <div class="form-group">
+                        <label class="control-label">Vendor Name </label>
+                        <select class="form-control" formControlName="vendorname"
+                            [(ngModel)]="ExpnsDetailsChildModel.SupplierCode"
+                            (change)="DropdownChange($event.target.selectedIndex)" autofocus>
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _vendor of Vendor" [value]="_vendor.Code">
+                                {{_vendor.Name}} </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5" *ngIf="model.option =='Cash'">
+                    <div class="form-group">
+                        <label class="control-label">Cash Ledger
+
+                        </label>
+                        <select class="form-control" formControlName="cash"
+                            (change)="DropdownChange($event.target.selectedIndex)"
+                            [(ngModel)]="ExpnsDetailsChildModel.SupplierCode" autofocus>
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _vendor of Vendor" [value]="_vendor.Code">
+                                {{_vendor.Name}} </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5" *ngIf="model.option =='Bank'">
+                    <div class="form-group">
+                        <label class="control-label">Bank Ledger
+                            <!--   -->
+                        </label>
+                        <select class="form-control" formControlName="bank"
+                            [(ngModel)]="ExpnsDetailsChildModel.SupplierCode"
+                            (change)="DropdownChange($event.target.selectedIndex)" autofocus>
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _vendor of Vendor" [value]="_vendor.Code">
+                                {{_vendor.Name}} </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">GSTIN
+                        </label>
+                        <input class="form-control" formControlName="gstinNo" [(ngModel)]="ExpnsHeaderListData.gstin"
+                            readonly />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">PAN
+                        </label>
+                        <input class="form-control" formControlName="panNo" [(ngModel)]="ExpnsHeaderListData.pan"
+                            readonly type="text" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <ng-container *ngIf="EnableJson">
+            <pre>{{ExpnsHeaderModel | json}}</pre>
+        </ng-container>
+    </div>
+</div>
+<br>
+
+<div class="card mb-0">
+    <div class="card-body">
+        <form [formGroup]="ExpenseVoucherDetailForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Ledger Name </label>
+                                    <select class="form-control" formControlName="frmCtrl_LedgerNames"
+                                        [(ngModel)]="ExpnsDetailsChildModel.AccCode"
+                                        (change)="LedgerDropdownChange($event.target.selectedIndex)" name="cmbTipoTexto"
+                                        class="form-control " id="cmbTipoTexto">
+                                        <option value="null">Select</option>
+                                        <option *ngFor="let item of LedgerTypes" [value]="item.Code">{{item.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Invoice No
+                                    </label>
+                                    <input class="form-control" formControlName="frmCtrl_InvcNo"
+                                        [(ngModel)]="ExpnsDetailsChildModel.InvoiceNo" type="text"
+                                        placeholder="Enter Invoice No" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">PO No
+                                    </label>
+                                    <input class="form-control" formControlName="frmCtrl_InvcNo"
+                                        [(ngModel)]="ExpnsDetailsChildModel.InvoiceNo" type="text"
+                                        placeholder="Enter PO No" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Invoice Date</label>
+                                    <input type="text" class="form-control" formControlName="frmCtrl_InvcDate"
+                                        [(ngModel)]="InvoiceDate" bsDatepicker [bsConfig]="datePickerConfig"
+                                        value="{{InvoiceDate | date:'dd/MM/yyyy' }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Description</label>
+                                    <input class="form-control" formControlName="frmCtrl_Description"
+                                        [(ngModel)]="ExpnsDetailsChildModel.Description" type="text"
+                                        placeholder="Enter Description" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">HSN Code
+                                    </label>
+                                    <input class="form-control" formControlName="frmCtrl_hsn" type="text"
+                                        [(ngModel)]="ExpnsDetailsChildModel.HSN" placeholder="Enter HSN Code"
+                                        IntegerDecimalFieldValidator />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">GST No
+                                    </label>
+                                    <input (input)="Codes.value = Codes.value.toUpperCase()" class="form-control"
+                                        formControlName="frmCtrl_gstin" oninput="this.value = this.value.toUpperCase()"
+                                        maxlength="15" type="text" #Codes placeholder="Enter GST No"
+                                        [(ngModel)]="ExpnsDetailsChildModel.GSTNo" [readonly]="isReadOnly" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Party Name
+                                    </label>
+                                    <input (input)="Codes.value = Codes.value.toUpperCase()" class="form-control"
+                                        formControlName="frmCtrl_partyName"
+                                        oninput="this.value = this.value.toUpperCase()" AlphaNumericValidator
+                                        maxlength="15" type="text" #Codes placeholder="Enter GST No"
+                                        [(ngModel)]="ExpnsDetailsChildModel.PartyCode" [readonly]="isReadOnly" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">GST </label>
+                                    <select class="form-control" formControlName="frmCtrl_gst"
+                                        [(ngModel)]="ExpnsDetailsChildModel.GSTGroupCode">
+                                        <option value="">Select</option>
+                                        <option *ngFor="let _gst of gst" [value]="_gst.Code">
+                                            {{_gst.Description}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">PAN No
+                                    </label>
+                                    <input (input)="Codes.value = Codes.value.toUpperCase()" class="form-control"
+                                        formControlName="frmCtrl_partyName"
+                                        oninput="this.value = this.value.toUpperCase()" AlphaNumericValidator
+                                        maxlength="15" type="text" #Codes placeholder="Enter GST No"
+                                        [(ngModel)]="ExpnsDetailsChildModel.PartyCode" [readonly]="isReadOnly" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">ChequeNo
+                                    </label>
+                                    <input class="form-control" formControlName="frmCtrl_chqNo" AlphaNumericValidator
+                                        maxlength="7" type="text" [(ngModel)]="ExpnsDetailsChildModel.ChqNo"
+                                        [readonly]="CashReadOnly" IntegerDecimalFieldValidator />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Cheque Date</label>
+                                    <input type="text" class="form-control" formControlName="frmCtrl_ChqDate"
+                                        [(ngModel)]="ChequeDate" bsDatepicker [bsConfig]="datePickerConfig"
+                                        value="{{ChequeDate | date:'dd/MM/yyyy' }}" [readonly]="CashReadOnly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Amount
+                                    </label>
+                                    <input class="form-control" formControlName="frmCtrl_Amount"
+                                        (change)="CalculateGST(amount.value)" (keyup.enter)="CalculateGST(amount.value)"
+                                        [(ngModel)]="ExpnsDetailsChildModel.Amount" type=" text" #amount
+                                        IntegerDecimalFieldValidator />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">CGST @ 0.00 %
+                                    </label>
+                                    <input class="form-control" formControlName="frmCtrl_cgst"
+                                        [(ngModel)]="ExpnsDetailsChildModel.CGSTAmount" maxlength="7" type="text"
+                                        [readonly]="StateGSTReadOnly" disabled IntegerDecimalFieldValidator />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">SGST @ 0.00 %
+                                    </label>
+                                    <input class="form-control" formControlName="frmCtrl_sgst" type="text"
+                                        [(ngModel)]="ExpnsDetailsChildModel.SGSTAmount" [readonly]="StateGSTReadOnly"
+                                        IntegerDecimalFieldValidator disabled />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">IGST @ 0.00 %
+                                    </label>
+                                    <input type="text" class="form-control" formControlName="frmCtrl_igst"
+                                        [(ngModel)]="ExpnsDetailsChildModel.IGSTAmount" IntegerDecimalFieldValidator
+                                        [readonly]="IGSTReadOnly" disabled />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">CESS Name </label>
+                                    <select class="form-control" fromControlName="frmCtrl_cessName"
+                                        (change)="CessDeatils($event)" readonly>
+                                        <option value="null">Select</option>
+                                        <!-- <option *ngFor="let _accountNameList of AccountNameList"
+                                            [value]="_accountNameList.acc_code">
+                                            {{_accountNameList.acc_name}}</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">CESS %
+                                    </label>
+                                    <input type="text" class="form-control" formControlName="frmCtrl_cessPercent"
+                                        [(ngModel)]="ExpnsDetailsChildModel.CESSPercent" readonly />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">CESS %
+                                    </label>
+                                    <input type="text" class="form-control" formControlName="frmCtrl_cessPercent"
+                                        [(ngModel)]="ExpnsDetailsChildModel.CESSPercent" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Cess Amt
+                                    </label>
+                                    <input type="text" class="form-control" formControlName="frmCtrl_cessAmount"
+                                        [(ngModel)]="ExpnsDetailsChildModel.CESSAmount" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Total Amt
+                                    </label>
+                                    <input type="text" class="form-control" formControlName="frmCtrl_TotalAmt"
+                                        [(ngModel)]="ExpnsDetailsChildModel.TotalAmount" IntegerDecimalFieldValidator />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Round off
+                                    </label>
+                                    <input type="text" class="form-control" formControlName="frmCtrl_roundOff"
+                                        [(ngModel)]="ExpnsDetailsChildModel.RoundOff" IntegerDecimalFieldValidator />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Final Amt
+                                    </label>
+                                    <input type="text" class="form-control" formControlName="frmCtrl_finalAmt"
+                                        [(ngModel)]="ExpnsDetailsChildModel.FinalAmount" value="{{FinalSum}}"
+                                        IntegerDecimalFieldValidator readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">TDS A/C
+                                    </label>
+                                    <select class="form-control" formControlName="frmCtrl_TdsAccnt"
+                                        [(ngModel)]="ExpnsDetailsChildModel.TDSID" (change)="AddTdsPercent($event)">
+                                        <option [ngValue]="null">Select</option>
+                                        <option *ngFor="let _tds of TDS" [value]="_tds.Code">
+                                            {{_tds.Name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <br>
+                                <div class="form-group">
+                                    <input type="checkbox" type="checkbox" formControlName="frmCtrl_CheckTds"
+                                        [checked]="chkchkbxchked" [(ngModel)]="ExpnsDetailsChildModel.IsEligible"
+                                        (change)="EditTdsAmount($event)" style="width: 20px;height: 30px;">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">TDS %
+                                    </label>
+                                    <input class="form-control" formControlName="frmCtrl_TdsPercent" type="text"
+                                        [(ngModel)]="ExpnsDetailsChildModel.TDSPercentage" value="{{tdsPercent}}"
+                                        readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">TDS Amt
+                                    </label>
+                                    <input class="form-control" formControlName="frmCtrl_TdsAmt"
+                                        [(ngModel)]="ExpnsDetailsChildModel.TDSAmount" IntegerDecimalFieldValidator
+                                        [readonly]="isReadTDSAmount" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <ng-container *ngIf="EnableAdd">
+                                        <button
+                                            class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2t"
+                                            style="margin-top: 1.2rem !important;"
+                                            (click)="AddToChild(ExpenseVoucherDetailForm)">
+                                            <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="EnableSave">
+                                        <button
+                                            class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                            style="margin-top: 1.2rem !important;"
+                                            (click)="SaveModifiedRowData(ExpenseVoucherDetailForm)">
+                                            <i class="fal fa-save"></i>&nbsp;Save</button>
+                                    </ng-container>
+                                    <button
+                                        class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        style="margin-top: 1.2rem !important;"
+                                        (click)="clearExpenseVoucherDetailForm()">
+                                        <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<br>
+<ng-container *ngIf="ListOfExpenses.length > 0 || ChildListObject.length > 0">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>Expense Details</h3>
+                </div>
+                <!-- <div class="col-md-4">
+                <div class="form-group">
+                    <ng-container *ngIf="EnableAdd">
+                        <button
+                            class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2 float-right"
+                            style="margin-top: 1.2rem !important;">
+                            <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                    </ng-container>
+                    <ng-container *ngIf="EnableSave">
+                        <button
+                            class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2 float-right"
+                            style="margin-top: 1.2rem !important;">
+                            <i class="fal fa-save"></i>&nbsp;Save</button>
+                    </ng-container>
+                    <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2 float-right"
+                        style="margin-top: 1.2rem !important;">
+                        <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                </div>
+            </div> -->
+            </div>
+            <div class="row" *ngIf="ListOfExpenses.length > 0">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>VoucherNo</th>
+                                <th>Sl No</th>
+                                <th>Account Name </th>
+                                <th>Invoice No</th>
+                                <th>Description</th>
+                                <th>Invoice Date</th>
+                                <th>Amount</th>
+                                <th>CGST Amt.</th>
+                                <th>SGST Amt.</th>
+                                <th>IGST Amt </th>
+                                <th>Cess Amt</th>
+                                <th>Total</th>
+                                <th>Round Off</th>
+                                <th>Final Amount </th>
+
+                                <th>TDS %</th>
+                                <th>TDS </th>
+                                <th>Cheque No</th>
+                                <th>Cheque Date </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let _details of ListOfExpenses ;index as i"
+                                (click)="LoadBackExpDetails(_details)" class="pointer">
+                                <td>{{_details.ExpenseNo}}</td>
+                                <td>{{_details.SNo}}</td>
+                                <td>{{_details.AccName}}</td>
+                                <td>{{_details.InvoiceNo}}</td>
+                                <td>{{_details.Description}}</td>
+                                <td>{{_details.InvoiceDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{_details.Amount}}</td>
+                                <td>{{_details.CGSTAmount}}</td>
+                                <td>{{_details.SGSTAmount}}</td>
+                                <td>{{_details.IGSTAmount}}</td>
+                                <td>{{_details.CESSAmount}}</td>
+                                <td>{{_details.TotalAmount }}</td>
+                                <td>{{_details.RoundOff}}</td>
+                                <td>{{_details.FinalAmount}}</td>
+                                <td>{{_details.TDSPercentage}}</td>
+                                <td>{{_details.TDSAmount}}</td>
+                                <td>{{_details.ChqNo}}</td>
+                                <td>{{_details.ChqDate}}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="row" *ngIf="ChildListObject.length > 0">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Sl No</th>
+                                <th>Account Name </th>
+                                <th>Invoice No</th>
+                                <th>Description</th>
+                                <th>Invoice Date</th>
+                                <th>Amount</th>
+                                <th>CGST Amt.</th>
+                                <th>SGST Amt.</th>
+                                <th>IGST Amt </th>
+                                <th>Cess Amt</th>
+                                <th>Total</th>
+                                <th>Round Off</th>
+                                <th>Final Amt</th>
+                                <th>TDS %</th>
+                                <th>TDS </th>
+                                <th>Delete</th>
+                                <th>Edit </th>
+                                <th>GST Groupcode</th>
+                                <th>HSn </th>
+                                <th>Cheque No</th>
+                                <th>Cheque Date </th>
+                                <!-- <th>Is Eligible </th>
+                                    <th>Add</th>
+                                    <th>Clear</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let _details of ChildListObject ;index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{_details.AccName}}</td>
+                                <td>{{_details.InvoiceNo}}</td>
+                                <td>{{_details.Description}}</td>
+                                <td>{{_details.InvoiceDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{_details.Amount}}</td>
+                                <td>{{_details.CGSTAmount}}</td>
+                                <td>{{_details.SGSTAmount}}</td>
+                                <td>{{_details.IGSTAmount}}</td>
+                                <td>{{_details.CESSAmount}}</td>
+                                <td>{{_details.FinalAmount}}</td>
+                                <td>{{_details.RoundOff}}</td>
+                                <td>{{_details.FinalAmount}}</td>
+                                <td>{{_details.TDSPercentage}}</td>
+                                <td>{{_details.TDSAmount}}</td>
+                                <td align="center">
+                                    <i class="fas fa-edit" title="Edit" (click)="EditField(_details)"></i>
+                                </td>
+                                <td align="center">
+                                    <i class="fas fa-trash" title="Delete" (click)="DeleteField(_details)"></i>
+                                </td>
+                                <td>{{_details.GSTGroupCode}}</td>
+                                <td>{{_details.HSN}}</td>
+                                <td>{{_details.ChqNo}}</td>
+                                <td>{{_details.ChqDate | date: 'dd/MM/yyyy'}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<br>
+<ng-container *ngIf="EnableJson">
+    <pre>{{ExpnsDetailsChildModel | json}}</pre>
+</ng-container>

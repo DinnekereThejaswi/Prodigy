@@ -1,0 +1,18 @@
+.trv-parameters-area.preview .trv-parameters-area-footer {
+    top: 0.4em;
+    bottom: 10;
+    position: absolute;
+}
+
+.trv-report-viewer .trv-parameters-area.preview .trv-parameters-area-content {
+    top: 3em;
+    bottom: 10;
+}
+
+.trv-parameters-area{
+    position: absolute;
+    top: 0px;
+    width: 210px;
+    height: 1161.61px;
+    right: 1188px;
+}

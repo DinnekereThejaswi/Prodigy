@@ -1,0 +1,2 @@
+export { TelerikReportingModule } from './telerik-reporting.module';
+export { TelerikReportViewerComponent } from './telerik-report-viewer.component';

@@ -1,0 +1,116 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="SKUform">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label" for="Supplier">GS</label>
+            <select class="form-control" formControlName="frmCtrl_gsname" (change)="getItemName($event)"
+              [(ngModel)]="stockKeepUnitModel.GSCode">
+              <option [ngValue]="null">Select</option>
+              <option *ngFor="let _GSList of GSList" [value]="_GSList.GSCode">
+                {{_GSList.GSName}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label" for="GS">Item Name</label>
+            <select class="form-control" formControlName="frmCtrl_itemname" (change)="getDesign($event)"
+              [(ngModel)]="stockKeepUnitModel.ItemCode">
+              <option [ngValue]="null">Select</option>
+              <option *ngFor="let Item of ItemName" [value]="Item.Code">
+                {{Item.Name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label class="control-label">Design Name</label>
+            <select class="form-control" formControlName="frmCtrl_designname"
+              [(ngModel)]="stockKeepUnitModel.DesignCode">
+              <option [ngValue]="null">Select</option>
+              <option *ngFor="let Design of DesignList" [ngValue]="Design.Code">
+                {{Design.Name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label class="control-label">Weight</label>
+            <input type="text" class="form-control" formControlName="frmCtrl_weight" IntegerDecimalFieldValidator
+              placeholder="0.00" [(ngModel)]="stockKeepUnitModel.Weight">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label class="control-label">SKU ID</label>
+            <input type="text" class="form-control" formControlName="frmCtrl_skuid" placeholder="0"
+              [(ngModel)]="stockKeepUnitModel.SKUID">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <br>
+          <ng-container *ngIf="EnableAdd">
+            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+              (click)="adda(SKUform)">
+              <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+          </ng-container>
+          <ng-container *ngIf="EnableSave">
+            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+              (click)="save(SKUform)">
+              <i class="fal fa-save"></i>&nbsp;Save</button>
+          </ng-container>
+          <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2" (click)="Clear()">
+            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+        </div>
+      </div>
+    </form>
+    <ng-container>
+      <pre>{{stockKeepUnitModel | json}}</pre>
+    </ng-container>
+  </div>
+</div>
+<br>
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered  table-hover ">
+        <thead class="topbar">
+          <tr>
+            <th> GS Code</th>
+            <th>Item Name</th>
+            <th>Design Name</th>
+            <th>Weight</th>
+            <th>SKU Id</th>
+            <th>Status</th>
+            <th>Open</th>
+            <th>Close</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let _list of ListOfSKU">
+          <tr>
+            <td>{{_list.GSCode}}</td>
+            <td>{{_list.ItemCode}}</td>
+            <td>{{_list.DesignCode}}</td>
+            <td>{{_list.Weight}}</td>
+            <td>{{_list.SKUID}}</td>
+            <td>{{_list.ObjStatus}}</td>
+            <td align="center">
+              <i class="fa fa-lock-open" title="edit"></i>
+            </td>
+            <td align="center">
+              <i class="fa fa-lock-open" title="edit"></i>
+            </td>
+            <td align="center">
+              <i class="fas fa-trash" title="edit"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

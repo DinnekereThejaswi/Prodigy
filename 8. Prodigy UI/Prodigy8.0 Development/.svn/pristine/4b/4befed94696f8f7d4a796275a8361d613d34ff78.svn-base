@@ -1,0 +1,81 @@
+/**
+ * Table Of Content
+ *
+ * 	1. Globals
+ *	2. Headers
+ *	3. Navigations
+ *	4. Banners
+ *	5. Footers
+ *	6. app
+ *	7. Widgets
+ *	8. Custom Templates
+ */
+
+@import url('//fonts.googleapis.com/css?family=Open+Sans|Oswald');
+@import url('//fonts.googleapis.com/css?family=Rubik');
+
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import 'variable';
+@import 'app';
+@import 'pages';
+@import 'sidebar';
+@import '../scss/icons/font-awesome/css/font-awesome.min.css';
+@import '../scss/icons/simple-line-icons/css/simple-line-icons.css';
+@import '../scss/icons/themify-icons/themify-icons.css';
+@import "../scss/icons/material-design-iconic-font/css/materialdesignicons.min.css";
+@import 'widgets';
+@import 'grid';
+@import 'responsive';
+@import 'spinners.scss';
+@import 'animate.css';
+@import 'theme-settings.scss';
+
+// color css
+
+@import 'colors/blue-dark';
+@import 'colors/default-dark';
+@import 'colors/red-dark';
+@import 'colors/green-dark';
+@import 'colors/purple-dark';
+@import 'colors/megna-dark';
+@import 'colors/megna';
+@import 'colors/blue';
+@import 'colors/red';
+@import 'colors/green';
+@import 'colors/purple';
+@import 'colors/default';
+
+// dark theme
+@import 'dark';
+
+
+.circle {
+    $circle-count   : 60;
+    $circle-diameter: 0.5em;
+    $ring-radius    : 4em;
+    $duration       : 3s;
+    position        : absolute;
+    width           : $circle-diameter;
+    height          : $circle-diameter;
+    border-radius   : 50%;
+    background      : white;
+    opacity         : 0;
+    animation       : move-to-center $duration ease-in-out infinite;
+
+    @for $i from 1 through $circle-count {
+        &:nth-child(#{$i}) {
+            $ratio         : $i / $circle-count;
+            // Make a ring of circles, and move them to center;
+            transform      : rotate($ratio * 720deg) translateX($ring-radius);
+            // Then stagger the animation, and it becomes a spiral.
+            animation-delay: $ratio * $duration;
+        }
+    }
+}
+
+@keyframes move-to-center {
+    to {
+        opacity  : 1;
+        transform: translate(0, 0);
+    }
+}

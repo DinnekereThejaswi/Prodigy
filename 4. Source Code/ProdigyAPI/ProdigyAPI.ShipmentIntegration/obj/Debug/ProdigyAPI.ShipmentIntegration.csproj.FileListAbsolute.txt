@@ -1,0 +1,12 @@
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\bin\Debug\ProdigyAPI.ShipmentIntegration.dll.config
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\bin\Debug\ProdigyAPI.ShipmentIntegration.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\bin\Debug\ProdigyAPI.ShipmentIntegration.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\obj\Debug\ProdigyAPI.ShipmentIntegration.csprojResolveAssemblyReference.cache
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\obj\Debug\ProdigyAPI.ShipmentIntegration.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\obj\Debug\ProdigyAPI.ShipmentIntegration.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\bin\Debug\ProdigyAPI.ShipmentIntegration.dll.config
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\bin\Debug\ProdigyAPI.ShipmentIntegration.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\bin\Debug\ProdigyAPI.ShipmentIntegration.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\obj\Debug\ProdigyAPI.ShipmentIntegration.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\obj\Debug\ProdigyAPI.ShipmentIntegration.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.ShipmentIntegration\obj\Debug\ProdigyAPI.ShipmentIntegration.csprojResolveAssemblyReference.cache

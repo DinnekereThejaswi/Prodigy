@@ -1,0 +1,219 @@
+<div style="color: brown; text-align: right; font-style: italic;">
+  <app-lastdocno [routerUrl]="routerUrl"></app-lastdocno>
+</div>
+<br>
+
+<div class="card">
+  <div class="card-body">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-3 ">
+          <div class="">
+            <div><i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">
+                Receipt Date</span>
+              <h2 class="font-light">{{RepairSummaryHeader.RepairDate}}</h2>
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <label for="">Receipt Date</label>
+            <input class="form-control" name="RepairDate" readonly
+              [(ngModel)]="RepairSummaryHeader.RepairDate">
+          </div> -->
+        </div>
+        <div class="col-md-3 ">
+          <div class="form-group">
+            <label for="">Due Date</label>
+            <input class="form-control" name="DueDate" readonly bsDatepicker [bsConfig]="ReceiptdatePickerConfig"
+              placeholder="Select Due Date" [(ngModel)]="RepairSummaryHeader.DueDate" value="{{RepairSummaryHeader.DueDate}">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="">Received By</label>
+            <select class="form-control mr-auto mt-2 mt-lg-0" name="SalCode" [(ngModel)]="RepairSummaryHeader.SalCode">
+              <option [ngValue]="null">select</option>
+              <option *ngFor="let _salesman of SalesManList" [value]="_salesman.sal_code">
+                {{_salesman.CodeName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 ">
+          <div class="form-group">
+            <label for="">Remarks</label>
+            <input class="form-control" placeholder="Remarks" name="Remarks" type="text"
+              [(ngModel)]="RepairSummaryHeader.Remarks">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div class="card-header Pointer " (click)="ToggleCustomerData()" data-toggle="collapse" href="#Customer"
+      [ngClass]="EnableCustomerTab ? 'collapsed' : ''" [attr.data-toggle]="EnableCustomerTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);">
+      <div class="row">
+        <div class="col-md-2 ">
+          <a class="card-title align-middle " style="color:#0096FF">
+            <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+            <span class="align-middle"><ins>Customer Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture the New customer
+                  information and Existing customer information</span>
+              </div>
+            </span>
+          </a>
+        </div>
+        <ng-container>
+          <ng-container *ngIf="Customer!=null">
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> Customer: {{Customer.CustName}} </span></h4>
+            </div>
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> Mobile No: {{Customer.MobileNo}} </span></h4>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div id="Customer" class="card-body collapse show" [hidden]="EnableCustomerTab">
+      <app-customer></app-customer>
+    </div>
+  </div>
+  <br>
+  <div class="card mb-0">
+    <div class="card-header Pointer" href="#ReceiptItems" [ngClass]="EnableReceiptItemsTab ? 'collapsed' : ''"
+      [attr.data-toggle]="EnableReceiptItemsTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.52);"
+      (click)="ToggleReceiptItemsData()">
+      <div class="row">
+        <div class="col-md-2 ">
+          <a class="card-title align-middle" style="color:#005BFF">
+            <i class="fal fa-cash-register "></i>
+            <!-- <i class="fal fa-rupee-sign fa-2x mr-2 align-middle"></i> -->
+            <span class="align-middle Pointer"><ins>Receipt Items </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top"></span>
+              </div>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="ReceiptItems" class="card-body collapse" [collapse]="EnableReceiptItemsTab">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row pull-right pt-3">
+            <button (click)="addrow()"
+              class=" pull-right btn waves-effect waves-light btn-rounded btn-outline-secondary wd"><i
+                class="far fa-plus-circle"></i>&nbsp;Add
+            </button>
+          </div>
+          <br><br><br>
+          <div class="table-responsive">
+            <table class="table table-bordered" style="width: 2000px;">
+              <thead class="topbar">
+                <tr>
+                  <th>Select GS</th>
+                  <th>Item Name</th>
+                  <th>Qty</th>
+                  <th>Gross Wt</th>
+                  <th>St Wt</th>
+                  <th>N Wt</th>
+                  <th>D cts</th>
+                  <th>App Charges</th>
+                  <th>Description</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="fieldArray">
+                <tr *ngFor="let field of fieldArray; let i = index">
+                  <td>
+                    <select class="form-control CustomWidth150" #repairGS [(ngModel)]="field.GSCode"
+                      name="{{field.GSCode}}" (change)="changeRepairGS(repairGS.value,i)">
+                      <option [ngValue]="null">Select</option>
+                      <option *ngFor="let _repairGS of RepairGS" [value]="_repairGS.GSCode">
+                        {{_repairGS.GSName}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select name="{{field.Item}}" class="form-control CustomWidth150" #Item [(ngModel)]="field.Item"
+                      [disabled]="readonly[i]" (change)="ChangeItem(Item.value,i)">
+                      <option [ngValue]="null">Select</option>
+                      <option *ngFor="let _RepairItemName of RepairItemName[i]" [disabled]="readonly[i]"
+                        [value]="_RepairItemName.ItemType">
+                        {{_RepairItemName.ItemType}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="number" [(ngModel)]="field.Units" name="{{field.Units}}"
+                      class="form-control CustomWidth75" placeholder="Quantity" [readonly]="readonly[i]">
+                  </td>
+                  <td><input type="number" [(ngModel)]="field.GrossWt" name="{{field.GrossWt}}"
+                      class="form-control CustomWidth75" placeholder="GrossWt" [readonly]="readonly[i]"></td>
+
+                  <td><input type="number" [(ngModel)]="field.StoneWt" name="{{field.StoneWt}}"
+                      class="form-control CustomWidth75" placeholder="Stone Wt" [readonly]="readonly[i]"
+                      (keydown.Tab)="GetNetWT(i);">
+                  </td>
+
+                  <td><input type="number" [(ngModel)]="field.NetWt" name="{{field.NetWt}}"
+                      class="form-control CustomWidth75" placeholder="Net Wt" readonly></td>
+
+                  <td><input type="number" [(ngModel)]="field.Dcts" name="{{field.Dcts}}"
+                      class="form-control CustomWidth75" placeholder="Dcts" [readonly]="readonly[i]"></td>
+
+                  <td><input type="number" [(ngModel)]="field.Rate" name="{{field.Rate}}"
+                      class="form-control CustomWidth75" placeholder="App Charges" [readonly]="readonly[i]"></td>
+
+                  <td><input type="text" [(ngModel)]="field.Description" name="{{field.Description}}"
+                      class="form-control CustomWidth200" placeholder="Description" [readonly]="readonly[i]"></td>
+
+                  <td>
+                    <ng-container *ngIf="EnableEditDelbtn[i]">
+                      <button class="btn btn-default btn-rounded" type="button" (click)="editFieldValue(i)"><i
+                          class="fal fa-pencil-alt"></i>
+                        Edit</button>
+                      <button class="btn btn-danger btn-rounded" type="button" (click)="deleteFieldValue(i)"><i
+                          class="fal fa-trash-alt"></i>
+                        Delete</button>
+                    </ng-container>
+                    <ng-container *ngIf="EnableSaveCnlbtn[i]">
+                      <button class="btn btn-success btn-rounded" type="button" (click)="saveDataFieldValue(i)"><i
+                          class="fal fa-save"></i>
+                        Save</button>
+                      <button class="btn btn-warning btn-rounded" type="button" (click)="cancelDataFieldValue(i)"><i
+                          class="far fa-window-close"></i>
+                        Cancel</button>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <h3 style="text-align:right">Total gross Wt: {{GrossWtTotal(fieldArray) | number: '1.2-2'}}</h3>
+  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button"
+    (click)="submitPost()" [hidden]="EnableSubmitButton"><i class="fal fa-save"></i> Submit</button>
+</div>
+
+<ng-container *ngIf="EnableReprintReceipt">
+  <app-repair-reprint></app-repair-reprint>
+</ng-container>
+
+
+<br><br>
+<span><b>Note :</b>All Weights are in Grams</span>
+<ng-container *ngIf="EnableJson">
+  <pre>{{RepairSummaryHeader | json}}</pre>
+</ng-container>

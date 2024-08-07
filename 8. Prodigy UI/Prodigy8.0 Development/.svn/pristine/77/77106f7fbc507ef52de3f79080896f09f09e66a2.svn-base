@@ -1,0 +1,536 @@
+<div class="row" style="display:block;margin: auto;width: 30%;">
+  <ng-container *ngIf="isReprint">
+    <form [formGroup]="ReprintForm" class="form-horizontal">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="OrderNo">Bill Date</label>&nbsp;
+                  <ng-container *ngIf="!EnableDate">
+                    <input type="text" class="form-control" formControlName="applicationDate" bsDatepicker
+                      [bsConfig]="datePickerConfig" [(ngModel)]="applicationDate" readonly
+                      (ngModelChange)="byDate(applicationDate)" value="{{applicationDate | date:'dd/MM/yyyy' }}"
+                      style="width: 200px;" />
+                  </ng-container>
+                  <ng-container *ngIf="EnableDate">
+                    <input type="text" class="form-control" [(ngModel)]="applicationDate"
+                      formControlName="applicationDate" value="{{applicationDate | date:'dd/MM/yyyy' }}"
+                      style="width: 200px;" readonly />
+                  </ng-container>
+                  &nbsp;&nbsp;
+                  <i class="fal fa-edit" (click)="ValidatePermisiion()"></i>
+                </div>
+                <div class="form-group">
+                  <label for="OrderNo">Bill No</label>
+                  <!-- <input type="number"  class="form-control" [(ngModel)]="billNo" [ngModelOptions]="{standalone: true}"/> -->
+                  <select class="form-control mr-auto mt-2 mt-lg-0" (change)="getBillNos(billNo.value)" #billNo>
+                    <option [ngValue]="0">Select</option>
+                    <option *ngFor="let _ReprintbillNo of ReprintbillNo" [value]="_ReprintbillNo.BillNo">
+                      {{_ReprintbillNo.BillNo}} - {{_ReprintbillNo.CustName}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      Cancelled Bills
+                      <div class="material-switch pull-right">
+                        <input id="someSwitchOptionDefault" (change)="isCheckedCancelledBills($event)"
+                          name="someSwitchOption001" type="checkbox" />
+                        <label for="someSwitchOptionDefault" class="label-default"></label>
+                      </div>
+                    </li>
+                  </ul>
+
+                </div>
+                <div class="form-group">
+                  <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                    (click)="onPrint()"><i class="fal fa-print"></i>
+                    Reprint </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <div class="modal fade" id="ReprintSalesBillingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+            id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+          <button type="button" class="close" (click)="closeSalesBilling()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <ng-container *ngIf="PrintTypeBasedOnConfig">
+          <div class="container invoice-box htmlPrint" id="print-closed-section"
+            style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+            <pre>{{PrintDetails}}</pre>
+          </div>
+          <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+            <div id="DisplayData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ReprintPurchaseBillingModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+            id="exampleModalLabel" (click)=printPurchaseBill()><i class="fal fa-print"></i> Print</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="reoadPurchaseBillPrint()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <ng-container *ngIf="PrintTypeBasedOnConfig">
+          <div class="container invoice-box htmlPrint" id="print-closed-section"
+            style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+            <pre>{{PrintPurchaseDetails}}</pre>
+          </div>
+          <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+            <div id="DisplayPurchaseData" class="center" [innerHTML]='PrintPurchaseDetails | safeHtml'></div>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="ReprintSRBillModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+            id="exampleModalLabel" (click)=printSRBill()><i class="fal fa-print"></i> Print</button>
+          <button type="button" class="close" (click)="reoaSRBill()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <ng-container *ngIf="PrintTypeBasedOnConfig">
+          <div class="container invoice-box htmlPrint" id="print-closed-section"
+            style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+            <pre>{{PrintSRDetails}}</pre>
+          </div>
+          <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+            <div id="SRDisplayData" class="center" [innerHTML]='PrintSRDetails | safeHtml'></div>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="ReprintOGBillModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+            id="exampleModalLabel" (click)=printOGBill()><i class="fal fa-print"></i> Print</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <ng-container *ngIf="PrintTypeBasedOnConfig">
+          <div class="container invoice-box htmlPrint" id="print-closed-section"
+            style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+            <pre>{{PrintOGDetails}}</pre>
+          </div>
+          <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+            <div id="OGDisplayData" class="center" [innerHTML]='PrintOGDetails | safeHtml'></div>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="modal fade" id="OrderTab" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+  aria-labelledby="OrderTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="OrderTabLabel" (click)=printOrder()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" (click)="closeOrderTab()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-order-section" style="max-width: 900px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">{{Orderheading}}</h3>
+          <div class="card">
+            <div class="card-body">
+
+              <div class="row mb-4 margin">
+                <div class="col-md-4 divborder">
+                  <h5 class="mb-3 top"> CUSTOMER DETAILS:</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{orderDetails.Salutation}}{{orderDetails.CustName}}</b></td>
+                      </tr>
+                      <tr class="spaceUnder">
+                        <td>Address</td>
+                        <td class="mb" style="width: 150px;
+                                                word-break: break-all;white-space: normal;">
+                          <b>{{orderDetails.Address1}}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td> <b>{{orderDetails.Address2}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>State</td>
+                        <td><b>{{orderDetails.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td *ngIf="orderDetails.StateCode != 0">Code</td>
+                        <td><b>{{orderDetails.StateCode}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>MobileNo</td>
+                        <td><b>{{orderDetails.MobileNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>{{orderDetails.CustDocType}}</td>
+                        <td><b>{{orderDetails.CustDocValue}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-4 divborder">
+                  <h5 class="mb-3 top">GSTIN:<b>{{ShowroomList.TinNo}}</b></h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <ngx-barcode6 [bc-value]="OrderNum" [bc-width]="width" [bc-height]="height">
+                          </ngx-barcode6>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Order No.</td>
+                        <td><b>{{orderDetails.BranchCode}}/O/{{orderDetails.OrderNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Order Date</td>
+                        <td><b>{{orderDetails.OrderDate | date: 'd/M/y'}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Place of supply</td>
+                        <td><b>{{orderDetails.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Tax Payment Mode</td>
+                        <td><b>Normal</b></td>
+                      </tr>
+                      <tr>
+                        <td>Rate</td>
+                        <td><b>{{orderDetails.Rate | currencyFormat}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Delivery Date</td>
+                        <td><b>{{orderDetails.DeliveryDate | date: 'd/M/y'}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Order Type</td>
+                        <td><b>{{orderDetails.OrderType}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>PAN</td>
+                        <td><b>{{ShowroomList.PAN}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Purchase Plan</td>
+                        <td><b>{{orderDetails.BookingType |
+                            purchasePlan:orderDetails.BookingType}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-4 lastdivborder">
+                  <h5 class="mb-3 top"> SHOWROOM ADDRESS</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{ShowroomList.CompanyName }}</b></td>
+                      </tr>
+                      <tr class="spaceUnder">
+                        <td>Address</td>
+                        <td class="mb" style="width: 150px;
+                                                word-break: break-all;white-space: normal;">
+                          <b>{{ShowroomList.Address1}}</b>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><b>{{ShowroomList.Address2}}</b>
+                      </tr>
+                      <tr>
+                        <td>City</td>
+                        <td><b>{{ShowroomList.city}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>State</td>
+                        <td><b>{{ShowroomList.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Code</td>
+                        <td><b>{{ShowroomList.StateCode}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Phone</td>
+                        <td><b>{{ShowroomList.PhoneNo}}</b></td>
+                      </tr>
+                    </tbody>
+
+                  </table>
+                 
+                </div>
+              </div>
+              <div class="row margin">
+                <div class="col-lg-12">
+                  <h3 style="text-align:center"><b>{{ReprintType | uppercase}}</b></h3>
+                  <div class="table-responsive-sm">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="classname">Item Description</th>
+                          <th class="classname">Quantity</th>
+                          <th>Weight</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let _Linesarray of Linesarray">
+                          <td class="classname">{{_Linesarray.Description}}</td>
+                          <td class="classname">{{_Linesarray.Quantity}}</td>
+                          <td class="classname">
+                            {{_Linesarray.FromGrossWt | number : '1.3-3'}}</td>
+                        </tr>
+                        <tr>
+                          <th class="classname">Totals</th>
+                          <th class="classname">{{WeightTotalList.Quantity}}</th>
+                          <th class="classname">
+                            {{WeightTotalList.FromGrossWt | number : '1.3-3'}}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="row margin" *ngIf="ReceiptList.length != '0'">
+                    <div class="col-lg-12">
+                      <h3 style="text-align:center"><b>Payment Details</b></h3>
+                      <div class="table-responsive-sm">
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                              <th class="classname">Mode</th>
+                              <th class="classname">Details</th>
+                              <th class="classname">Amount</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let _ReceiptList of ReceiptList">
+                              <td class="classname">{{_ReceiptList.PayMode |
+                                payment:_ReceiptList.PayMode}}</td>
+                              <ng-Container *ngIf="_ReceiptList.PayMode == 'R'">
+                                <td class="classname">
+                                  {{_ReceiptList.RefBillNo}}/{{_ReceiptList.ChequeNo}}/{{_ReceiptList.Bank}}/{{_ReceiptList.CardAppNo}}
+                                </td>
+                              </ng-Container>
+                              <ng-Container *ngIf="_ReceiptList.PayMode != 'R'">
+                                <td *ngIf="_ReceiptList.PayMode == 'PB' || _ReceiptList.PayMode == 'SR'"
+                                  class="classname">
+                                  {{_ReceiptList.BranchCode}}/{{_ReceiptList.RefBillNo}}
+                                </td>
+                                <td
+                                  *ngIf="_ReceiptList.PayMode != 'PB' && _ReceiptList.PayMode != 'SR' && _ReceiptList.PayMode != 'R'"
+                                  class="classname">{{_ReceiptList.PayDetails}}</td>
+                              </ng-Container>
+                              <td class="classname">{{_ReceiptList.PayAmount | number :
+                                '1.2-2'}}
+
+                              </td>
+                            </tr>
+                            <tr>
+                              <th class="classname">Totals</th>
+                              <th class="classname"></th>
+                              <th class="classname"> {{ ReceiptTotal.pay_amt | number :
+                                '1.2-2'}}
+                              </th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="ReceiptList.length != '0'">
+                    <div class="col-sm-12 ">
+                      <div class="table-responsive-sm">
+                        <table class="table table-bordered">
+                          <tbody>
+                            <tr>
+                              <td class="classname bottom"><strong>Taxable Amt:<br>
+                                  {{ ReceiptTotal.pay_amount_before_tax | number :
+                                  '1.2-2'}}</strong>
+                              </td>
+                              <td class="classname bottom">
+                                <strong>CGST @ 1.5%:<br>
+                                  {{ ReceiptTotal.CGST_Amount | number :
+                                  '1.2-2'}}</strong>
+                              </td>
+                              <td class="classname bottom">
+                                <strong>SGST @ 1.5%:<br>
+                                  {{ ReceiptTotal.SGST_Amount | number :
+                                  '1.2-2'}}</strong>
+                              </td>
+                              <td class="classname bottom">
+                                <strong>IGST @ 3%:<br>
+                                  {{ ReceiptTotal.IGST_Amount | number :
+                                  '1.2-2'}}</strong>
+                              </td>
+                              <td class="classname bottom">
+                                <strong>Total Amt:<br>
+                                  {{ ReceiptTotal.pay_amt | number :
+                                  '1.2-2'}}</strong>
+                              </td>
+                            </tr>
+                            <tr></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-2" *ngIf="TotalList">
+                    <div class="col-md-12" style="text-align: right"><b>Total Amount :
+                        {{ TotalList.pay_amt | currencyFormat}}</b></div>
+                  </div>
+                  <div class="row mb-2" *ngIf="TotalList">
+                    <div class="col-md-12"><b> {{ TotalList.pay_amt | round | numberToWords}}</b>
+                    </div>
+                  </div>
+                  <div class="row mb-2" *ngIf="!TotalList">
+                    <div class="col-md-12"><b>Rupees NIL Only</b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <div>OPR:<b>{{orderDetails.OperatorCode}}</b></div>
+                </div>
+                <div class="col-sm-4">
+                  <div>Salesman Code:<b>{{ orderDetails.SalCode}}</b></div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">Remarks : <b>{{orderDetails.Remarks}}.</b></div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  Taxes and Duties will be
+                  charged extra as
+                  applicable at
+                  the time of Billing.<br>
+                  I hereby agree to take delivery of the articles on payment of the full amount.
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 float-left">
+                  <div class="mb-5">{{orderDetails.OrderRateType}}
+                  </div>
+                  <div class="mt-5"> Customer Signature</div>
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                  <div class="mb-5">For {{ShowroomList.CompanyName}}</div>
+                  Authorized Signature
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="row" style="display:block;margin: auto;width: 30%;">
+  <div class="modal fade" id="OrderTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+            id="exampleModalLabel" (click)=printOrder()><i class="fal fa-print"></i> Print</button>
+          <button type="button" class="close" (click)="closeOrderTab()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <ng-container *ngIf="PrintTypeBasedOnConfig">
+          <div class="container invoice-box htmlPrint" id="print-closed-section"
+            style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+            <pre>{{orderDetails}}</pre>
+          </div>
+          <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+            <div id="DisplayOrderData" class="center" [innerHTML]='orderDetails | safeHtml'></div>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Added permisison modal-->
+
+<div id="PermissonModals" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Prodigy</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="PassWord">9. Password</label>
+          <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+            (keyup.enter)="passWord(Pwd.value)" IntegerDecimalFieldValidator #Pwd />{{ Pwd.focus() }}
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+            (click)="passWord(Pwd.value)">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Ends here -->

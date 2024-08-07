@@ -1,0 +1,6 @@
+/*
+ * Public API Surface of ngx-barcode6
+ */
+export * from './lib/ngx-barcode6.component';
+export * from './lib/ngx-barcode6.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Byb2plY3RzL25neC1iYXJjb2RlNi9zcmMvcHVibGljLWFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUVILGNBQWMsOEJBQThCLENBQUM7QUFDN0MsY0FBYywyQkFBMkIsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygbmd4LWJhcmNvZGU2XG4gKi9cblxuZXhwb3J0ICogZnJvbSAnLi9saWIvbmd4LWJhcmNvZGU2LmNvbXBvbmVudCc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9uZ3gtYmFyY29kZTYubW9kdWxlJztcbiJdfQ==

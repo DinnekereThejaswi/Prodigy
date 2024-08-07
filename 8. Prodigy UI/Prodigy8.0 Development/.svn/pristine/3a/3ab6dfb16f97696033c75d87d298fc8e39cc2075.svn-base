@@ -1,0 +1,158 @@
+<div style="color: brown; text-align: right; font-style: italic;">
+  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+    (click)="chngModifyOrder()">Modify</button>
+</div> <br>
+
+<div style="color: brown; text-align: right; font-style: italic;">
+  <app-lastdocno [routerUrl]="routerUrl"></app-lastdocno>
+</div>
+<br>
+<div id="accordian" class="accordion">
+  <div class="card mb-0">
+    <div class="card-header Pointer " (click)="ToggleCustomerData()" data-toggle="collapse" href="#Customer"
+      [ngClass]="EnableCustomerTab ? 'collapsed' : ''" [attr.data-toggle]="EnableCustomerTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);">
+      <div class="row">
+        <div class="col-md-4 ">
+          <a class="card-title align-middle " style="color:#0096FF">
+            <i class="fas fa-2x fa-users mr-2 align-middle"></i>
+            <span class="align-middle"><ins>Customer Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture the New customer
+                  information and Existing customer information</span>
+              </div>
+            </span>
+
+          </a>
+        </div>
+        <ng-container *ngIf="ToggleCustomer">
+          <ng-container *ngIf="Customer!=null">
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> Customer: {{Customer.CustName}} </span></h4>
+            </div>
+            <div class="col-md-4 pull-right">
+              <h4><span class="align-middle"> MobileNo: {{Customer.MobileNo}} </span></h4>
+            </div>
+
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div id="Customer" class="card-body collapse show" [hidden]="EnableCustomerTab">
+      <app-customer></app-customer>
+    </div>
+  </div>
+  <br>
+  <div class="card mb-0">
+    <div class="card-header Pointer" href="#ItemsPayment" [ngClass]="EnableItemsPaymentsTab ? 'collapsed' : ''"
+      (click)="ToggleItemsPaymentData()"
+      style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);"
+      [attr.data-toggle]="EnableItemsPaymentsTab ? '':'collapse'">
+      <div class="row">
+        <div class="col-md-3 ">
+          <a class="card-title align-middle " style="color:#005BFF">
+            <i class="fal fa-file-invoice fa-2x mr-2 align-middle"></i>
+            <span class="align-middle "><ins>Order Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture the information like
+                  Counter code , Item name , Item description ,Qty, Appr.Wt , MC types like MC/gram , MC/piece
+                  etc</span>
+              </div>
+            </span>
+          </a>
+        </div>
+        <ng-container *ngIf="NoRecordsPayments">
+          <div class="col-md-3 pull-right">
+            <h4><span class="align-middle"> Order No: {{itemDetails.OrderNo}} </span></h4>
+          </div>
+          <div class="col-md-3 pull-right">
+            <h4><span class="align-middle"> Karat: {{itemDetails.Karat}} </span></h4>
+          </div>
+          <div class="col-md-3 pull-right">
+            <h4><span class="align-middle"> Order Due Date: {{itemDetails.DeliveryDate }} </span>
+            </h4>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <ng-container *ngIf="NoRecordsItemsPayments">
+      <div id="ItemsPayment" class="card-body collapse" [hidden]="EnableItemsPaymentsTab"
+        [ngClass]="EnableItemsPaymentsTab ? 'hide' : 'show'">
+        <app-itemdetails [OrderType]="OrderType"></app-itemdetails>
+      </div>
+    </ng-container>
+  </div>
+  <br>
+  <div class="card mb-0">
+    <div class="card-header Pointer" href="#Payment" (click)="TogglePaymentData()"
+      [ngClass]="EnablePaymentsTab ? 'collapsed' : ''" [attr.data-toggle]="EnablePaymentsTab ? '':'collapse'"
+      style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+      <div class="row">
+        <div class="col-md-4 ">
+          <a class="card-title align-middle" style="color:#FF00C5">
+            <i class="far fa-rupee-sign fa-2x mr-2 align-middle"></i>
+            <span class="align-middle"><ins>Receipt Details </ins>
+              <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext tooltip-top">Capture the Receipts
+                  ( Payment collection modes) information like Cash , Cheque , Card , Scheme Adj, Purchase Bill
+                  etc</span>
+              </div>
+            </span>
+          </a>
+        </div>
+        <ng-container *ngIf="NoRecordsPaymentSummary">
+          <div class="col-md-4 pull-right">
+          </div>
+          <div class="col-md-4 pull-right">
+            <h4><span class="align-middle"> Amount: {{PaymentSummary.Amount | number : '1.2-2'}} </span></h4>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <ng-container *ngIf="NoRecordsPayments">
+      <div id="Payment" class="card-body collapse" [hidden]="EnablePaymentsTab"
+        [ngClass]="EnablePaymentsTab ? 'hide' : 'show'">
+        <app-payment [argPageName]="pageName"></app-payment>
+      </div>
+    </ng-container>
+  </div>
+  <br>
+  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button" (click)="Submit()"
+    [hidden]="EnableSubmitButton"><i class="fal fa-save"></i> Submit</button>
+  <!-- <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button"
+    (click)="Submit()"><i class="fal fa-save"></i> Submit</button> -->
+  <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" (click)="cancel()" type="button"><i
+      class="far fa-window-close"></i>
+    Cancel</button>
+
+</div>
+
+<ng-container *ngIf="EnableReprintOrder">
+  <!-- <app-reprint-order [OrderNo]="OrderNo"></app-reprint-order> -->
+  <app-reprint-order></app-reprint-order>
+</ng-container>
+
+<br>
+<br>
+
+<ng-container *ngIf="EnableModifyOrder">
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog " style="max-width: 1200px;">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <app-modify-order></app-modify-order>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+<span style="width: auto;"><b>Note : </b>All Weights are in Grams</span>
+<ng-container *ngIf="EnableJson">
+  <pre>{{ParentJSON | json}}</pre>
+</ng-container>

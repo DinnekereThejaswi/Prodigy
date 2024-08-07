@@ -1,0 +1,37 @@
+table {
+    width: 100%;
+}
+
+thead, tbody, tr, td, th { display: block; }
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 50px;
+    width: 19.2%;
+    float: left;
+    /*text-align: left;*/
+}
+
+tbody {
+    height: 360px;
+    overflow-y: auto;
+}
+
+thead {
+    /* fallback */
+}
+
+
+tbody td {
+    width: 19.2%;
+    float: left;
+    height:32px;
+    padding-top:5px;
+    padding-bottom: 5px;
+}

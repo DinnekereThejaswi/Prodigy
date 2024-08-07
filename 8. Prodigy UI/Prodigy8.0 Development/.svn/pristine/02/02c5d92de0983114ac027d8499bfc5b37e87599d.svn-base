@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="GSTForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="control-label"> GST Code </label>
+                <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                  formControlName="frmCtrl_Code"  (input)="Codes.value = Codes.value.toUpperCase()"
+                  [(ngModel)]="GSTgroupModel.Code" [readonly]="isReadOnly" placeholder="Enter code"
+                  type="text" #Codes IntegerDecimalFieldValidator>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="control-label"> GST Type </label>
+                <select class="form-control" formControlName="frmCtrl_GSTGroupType"
+                  [(ngModel)]="GSTgroupModel.GSTGroupType">
+                  <option [ngValue]="null">Select</option>
+                  <option *ngFor="let _types of GroupTYpe" [value]="_types.name">
+                    {{_types.code}}-{{_types.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label"> Description </label>
+                <input type="text" class="form-control" 
+                [(ngModel)]="GSTgroupModel.Description"
+                 formControlName="frmCtrl_Description" maxlength="30" placeholder="Enter Description"  >
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="form-group">
+                <label class="control-label"> Enable</label>
+                <div class="form-group" style="width: 20px;height: 20px;">
+                  <input type="checkbox" class="chkbxsize" class="form-control"
+                    [checked]="GSTgroupModel.IsActive==true"
+                    [(ngModel)]="GSTgroupModel.IsActive" formControlName="frmCtrl_IsActive"
+                    (change)="IsEnable($event)" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="form-group">
+                <label class="control-label"> Seq No </label>
+                <input type="text"  class="form-control" 
+                [(ngModel)]="GSTgroupModel.SortOrder"
+                 formControlName="frmCtrl_SortOrder"  IntegerDecimalFieldValidator >
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <ng-container *ngIf="EnableAdd">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="postGSTListData(GSTForm)">
+                    <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                </ng-container>
+                <ng-container *ngIf="EnableSave">
+                  <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                    style="margin-top: 1.2rem !important;" (click)="save(GSTForm)">
+                    <i class="fal fa-save"></i>&nbsp;Save</button>
+                </ng-container>
+                <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  style="margin-top: 1.2rem !important;" (click)="clear()">
+                  <i class="fal fa-trash"></i>&nbsp;Clear</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered  table-hover ">
+            <thead class="topbar">
+              <tr>
+                <th>GST Code</th>
+                <th>Goup Type</th>
+                <th>Description</th>
+               
+                <th>Enabled</th>
+                <th>SeqNo</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let  _gstypes of GSTgroupItemList">
+                <td>{{_gstypes.Code}}</td>
+                <td>{{_gstypes.GSTGroupType}}</td>
+                <td>{{_gstypes.Description}}</td>
+                <td ><input type="checkbox" [checked]="_gstypes.IsActive==true" style="width: 20px;height: 20px;" /></td>
+                <td > {{_gstypes.SortOrder }}</td>           
+                <td align="center">
+                  <!-- <button type="button" class="btn btn-outline-dark  btn-sm" (click)="editField(_salesmans)">Edit</button> -->
+                  <i class="fas fa-edit" title="edit" (click)="editField(_gstypes)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<ng-container *ngIf="EnableJson">
+<pre>{{GSTgroupModel | json}}</pre>
+</ng-container>
+</div>

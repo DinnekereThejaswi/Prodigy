@@ -1,0 +1,135 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="TCSForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="Limit">TCS Limit Amt(%)<span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span></label>
+                        <input type="text" class="form-control" id="Limit" formControlName="frmCtrl_TCSLimitAmt"
+                            [(ngModel)]="TCSListData.AmountLimit">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="AccountName">Account Name <span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span></label>
+                        <Select class="form-control" id="AccountName" formControlName="frmCtrl_AccountName"
+                            [(ngModel)]="TCSListData.AccCode">
+                            <option [value]="0">Select</option>
+                            <option *ngFor="let _list of AccDeatils" [value]="_list.Code"> {{_list.Name}}</option>
+                        </Select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="KYC">Is With KYC <span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span></label>
+                        <Select class="form-control" id="KYC" formControlName="frmCtrl_IsWithKYC"
+                            [(ngModel)]="TCSListData.IsWithKYC">
+                            <option [value]="null">Select</option>
+                            <option *ngFor="let _list of kyc" [value]="_list.Code"> {{_list.Name}}</option>
+                        </Select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="TDSpercent">TCS(%)<span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span></label>
+                        <input type="text" class="form-control" id="TDSpercent" formControlName="frmCtrl_TCSPercent"
+                            [(ngModel)]="TCSListData.TCSPercent">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="Transtype">Transtype <span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span></label>
+                        <Select class="form-control" id="Transtype" formControlName="frmCtrl_Transtype"
+                            [(ngModel)]="TCSListData.TransactionType">
+                            <option [value]="null">Select</option>
+                            <option *ngFor="let _list of Transtypes" [value]="_list.Code"> {{_list.Name}}</option>
+                        </Select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="Calculated">Calculated <span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span></label>
+                        <Select class="form-control" id="Calculated" formControlName="frmCtrl_Calculated"
+                            [(ngModel)]="TCSListData.CalculatedOn">
+                            <option [value]="null">Select</option>
+                            <option *ngFor="let _list of calculatedBy" [value]="_list.Code">
+                                {{_list.Name}}
+                            </option>
+                        </Select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="date">Effective<span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span></label>
+                        <input type="text" class="form-control" id="date" formControlName="frmCtrl_Effective"
+                            [bsConfig]="datePickerConfig" bsDatepicker [(ngModel)]="applicationDate"
+                            value="{{applicationDate | date:'DD/MM/YYYY' }}"
+                            (ngModelChange)="byDate(applicationDate)" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <ng-container *ngIf="EnableAdd">
+                        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;" (click)="Add(TCSForm)">
+                            <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                    </ng-container>
+                    <ng-container *ngIf="EnableSave">
+                        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;" (click)="save(TCSForm)">
+                            <i class="fal fa-save"></i>&nbsp;Save</button>
+                    </ng-container>
+                    <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        style="margin-top: 1.2rem !important;">
+                        <i class="fal fa-trash"></i>&nbsp;Clear</button>
+
+                </div>
+            </div>
+        </form>
+        <ng-container *ngIf="EnableJson">
+            <pre> {{TCSListData | json }}</pre>
+        </ng-container>
+    </div>
+</div>
+
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h3> TCS Master</h3>
+                    </div>
+                </div>
+                <h6 class="card-subtitle"></h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <!-- <th>ID</th>-->
+
+                                <th>TDS Name</th>
+                                <th>TDS %</th>
+                                <th>Status</th>
+                                <th>Edit</th>
+                                <th>Open</th>
+                                <th>Close</th>
+                            </tr>
+                        </thead>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+h2 {
+    font-size: 150px;
+    padding-top: 25px;
+    padding-left: 55px;
+}
+h1 {
+    font-size: 120px;
+    padding-left: 55px;
+}
+.padding {
+    padding: 0.25rem !important;
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"progress-spinner-module.d.ts","sources":["E:/MagnaWeb-Angular8.0/node_modules/@angular/material/progress-spinner/typings/progress-spinner-module.d.ts"],"sourcesContent":["declare class MatProgressSpinnerModule {\n}\nexport { MatProgressSpinnerModule };\n"],"names":[],"mappings":";;;;AAAA;;;AACA;;"}

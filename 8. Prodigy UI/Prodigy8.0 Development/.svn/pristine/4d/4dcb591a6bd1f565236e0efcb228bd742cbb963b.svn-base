@@ -1,0 +1,46 @@
+<div class="limiter">
+  <div class="container-login100" style="background-image: url('../../../assets/images/jewellery-Showroom-Interior-Design-1.jpg') !important;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;">
+    <div class="wrap-login100" style="box-shadow: rgba(0, 0, 0, 0.54) 3px 14px 13px 7px">
+      <form class="login100-form validate-form" #f='ngForm' (ngSubmit)="submit(f)">
+        <span class="login100-form-title p-b-26">
+          Login
+        </span>
+
+
+        <div class="wrap-input100 validate-input">
+          <input class="input100" type="text" name="username" placeholder="Username" [(ngModel)]="userName">
+        </div>
+
+        <div class="wrap-input100 validate-input">
+          <span class="btn-show-pass">
+            <i class="fas fa-eye"></i>
+          </span>
+          <input class="input100" type="password" name="password" placeholder="Password" [(ngModel)]="passwordValue">
+        </div>
+
+        <div class="container-login100-form-btn">
+          <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn">
+              Login
+            </button>
+          </div>
+        </div>
+
+        <div class="text-center p-t-115">
+          <span class="txt1">Ver 1.0<br>
+            © Copyright {{year}}
+          </span>
+
+          <a class="txt2" href="https://sharaaninfo.com" target="_blank">
+            Sharaan Infosystems
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

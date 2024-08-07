@@ -1,0 +1,330 @@
+import { Injectable, NgModule } from '@angular/core';
+import { fromEvent, timer, Subject, throwError } from 'rxjs';
+import { map, filter, tap, debounce, catchError } from 'rxjs/operators';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import * as ɵngcc0 from '@angular/core';
+const /** @type {?} */ isMac = (navigator.userAgent.indexOf('Mac OS') !== -1);
+const /** @type {?} */ codes = {
+    'backspace': 8,
+    'tab': 9,
+    'enter': 13,
+    'pause/break': 19,
+    'caps lock': 20,
+    'esc': 27,
+    'space': 32,
+    'page up': 33,
+    'page down': 34,
+    'end': 35,
+    'home': 36,
+    'left': 37,
+    'up': 38,
+    'right': 39,
+    'down': 40,
+    'insert': 45,
+    'delete': 46,
+    'numpad *': 106,
+    'numpad +': 107,
+    'numpad -': 109,
+    'numpad .': 110,
+    'numpad /': 111,
+    'num lock': 144,
+    'scroll lock': 145,
+    'my computer': 182,
+    'my calculator': 183,
+    ';': 186,
+    '=': 187,
+    ',': 188,
+    '-': 189,
+    '.': 190,
+    '/': 191,
+    '`': 192,
+    '[': 219,
+    '\\': 220,
+    ']': 221,
+    "'": 222,
+    'windows': 91,
+    '⇧': 16,
+    '⌥': 18,
+    '⌃': 17,
+    'pause': 19,
+    'break': 19,
+    'caps': 20,
+    'return': 13,
+    'escape': 27,
+    'spc': 32,
+    'pgup': 33,
+    'pgdn': 34,
+    'ins': 45,
+    'del': 46,
+};
+const /** @type {?} */ modifiers = {
+    'shift': 'shiftKey',
+    'ctrl': 'ctrlKey',
+    'alt': 'altKey',
+    'cmd': isMac ? 'metaKey' : 'ctrlKey',
+    'command': isMac ? 'metaKey' : 'ctrlKey',
+    'left command': 'metaKey',
+    'right command': 'MetaRight',
+    '⌘': isMac ? 'metaKey' : 'ctrlKey',
+    'option': 'altKey',
+    'ctl': 'ctrlKey',
+    'control': 'ctrlKey',
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @param {?} x
+ * @return {?}
+ */
+function isFunction(x) {
+    return typeof x === "function";
+}
+const /** @type {?} */ any = (fn, list) => {
+    let /** @type {?} */ idx = 0;
+    while (idx < list.length) {
+        if (fn(list[idx])) {
+            return true;
+        }
+        idx += 1;
+    }
+    return false;
+};
+const /** @type {?} */ identity = x => x;
+const /** @type {?} */ isNill = x => x == null;
+const /** @type {?} */ difference = (first, second) => first.filter(item => !second.includes(item));
+const /** @type {?} */ allPass = preds => (...args) => {
+    let /** @type {?} */ idx = 0;
+    const /** @type {?} */ len = preds.length;
+    while (idx < len) {
+        if (!preds[idx].apply(this, args)) {
+            return false;
+        }
+        idx += 1;
+    }
+    return true;
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+const /** @type {?} */ $$ngOnDestroy = Symbol("OnDestroy");
+class KeyboardShortcutsService {
+    constructor() {
+        /**
+         * Parsed shortcuts
+         * for each key create a predicate function
+         */
+        this._shortcuts = [];
+        /**
+         * Throttle the keypress event.
+         */
+        this.throttleTime = 0;
+        this._pressed = new Subject();
+        /**
+         * Streams of pressed events, can be used instead or with a command.
+         */
+        this.pressed$ = this._pressed.asObservable();
+        /**
+         * Disable all keyboard shortcuts
+         */
+        this.disabled = false;
+        this._ignored = ["INPUT", "TEXTAREA", "SELECT"];
+        this.isAllowed = (shortcut) => {
+            const /** @type {?} */ target = /** @type {?} */ (shortcut.event.target);
+            if (target === shortcut.target) {
+                return true;
+            }
+            if (shortcut.allowIn.length) {
+                return !difference(this._ignored, shortcut.allowIn).includes(target.nodeName);
+            }
+            return !this._ignored.includes(target.nodeName);
+        };
+        this.mapEvent = event => this._shortcuts
+            .map(shortcut => Object.assign({}, shortcut, {
+            predicates: any(identity, shortcut.predicates.map((predicates) => allPass(predicates)(event))),
+            event: event
+        }))
+            .filter(shortcut => shortcut.predicates)
+            .reduce((acc, shortcut) => (acc.priority > shortcut.priority ? acc : shortcut), /** @type {?} */ ({
+            priority: 0
+        }));
+        this.keydown$ = fromEvent(document, "keydown").pipe(filter(_ => !this.disabled), map(this.mapEvent), filter((shortcut) => !shortcut.target || shortcut.event.target === shortcut.target), filter((shortcut) => isFunction(shortcut.command)), filter(this.isAllowed), tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()), debounce(shortcut => timer(shortcut.throttleTime)), tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })), tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })), catchError(error => throwError(error)));
+        /**
+         * transforms a shortcut to:
+         * a predicate function
+         */
+        this.getKeys = (command) => command
+            .map(key => key.trim())
+            .filter(key => key !== "+")
+            .map(key => {
+            // for modifiers like control key
+            // look for event['ctrlKey']
+            // otherwise use the keyCode
+            if (modifiers.hasOwnProperty(key)) {
+                return event => !!event[modifiers[key]];
+            }
+            return event => codes[key]
+                ? event.keyCode === codes[key] || event.key === key
+                : event.keyCode === key.toUpperCase().charCodeAt(0);
+        });
+        this.subscription = this.keydown$.subscribe();
+    }
+    /**
+     * @return {?}
+     */
+    get shortcuts() {
+        return this._shortcuts;
+    }
+    /**
+     * Remove subscription.
+     * @return {?}
+     */
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
+    /**
+     * Enable all keyboard shortcuts
+     * @return {?}
+     */
+    enable() {
+        this.disabled = false;
+        return this;
+    }
+    /**
+     * Disable all keyboard shortcuts
+     * @return {?}
+     */
+    disable() {
+        this.disabled = true;
+        return this;
+    }
+    /**
+     * Check if all keyboard shortcuts are disabled.
+     * @return {?}
+     */
+    isDisabled() {
+        return this.disabled;
+    }
+    /**
+     * Add new shortcut/s
+     * @param {?} shortcuts
+     * @param {?=} instance
+     * @return {?}
+     */
+    add(shortcuts, instance) {
+        shortcuts = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
+        if (instance) {
+            const [key] = [...shortcuts.map(shortcut => shortcut.key)];
+            this.bindOnDestroy(instance, key);
+        }
+        this._shortcuts.push(...this.parseCommand(shortcuts));
+        return this;
+    }
+    /**
+     * bind to the component ngOnDestroy to remove related keys
+     * when component is destroyed.
+     * @param {?} instance - component to remove keys when ngOnDestroy is called.
+     * @param {?} keys
+     * @return {?}
+     */
+    bindOnDestroy(instance, keys) {
+        if (instance.ngOnDestroy) {
+            instance[$$ngOnDestroy] = instance.ngOnDestroy;
+        }
+        const /** @type {?} */ that = this;
+        instance.ngOnDestroy = function () {
+            const /** @type {?} */ onDestroy = instance[$$ngOnDestroy];
+            if (onDestroy) {
+                onDestroy.apply(this);
+            }
+            that.remove(keys);
+        };
+        return this;
+    }
+    /**
+     * Remove a command based on key or array of keys.
+     * can be used for cleanup.
+     * @param {?} key
+     * @return {?}
+     */
+    remove(key) {
+        const /** @type {?} */ keys = Array.isArray(key) ? key : [key];
+        this._shortcuts = this._shortcuts.filter(shortcut => {
+            return !shortcut.key.find(sKey => {
+                return keys.filter(k => k === sKey).length > 0;
+            });
+        });
+        return this;
+    }
+    /**
+     * Returns an observable of keyboard shortcut filtered by a specific key.
+     * @param {?} key - the key to filter the observable by.
+     * @return {?}
+     */
+    select(key) {
+        return this.pressed$.pipe(filter(({ event, key: eventKeys }) => {
+            return !!eventKeys.find(eventKey => eventKey === key);
+        }));
+    }
+    /**
+     * Parse each command using getKeys function
+     * @param {?} command
+     * @return {?}
+     */
+    parseCommand(command) {
+        const /** @type {?} */ commands = Array.isArray(command) ? command : [command];
+        return commands.map(command => {
+            const /** @type {?} */ keys = Array.isArray(command.key) ? command.key : [command.key];
+            const /** @type {?} */ priority = Math.max(...keys.map(key => key.split(" ").length));
+            const /** @type {?} */ predicates = keys.map(key => this.getKeys(key.split(" ")));
+            return /** @type {?} */ (Object.assign({}, command, { allowIn: command.allowIn || [], key: keys, throttle: isNill(command.throttleTime) ? this.throttleTime : command.throttleTime, priority: priority, predicates: predicates }));
+        });
+    }
+}
+KeyboardShortcutsService.ngInjectableDef = ɵngcc0.ɵɵdefineInjectable({ token: KeyboardShortcutsService, factory: function KeyboardShortcutsService_Factory(t) { return new (t || KeyboardShortcutsService)(); }, providedIn: null });
+/*@__PURE__*/ ɵngcc0.ɵsetClassMetadata(KeyboardShortcutsService, [{
+        type: Injectable
+    }], function () { return []; }, { constructor: [], _shortcuts: [], throttleTime: [], _pressed: [], pressed$: [], disabled: [], _ignored: [], isAllowed: [], mapEvent: [], keydown$: [], getKeys: [], subscription: [], shortcuts: [], ngOnDestroy: [], enable: [], disable: [], isDisabled: [], add: [], bindOnDestroy: [], remove: [], select: [], parseCommand: [] });
+/** @nocollapse */
+KeyboardShortcutsService.ctorParameters = () => [];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+class KeyboardShortcutsModule {
+}
+KeyboardShortcutsModule.ngModuleDef = ɵngcc0.ɵɵdefineNgModule({ type: KeyboardShortcutsModule });
+/*@__PURE__*/ ɵngcc0.ɵsetClassMetadata(KeyboardShortcutsModule, [{
+        type: NgModule,
+        args: [{
+                imports: [],
+                declarations: [],
+                exports: []
+            }]
+    }], null, null);
+KeyboardShortcutsModule.ngInjectorDef = ɵngcc0.ɵɵdefineInjector({ factory: function KeyboardShortcutsModule_Factory(t) { return new (t || KeyboardShortcutsModule)(); }, imports: [[]] });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+
+export { KeyboardShortcutsService, KeyboardShortcutsModule };
+
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkU6L01hZ25hV2ViLUFuZ3VsYXI4LjAvbm9kZV9tb2R1bGVzL25nLWtleWJvYXJkLXNob3J0Y3V0cy9mZXNtMjAxNS9uZy1rZXlib2FyZC1zaG9ydGN1dHMuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7Ozs7OztBQVFBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztDQTJSQywyV0FHQzs7Ozs7Ozs7Ozs7Ozs7Ozs7OztDQVNELHlMQU9DIiwiZmlsZSI6Im5nLWtleWJvYXJkLXNob3J0Y3V0cy5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEluamVjdGFibGUsIE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBmcm9tRXZlbnQsIHRpbWVyLCBTdWJqZWN0LCB0aHJvd0Vycm9yIH0gZnJvbSAncnhqcyc7XG5pbXBvcnQgeyBtYXAsIGZpbHRlciwgdGFwLCBkZWJvdW5jZSwgY2F0Y2hFcnJvciB9IGZyb20gJ3J4anMvb3BlcmF0b3JzJztcblxuLyoqXG4gKiBAZmlsZW92ZXJ2aWV3IGFkZGVkIGJ5IHRzaWNrbGVcbiAqIEBzdXBwcmVzcyB7Y2hlY2tUeXBlc30gY2hlY2tlZCBieSB0c2NcbiAqL1xuY29uc3QgLyoqIEB0eXBlIHs/fSAqLyBpc01hYyA9IChuYXZpZ2F0b3IudXNlckFnZW50LmluZGV4T2YoJ01hYyBPUycpICE9PSAtMSk7XG5jb25zdCAvKiogQHR5cGUgez99ICovIGNvZGVzID0ge1xuICAgICdiYWNrc3BhY2UnOiA4LFxuICAgICd0YWInOiA5LFxuICAgICdlbnRlcic6IDEzLFxuICAgICdwYXVzZS9icmVhayc6IDE5LFxuICAgICdjYXBzIGxvY2snOiAyMCxcbiAgICAnZXNjJzogMjcsXG4gICAgJ3NwYWNlJzogMzIsXG4gICAgJ3BhZ2UgdXAnOiAzMyxcbiAgICAncGFnZSBkb3duJzogMzQsXG4gICAgJ2VuZCc6IDM1LFxuICAgICdob21lJzogMzYsXG4gICAgJ2xlZnQnOiAzNyxcbiAgICAndXAnOiAzOCxcbiAgICAncmlnaHQnOiAzOSxcbiAgICAnZG93bic6IDQwLFxuICAgICdpbnNlcnQnOiA0NSxcbiAgICAnZGVsZXRlJzogNDYsXG4gICAgJ251bXBhZCAqJzogMTA2LFxuICAgICdudW1wYWQgKyc6IDEwNyxcbiAgICAnbnVtcGFkIC0nOiAxMDksXG4gICAgJ251bXBhZCAuJzogMTEwLFxuICAgICdudW1wYWQgLyc6IDExMSxcbiAgICAnbnVtIGxvY2snOiAxNDQsXG4gICAgJ3Njcm9sbCBsb2NrJzogMTQ1LFxuICAgICdteSBjb21wdXRlcic6IDE4MixcbiAgICAnbXkgY2FsY3VsYXRvcic6IDE4MyxcbiAgICAnOyc6IDE4NixcbiAgICAnPSc6IDE4NyxcbiAgICAnLCc6IDE4OCxcbiAgICAnLSc6IDE4OSxcbiAgICAnLic6IDE5MCxcbiAgICAnLyc6IDE5MSxcbiAgICAnYCc6IDE5MixcbiAgICAnWyc6IDIxOSxcbiAgICAnXFxcXCc6IDIyMCxcbiAgICAnXSc6IDIyMSxcbiAgICBcIidcIjogMjIyLFxuICAgICd3aW5kb3dzJzogOTEsXG4gICAgJ+KHpyc6IDE2LFxuICAgICfijKUnOiAxOCxcbiAgICAn4oyDJzogMTcsXG4gICAgJ3BhdXNlJzogMTksXG4gICAgJ2JyZWFrJzogMTksXG4gICAgJ2NhcHMnOiAyMCxcbiAgICAncmV0dXJuJzogMTMsXG4gICAgJ2VzY2FwZSc6IDI3LFxuICAgICdzcGMnOiAzMixcbiAgICAncGd1cCc6IDMzLFxuICAgICdwZ2RuJzogMzQsXG4gICAgJ2lucyc6IDQ1LFxuICAgICdkZWwnOiA0Nixcbn07XG5jb25zdCAvKiogQHR5cGUgez99ICovIG1vZGlmaWVycyA9IHtcbiAgICAnc2hpZnQnOiAnc2hpZnRLZXknLFxuICAgICdjdHJsJzogJ2N0cmxLZXknLFxuICAgICdhbHQnOiAnYWx0S2V5JyxcbiAgICAnY21kJzogaXNNYWMgPyAnbWV0YUtleScgOiAnY3RybEtleScsXG4gICAgJ2NvbW1hbmQnOiBpc01hYyA/ICdtZXRhS2V5JyA6ICdjdHJsS2V5JyxcbiAgICAnbGVmdCBjb21tYW5kJzogJ21ldGFLZXknLFxuICAgICdyaWdodCBjb21tYW5kJzogJ01ldGFSaWdodCcsXG4gICAgJ+KMmCc6IGlzTWFjID8gJ21ldGFLZXknIDogJ2N0cmxLZXknLFxuICAgICdvcHRpb24nOiAnYWx0S2V5JyxcbiAgICAnY3RsJzogJ2N0cmxLZXknLFxuICAgICdjb250cm9sJzogJ2N0cmxLZXknLFxufTtcblxuLyoqXG4gKiBAZmlsZW92ZXJ2aWV3IGFkZGVkIGJ5IHRzaWNrbGVcbiAqIEBzdXBwcmVzcyB7Y2hlY2tUeXBlc30gY2hlY2tlZCBieSB0c2NcbiAqL1xuLyoqXG4gKiBAcGFyYW0gez99IHhcbiAqIEByZXR1cm4gez99XG4gKi9cbmZ1bmN0aW9uIGlzRnVuY3Rpb24oeCkge1xuICAgIHJldHVybiB0eXBlb2YgeCA9PT0gXCJmdW5jdGlvblwiO1xufVxuY29uc3QgLyoqIEB0eXBlIHs/fSAqLyBhbnkgPSAoZm4sIGxpc3QpID0+IHtcbiAgICBsZXQgLyoqIEB0eXBlIHs/fSAqLyBpZHggPSAwO1xuICAgIHdoaWxlIChpZHggPCBsaXN0Lmxlbmd0aCkge1xuICAgICAgICBpZiAoZm4obGlzdFtpZHhdKSkge1xuICAgICAgICAgICAgcmV0dXJuIHRydWU7XG4gICAgICAgIH1cbiAgICAgICAgaWR4ICs9IDE7XG4gICAgfVxuICAgIHJldHVybiBmYWxzZTtcbn07XG5jb25zdCAvKiogQHR5cGUgez99ICovIGlkZW50aXR5ID0geCA9PiB4O1xuY29uc3QgLyoqIEB0eXBlIHs/fSAqLyBpc05pbGwgPSB4ID0+IHggPT0gbnVsbDtcbmNvbnN0IC8qKiBAdHlwZSB7P30gKi8gZGlmZmVyZW5jZSA9IChmaXJzdCwgc2Vjb25kKSA9PiBmaXJzdC5maWx0ZXIoaXRlbSA9PiAhc2Vjb25kLmluY2x1ZGVzKGl0ZW0pKTtcbmNvbnN0IC8qKiBAdHlwZSB7P30gKi8gYWxsUGFzcyA9IHByZWRzID0+ICguLi5hcmdzKSA9PiB7XG4gICAgbGV0IC8qKiBAdHlwZSB7P30gKi8gaWR4ID0gMDtcbiAgICBjb25zdCAvKiogQHR5cGUgez99ICovIGxlbiA9IHByZWRzLmxlbmd0aDtcbiAgICB3aGlsZSAoaWR4IDwgbGVuKSB7XG4gICAgICAgIGlmICghcHJlZHNbaWR4XS5hcHBseSh0aGlzLCBhcmdzKSkge1xuICAgICAgICAgICAgcmV0dXJuIGZhbHNlO1xuICAgICAgICB9XG4gICAgICAgIGlkeCArPSAxO1xuICAgIH1cbiAgICByZXR1cm4gdHJ1ZTtcbn07XG5cbi8qKlxuICogQGZpbGVvdmVydmlldyBhZGRlZCBieSB0c2lja2xlXG4gKiBAc3VwcHJlc3Mge2NoZWNrVHlwZXN9IGNoZWNrZWQgYnkgdHNjXG4gKi9cbmNvbnN0IC8qKiBAdHlwZSB7P30gKi8gJCRuZ09uRGVzdHJveSA9IFN5bWJvbChcIk9uRGVzdHJveVwiKTtcbmNsYXNzIEtleWJvYXJkU2hvcnRjdXRzU2VydmljZSB7XG4gICAgY29uc3RydWN0b3IoKSB7XG4gICAgICAgIC8qKlxuICAgICAgICAgKiBQYXJzZWQgc2hvcnRjdXRzXG4gICAgICAgICAqIGZvciBlYWNoIGtleSBjcmVhdGUgYSBwcmVkaWNhdGUgZnVuY3Rpb25cbiAgICAgICAgICovXG4gICAgICAgIHRoaXMuX3Nob3J0Y3V0cyA9IFtdO1xuICAgICAgICAvKipcbiAgICAgICAgICogVGhyb3R0bGUgdGhlIGtleXByZXNzIGV2ZW50LlxuICAgICAgICAgKi9cbiAgICAgICAgdGhpcy50aHJvdHRsZVRpbWUgPSAwO1xuICAgICAgICB0aGlzLl9wcmVzc2VkID0gbmV3IFN1YmplY3QoKTtcbiAgICAgICAgLyoqXG4gICAgICAgICAqIFN0cmVhbXMgb2YgcHJlc3NlZCBldmVudHMsIGNhbiBiZSB1c2VkIGluc3RlYWQgb3Igd2l0aCBhIGNvbW1hbmQuXG4gICAgICAgICAqL1xuICAgICAgICB0aGlzLnByZXNzZWQkID0gdGhpcy5fcHJlc3NlZC5hc09ic2VydmFibGUoKTtcbiAgICAgICAgLyoqXG4gICAgICAgICAqIERpc2FibGUgYWxsIGtleWJvYXJkIHNob3J0Y3V0c1xuICAgICAgICAgKi9cbiAgICAgICAgdGhpcy5kaXNhYmxlZCA9IGZhbHNlO1xuICAgICAgICB0aGlzLl9pZ25vcmVkID0gW1wiSU5QVVRcIiwgXCJURVhUQVJFQVwiLCBcIlNFTEVDVFwiXTtcbiAgICAgICAgdGhpcy5pc0FsbG93ZWQgPSAoc2hvcnRjdXQpID0+IHtcbiAgICAgICAgICAgIGNvbnN0IC8qKiBAdHlwZSB7P30gKi8gdGFyZ2V0ID0gLyoqIEB0eXBlIHs/fSAqLyAoc2hvcnRjdXQuZXZlbnQudGFyZ2V0KTtcbiAgICAgICAgICAgIGlmICh0YXJnZXQgPT09IHNob3J0Y3V0LnRhcmdldCkge1xuICAgICAgICAgICAgICAgIHJldHVybiB0cnVlO1xuICAgICAgICAgICAgfVxuICAgICAgICAgICAgaWYgKHNob3J0Y3V0LmFsbG93SW4ubGVuZ3RoKSB7XG4gICAgICAgICAgICAgICAgcmV0dXJuICFkaWZmZXJlbmNlKHRoaXMuX2lnbm9yZWQsIHNob3J0Y3V0LmFsbG93SW4pLmluY2x1ZGVzKHRhcmdldC5ub2RlTmFtZSk7XG4gICAgICAgICAgICB9XG4gICAgICAgICAgICByZXR1cm4gIXRoaXMuX2lnbm9yZWQuaW5jbHVkZXModGFyZ2V0Lm5vZGVOYW1lKTtcbiAgICAgICAgfTtcbiAgICAgICAgdGhpcy5tYXBFdmVudCA9IGV2ZW50ID0+IHRoaXMuX3Nob3J0Y3V0c1xuICAgICAgICAgICAgLm1hcChzaG9ydGN1dCA9PiBPYmplY3QuYXNzaWduKHt9LCBzaG9ydGN1dCwge1xuICAgICAgICAgICAgcHJlZGljYXRlczogYW55KGlkZW50aXR5LCBzaG9ydGN1dC5wcmVkaWNhdGVzLm1hcCgocHJlZGljYXRlcykgPT4gYWxsUGFzcyhwcmVkaWNhdGVzKShldmVudCkpKSxcbiAgICAgICAgICAgIGV2ZW50OiBldmVudFxuICAgICAgICB9KSlcbiAgICAgICAgICAgIC5maWx0ZXIoc2hvcnRjdXQgPT4gc2hvcnRjdXQucHJlZGljYXRlcylcbiAgICAgICAgICAgIC5yZWR1Y2UoKGFjYywgc2hvcnRjdXQpID0+IChhY2MucHJpb3JpdHkgPiBzaG9ydGN1dC5wcmlvcml0eSA/IGFjYyA6IHNob3J0Y3V0KSwgLyoqIEB0eXBlIHs/fSAqLyAoe1xuICAgICAgICAgICAgcHJpb3JpdHk6IDBcbiAgICAgICAgfSkpO1xuICAgICAgICB0aGlzLmtleWRvd24kID0gZnJvbUV2ZW50KGRvY3VtZW50LCBcImtleWRvd25cIikucGlwZShmaWx0ZXIoXyA9PiAhdGhpcy5kaXNhYmxlZCksIG1hcCh0aGlzLm1hcEV2ZW50KSwgZmlsdGVyKChzaG9ydGN1dCkgPT4gIXNob3J0Y3V0LnRhcmdldCB8fCBzaG9ydGN1dC5ldmVudC50YXJnZXQgPT09IHNob3J0Y3V0LnRhcmdldCksIGZpbHRlcigoc2hvcnRjdXQpID0+IGlzRnVuY3Rpb24oc2hvcnRjdXQuY29tbWFuZCkpLCBmaWx0ZXIodGhpcy5pc0FsbG93ZWQpLCB0YXAoc2hvcnRjdXQgPT4gIXNob3J0Y3V0LnByZXZlbnREZWZhdWx0IHx8IHNob3J0Y3V0LmV2ZW50LnByZXZlbnREZWZhdWx0KCkpLCBkZWJvdW5jZShzaG9ydGN1dCA9PiB0aW1lcihzaG9ydGN1dC50aHJvdHRsZVRpbWUpKSwgdGFwKHNob3J0Y3V0ID0+IHNob3J0Y3V0LmNvbW1hbmQoeyBldmVudDogc2hvcnRjdXQuZXZlbnQsIGtleTogc2hvcnRjdXQua2V5IH0pKSwgdGFwKHNob3J0Y3V0ID0+IHRoaXMuX3ByZXNzZWQubmV4dCh7IGV2ZW50OiBzaG9ydGN1dC5ldmVudCwga2V5OiBzaG9ydGN1dC5rZXkgfSkpLCBjYXRjaEVycm9yKGVycm9yID0+IHRocm93RXJyb3IoZXJyb3IpKSk7XG4gICAgICAgIC8qKlxuICAgICAgICAgKiB0cmFuc2Zvcm1zIGEgc2hvcnRjdXQgdG86XG4gICAgICAgICAqIGEgcHJlZGljYXRlIGZ1bmN0aW9uXG4gICAgICAgICAqL1xuICAgICAgICB0aGlzLmdldEtleXMgPSAoY29tbWFuZCkgPT4gY29tbWFuZFxuICAgICAgICAgICAgLm1hcChrZXkgPT4ga2V5LnRyaW0oKSlcbiAgICAgICAgICAgIC5maWx0ZXIoa2V5ID0+IGtleSAhPT0gXCIrXCIpXG4gICAgICAgICAgICAubWFwKGtleSA9PiB7XG4gICAgICAgICAgICAvLyBmb3IgbW9kaWZpZXJzIGxpa2UgY29udHJvbCBrZXlcbiAgICAgICAgICAgIC8vIGxvb2sgZm9yIGV2ZW50WydjdHJsS2V5J11cbiAgICAgICAgICAgIC8vIG90aGVyd2lzZSB1c2UgdGhlIGtleUNvZGVcbiAgICAgICAgICAgIGlmIChtb2RpZmllcnMuaGFzT3duUHJvcGVydHkoa2V5KSkge1xuICAgICAgICAgICAgICAgIHJldHVybiBldmVudCA9PiAhIWV2ZW50W21vZGlmaWVyc1trZXldXTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgICAgIHJldHVybiBldmVudCA9PiBjb2Rlc1trZXldXG4gICAgICAgICAgICAgICAgPyBldmVudC5rZXlDb2RlID09PSBjb2Rlc1trZXldIHx8IGV2ZW50LmtleSA9PT0ga2V5XG4gICAgICAgICAgICAgICAgOiBldmVudC5rZXlDb2RlID09PSBrZXkudG9VcHBlckNhc2UoKS5jaGFyQ29kZUF0KDApO1xuICAgICAgICB9KTtcbiAgICAgICAgdGhpcy5zdWJzY3JpcHRpb24gPSB0aGlzLmtleWRvd24kLnN1YnNjcmliZSgpO1xuICAgIH1cbiAgICAvKipcbiAgICAgKiBAcmV0dXJuIHs/fVxuICAgICAqL1xuICAgIGdldCBzaG9ydGN1dHMoKSB7XG4gICAgICAgIHJldHVybiB0aGlzLl9zaG9ydGN1dHM7XG4gICAgfVxuICAgIC8qKlxuICAgICAqIFJlbW92ZSBzdWJzY3JpcHRpb24uXG4gICAgICogQHJldHVybiB7P31cbiAgICAgKi9cbiAgICBuZ09uRGVzdHJveSgpIHtcbiAgICAgICAgaWYgKHRoaXMuc3Vic2NyaXB0aW9uKSB7XG4gICAgICAgICAgICB0aGlzLnN1YnNjcmlwdGlvbi51bnN1YnNjcmliZSgpO1xuICAgICAgICB9XG4gICAgfVxuICAgIC8qKlxuICAgICAqIEVuYWJsZSBhbGwga2V5Ym9hcmQgc2hvcnRjdXRzXG4gICAgICogQHJldHVybiB7P31cbiAgICAgKi9cbiAgICBlbmFibGUoKSB7XG4gICAgICAgIHRoaXMuZGlzYWJsZWQgPSBmYWxzZTtcbiAgICAgICAgcmV0dXJuIHRoaXM7XG4gICAgfVxuICAgIC8qKlxuICAgICAqIERpc2FibGUgYWxsIGtleWJvYXJkIHNob3J0Y3V0c1xuICAgICAqIEByZXR1cm4gez99XG4gICAgICovXG4gICAgZGlzYWJsZSgpIHtcbiAgICAgICAgdGhpcy5kaXNhYmxlZCA9IHRydWU7XG4gICAgICAgIHJldHVybiB0aGlzO1xuICAgIH1cbiAgICAvKipcbiAgICAgKiBDaGVjayBpZiBhbGwga2V5Ym9hcmQgc2hvcnRjdXRzIGFyZSBkaXNhYmxlZC5cbiAgICAgKiBAcmV0dXJuIHs/fVxuICAgICAqL1xuICAgIGlzRGlzYWJsZWQoKSB7XG4gICAgICAgIHJldHVybiB0aGlzLmRpc2FibGVkO1xuICAgIH1cbiAgICAvKipcbiAgICAgKiBBZGQgbmV3IHNob3J0Y3V0L3NcbiAgICAgKiBAcGFyYW0gez99IHNob3J0Y3V0c1xuICAgICAqIEBwYXJhbSB7Pz19IGluc3RhbmNlXG4gICAgICogQHJldHVybiB7P31cbiAgICAgKi9cbiAgICBhZGQoc2hvcnRjdXRzLCBpbnN0YW5jZSkge1xuICAgICAgICBzaG9ydGN1dHMgPSBBcnJheS5pc0FycmF5KHNob3J0Y3V0cykgPyBzaG9ydGN1dHMgOiBbc2hvcnRjdXRzXTtcbiAgICAgICAgaWYgKGluc3RhbmNlKSB7XG4gICAgICAgICAgICBjb25zdCBba2V5XSA9IFsuLi5zaG9ydGN1dHMubWFwKHNob3J0Y3V0ID0+IHNob3J0Y3V0LmtleSldO1xuICAgICAgICAgICAgdGhpcy5iaW5kT25EZXN0cm95KGluc3RhbmNlLCBrZXkpO1xuICAgICAgICB9XG4gICAgICAgIHRoaXMuX3Nob3J0Y3V0cy5wdXNoKC4uLnRoaXMucGFyc2VDb21tYW5kKHNob3J0Y3V0cykpO1xuICAgICAgICByZXR1cm4gdGhpcztcbiAgICB9XG4gICAgLyoqXG4gICAgICogYmluZCB0byB0aGUgY29tcG9uZW50IG5nT25EZXN0cm95IHRvIHJlbW92ZSByZWxhdGVkIGtleXNcbiAgICAgKiB3aGVuIGNvbXBvbmVudCBpcyBkZXN0cm95ZWQuXG4gICAgICogQHBhcmFtIHs/fSBpbnN0YW5jZSAtIGNvbXBvbmVudCB0byByZW1vdmUga2V5cyB3aGVuIG5nT25EZXN0cm95IGlzIGNhbGxlZC5cbiAgICAgKiBAcGFyYW0gez99IGtleXNcbiAgICAgKiBAcmV0dXJuIHs/fVxuICAgICAqL1xuICAgIGJpbmRPbkRlc3Ryb3koaW5zdGFuY2UsIGtleXMpIHtcbiAgICAgICAgaWYgKGluc3RhbmNlLm5nT25EZXN0cm95KSB7XG4gICAgICAgICAgICBpbnN0YW5jZVskJG5nT25EZXN0cm95XSA9IGluc3RhbmNlLm5nT25EZXN0cm95O1xuICAgICAgICB9XG4gICAgICAgIGNvbnN0IC8qKiBAdHlwZSB7P30gKi8gdGhhdCA9IHRoaXM7XG4gICAgICAgIGluc3RhbmNlLm5nT25EZXN0cm95ID0gZnVuY3Rpb24gKCkge1xuICAgICAgICAgICAgY29uc3QgLyoqIEB0eXBlIHs/fSAqLyBvbkRlc3Ryb3kgPSBpbnN0YW5jZVskJG5nT25EZXN0cm95XTtcbiAgICAgICAgICAgIGlmIChvbkRlc3Ryb3kpIHtcbiAgICAgICAgICAgICAgICBvbkRlc3Ryb3kuYXBwbHkodGhpcyk7XG4gICAgICAgICAgICB9XG4gICAgICAgICAgICB0aGF0LnJlbW92ZShrZXlzKTtcbiAgICAgICAgfTtcbiAgICAgICAgcmV0dXJuIHRoaXM7XG4gICAgfVxuICAgIC8qKlxuICAgICAqIFJlbW92ZSBhIGNvbW1hbmQgYmFzZWQgb24ga2V5IG9yIGFycmF5IG9mIGtleXMuXG4gICAgICogY2FuIGJlIHVzZWQgZm9yIGNsZWFudXAuXG4gICAgICogQHBhcmFtIHs/fSBrZXlcbiAgICAgKiBAcmV0dXJuIHs/fVxuICAgICAqL1xuICAgIHJlbW92ZShrZXkpIHtcbiAgICAgICAgY29uc3QgLyoqIEB0eXBlIHs/fSAqLyBrZXlzID0gQXJyYXkuaXNBcnJheShrZXkpID8ga2V5IDogW2tleV07XG4gICAgICAgIHRoaXMuX3Nob3J0Y3V0cyA9IHRoaXMuX3Nob3J0Y3V0cy5maWx0ZXIoc2hvcnRjdXQgPT4ge1xuICAgICAgICAgICAgcmV0dXJuICFzaG9ydGN1dC5rZXkuZmluZChzS2V5ID0+IHtcbiAgICAgICAgICAgICAgICByZXR1cm4ga2V5cy5maWx0ZXIoayA9PiBrID09PSBzS2V5KS5sZW5ndGggPiAwO1xuICAgICAgICAgICAgfSk7XG4gICAgICAgIH0pO1xuICAgICAgICByZXR1cm4gdGhpcztcbiAgICB9XG4gICAgLyoqXG4gICAgICogUmV0dXJucyBhbiBvYnNlcnZhYmxlIG9mIGtleWJvYXJkIHNob3J0Y3V0IGZpbHRlcmVkIGJ5IGEgc3BlY2lmaWMga2V5LlxuICAgICAqIEBwYXJhbSB7P30ga2V5IC0gdGhlIGtleSB0byBmaWx0ZXIgdGhlIG9ic2VydmFibGUgYnkuXG4gICAgICogQHJldHVybiB7P31cbiAgICAgKi9cbiAgICBzZWxlY3Qoa2V5KSB7XG4gICAgICAgIHJldHVybiB0aGlzLnByZXNzZWQkLnBpcGUoZmlsdGVyKCh7IGV2ZW50LCBrZXk6IGV2ZW50S2V5cyB9KSA9PiB7XG4gICAgICAgICAgICByZXR1cm4gISFldmVudEtleXMuZmluZChldmVudEtleSA9PiBldmVudEtleSA9PT0ga2V5KTtcbiAgICAgICAgfSkpO1xuICAgIH1cbiAgICAvKipcbiAgICAgKiBQYXJzZSBlYWNoIGNvbW1hbmQgdXNpbmcgZ2V0S2V5cyBmdW5jdGlvblxuICAgICAqIEBwYXJhbSB7P30gY29tbWFuZFxuICAgICAqIEByZXR1cm4gez99XG4gICAgICovXG4gICAgcGFyc2VDb21tYW5kKGNvbW1hbmQpIHtcbiAgICAgICAgY29uc3QgLyoqIEB0eXBlIHs/fSAqLyBjb21tYW5kcyA9IEFycmF5LmlzQXJyYXkoY29tbWFuZCkgPyBjb21tYW5kIDogW2NvbW1hbmRdO1xuICAgICAgICByZXR1cm4gY29tbWFuZHMubWFwKGNvbW1hbmQgPT4ge1xuICAgICAgICAgICAgY29uc3QgLyoqIEB0eXBlIHs/fSAqLyBrZXlzID0gQXJyYXkuaXNBcnJheShjb21tYW5kLmtleSkgPyBjb21tYW5kLmtleSA6IFtjb21tYW5kLmtleV07XG4gICAgICAgICAgICBjb25zdCAvKiogQHR5cGUgez99ICovIHByaW9yaXR5ID0gTWF0aC5tYXgoLi4ua2V5cy5tYXAoa2V5ID0+IGtleS5zcGxpdChcIiBcIikubGVuZ3RoKSk7XG4gICAgICAgICAgICBjb25zdCAvKiogQHR5cGUgez99ICovIHByZWRpY2F0ZXMgPSBrZXlzLm1hcChrZXkgPT4gdGhpcy5nZXRLZXlzKGtleS5zcGxpdChcIiBcIikpKTtcbiAgICAgICAgICAgIHJldHVybiAvKiogQHR5cGUgez99ICovIChPYmplY3QuYXNzaWduKHt9LCBjb21tYW5kLCB7IGFsbG93SW46IGNvbW1hbmQuYWxsb3dJbiB8fCBbXSwga2V5OiBrZXlzLCB0aHJvdHRsZTogaXNOaWxsKGNvbW1hbmQudGhyb3R0bGVUaW1lKSA/IHRoaXMudGhyb3R0bGVUaW1lIDogY29tbWFuZC50aHJvdHRsZVRpbWUsIHByaW9yaXR5OiBwcmlvcml0eSwgcHJlZGljYXRlczogcHJlZGljYXRlcyB9KSk7XG4gICAgICAgIH0pO1xuICAgIH1cbn1cbktleWJvYXJkU2hvcnRjdXRzU2VydmljZS5kZWNvcmF0b3JzID0gW1xuICAgIHsgdHlwZTogSW5qZWN0YWJsZSB9LFxuXTtcbi8qKiBAbm9jb2xsYXBzZSAqL1xuS2V5Ym9hcmRTaG9ydGN1dHNTZXJ2aWNlLmN0b3JQYXJhbWV0ZXJzID0gKCkgPT4gW107XG5cbi8qKlxuICogQGZpbGVvdmVydmlldyBhZGRlZCBieSB0c2lja2xlXG4gKiBAc3VwcHJlc3Mge2NoZWNrVHlwZXN9IGNoZWNrZWQgYnkgdHNjXG4gKi9cbmNsYXNzIEtleWJvYXJkU2hvcnRjdXRzTW9kdWxlIHtcbn1cbktleWJvYXJkU2hvcnRjdXRzTW9kdWxlLmRlY29yYXRvcnMgPSBbXG4gICAgeyB0eXBlOiBOZ01vZHVsZSwgYXJnczogW3tcbiAgICAgICAgICAgICAgICBpbXBvcnRzOiBbXSxcbiAgICAgICAgICAgICAgICBkZWNsYXJhdGlvbnM6IFtdLFxuICAgICAgICAgICAgICAgIGV4cG9ydHM6IFtdXG4gICAgICAgICAgICB9LF0gfSxcbl07XG5cbi8qKlxuICogQGZpbGVvdmVydmlldyBhZGRlZCBieSB0c2lja2xlXG4gKiBAc3VwcHJlc3Mge2NoZWNrVHlwZXN9IGNoZWNrZWQgYnkgdHNjXG4gKi9cblxuLyoqXG4gKiBAZmlsZW92ZXJ2aWV3IGFkZGVkIGJ5IHRzaWNrbGVcbiAqIEBzdXBwcmVzcyB7Y2hlY2tUeXBlc30gY2hlY2tlZCBieSB0c2NcbiAqL1xuXG5leHBvcnQgeyBLZXlib2FyZFNob3J0Y3V0c1NlcnZpY2UsIEtleWJvYXJkU2hvcnRjdXRzTW9kdWxlIH07XG4iXX0=

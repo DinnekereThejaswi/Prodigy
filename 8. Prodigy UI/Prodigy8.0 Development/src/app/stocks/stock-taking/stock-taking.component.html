@@ -1,0 +1,246 @@
+<div style="color: brown; text-align: right; font-style: italic;">
+  <app-lastdocno [routerUrl]="routerUrl"></app-lastdocno>
+</div>
+
+<form [formGroup]="StockTakingForm">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="BatchNo">Batch No
+                </label>
+                <input type="text" class="form-control" formControlName="BatchNo"
+                  [(ngModel)]="StockTakingSummaryHeader.BatchNo" [disabled]="isDisabled"
+                  (keyup.enter)="getBatchDetails(StockTakingForm.value.BatchNo)">
+              </div>
+            </div>
+            <!-- <div class="col-sm-2" style="padding-top:28px;">
+              <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                href="javascript:void(0)" [disabled]="isDisabled">
+                <i class="fal fa-pencil"></i>
+                Edit
+              </button>
+            </div> -->
+            <!-- <div class="col-sm-5">
+              <div class="form-group">
+                <label class="control-label">Last Batch No
+                </label>
+                <input type="text" class="form-control"  formControlName="LastBatchNo"  />
+              </div>
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="CounterCode">Counter</label>
+                <select class="form-control" formControlName="CounterCode" #CounterCode
+                  (change)="getItem(StockTakingForm.value.CounterCode)"
+                  [(ngModel)]="StockTakingSummaryHeader.CounterCode">
+                  <option [ngValue]="null" [disabled]="isDisabled">Select</option>
+                  <option *ngFor="let Counter of CounterList" [ngValue]="Counter.CounterCode" [disabled]="isDisabled">
+                    {{Counter.CounterName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <!-- <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="ItemName">Item</label>
+                <select class="form-control" formControlName="ItemName" [(ngModel)]="StockTakingSummaryHeader.ItemName">
+                  <option [ngValue]="null" [disabled]="isDisabled">Select</option>
+                  <option *ngFor="let item of Item" [value]="item.ItemCode" [disabled]="isDisabled">
+                    {{item.ItemCode}}
+                  </option>
+                </select>
+              </div>
+            </div> -->
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="ItemName">Item</label>
+                <select class="form-control" formControlName="ItemName" [(ngModel)]="StockTakingSummaryHeader.ItemName">
+                  <option [ngValue]="null" [disabled]="isDisabled">Select</option>
+                  <option *ngFor="let item of Item" [value]="item.Code" [disabled]="isDisabled">
+                    {{item.Code}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="SalCode">Salesman</label>
+                <select class="form-control" formControlName="SalCode" [(ngModel)]="StockTakingSummaryHeader.SalCode">
+                  <option [ngValue]="null" [disabled]="isDisabled">Select</option>
+                  <option *ngFor="let _List of SalesmanList" [value]="_List.sal_code" [disabled]="isDisabled">
+                    {{_List.CodeName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">Tag No
+            </label>
+            <input type="text" class="form-control" formControlName="BarcodeNo"
+              [(ngModel)]="StockTakingSummaryHeader.BarcodeNo" onKeyPress="if(this.value.length==8) return false;"
+              (keyup.enter)="StocktakingPost();" #BarcodeNo />
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="social-widget">
+            <div class="soc-header box-twitter" style="padding: 3px;">
+              <h3 class="text-white">Total Scanned </h3>
+            </div>
+            <div class="soc-content" *ngFor="let _summary of summary">
+              <div class="col-3 b-r">
+                <h5 class="text-black">Qty</h5>
+                <!-- <h4 class="font-medium"> <b>{{Qty(BatchList)}}</b> -->
+                <h4 class="font-medium"> <b>{{_summary.Qty}}</b>
+                </h4>
+
+              </div>
+              <div class="col-3 b-r">
+                <h5 class="text-black">Gr. Wt</h5>
+                <!-- <h4 class="font-medium"><b>{{GrWt(BatchList) | number : '1.3-3'}}</b> -->
+                <h4 class="font-medium"><b>{{_summary.GrossWt}}</b>
+
+                </h4>
+              </div>
+              <div class="col-3 b-r">
+                <h5 class="text-black">N Wt</h5>
+                <!-- <h4 class="font-medium"><b>{{NetWt(BatchList) | number : '1.3-3'}}</b> -->
+                <h4 class="font-medium"><b>{{_summary.NetWt}}</b>
+                </h4>
+              </div>
+              <div class="col-3 b-r">
+                <h5 class="text-black">D.Cts</h5>
+                <!-- <h4 class="font-medium"><b>{{Dcts(BatchList) | number : '1.3-3'}}</b></h4> -->
+                <h4 class="font-medium"><b>{{_summary.Dcts}}</b></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="table-responsive" style="height:205pt;overflow:auto;">
+            <table class="table table-bordered" #TABLE>
+              <thead class="topbar">
+                <tr>
+                  <th>SNo.</th>
+                  <th>Tag No</th>
+                  <th>Item</th>
+                  <th>Qty</th>
+                  <th>Gr.Wt</th>
+                  <th>N.Wt</th>
+                  <th>D.Cts</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr *ngFor="let _result of result">
+                  <td></td>
+                  <td>{{_result.BarcodeNo}}</td>
+                  <td>{{_result.ItemName}}</td>
+                  <td>{{_result.Qty}}</td>
+                  <td>{{_result.GrossWt}}</td>
+                  <td>{{_result.NetWt}}</td>
+                  <td>{{_result.Dcts}}</td>
+                </tr> -->
+                <!-- <tr >
+                    <td></td>
+                    <td>{{PostResult.BarcodeNo}}</td>
+                    <td>{{PostResult.ItemName}}</td>
+                    <td>{{PostResult.Qty}}</td>
+                    <td>{{PostResult.GrossWt}}</td>
+                    <td>{{PostResult.NetWt}}</td>
+                    <td>{{PostResult.Dcts}}</td>
+                  </tr> -->
+                <tr *ngFor="let array of postArray;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{array.BarcodeNo}}</td>
+                  <td>{{array.ItemName}}</td>
+                  <td>{{array.Qty}}</td>
+                  <td>{{array.GrossWt}}</td>
+                  <td>{{array.NetWt}}</td>
+                  <td>{{array.Dcts}}</td>
+                  <td>
+                    <i class="far fa-trash-alt fa-1-5x pointer" style='color: red; font-size: 1.5em !important;'
+                      (click)="Delete(i,array)"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-4" style="border: 1px solid black;">
+          <div class="form-group">
+            <div class="input-group" *ngFor="let radiobutton of radioItems">
+              <ul class="list-group">
+                <div class="col-md-12">
+                  <label class="form-check-inline">
+                    <input type="radio" name="option" class="form-check-input" [value]="radiobutton"
+                      [checked]="radiobutton === model.option" [(ngModel)]="printHeader.radioItem"
+                      (change)="Changed(radiobutton)">
+                    <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                  </label>
+                </div>
+
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" (click)="print()"
+                href="javascript:void(0)">Print</a>&nbsp;&nbsp;
+              <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                (click)="ExportToExcel()" href="javascript:void(0)">To Excel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<ng-container *ngIf="EnableJson">
+  <pre>
+  {{ StockTakingSummaryHeader | json}}
+</pre>
+</ng-container>
+
+<div class="modal fade" id="BatchSummary" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+
+  <div class="modal-dialog modal-lg" style="max-width: 1360px;">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printBatchSummary()><i class="fal fa-print"></i> Print</button>
+
+        <div class="col-md-2">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+      </div>
+
+      <div class="container invoice-box htmlPrint" id="print-closed-section" style="max-width: 900px;border-width: 2em">
+        <pre>{{printData}}</pre>
+      </div>
+
+    </div>
+  </div>
+
+</div>

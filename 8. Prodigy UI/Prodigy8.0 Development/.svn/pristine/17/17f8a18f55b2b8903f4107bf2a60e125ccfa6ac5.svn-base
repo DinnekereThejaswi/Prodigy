@@ -1,0 +1,138 @@
+.card-body{ padding: 10px 30px 0px 30px !important; }
+
+:host {
+    padding: 0!important;
+  }
+  
+  .hiddenRow {
+    padding: 0 !important;
+  }
+  
+  .wrapper{
+    margin: 25px 3em auto 3em;
+  }
+  
+  .overlay{
+    height: 400px; 
+      overflow-y: scroll; 
+      overflow-x: hidden; 
+  }
+  
+  fieldset.scheduler-border {
+    border: 2px solid #757575 !important;
+    padding: 0 1.4em 0px 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    /* box-shadow: 0px 0px 0px 0px #000; */
+    border-radius: 15px;
+  }
+  
+  legend.scheduler-border {
+    font-size: 20px !important;
+    font-family: "Montserrat", Helvetica, sans-serif;
+    font-weight: 600;
+    text-align: left !important;
+    width:auto;
+    padding:0 10px;
+    border-bottom:none;
+  }
+  
+    .pointer{
+      cursor: pointer;
+    }
+  
+    .dropdown-label { 
+      background-color:transparent /* This hides the background */; 
+      background-image:none; 
+      -webkit-appearance: none /* Webkit Fix */; 
+      border:none; 
+      box-shadow:none; 
+      pointer-events: none;
+      
+    }
+  
+    tr.tr-hover-class:hover {
+      background: rgba(234, 237, 255, 0.719) !important;
+    }
+    
+  .dropdown {
+    position: absolute;
+    border: 1px solid grey;
+    z-index: 9999;
+    background-color: white;
+    padding: 5px;
+  }
+  
+   input:focus + .dropdown  {
+    display: block;
+    z-index: 9999999;
+  }
+  
+  
+  /*For Pricing tables*/  
+  .price {
+    list-style-type: none;
+    border: 1px solid #eee;
+    margin: 0;
+    padding: 0;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  
+  }
+  
+  .price:hover {
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+  }
+  
+  .price .header {
+    background-color: #111;
+    color: white;
+    font-size: 25px;
+  }
+
+  .font{
+    color:#ff660098;
+  }
+  
+  .price li {
+    border-bottom: 1px solid #eee;
+    padding: 15px 25px 20px 25px;
+  }
+  
+  .float-left{
+  font-weight: 600;
+  }
+  
+  .card-body{ padding: 10px 30px 0px 30px !important; }
+  @media only screen and (max-width: 600px) {
+      .columns {
+        width: 100%;
+      }
+    }
+  
+  
+    @media (min-width:2200px) and (max-width: 2440px) {
+      .table-responsive {
+       overflow-x: hidden !important;
+    
+  }
+  }
+  @media (min-width: 300px) and (max-width: 2200px) {
+      .table-responsive {
+      overflow-x: auto !important;
+    
+  }}
+
+  
+ span.Heading{
+  font-weight: 600;
+  font-style: italic;
+  text-decoration: underline;
+}
+
+.modal-dialog{
+  z-index: -9999999999999;
+}
+
+
+
+ 

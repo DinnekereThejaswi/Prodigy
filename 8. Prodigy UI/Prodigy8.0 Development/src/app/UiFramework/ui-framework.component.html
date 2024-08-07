@@ -1,0 +1,19 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card" style="padding:15px;">
+        <dynamic-form #someVar [fields]="regConfig" (submit)="submit($event)"></dynamic-form>
+      </div>
+      <button (click)="GenerateHtml()" [disabled]="flag" *ngIf="!flag" class="btn btn-success">Generate HTML</button>
+
+      <button (click)="clear()" class="btn btn-success" *ngIf="flag">Clear</button>
+    </div>
+    <div class="col-md-6">
+      <!-- <pre><p>{{ form.value | json }}</p></pre> -->
+      <!-- <pre>{{arrayObj | json}}</pre> -->
+      <!-- <pre>
+       {{arrayObj | json}}
+     </pre> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table" id='panels' style="width: 1000px;">
+    <thead class="topbar">
+      <tr>
+        <th></th>
+        <th>S.No</th>
+        <th>Tag No</th>
+        <th>Sal Code</th>
+        <th>Counter</th>
+        <th>Qty</th>
+        <th>Gr.Wt</th>
+        <th>St.Wt</th>
+        <th>N.Wt</th>
+        <th>Wastage%</th>
+    </thead>
+    <tbody *ngFor="let field of fieldArray.salesEstimatonVM;let j = index">
+      <tr>
+        <td>
+          <input type="checkbox" class="chkbxsize" [checked]="true" />
+        </td>
+        <td class="classname">{{j+1}}</td>
+        <td class="classname">{{field.BarcodeNo}}</td>
+        <td class="classname">{{field.SalCode}}</td>
+        <td class="classname">{{field.CounterCode}}</td>
+        <td class="classname">{{field.ItemQty}}</td>
+        <td class="classname">{{field.Grosswt}}</td>
+        <td class="classname">{{field.Stonewt}}</td>
+        <td class="classname">{{field.Netwt}}</td>
+        <td class="classname">{{field.WastPercent}}</td>
+      </tr>
+    </tbody>
+  </table>

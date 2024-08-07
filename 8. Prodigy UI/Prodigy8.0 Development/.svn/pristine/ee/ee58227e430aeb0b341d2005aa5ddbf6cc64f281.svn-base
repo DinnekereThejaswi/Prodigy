@@ -1,0 +1,10 @@
+var jQuery = require('jquery');
+if(!window.$){
+    window.$ = jQuery;
+}
+if(!window.jQuery){
+    window.jQuery = jQuery;
+}
+if(!window.kendo){
+    window.kendo = require('.\\telerikReportViewer.kendo.min');
+}

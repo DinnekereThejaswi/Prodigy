@@ -1,0 +1,155 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="NewRoleform" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="rolename">Role Name <span class="textRed"> <i
+                                            class="fas fa-star-of-life"></i></span>
+                                    <div class="tooltipdesign" > <i class="fal fa-question-circle"></i>
+                                        <span class="tooltiptext tooltip-top">Enter Role Name </span>
+                                    </div>
+                                </label>
+                                <input type="text" class="form-control" id="rolename"
+                                    oninput="this.value = this.value.toUpperCase()" formControlName="frmCtrl_RoleName"
+                                    (input)="Codes.value = Codes.value.toUpperCase()" placeholder="Enter Role Name"
+                                    [(ngModel)]="NewrolesPostModel.Name" AlphaNumericValidator #Codes />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">OTP</label>
+                                <div class="form-group" style="width: 20px;height: 20px;">
+                                    <input type="checkbox" class="chkbxsize" class="form-control"
+                                        [(ngModel)]="NewrolesPostModel.OTPValidationEnabled"
+                                        formControlName="frmCtrl_OtpValidate" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-top:22px">
+                            <ng-container *ngIf="EnableAdd">
+                                <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                    (click)="onSubmit(NewRoleform)">
+                                    <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                            </ng-container>
+                            <ng-container *ngIf="EnableSave">
+                                <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                    (click)="save(NewRoleform)">
+                                    <i class="fal fa-save"></i>&nbsp;Save</button>
+                            </ng-container>
+                            <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                (click)="ClearNewRoles()">
+                                <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                        </div>
+                        <div class="col-md-3" style="float: right;">
+                            <br>
+                            <button type="button"
+                                class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                                id="exampleModalLabel" (click)="printRoleDetails()"><i class="fal fa-print"></i>
+                                Print</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <ng-container *ngIf="EnableJson">
+                <pre>{{NewrolesPostModel | json}}</pre>
+            </ng-container>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>RNo</th>
+                                <th>Role Name</th>
+                                <th>Status</th>
+                                <th>OTP</th>
+                                <th>Edit</th>
+                                <th>Activate</th>
+                                <th>De-Activate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let _list of RolesList">
+                                <td>{{_list.ID}}</td>
+                                <td>{{_list.Name}}</td>
+                                <!-- <td>{{_list.Status}}</td> -->
+
+                                <td [style.color]="getStatusColor(_list.Status)">
+                                    <b>{{_list.Status }}</b>
+                                </td>
+                                <td>{{_list.OTPValidationEnabled}}</td>
+                                <td (click)="Edit(_list)">
+                                    <i class="far fa-edit" title="Edit"></i>
+                                <td (click)="ActivateRole(_list)">
+                                    <i class="fas fa-lock-open fa-1x" title="Active" aria-hidden="true"></i>
+                                </td>
+                                <td (click)="DeActivateRole(_list)">
+                                    <i class="fas fa-user-lock fa-1x" title="De-Active"></i>
+                                </td>
+                                <!-- <td align="center">
+                                    <ng-container *ngIf="_list.Status==='Active'">
+                                        <i class="fas fa-user-lock fa-1x" title="close Operator"></i>
+                                    </ng-container>
+                                    <ng-container *ngIf="_list.Status==='Closed'">
+                                        <i class="fas fa-lock-open fa-1x" title="Active Operator" aria-hidden="true"></i>
+                                    </ng-container>
+                                </td> -->
+
+                            <tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---------------------Print-->
+<div class="modal fade" id="NewRolesTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 500px">
+        <div class="modal-content">
+            <div class="modal-header" style="position: sticky;">
+                <h3 class="modal-title">{{bcode}}-Role List</h3>
+                <button type="button" style="float: right;"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=printRoleData()><i class="fal fa-print"></i> Print</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="table-responsive" id="DisplayprintRolesData">
+                            <table class="table table-bordered table-hover">
+                                <thead class="topbar">
+                                    <th>Role Id</th>
+                                    <th>Role Name</th>
+                                    <th>Status</th>
+
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let _list of RolesList ">
+                                        <td>{{_list.ID}}</td>
+                                        <td>{{_list.Name}}</td>
+                                        <td>{{_list.Status }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

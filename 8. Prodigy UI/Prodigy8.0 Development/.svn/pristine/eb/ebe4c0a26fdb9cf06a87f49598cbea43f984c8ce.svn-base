@@ -1,0 +1,82 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="ConfigForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" for="objid">Id </label>
+                        <input type="text" class="form-control" id="objid" [(ngModel)]="ConfigModel.ObjId"
+                            formControlName="frmCtrl_ObjId" placeholder="Enter Id" [readonly]=EnableSave />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label" for="Description">Description</label>
+                        <textarea type="text" class="form-control" id="Description"
+                            [(ngModel)]="ConfigModel.Description" formControlName="frmCtrl_Description"
+                            IntegerDecimalFieldValidator maxlength="25" placeholder="Enter Description">
+                            </textarea>
+
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label class="control-label" for="Value">Value</label>
+                        <input type="text" class="form-control" id="Value" [(ngModel)]="ConfigModel.value"
+                            formControlName="frmCtrl_Value" IntegerDecimalFieldValidator maxlength="1"
+                            placeholder="Value" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <ng-container *ngIf="EnableAdd">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="add(ConfigForm)">
+                                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                        </ng-container>
+                        <ng-container *ngIf="EnableSave">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="save(ConfigForm)">
+                                <i class="fal fa-save"></i>&nbsp;Save</button>
+                        </ng-container>
+                        <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;" (click)="Clear()">
+                            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <ng-container *ngIf="EnableJson">
+            <!-- <pre>{{ ConfigModel | json }}</pre> -->
+        </ng-container>
+    </div>
+</div>
+
+<br>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body" style="height: 270pt; overflow-y: scroll;">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="topbar">
+                        <tr>
+                            <th>Id</th>
+                            <th>Description</th>
+                            <th>Value</th>
+                            <th>Edit </th>
+
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let _list of ConfigData">
+                        <tr>
+                            <td>{{_list.ObjId}} </td>
+                            <td style="width:150px;">{{_list.Description}} </td>
+                            <td>{{_list.value}} </td>
+                            <td><i class="fas fa-edit" title="Edit" (click)="edit(_list)"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TelerikReportViewerComponent } from './telerik-report-viewer.component';
+/**
+ * Represents the [NgModule](https://angular.io/docs/ts/latest/guide/ngmodule.html)
+ * definition for the Telerik Report Viewer component.
+ *
+ * @example
+ *
+ * ```ts-no-run
+ * // Import the Grid module
+ * import { TelerikReportingModule } from './telerik-reporting/telerik-reporting.module';
+ *
+ * import { NgModule } from '@angular/core';
+ *
+ * // Import the app component
+ * import { AppComponent } from './app.component';
+ *
+ * // Define the app module
+ * @@NgModule({
+ *     declarations: [AppComponent], // declare app component
+ *     imports:      [BrowserModule, TelerikReportingModule], // import Grid module
+ *     bootstrap:    [AppComponent]
+ * })
+ * export class AppModule {}
+ *
+ * ```
+ */
+import * as ɵngcc0 from '@angular/core';
+var TelerikReportingModule = /** @class */ (function () {
+    function TelerikReportingModule() {
+    }
+    /** @nocollapse */
+    TelerikReportingModule.ctorParameters = function () { return []; };
+TelerikReportingModule.ngModuleDef = ɵngcc0.ɵɵdefineNgModule({ type: TelerikReportingModule });
+/*@__PURE__*/ ɵngcc0.ɵɵsetNgModuleScope(TelerikReportingModule, { declarations: function () { return [TelerikReportViewerComponent]; }, imports: function () { return [CommonModule]; }, exports: function () { return [TelerikReportViewerComponent]; } });
+/*@__PURE__*/ ɵngcc0.ɵsetClassMetadata(TelerikReportingModule, [{
+        type: NgModule,
+        args: [{
+                imports: [CommonModule],
+                exports: [TelerikReportViewerComponent],
+                declarations: [TelerikReportViewerComponent]
+            }]
+    }], function () { return []; }, null);
+TelerikReportingModule.ngInjectorDef = ɵngcc0.ɵɵdefineInjector({ factory: function TelerikReportingModule_Factory(t) { return new (t || TelerikReportingModule)(); }, imports: [[CommonModule]] });
+    return TelerikReportingModule;
+}());
+export { TelerikReportingModule };
+
+//# sourceMappingURL=telerik-reporting.module.js.map

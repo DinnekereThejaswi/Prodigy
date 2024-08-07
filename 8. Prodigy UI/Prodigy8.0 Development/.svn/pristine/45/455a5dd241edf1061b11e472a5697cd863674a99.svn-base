@@ -1,0 +1,62 @@
+{
+  "_from": "qz-tray@^2.1.1-1",
+  "_id": "qz-tray@2.1.2",
+  "_inBundle": false,
+  "_integrity": "sha512-ECUA+5eNw7V3PbRTVQivTWcfLV/J7qO8ty4hzFflfXE/1uolCMCHNw+7ojjG4FDxdqbAAt7ZAsEmpjYgVOPaRw==",
+  "_location": "/qz-tray",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "qz-tray@^2.1.1-1",
+    "name": "qz-tray",
+    "escapedName": "qz-tray",
+    "rawSpec": "^2.1.1-1",
+    "saveSpec": null,
+    "fetchSpec": "^2.1.1-1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/qz-tray/-/qz-tray-2.1.2.tgz",
+  "_shasum": "988d523ed82f9d9b14071d82aa9e86a83560b5a4",
+  "_spec": "qz-tray@^2.1.1-1",
+  "_where": "E:\\MagnaWeb-Angular8.0",
+  "author": {
+    "name": "QZ Industries, LLC"
+  },
+  "bugs": {
+    "url": "https://github.com/qzind/tray/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Connects a web client to the QZ Tray software.  Enables printing and device communication from javascript. ",
+  "homepage": "https://github.com/qzind/tray#readme",
+  "keywords": [
+    "Printing",
+    "USB",
+    "Serial",
+    "RS232",
+    "USB",
+    "Scales",
+    "Zebra",
+    "Epson",
+    "Star",
+    "Citizen",
+    "BOCA"
+  ],
+  "license": "LGPL-2.1",
+  "main": "qz-tray.js",
+  "name": "qz-tray",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qzind/tray.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "2.1.2",
+  "__processed_by_ivy_ngcc__": {
+    "main": "8.2.14"
+  }
+}

@@ -1,0 +1,186 @@
+<!-- {{CustomerDets | json}} -->
+
+
+
+
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="SalesForm" autocomplete="off" class="form-horizontal" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-3 ">
+          <div class="form-group">
+            <label for="barcode">Barcode/Tag No</label>
+            <div class="input-group">
+              <input class="form-control" id="barcode" formControlName="barcode" [(ngModel)]="SalesPersonModel.barcode"
+                placeholder="Barcode" type="text"
+                onkeypress='return (event.charCode > 96 && event.charCode < 123) || (event.charCode > 64 && event.charCode < 91) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode <= 31'
+                maxlength="10" GreenBorder>
+              <span class="textRed" *ngIf="findErrorByField('barcode', null) != ''">
+                {{findErrorByField('barcode', null)}}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 ">
+          <div class="form-group">
+            <label for="barcode"></label>
+            <div class="input-group">
+              <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                (click)="getDetails(SalesForm)"><i class="fal fa-search"></i> Search</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 ">
+        </div>
+      </div>
+    </form>
+
+    <!-- <div class="table-responsive" *ngIf="ToggleCalculation">
+      <table class="table table-bordered" id="panels">
+        <thead class="topbar">
+          <tr>
+            <th>Action</th>
+            <th>Barcode</th>
+            <th>Item </th>
+            <th>Qty</th>
+            <th>Gr.Wt</th>
+            <th>Nt.Wt</th>
+            <th>Rate/gram</th>
+            <th>Itm.Code</th>
+            <th>Metal Amt</th>
+            <th>St Amt</th>
+            <th>Dia Amt</th>
+            <th>VA Amt</th>
+            <th>Item Total</th>
+            <th>SGST</th>
+            <th>CGST</th>
+            <th>IGST</th>
+            <th>Sales Total</th>
+          </tr>
+        </thead>
+
+        <tbody *ngFor="let _GetBarcodeList of GetBarcodeList; let i = index">
+          <tr>
+            <td>
+              <i class="far fa-eye fa-1-5x pointer" aria-hidden="true"
+                style='color: #009688; font-size: 1.5em !important;' data-toggle="modal" data-target="#myModal"
+                (click)="GetBarcodeInfo(_GetBarcodeList)"></i>
+              <i class="far fa-trash-alt fa-1-5x pointer" style='color: red; font-size: 1.5em !important;'
+                (click)="DeleteTagRow(i,_GetBarcodeList)"></i>
+            </td>
+
+            <td><b>{{_GetBarcodeList.BarcodeNo}}</b></td>
+            <td>{{_GetBarcodeList.ItemName}}</td>
+            <td>{{_GetBarcodeList.ItemQty}}</td>
+            <td>{{_GetBarcodeList.Grosswt | number : '1.2-2'}}</td>
+            <td>{{_GetBarcodeList.Netwt | number : '1.2-2'}}</td>
+            <td>{{_GetBarcodeList.Rate | number : '1.2-2'}}</td>
+            <td>{{_GetBarcodeList.McPercent | number : '1.2-2'}}</td>
+            <td>{{_GetBarcodeList.GoldValue | number : '1.2-2'}}</td>
+            <td>{{_GetBarcodeList.StoneCharges | number : '1.2-2'}}</td>
+            <td>{{_GetBarcodeList.DiamondCharges | number : '1.2-2' }}</td>
+            <td>{{_GetBarcodeList.VaAmount | number : '1.2-2' }}</td>
+            <td>{{_GetBarcodeList.TotalAmount | number : '1.2-2'}}</td>
+            <td>{{_GetBarcodeList.SGSTAmount | number : '1.2-2' }}</td>
+            <td>{{_GetBarcodeList.CGSTAmount | number : '1.2-2'}}</td>
+            <td>{{_GetBarcodeList.IGSTAmount | number : '1.2-2'}}</td>
+            <td>{{_GetBarcodeList.ItemFinalAmount | number : '1.2-2'}}</td>
+          </tr>
+        </tbody>
+        <tr>
+          <td class="border-none"><b>Grand Total</b></td>
+          <td class="border-none"></td>
+          <td class="border-none">No. of items:</td>
+          <td class="border-none">{{total_items(GetBarcodeList) | number}}</td>
+
+          <td class="border-none">{{grossWT(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none">{{netWT(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none">{{wastage_grms(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none"></td>
+          <td class="border-none">{{metal_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none">{{stone_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none"></td>
+
+          <td class="border-none">{{va_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none">{{taxable_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+        </tr>
+        <tr>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none Heading"></td>
+
+          <td class="border-none Heading"><span class="Heading">Taxable Amt</span></td>
+          <td class="border-none">{{taxable_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+
+        </tr>
+        <tr style=" border: none;">
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none Heading"><span class="Heading">SGST </span> (1.5%) :</td>
+          <td class="border-none">{{SGST_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none Heading"><span class="Heading">CGST </span> (1.5%) :</td>
+          <td class="border-none">{{CGST_amount(GetBarcodeList) | number : '1.2-2'}}</td>
+          <td class="border-none Heading"><span class="Heading">IGST:</span> (0.0%):</td>
+          <td class="border-none">00.00</td>
+          <td class="border-none Heading"><span class="Heading">Sales Total:</span></td>
+          <td class="border-none"><b>{{SalesTotal_amount(GetBarcodeList) | number : '1.2-2'}}</b> </td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+          <td class="border-none"></td>
+
+        </tr>
+      </table>
+    </div> -->
+
+
+    <div class="modal fade " id="addBarcode" data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;
+overflow-x: hidden;">
+      <div class="modal-dialog" style="max-width: 1360px;">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h3 class="modal-title">BarCode Details <div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                <span class="tooltiptext ">BarCode Details.</span>
+              </div>
+            </h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
+                  <app-add-barcode [BarCodeNo]="BarCodeNo"></app-add-barcode>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- ArrayList -->
+<!-- <pre>{{GetBarcodeList | json}}</pre>  -->

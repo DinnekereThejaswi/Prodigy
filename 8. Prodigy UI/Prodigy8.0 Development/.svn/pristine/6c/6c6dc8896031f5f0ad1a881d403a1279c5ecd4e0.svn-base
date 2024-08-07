@@ -1,0 +1,10 @@
+import { Observable } from 'rxjs';
+import * as ɵngcc0 from '@angular/core';
+export declare class ConnectionService {
+    private connectionMonitor;
+    constructor();
+    monitor(): Observable<boolean>;
+    static ngInjectableDef: ɵngcc0.ɵɵInjectableDef<ConnectionService>;
+}
+
+//# sourceMappingURL=connection-service.service.d.ts.map

@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D59EAB55-3848-49BF-BF02-FA95B6580986}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProdigyAPI.BL</RootNamespace>
+    <AssemblyName>ProdigyAPI.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.2.0.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.2.0\lib\net45\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NtoW, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\NtoW.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessLayer\AccessManagement\IPAddressManagement.cs" />
+    <Compile Include="BusinessLayer\AccessManagement\RoleBasedAccessManagementBL.cs" />
+    <Compile Include="BusinessLayer\AccessManagement\UserBasedAccessManagementBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\AccountCodeSettingBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\AccountPostingSetupBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\AccountsCommonBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\AccountsUpdateBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\BankVoucherEntryBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\CashBackBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\CashInHandBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\CashVoucherEntryBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\ChequeBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\ContraEntryBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\ExpanseVoucherEntryBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\ExpenseVoucherCancelBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\JournalVoucherEntryBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\LedgerBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\MasterGroupBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\NarrationBL.cs" />
+    <Compile Include="BusinessLayer\Accounts\SubGroupBL.cs" />
+    <Compile Include="BusinessLayer\Barcoding\BarcodeOrderNoUpdateBL.cs" />
+    <Compile Include="BusinessLayer\Barcoding\BarcodePrintBL.cs" />
+    <Compile Include="BusinessLayer\Barcoding\CounterToCounterTransferBL.cs" />
+    <Compile Include="BusinessLayer\Barcoding\ItemToItemTransferBL.cs" />
+    <Compile Include="BusinessLayer\BatchPosting\AccountsUpdateBL.cs" />
+    <Compile Include="BusinessLayer\BatchPosting\ChitUpdateBL.cs" />
+    <Compile Include="BusinessLayer\BatchPosting\DayEndProcessingBL.cs" />
+    <Compile Include="BusinessLayer\Common\CommonBL.cs" />
+    <Compile Include="BusinessLayer\Common\DocumentPrintBL.cs" />
+    <Compile Include="BusinessLayer\Marketplace\AmazonMarketplaceBL.cs" />
+    <Compile Include="BusinessLayer\Marketplace\BhimaECommMaretplaceBL.cs" />
+    <Compile Include="BusinessLayer\Marketplace\FlipkartMarketplaceBL.cs" />
+    <Compile Include="BusinessLayer\Marketplace\IMarketplace.cs" />
+    <Compile Include="BusinessLayer\Common\MarketplaceBL.cs" />
+    <Compile Include="BusinessLayer\CreditReceipt\CreditReceiptBL.cs" />
+    <Compile Include="BusinessLayer\DocumentMgmt\DocMgmt.cs" />
+    <Compile Include="BusinessLayer\ErrorHandler\ExceptionErrorHandler.cs" />
+    <Compile Include="BusinessLayer\HttpRequestHandler\HttpRequestHandler.cs" />
+    <Compile Include="BusinessLayer\HttpRequestHandler\TokenManager.cs" />
+    <Compile Include="BusinessLayer\Issues\BarcodedIssueBL.cs" />
+    <Compile Include="BusinessLayer\Issues\IssueCancelBL.cs" />
+    <Compile Include="BusinessLayer\Issues\NonTagIssueBL.cs" />
+    <Compile Include="BusinessLayer\Issues\OPGIssueBL.cs" />
+    <Compile Include="BusinessLayer\Issues\SRIssueBL.cs" />
+    <Compile Include="BusinessLayer\Marketplace\OnlineMarketpaceBase.cs" />
+    <Compile Include="BusinessLayer\Marketplace\OnlineMarketplaceBL.cs" />
+    <Compile Include="BusinessLayer\Marketplace\OnlineMarketplaceFactory.cs" />
+    <Compile Include="BusinessLayer\Masters\BarcodeBL.cs" />
+    <Compile Include="BusinessLayer\Masters\CardChargesBL.cs" />
+    <Compile Include="BusinessLayer\Masters\CessMasterBL.cs" />
+    <Compile Include="BusinessLayer\Masters\CustomerBL.cs" />
+    <Compile Include="BusinessLayer\Masters\DailyRatesBL.cs" />
+    <Compile Include="BusinessLayer\Masters\DiscountBL.cs" />
+    <Compile Include="BusinessLayer\Masters\GSEntryBL.cs" />
+    <Compile Include="BusinessLayer\Masters\HSNBL.cs" />
+    <Compile Include="BusinessLayer\Masters\IRSetupBL.cs" />
+    <Compile Include="BusinessLayer\Masters\MinimumStockBL.cs" />
+    <Compile Include="BusinessLayer\Masters\PackingMaterialBL.cs" />
+    <Compile Include="BusinessLayer\Masters\PaymentMasterBL.cs" />
+    <Compile Include="BusinessLayer\Masters\ProductTreeBL.cs" />
+    <Compile Include="BusinessLayer\Masters\SKUMasterBL.cs" />
+    <Compile Include="BusinessLayer\Masters\StockGroupBL.cs" />
+    <Compile Include="BusinessLayer\Masters\StoneDiamondBL.cs" />
+    <Compile Include="BusinessLayer\Masters\TCSBL.cs" />
+    <Compile Include="BusinessLayer\Masters\ApplicationPasswordBL.cs" />
+    <Compile Include="BusinessLayer\Masters\ToleranceMasterBL.cs" />
+    <Compile Include="BusinessLayer\Masters\VAMasterBL.cs" />
+    <Compile Include="BusinessLayer\Masters\VendorMasterBL.cs" />
+    <Compile Include="BusinessLayer\OPGProcessing\OPGCPCIssueBL.cs" />
+    <Compile Include="BusinessLayer\OPGProcessing\OPGMeltingIssueBL.cs" />
+    <Compile Include="BusinessLayer\OPGProcessing\OPGMeltingReceiptBL.cs" />
+    <Compile Include="BusinessLayer\OPGProcessing\OPGSeparationBL.cs" />
+    <Compile Include="BusinessLayer\Order\DormantOrderBL.cs" />
+    <Compile Include="BusinessLayer\Order\OrderBL.cs" />
+    <Compile Include="BusinessLayer\Order\OrderCPCIssueBL.cs" />
+    <Compile Include="BusinessLayer\PrintConfig\PrintConfiguration.cs" />
+    <Compile Include="BusinessLayer\Purchase\OldGoldPurchaseBL.cs" />
+    <Compile Include="BusinessLayer\Purchase\PurchaseBillingBL.cs" />
+    <Compile Include="BusinessLayer\Receipts\BarcodeReceiptBL.cs" />
+    <Compile Include="BusinessLayer\Receipts\NonTagReceiptBL.cs" />
+    <Compile Include="BusinessLayer\Receipts\ReceiptCancelBL.cs" />
+    <Compile Include="BusinessLayer\Repair\RepairBL.cs" />
+    <Compile Include="BusinessLayer\Sales\BillReceiptBL.cs" />
+    <Compile Include="BusinessLayer\Sales\ConfirmSalesReturnBL.cs" />
+    <Compile Include="BusinessLayer\Sales\SalesBillingBL.cs" />
+    <Compile Include="BusinessLayer\Sales\SalesEstimationBL.cs" />
+    <Compile Include="BusinessLayer\Sales\SalesReturnEstimationBL.cs" />
+    <Compile Include="BusinessLayer\Sales\TagSplitBL.cs" />
+    <Compile Include="BusinessLayer\SRBarcode\SRBarcodingBL.cs" />
+    <Compile Include="BusinessLayer\Stock\CounterStockBL.cs" />
+    <Compile Include="BusinessLayer\Stock\StockPostBL.cs" />
+    <Compile Include="BusinessLayer\Stock\StockTakingBL.cs" />
+    <Compile Include="BusinessLayer\UserManagement\ModuleMasterBL.cs" />
+    <Compile Include="BusinessLayer\UserManagement\RoleAssignmentBL.cs" />
+    <Compile Include="BusinessLayer\UserManagement\RoleBL.cs" />
+    <Compile Include="BusinessLayer\UserManagement\SubModuleMasterBL.cs" />
+    <Compile Include="BusinessLayer\UserManagement\UserManagementBL.cs" />
+    <Compile Include="BusinessLayer\UserManagement\UserManagementInterfaces.cs" />
+    <Compile Include="ViewModel\AccessManagement\IPSettingsVM.cs" />
+    <Compile Include="ViewModel\Accounts\AccountCodeMasterVM.cs" />
+    <Compile Include="ViewModel\Accounts\AccountPostingSetupVM.cs" />
+    <Compile Include="ViewModel\Accounts\AccountsVoucherEntryVM.cs" />
+    <Compile Include="ViewModel\Accounts\AccVoucherTransactionsVM.cs" />
+    <Compile Include="ViewModel\Accounts\CashBackVM.cs" />
+    <Compile Include="ViewModel\Accounts\CashInHandVM.cs" />
+    <Compile Include="ViewModel\Accounts\ChequeVM.cs" />
+    <Compile Include="ViewModel\Accounts\ExpanseVoucherEntryVM.cs" />
+    <Compile Include="ViewModel\Accounts\LedgerTypeVM.cs" />
+    <Compile Include="ViewModel\Accounts\MasterGroupVM.cs" />
+    <Compile Include="ViewModel\Accounts\NarrationVM.cs" />
+    <Compile Include="ViewModel\Accounts\ScheduleMasteVM.cs" />
+    <Compile Include="ViewModel\Accounts\SubGroupVM.cs" />
+    <Compile Include="ViewModel\Barcoding\BarcodePrintVM.cs" />
+    <Compile Include="ViewModel\Barcoding\CounterToCounterTransferVM.cs" />
+    <Compile Include="ViewModel\Barcoding\ItemToItemTransferVM.cs" />
+    <Compile Include="ViewModel\BatchPosting\SchemeInfoVM.cs" />
+    <Compile Include="ViewModel\Credit\CreditPaymentDetailsVM.cs" />
+    <Compile Include="ViewModel\Credit\CreditReceiptVM.cs" />
+    <Compile Include="ViewModel\AccessManagement\ElevatedPermissionRoleMap.cs" />
+    <Compile Include="ViewModel\AccessManagement\ElevatedPermissionUserMap.cs" />
+    <Compile Include="ViewModel\CustomModelLevelValidator.cs" />
+    <Compile Include="ViewModel\Error\ErrorVM.cs" />
+    <Compile Include="ViewModel\Error\ExceptionHandler.cs" />
+    <Compile Include="ViewModel\GenericReport\GenericReportControlTypeViewModel.cs" />
+    <Compile Include="ViewModel\GenericReport\GenericReportFilterViewModel.cs" />
+    <Compile Include="ViewModel\GenericReport\GenericReportQueryViewModel.cs" />
+    <Compile Include="ViewModel\HttpRequestHandler\ProdigyCoreToken.cs" />
+    <Compile Include="ViewModel\Issues\BarcodeIssueVM.cs" />
+    <Compile Include="ViewModel\Issues\NonTagIssueVM.cs" />
+    <Compile Include="ViewModel\Issues\OPGIssueVM.cs" />
+    <Compile Include="ViewModel\Issues\SRIssueVM.cs" />
+    <Compile Include="ViewModel\Marketplace\MarketplaceVM.cs" />
+    <Compile Include="ViewModel\Master\ApplicationPasswordVM.cs" />
+    <Compile Include="ViewModel\Master\BarcodeMasterVM.cs" />
+    <Compile Include="ViewModel\Master\CardCommissionVM.cs" />
+    <Compile Include="ViewModel\Master\CardTypeVM.cs" />
+    <Compile Include="ViewModel\Master\CessVM.cs" />
+    <Compile Include="ViewModel\Master\ClaimDetail.cs" />
+    <Compile Include="ViewModel\Master\CommonVM.cs" />
+    <Compile Include="ViewModel\Master\CompanyVM.cs" />
+    <Compile Include="ViewModel\Master\CounterMasterVM.cs" />
+    <Compile Include="ViewModel\Master\CustomerMasterVM.cs" />
+    <Compile Include="ViewModel\GenericReport\GenericReportAggregateViewModel.cs" />
+    <Compile Include="ViewModel\Master\DailyRateVM.cs" />
+    <Compile Include="ViewModel\Master\DesignMasterVM.cs" />
+    <Compile Include="ViewModel\Master\DiscountMasterVM.cs" />
+    <Compile Include="ViewModel\Master\GenComboVM.cs" />
+    <Compile Include="ViewModel\Master\GeneralViewModels.cs" />
+    <Compile Include="ViewModel\Master\GroupTypesVM.cs" />
+    <Compile Include="ViewModel\Master\GSGroupVM.cs" />
+    <Compile Include="ViewModel\Master\GSItemEntryMasterVM.cs" />
+    <Compile Include="ViewModel\Master\GSTComponentVM.cs" />
+    <Compile Include="ViewModel\Master\GSTGroupVM.cs" />
+    <Compile Include="ViewModel\Master\GSTLedgerEntriesVM.cs" />
+    <Compile Include="ViewModel\Master\GSTMasterVM.cs" />
+    <Compile Include="ViewModel\Master\GSTPostingSetUpMasterVM.cs" />
+    <Compile Include="ViewModel\Master\HSNUCVM.cs" />
+    <Compile Include="ViewModel\Master\IDProofVM.cs" />
+    <Compile Include="ViewModel\Master\IRSetupVM.cs" />
+    <Compile Include="ViewModel\Master\ItemLevelVM.cs" />
+    <Compile Include="ViewModel\Master\ItemListGroupVM.cs" />
+    <Compile Include="ViewModel\Master\ItemMasterVM.cs" />
+    <Compile Include="ViewModel\Master\ItemSizeVM.cs" />
+    <Compile Include="ViewModel\Master\KaratVM.cs" />
+    <Compile Include="ViewModel\Master\MainLocationVM.cs" />
+    <Compile Include="ViewModel\Master\MasterDesignVM.cs" />
+    <Compile Include="ViewModel\Master\MenuViewModel.cs" />
+    <Compile Include="ViewModel\Master\MinStcokVM.cs" />
+    <Compile Include="ViewModel\Master\PackaingMaterialVM.cs" />
+    <Compile Include="ViewModel\Master\PaymentMasterVM.cs" />
+    <Compile Include="ViewModel\Master\ProductTreeVM.cs" />
+    <Compile Include="ViewModel\Master\ProfessionMasterVM.cs" />
+    <Compile Include="ViewModel\Master\ReligionVM.cs" />
+    <Compile Include="ViewModel\Master\RolMasterVM.cs" />
+    <Compile Include="ViewModel\Master\SalesmanMasterVM.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Master\SearchParams.cs" />
+    <Compile Include="ViewModel\Master\SKUVM.cs" />
+    <Compile Include="ViewModel\Master\StateMasterVM.cs" />
+    <Compile Include="ViewModel\Master\StockGroupVM.cs" />
+    <Compile Include="ViewModel\Master\StockJournalVM.cs" />
+    <Compile Include="ViewModel\Master\StoneMasterVM.cs" />
+    <Compile Include="ViewModel\Master\StoneRateMasterVM.cs" />
+    <Compile Include="ViewModel\Master\StoneTypesVM.cs" />
+    <Compile Include="ViewModel\Master\SupplierMasterVM.cs" />
+    <Compile Include="ViewModel\Master\SupplierOpenDetailsVM.cs" />
+    <Compile Include="ViewModel\Master\TCSVM.cs" />
+    <Compile Include="ViewModel\Master\TDSMasterVM.cs" />
+    <Compile Include="ViewModel\Master\ToleranceMasterVM.cs" />
+    <Compile Include="ViewModel\Master\TransactionTypesVM.cs" />
+    <Compile Include="ViewModel\Master\TypesInHSNMasterVm.cs" />
+    <Compile Include="ViewModel\Master\UOMVM.cs" />
+    <Compile Include="ViewModel\Master\SellingMCMasterVM.cs" />
+    <Compile Include="ViewModel\Master\VAMasterVM.cs" />
+    <Compile Include="ViewModel\Misc\AccessPermissionVM.cs" />
+    <Compile Include="ViewModel\Misc\GenericList.cs" />
+    <Compile Include="ViewModel\OldPurchase\AllPurchaseVM.cs" />
+    <Compile Include="ViewModel\OldPurchase\PurchaseBillingVM.cs" />
+    <Compile Include="ViewModel\OldPurchase\PurchaseEstDetailsVM.cs" />
+    <Compile Include="ViewModel\OldPurchase\PurchaseEstMasterVM.cs" />
+    <Compile Include="ViewModel\OldPurchase\PurchaseEstStoneDetailsVM.cs" />
+    <Compile Include="ViewModel\OPGProcessing\OPGCPCIssueVM.cs" />
+    <Compile Include="ViewModel\OPGProcessing\OPGMeltingIssueVM.cs" />
+    <Compile Include="ViewModel\OPGProcessing\OPGMeltingReceiptVM.cs" />
+    <Compile Include="ViewModel\OPGProcessing\OPGSeparationVM.cs" />
+    <Compile Include="ViewModel\Orders\AllOrdersVM.cs" />
+    <Compile Include="ViewModel\Orders\ChitAdjustVM.cs" />
+    <Compile Include="ViewModel\Orders\ChitClosureVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderBankVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderCounterVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderCPCIssueVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderGSTypeVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderItemDetailsVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderItemVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderMasterVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderPayModeVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderRateMasterVM.cs" />
+    <Compile Include="ViewModel\Orders\OrderReportVM.cs" />
+    <Compile Include="ViewModel\Orders\SearchParamVM.cs" />
+    <Compile Include="ViewModel\Payment\PaymentVM.cs" />
+    <Compile Include="ViewModel\Print\ProdigyPrintVM.cs" />
+    <Compile Include="ViewModel\Receipts\BarcodeReceiptVM.cs" />
+    <Compile Include="ViewModel\Repair\RepairGSItemVM.cs" />
+    <Compile Include="ViewModel\Repair\RepairGSVM.cs" />
+    <Compile Include="ViewModel\Repair\RepairIssueDetailsVM.cs" />
+    <Compile Include="ViewModel\Repair\RepairRecieptDetailsVM.cs" />
+    <Compile Include="ViewModel\Repair\RepairRecieptMasterVM.cs" />
+    <Compile Include="ViewModel\Repair\RepairIssueMasterVM.cs" />
+    <Compile Include="ViewModel\Sales\AllSalesReturnVM.cs" />
+    <Compile Include="ViewModel\Sales\BilledBranchVM.cs" />
+    <Compile Include="ViewModel\Sales\BillReceiptVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesDerivationVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesDetailsVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesEstimationVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesEstMasterVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesEstStoneVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesMasterVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesReturnDetailsVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesReturnMasterVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesReturnStoneDetailsVM.cs" />
+    <Compile Include="ViewModel\Sales\SalesStoneVM.cs" />
+    <Compile Include="ViewModel\Sales\TagVM.cs" />
+    <Compile Include="ViewModel\SRBarcode\SRItemsToBeBarcoded.cs" />
+    <Compile Include="ViewModel\Stock\CounterStockVM.cs" />
+    <Compile Include="ViewModel\Stock\FlagsVM.cs" />
+    <Compile Include="ViewModel\Stock\GSStockVM.cs" />
+    <Compile Include="ViewModel\Stock\StockCheckerVM.cs" />
+    <Compile Include="ViewModel\Stock\StockTakingVM.cs" />
+    <Compile Include="ViewModel\UserManagement\FunctionMasterViewModel.cs" />
+    <Compile Include="ViewModel\UserManagement\ModuleViewModel.cs" />
+    <Compile Include="ViewModel\UserManagement\OperatorViewModel.cs" />
+    <Compile Include="ViewModel\UserManagement\RolePermissionViewModel.cs" />
+    <Compile Include="ViewModel\UserManagement\RoleViewModel.cs" />
+    <Compile Include="ViewModel\UserManagement\UserLoginViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\Purchase\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProdigyAPI.Marketplace\ProdigyAPI.Marketplace.csproj">
+      <Project>{0ebcacb2-b692-4ab8-aa93-8b5225fb19e5}</Project>
+      <Name>ProdigyAPI.Marketplace</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProdigyAPI.Model\ProdigyAPI.Model.csproj">
+      <Project>{BC0E7530-582B-4495-B7FA-6E6366B16A9D}</Project>
+      <Name>ProdigyAPI.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProdigyAPI.SIGlobals\ProdigyAPI.SIGlobals.csproj">
+      <Project>{845009ce-d1c3-4f33-8166-c1922f2229a4}</Project>
+      <Name>ProdigyAPI.SIGlobals</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="irMasterForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Type </label>
+                                <select class="form-control" formControlName="frmCtrl_Type"
+                                    [(ngModel)]="irListDatamodel.VoucherCode" (change)="getIRlist($event)">
+                                    <option [ngValue]="null">Select</option>
+                                    <option *ngFor="let _types of IRTYPES" [value]="_types.Code">
+                                        <b> {{_types.Name}}</b>
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label" for="code">Code
+                                </label>
+                                <input type="text" class="form-control" id="code" formControlName="frmCtrl_Code"
+                                    autocapitalize="on" [(ngModel)]="irListDatamodel.IRCode" placeholder="Enter Code"
+                                    autocomplete="of" [readonly]="isReadOnly">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label" for="name">Name
+                                </label>
+                                <input type="text" class="form-control" id="name" formControlName="frmCtrl_Name"
+                                    style="text-transform:uppercase()" [(ngModel)]="irListDatamodel.IRName"
+                                    placeholder="Enter Name" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <ng-container *ngIf="EnableAdd">
+                                    <button
+                                        class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        style="margin-top: 1.2rem !important;" (click)="addIRdetails(irMasterForm)">
+                                        <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                                </ng-container>
+                                <ng-container *ngIf="EnableSave">
+                                    <button
+                                        class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        style="margin-top: 1.2rem !important;" (click)="save(irMasterForm)">
+                                        <i class="fal fa-save"></i>&nbsp;Save</button>
+                                </ng-container>
+                                <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                    style="margin-top: 1.2rem !important;" (click)="clear(irMasterForm)">
+                                    <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <ng-container *ngIf="EnableJson">
+                    <pre>{{irListDatamodel | json}}</pre>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-5">
+                <h3>Issue-Receipt Setup</h3>
+            </div>
+            <h6 class="card-subtitle"></h6>
+            <div class="table-responsive my-custom-scrollbar">
+                <table class="table table-bordered ">
+                    <thead class="topbar">
+                        <tr>
+                            <th>Type</th>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let _data of IRListData ">
+                            <td>{{_data.VoucherCode}}</td>
+                            <td>{{_data.IRCode}}</td>
+                            <td>{{_data.IRName}}</td>
+                            <td align="center">
+                                <i class="fas fa-edit" title="edit" (click)="editField(_data)"></i>
+                            </td>
+                            <td align="center"><i class="fa fa-trash" title="Delete" (click)="Delete(_data)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

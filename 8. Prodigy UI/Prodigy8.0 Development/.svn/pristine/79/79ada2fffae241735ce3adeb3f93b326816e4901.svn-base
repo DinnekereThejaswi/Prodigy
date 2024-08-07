@@ -1,0 +1,13 @@
+{
+  "name": "@angular/material/autocomplete",
+  "typings": "../autocomplete.d.ts",
+  "main": "../bundles/material-autocomplete.umd.js",
+  "module": "../esm5/autocomplete.es5.js",
+  "es2015": "../esm2015/autocomplete.js",
+  "sideEffects": false,
+  "es2015_ivy_ngcc": "../__ivy_ngcc__/esm2015/autocomplete.js",
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "8.2.14",
+    "typings": "8.2.14"
+  }
+}

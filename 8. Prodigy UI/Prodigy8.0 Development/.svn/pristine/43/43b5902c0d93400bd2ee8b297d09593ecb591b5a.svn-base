@@ -1,0 +1,442 @@
+<div class="row" style="display:block;margin: auto;width: 30%;" *ngIf="ShowHide">
+  <form class="form-horizontal">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="exampleAccount">Reprint SR No</label>
+                <div class="input-group">
+                  <input class="form-control" id="exampleAccount" placeholder="SR No" type="number" #estNo>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <ng-container *ngFor="let radiobutton of radioItems">
+                    <div class="col-md-6">
+                      <label class="form-check-inline">
+                        <input type="radio" name="option" class="form-check-input" [value]="radiobutton"
+                          (change)="Changed(radiobutton)" [checked]="radiobutton === model.option">
+                        <h3 style="margin-top: 5px;">{{radiobutton}}</h3>
+                      </label>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="getSREstimationDetails(estNo.value)"><i class="fal fa-print"></i>
+                  Reprint </button>
+              </div>
+              <!-- <div class="form-group">
+                <div class="input-group">
+                  <div class="col-md-9">
+
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-check-inline">
+                      <input type="checkbox" [checked]="checked" [disabled]="isDisabled" class="form-check-input"
+                        (change)="handleSelected($event)"> HTML
+                    </label>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<div class="modal fade" id="ReprintSRBillModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printSRBill()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" (click)="closeSRBill()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container *ngIf="PrintTypeBasedOnConfig">
+        <div class="container invoice-box htmlPrint" id="print-closed-section"
+          style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+          <pre>{{PrintDetails}}</pre>
+        </div>
+        <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+          <div id="DisplaySRBillData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="ReprintSREstModal" tabindex="-1" role="dialog"
+  aria-labelledby="ReprintSREstModalTextTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="ReprintSREstModalTextTabLabel" (click)=printSREst()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" (click)="PrintCreditReceipt()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container *ngIf="PrintTypeBasedOnConfig">
+        <div class="container invoice-box htmlPrint" id="print-closed-section"
+          style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+          <pre>{{PrintDetails}}</pre>
+        </div>
+        <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+          <div id="DisplaySREstData" class="center" [innerHTML]='PrintDetails | safeHtml'></div>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="modal fade" id="SRModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  *ngIf="EnableSRReprintHeaders">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=printSR()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-sectionSR" style="max-width: 1100px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">{{heading}}</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="row mb-4">
+                <div class="col-md-6 ">
+                  <h5 class="mb-3 "> Sales Bill No: <span>{{estSRDetails.VotureBillNo}}</span></h5>
+                </div>
+                <div class="col-md-6 ">
+                  <h5 class="mb-3 ">SR Date:
+                    <span>{{estSRDetails.SalesReturnDate | date :'dd-MMM-yy h:mm:ss a '}}</span></h5>
+                </div>
+              </div>
+              <div class="row mb-4 ">
+                <div class="col-md-6 ">
+                  <h5 class="mb-3"> SR Est.No: <span>{{estSRDetails.EstNo}}</span></h5>
+                </div>
+                <div class="col-md-3 ">
+                  <h5 class="mb-3">Gold Rate: <span>{{estSRDetails.Rate}}/gm</span></h5>
+                </div>
+                <div class="col-md-3 ">
+                  <h5 class="mb-3"> OperatorCode: <span>{{estSRDetails.OperatorCode}}</span></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="table-responsive-sm">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="classname">Stone Name</th>
+                          <th class="classname">Qty</th>
+                          <th class="classname">Gr.Wt</th>
+                          <th class="classname">St.Wt</th>
+                          <th class="classname">Net Wt</th>
+                          <th class="classname">VA Amt</th>
+                          <th class="classname">St.Amt</th>
+                          <th class="classname">Gold Amt</th>
+                          <th class="classname">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="SRDetails">
+                        <tr *ngFor="let _SRDetails of SRDetails">
+                          <td class="classname">{{_SRDetails.ItemName}}</td>
+                          <td class="classname">{{_SRDetails.Quantity}}</td>
+                          <td class="classname">{{_SRDetails.GrossWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_SRDetails.StoneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_SRDetails.NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{_SRDetails.VAAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{_SRDetails.StoneCharges | number : '1.2-2'}}</td>
+                          <td class="classname">{{_SRDetails.SRAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{_SRDetails.NetAmount | number : '1.2-2'}}</td>
+                        </tr>
+                        <tr *ngIf="getSRTotForPrint">
+                          <td class="classname">Grand Total</td>
+                          <td class="classname">{{getSRTotForPrint[0].Quantity}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].GrossWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].StoneWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].NetWt | number : '1.3-3'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].VAAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].StoneCharges | number : '1.2-2'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].SRAmount | number : '1.2-2'}}</td>
+                          <td class="classname">{{getSRTotForPrint[0].NetAmount | number : '1.2-2'}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                  <table>
+                    <tbody *ngIf="getSRTotForPrint">
+                      <tr>
+                        <td>Taxable Value :</td>
+                        <td>{{getSRTotForPrint[0].ItemTotalAfterDiscount | number : '1.2-2'}}</td>
+                      </tr>
+                      <tr>
+                        <td> SGST {{getSRTotForPrint[0].SGSTPercent}} %:</td>
+                        <td>{{getSRTotForPrint[0].SGSTAmount | number : '1.2-2'}}</td>
+                      </tr>
+                      <tr>
+                        <td>CGST {{getSRTotForPrint[0].CGSTPercent}} %:</td>
+                        <td>{{getSRTotForPrint[0].CGSTAmount | number : '1.2-2'}}</td>
+                      </tr>
+                      <tr>
+                        <td>IGST {{getSRTotForPrint[0].IGSTPercent}} %:</td>
+                        <td>{{getSRTotForPrint[0].IGSTAmount | number : '1.2-2'}}</td>
+                      </tr>
+                      <tr>
+                        <td>Invoice Amount :</td>
+                        <td>{{getSRTotForPrint[0].ItemFinalAmount}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row mb-4">
+                  <div class="col-md-10">
+                    <h5 class="mb-3 "><span><b>{{ getSRTotForPrint[0].ItemFinalAmount | numberToWords}}</b></span></h5>
+                  </div>
+                  <div class="col-md-2">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="modal fade" id="CreditReceiptModal" tabindex="-1" role="dialog"
+  aria-labelledby="CreditReceiptModalTextTabLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="CreditReceiptModalTextTabLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container *ngIf="PrintTypeBasedOnConfig">
+        <div class="container invoice-box htmlPrint" id="print-closed-section"
+          style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+          <pre>{{ReceiptDetails}}</pre>
+        </div>
+        <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+          <div id="DisplayCreditReceiptData" class="center" [innerHTML]='ReceiptDetails | safeHtml'></div>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="modal fade" id="CreditReceiptModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+          id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-section" style="max-width: 1400px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">CREDIT RECEIPT</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="row mb-4 margin">
+                <div class="col-md-4 divborder bottom">
+                  <h5 class="mb-3 top"> CUSTOMER DETAILS:</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{ReceiptDetails.CustomerName}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Address</td>
+                        <td><b>{{ReceiptDetails.Address1}}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td> <b>{{ReceiptDetails.Address2}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>State</td>
+                        <td><b>{{ReceiptDetails.State}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Mobile No</td>
+                        <td><b>{{ReceiptDetails.MobileNo}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="col-md-4 divborder bottom">
+                  <h5 class="mb-3 top">Bill Receipt</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Receipt No</td>
+                        <td><b>{{ReceiptDetails.ReceiptNo }}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Receipt Date</td>
+                        <td><b>{{ReceiptDetails.ReceiptDate | date: 'd/M/y'}}</b></td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+                </div>
+                <div class="col-md-4 lastdivborder">
+                  <h5 class="mb-3 top"> SHOWROOM ADDRESS</h5>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td><b>{{ShowroomList.CompanyName }}</b></td>
+                      </tr>
+                      <tr class="spaceUnder">
+                        <td>Address</td>
+                        <td class="mb" style="width: 150px;
+                                              word-break: break-all;white-space: normal;">
+                          <b>{{ShowroomList.Address1}}</b>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><b>{{ShowroomList.Address2}}</b>
+                      </tr>
+                      <tr>
+                        <td>Phone</td>
+                        <td><b>{{ShowroomList.PhoneNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>TIN</td>
+                        <td><b>{{ShowroomList.TinNo}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>E-mail</td>
+                        <td><b>{{ShowroomList.EMailID}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Website</td>
+                        <td><b>{{ShowroomList.Website}}</b></td>
+                      </tr>
+
+                    </tbody>
+
+                  </table>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div *ngIf="ReceiptDetails.CFlag=='Y'" class="watermark">Cancelled</div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th style="text-align: center">Original/Duplicate</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Received with thanks from Mr./Mrs./M/s. <b>{{ReceiptDetails.CustomerName}}</b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>The Sum of Rs.<b>{{ReceiptDetails.Amount}} ( {{ReceiptDetails.Amount |numberToWords }}
+                              )</b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td> Towards the Bill Number: <b>{{SummaryHeader.BillNo}}</b> Dated:
+                            <b>{{ReceiptDetails.BilledDate | date: 'd/M/y'}}</b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Customer Credit Balance Amount Rs :<b>{{ReceiptDetails.CreditBalance}}</b>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let _array of Linesarray">
+                          <td *ngIf="_array.PayMode=='D'">By cheque/DD : <b>{{_array.PayAmount}}</b> , cheque/DD No.
+                            <b>{{_array.ChequeNo}}</b>,
+                            Dated: <b>{{_array.ChequeDate | date: 'd/M/y'}}</b>, Drawn on <b>{{_array.Bank}}</b>
+                          </td>
+                          <td *ngIf="_array.PayMode=='C'">Cash Received: <b>{{_array.PayAmount}}</b></td>
+                          <td *ngIf="_array.PayMode=='EP'">E-Payment: <b>{{_array.PayAmount}}</b></td>
+                          <td *ngIf="_array.PayMode=='R'">By CC: {{_array.PayAmount}} ,{{_array.BankName}} ,
+                            {{_array.Bank}} , {{_array.CardType}} , {{_array.CardAppNo}} </td>
+
+                          <td *ngIf="_array.PayMode=='Q'">By cheque/DD: <b>{{_array.PayAmount}} , ChequeNo:
+                              {{_array.ChequeNo}} , Dated: {{_array.ChequeDate | date: 'd/M/y'}} , Drawn on:
+                              {{_array.Bank}}</b></td>
+
+                        </tr>
+                        <tr>
+                          <td>Balance Amount: <b>{{ReceiptDetails.BalanceAmount | round}}</b> </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="ReceiptDetails.lstOfPayment">
+                <div class="col-md-6">
+                  <div>Operator Code :{{ReceiptDetails.lstOfPayment[0].OperatorCode}}<b></b></div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 float-left">
+                  <div class="mb-5"></div>
+                  Customer Signature
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                  <div class="mb-5">For {{ShowroomList.CompanyName}}</div>
+                  Authorized Signature
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

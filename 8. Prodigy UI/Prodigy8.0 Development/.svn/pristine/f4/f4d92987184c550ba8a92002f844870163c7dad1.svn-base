@@ -1,0 +1,284 @@
+<div class="card mb-0">
+    <div class="card-body">
+        <!-- <div class="card-body"> -->
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <div>
+                            <i class="fal fa-calendar-alt"></i>&nbsp; <span class="text-muted">
+                                Voucher Date</span>
+                            <!-- <h2 class="font-light">{{voucherDate | date: 'yyyy-MM-dd'}}</h2> -->
+                            <h2 class="font-light">{{voucherDate | date:'dd/MM/yyyy'}}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="NewVoucherNo">Voucher No.</label>
+                        <input type="number" class="form-control" name="NewVoucherNo"
+                            [(ngModel)]="BankVoucherEntryHeader.NewVoucherNo" readonly>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Master Ledger</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" (change)="getChequeNumber()"
+                            name="AccountCodeMaster" [(ngModel)]="BankVoucherEntryHeader.AccountCodeMaster">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _masterLedgerList of MasterLedgerList" [value]="_masterLedgerList.Code">
+                                {{_masterLedgerList.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <label for="">Type</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" name="TransType"
+                            [(ngModel)]="BankVoucherEntryHeader.TransType"
+                            (change)="chngType(BankVoucherEntryHeader.TransType)">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _paymentType of PaymentType" [value]="_paymentType.Code">
+                                {{_paymentType.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Account Name</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Cheque No</th>
+                                <th>Cheque Date</th>
+                                <th>Ref No</th>
+                                <th>Narration</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="form-control" [(ngModel)]="BankVoucherEntryHeader.AccountCode"
+                                        (change)="getAccName($event.target.value)">
+                                        <option [ngValue]="0">Select</option>
+                                        <option *ngFor="let name of ApplicationNameList" [value]="name.acc_code">
+                                            {{name.acc_name}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control"
+                                        [(ngModel)]="BankVoucherEntryHeader.DebitAmount" [readonly]="EnableDebit">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control"
+                                        [(ngModel)]="BankVoucherEntryHeader.CreditAmount" [readonly]="EnableCredit">
+                                </td>
+                                <td style="width:200px">
+                                    <ng-container *ngIf="EnableCredit">
+                                        <!-- <ng-select [items]="ChequeNo" bindLabel="chq_no" [virtualScroll]="true"
+                                            bindValue="chq_no" appendTo="body" placeholder="Select Cheque No"
+                                            [(ngModel)]="BankVoucherEntryHeader.ChequeNo">
+                                        </ng-select> -->
+                                        <input list="ChequeNo" class="form-control" name="chq no"
+                                        [(ngModel)]="BankVoucherEntryHeader.ChequeNo" />
+                                    <datalist id="ChequeNo">
+                                        <option [ngValue]="null">Select</option>
+                                        <option *ngFor="let list of ChequeNo" [value]="list.chq_no">
+                                            {{list.chq_no}}</option>
+                                    </datalist>
+                                   
+
+                                    </ng-container>
+                                    <ng-container *ngIf="!EnableCredit">
+                                        <input type="number" pattern="/^-?\d+\.?\d*$/"
+                                            onKeyPress="if(this.value.length==6) return false;" class="form-control"
+                                            [(ngModel)]="BankVoucherEntryHeader.ChequeNo">
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <input type="text" bsDatepicker class="form-control" [bsConfig]="datePickerConfig"
+                                        placeholder="Select Date" [(ngModel)]="BankVoucherEntryHeader.ChequeDate">
+
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control"
+                                        [(ngModel)]="BankVoucherEntryHeader.ReceiptNo">
+                                </td>
+                                <td>
+
+                                    <!-- <ng-select [items]="NarrationList" bindLabel="Narration" [virtualScroll]="true"
+                                bindValue="chq_no" appendTo="body" placeholder="Select Narration"
+                                [(ngModel)]="BankVoucherEntryHeader.Narration">
+                                </ng-select> -->
+                                    <!-- 
+
+                                <select class="form-control" [(ngModel)]="BankVoucherEntryHeader.Narration">
+                                    <option [ngValue]="null">Select</option>
+                                    <option *ngFor="let list of NarrationList" [value]="list.Narration">
+                                        {{list.Narration}}</option>
+                                </select> -->
+
+                                    <input list="narrationList" class="form-control" name="narration"
+                                        [(ngModel)]="BankVoucherEntryHeader.Narration" />
+                                    <datalist id="narrationList">
+                                        <option [ngValue]="null">Select</option>
+                                        <option *ngFor="let list of NarrationList" [value]="list.Narration">
+                                            {{list.Narration}}</option>
+                                    </datalist>
+
+
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="EnableAdd">
+                                        <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                            style="margin-top: 0.2rem !important;" (click)="add()">
+                                            <i class="far fa-plus-circle" style="padding-right:10px"></i>Add</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="EnableSave">
+                                        <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                            style="margin-top: 0.2rem !important;" (click)="save()">
+                                            <i class="fal fa-save" style="padding-right:10px"></i>Save</button>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                        style="margin-top: 0.2rem !important;" (click)="clear()">
+                                        <i class="fal fa-window-close" style="padding-right:10px"></i>Clear</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<ng-container *ngIf="BankVoucherList.length>0">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <!-- <th>Action</th> -->
+                                <th>SNo</th>
+                                <th>Voucher No</th>
+                                <th>Account Name</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Cheque No</th>
+                                <th>Naration</th>
+                                <th>Ref.No</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let _bankVoucherList of BankVoucherList;let i=index">
+                            <tr>
+                                <!-- <td><i class="fas fa-edit" title="edit" (click)="EditRow(_bankVoucherList)"
+                                        style="padding-right:10px"></i>
+                                   
+                                    <i class="fal fa-print" (click)="onPrint(_bankVoucherList)"></i>
+                                </td> -->
+                                <td>{{i+1}}</td>
+                                <td>{{_bankVoucherList.VoucherNo}}</td>
+                                <td>{{_bankVoucherList.AccName}}</td>
+                                <td>{{_bankVoucherList.Debit}}</td>
+                                <td>{{_bankVoucherList.Credit}}</td>
+                                <td>{{_bankVoucherList.ChequeNo}}</td>
+                                <td>{{_bankVoucherList.Narration}}</td>
+                                <td>{{_bankVoucherList.RefNo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<br>
+<br>
+<ng-container *ngIf="BankVoucherFinalJsonList.length>0">
+    <div class="card mb-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>Action</th>
+                                <th>SNo</th>
+                                <th>Account Name</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Cheque No</th>
+                                <th>Ref.No</th>
+                                <th>Naration</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let _bankVoucherFinalJsonList of BankVoucherFinalJsonList;let i=index">
+                            <tr>
+                                <td>
+                                    <!-- <i class="fas fa-edit" title="edit"
+                                        (click)="EditTempRow(_bankVoucherFinalJsonList,i)"
+                                        style="padding-right:10px"></i> -->
+                                    <i class="fas fa-trash" title="delete"
+                                        (click)="DeleteTempRow(_bankVoucherFinalJsonList,i)"></i>
+                                </td>
+                                <td>{{i+1}}</td>
+                                <td>{{_bankVoucherFinalJsonList.Partyname}}</td>
+                                <td>{{_bankVoucherFinalJsonList.DebitAmount}}</td>
+                                <td>{{_bankVoucherFinalJsonList.CreditAmount}}</td>
+                                <td>{{_bankVoucherFinalJsonList.ChequeNo}}</td>
+                                <td>{{_bankVoucherFinalJsonList.ReceiptNo}}</td>
+                                <td>{{_bankVoucherFinalJsonList.Narration}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+        style="margin-top: 0.2rem !important;" (click)="Submit()">
+        <i class="fal fa-save" style="padding-right:10px"></i>Submit</button>
+</ng-container>
+<!-- </div> -->
+<!-- </div> -->
+
+<div class="modal fade" id="ReprintBankVoucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="print">
+                <span>
+                    <div id="DisplayData" [innerHTML]='PrintDetails'></div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{BankVoucherEntryHeader | json}}</pre>
+    <pre>{{BankVoucherFinalJsonList | json}}</pre>
+</ng-container>

@@ -1,0 +1,165 @@
+<div class="card">
+    <div class="card-body">
+
+        <!-- FrmCtrl_GsCode: "",
+        FrmCtrl_Purity: 0,
+        FrmCtrl_FromMcPer: 0,
+        FrmCtrl_ToMcPer: "",
+        FrmCtrl_BoardRate: 0,
+        FrmCtrl_OfferRate: 0,
+        FrmCtrl_DiscountPer: 0,
+        FrmCtrl_DiscountAmt: 0, -->
+        <form [formGroup]="MetalOfferFrom" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="label-control">GS</label>
+                        <select class="form-control" formControlName="FrmCtrl_GsCode"
+                            [(ngModel)]="MetalRateOfferModel.GsCode">
+                            <option></option>
+                            <option></option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="label-control">From MC%</label>
+                        <input type="text" class="form-control" placeholder="0.00"
+                            [(ngModel)]="MetalRateOfferModel.FromMcPer" formControlName="FrmCtrl_FromMcPer"
+                            IntegerDecimalFieldValidator>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="label-control">To MC%</label>
+                        <input type="text" class="form-control" placeholder="0.00" formControlName="FrmCtrl_ToMcPer"
+                            IntegerDecimalFieldValidator [(ngModel)]="MetalRateOfferModel.ToMcPer">
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="label-control">Board Rate</label>
+                        <input type="text" class="form-control" placeholder="0.00" formControlName="FrmCtrl_BoardRate"
+                            IntegerDecimalFieldValidator [(ngModel)]="MetalRateOfferModel.BoardRate">
+
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="label-control">Discount%</label>
+                        <input type="text" class="form-control" placeholder="0.00" formControlName="FrmCtrl_DiscountPer"
+                            IntegerDecimalFieldValidator [(ngModel)]="MetalRateOfferModel.DiscountPer">
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="label-control">Discount Amt</label>
+                        <input type="text" class="form-control" formControlName="FrmCtrl_DiscountAmt" placeholder="0.00"
+                            IntegerDecimalFieldValidator [(ngModel)]="MetalRateOfferModel.DiscountAmt" readonly disabled
+                            style="background: rgb(255, 235, 54);font-weight: bold; text-align: center;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="label-control">Offer Rate</label>
+                        <input type="text" class="form-control" formControlName="FrmCtrl_OfferRate" placeholder="0.00"
+                            IntegerDecimalFieldValidator [(ngModel)]="MetalRateOfferModel.OfferRate">
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <ng-container *ngIf="EnableAdd">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="add(MetalOfferFrom)">
+                                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                        </ng-container>
+                        <ng-container *ngIf="EnableSave">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="save(MetalOfferFrom)">
+                                <i class="fal fa-save"></i>&nbsp;Save</button>
+                        </ng-container>
+                        <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;" (click)="clear()">
+                            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">Rate &nbsp;(22k)</legend>
+                        <input type="text" value="4444" class="form-control"
+                            style="background: palegoldenrod;font-weight: bold;width: 25%;  text-align: center;color: red;"
+                            readonly>
+                        &nbsp;&nbsp;&nbsp;
+                        <button class="btn  btn btn-info waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            (click)="clear()">
+                            <i class="fa fa-refresh"></i>&nbsp;Recalculate</button>
+                        <button type="button" style="float: right;"
+                            class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            (click)=Print() id="exampleModalLabel"><i class="fal fa-print"></i>
+                            Print</button>
+                    </fieldset>
+                </div>
+
+            </div>
+        </form>
+        <ng-container *ngIf="EnableJson">
+            <pre>{{MetalRateOfferModel | json}}</pre>
+        </ng-container>
+    </div>
+</div>
+
+
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered  table-hover ">
+                    <thead class="topbar">
+                        <tr>
+                            <th>Sl.No</th>
+                            <th>GS</th>
+                            <th>From MC%</th>
+                            <th>To MC%</th>
+                            <th>Board Rate</th>
+                            <th>Discount %</th>
+                            <th>Discount Amount</th>
+                            <th>Offer rate</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngFor=" let  _salesmans of SalesMenData  
+                | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber } 
+                 ; let i = index">
+                            <td>{{_salesmans.SalesManCode}}</td>
+                            <td>{{_salesmans.SalesManName}}</td>
+                            <td [style.color]="getStatusColor(_salesmans.ObjStatus)">
+                                <b>{{_salesmans.ObjStatus | statusName : _salesmans.ObjStatus }}</b>
+                            </td>
+                            <td align="center">
+                                <i class="fas fa-edit" title="edit" (click)="editField(_salesmans)"></i>
+                            </td>
+                            <td align="center"><i class="fas fa-lock-open" title="open"
+                                    (click)="openField(_salesmans)"></i>
+                            <td align="center">
+                                <i class="fas fa-lock" title="close" (click)="closeField(_salesmans)"></i>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,153 @@
+<button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+  style="margin-top: 5px;" (click)="MergeEst()">
+  <i class="far fa-code-merge"></i> Merge Est.</button>
+
+
+<div class="modal fade" id="MergeEstModal" tabindex="-1" role="dialog" aria-labelledby="MergeEstModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 2000px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container invoice-box htmlPrint" id="print-section" style="max-width: 2000px;border-width: 2em">
+        <div class="invoice">
+          <h3 style="text-align:center">Merge Estimation</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th class="classname"></th>
+                          <th class="classname">EstNo</th>
+                          <th class="classname">CustID</th>
+                          <th class="classname">Cust Name</th>
+                          <th class="classname">Order No</th>
+                          <th class="classname">Order Amount</th>
+                          <th class="classname">Gold.Amt</th>
+                          <th class="classname">Total.Amt</th>
+                          <th class="classname">Purchase.Amt</th>
+                          <th class="classname">SR.Amt</th>
+                          <th class="classname">GsType</th>
+                          <th class="classname">Rate</th>
+                          <th class="classname">GST</th>
+                          <th class="classname">Karat</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let _AllEstDetails of AllEstDetails;let i = index">
+                        <tr>
+                          <td>
+                            <input type="checkbox" class="chkbxsize" value="{{_AllEstDetails.EstNo}}"
+                              data-toggle="collapse" [attr.data-target]="'#collapse'+ i" id='panels'
+                              (click)="onCheckboxChange(_AllEstDetails,$event,i)" />
+                          </td>
+                          <td class="classname">{{_AllEstDetails.EstNo}}</td>
+                          <td class="classname">{{_AllEstDetails.CustID}}</td>
+                          <td class="classname">{{_AllEstDetails.CustName}}</td>
+                          <td class="classname">{{_AllEstDetails.OrderNo}}</td>
+                          <td class="classname">{{_AllEstDetails.OrderAmount}}</td>
+                          <td class="classname"></td>
+                          <td class="classname"></td>
+                          <td class="classname">{{_AllEstDetails.PurchaseAmount}}</td>
+                          <td class="classname">{{_AllEstDetails.SPurchaseAmount}}</td>
+                          <td class="classname">{{_AllEstDetails.GSType}}</td>
+                          <td class="classname">{{_AllEstDetails.Rate}}</td>
+                          <td class="classname"></td>
+                          <td class="classname">{{_AllEstDetails.Karat}}</td>
+                        </tr>
+                        <tr>
+                          <td colspan="11" class="hiddenRow" *ngIf="i === Index">
+                            <div class="collapse wrapper" id="collapse{{i}}" data-parent="#panels">
+                              <table class="table" id='panels' style="width: 1200px;">
+                                <thead class="topbar">
+                                  <tr>
+                                    <th></th>
+                                    <th>S.No</th>
+                                    <th>Tag No</th>
+                                    <th>Sal Code</th>
+                                    <th>Counter</th>
+                                    <th>Qty</th>
+                                    <th>Gr.Wt</th>
+                                    <th>St.Wt</th>
+                                    <th>N.Wt</th>
+                                    <th>Wastage%</th>
+                                </thead>
+                                <tbody *ngFor="let _ItemDetails of _AllEstDetails.salesEstimatonVM;let j = index">
+                                  <tr>
+                                    <td>
+                                      <input type="checkbox" class="chkbxsize" [checked]="true" [attr.id]="i + '_' + j"
+                                        (click)="onCheckboxSubItemsChange(_ItemDetails,$event,j)" />
+                                    </td>
+                                    <td class="classname">{{j+1}}</td>
+                                    <td class="classname">{{_ItemDetails.BarcodeNo}}</td>
+                                    <td class="classname">{{_ItemDetails.SalCode}}</td>
+                                    <td class="classname">{{_ItemDetails.CounterCode}}</td>
+                                    <td class="classname">{{_ItemDetails.ItemQty}}</td>
+                                    <td class="classname">{{_ItemDetails.Grosswt}}</td>
+                                    <td class="classname">{{_ItemDetails.Stonewt}}</td>
+                                    <td class="classname">{{_ItemDetails.Netwt}}</td>
+                                    <td class="classname">{{_ItemDetails.WastPercent}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4" style="text-align: center;">
+            <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+              style="margin-top: 1.2rem !important;" (click)="Save()">
+              <i class="far fa-save"></i> Save</button>
+          </div>
+          <div class="col-md-4">
+          </div>
+        </div>
+        <ng-container *ngIf="EnableJson">
+          <pre>{{MergeEstPost | json}}</pre>
+        </ng-container>
+        <!-- <pre>{{AllEstDetails | json}}</pre> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="PermissonModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="OrderNo">6. Password</label>
+          <input type="password" min="0" class="form-control" name="pwd" placeholder="Password"
+            (keyup.enter)="passWord(PwdMergeEst.value)" #PwdMergeEst>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+            (click)="passWord(PwdMergeEst.value)">Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

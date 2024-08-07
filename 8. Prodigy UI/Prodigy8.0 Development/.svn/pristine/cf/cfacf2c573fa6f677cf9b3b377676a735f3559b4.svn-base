@@ -1,0 +1,191 @@
+<!-- <header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+      
+        <div class="navbar-header">
+            <a class="navbar-brand" href="javascript:Void(0)">
+               <b>
+                    <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+          
+                    <img src="assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                </b><span>
+        
+                    <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                 
+                    <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                </span>
+            </a>
+
+
+
+        </div>
+        <div class="navbar-header">
+            <ng-container *ngIf="Company">
+                <marquee style="margin-top: 18px;color:rgb(9, 231, 220);font-weight:800">
+                    {{Company.CompanyName}}-{{bcode}}
+                </marquee>
+            </ng-container>
+        </div>
+        
+        <div class="navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-md-0">
+                <li class="nav-item m-l-10"> <a
+                        class="nav-link sidebartoggler hidden-lg-up text-muted waves-effect waves-dark"
+                        href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+            </ul>
+          
+            <ul class="navbar-nav ml-auto mt-md-0">
+                
+
+                <ul *ngIf="timedOut">
+                    <li class="float-right " style="margin-top: 18px;color:rgb(231, 227, 9);font-weight:800">
+                        Your session is about to expire in {{idleState | minuteSeconds}}
+                    </li>
+                </ul>
+                <li class="nav-item hidden-sm-down search-box"> <a
+                        class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i
+                            class="ti-search"></i></a>
+                    <form class="app-search col-6 float-right">
+                        <ng-template #rt let-r="result" let-t="term">
+                          
+                            <div style="width:300px;">
+                                <span>{{ r.Tittle}}</span>
+                            </div>
+                        </ng-template>
+                        <input type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" name="model"
+                            [ngbTypeahead]="search3" [resultTemplate]="rt" [inputFormatter]="formatter2"
+                            placeholder="Search & enter">
+                        <a class="srh-btn"><i class="ti-close"></i></a>
+                        <button type="submit" style="display:none;" (click)="temp(model)">Search</button>
+                    </form>
+                </li>
+                <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
+                    <a ngbDropdownToggle class="nav-link dropdown-toggle  waves-effect waves-dark"
+                        href="javascript:void(0)" data-toggle="dropdown">
+                        <img src="assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                    <div class="dropdown-menu dropdown-menu-right animated slideInDown" ngbDropdownMenu>
+                        <ul class="dropdown-user">
+                            <li>
+                                <div class="dw-user-box">
+                                    <div class="u-img"><img src="assets/images/users/1.jpg" alt="user"></div>
+                                    <div class="u-text">
+                                        <h4>{{LoggedIn}}</h4>
+                                       
+                                    </div>
+                                </div>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                           
+                            <li><a href="#" (click)="logOut()"><i class="fa fa-power-off"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav my-lg-0">
+
+
+            </ul>
+        </div>
+    </nav>
+</header> -->
+
+
+<header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="javascript:Void(0)">
+                <b>
+                    <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+
+                    <img src="assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                </b>
+                <span>
+
+                    <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+
+                    <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                </span>
+            </a>
+        </div>
+
+        <div style="width: 150pt;">
+            <ng-container *ngIf="Company">
+                <marquee style="margin-top: 18px;color:#ebf3ea;font-weight:800">
+                    {{Company.CompanyName}}-{{bcode}}
+                </marquee>
+            </ng-container>
+        </div>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-md-0">
+                <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler  text-muted waves-effect waves-dark"
+                        href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+
+                <li class="nav-item hidden-sm-down search-box"> <a
+                        class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i
+                            class="ti-search"></i></a>
+                    <form class="app-search col-6 float-right">
+                        <ng-template #rt let-r="result" let-t="term">
+
+                            <div style="width:300px;">
+                                <span>{{ r.Tittle}}</span>
+                            </div>
+                        </ng-template>
+                        <input type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" name="model"
+                            [ngbTypeahead]="search3" [resultTemplate]="rt" [inputFormatter]="formatter2"
+                            placeholder="Search & enter">
+                        <a class="srh-btn"><i class="ti-close"></i></a>
+                        <button type="submit" style="display:none;" (click)="temp(model)">Search</button>
+                    </form>
+                </li>
+            </ul>
+
+
+            <ul class="navbar-nav ml-auto mt-md-0">
+                <ul *ngIf="timedOut">
+                    <li class="float-right " style="margin-top: 18px;color:rgb(243, 240, 47);font-weight:800">
+                        Your session is about to expire in {{idleState | minuteSeconds}}
+                    </li>
+                </ul>
+                <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
+                    <a ngbDropdownToggle class="nav-link dropdown-toggle  waves-effect waves-dark"
+                        href="javascript:void(0)" data-toggle="dropdown">
+                        <img src="assets/images/users/1.jpg" alt="user" class="profile-pic" />
+                        &nbsp;&nbsp;
+                        <strong>{{LoggedIn}}</strong>
+                    </a>
+
+                    <!---Below  div used to  naimated slide down hovering-->
+                    <!-- <div class="dropdown-menu dropdown-menu-right animated slideInDown" ngbDropdownMenu> -->
+                    <!---above  divused to  naimated slide down hovering-->
+
+                    <div class="dropdown-menu dropdown-menu-right animated " ngbDropdownMenu
+                        style=" border-style: solid;border-color:rgb(13, 13, 14); border-width:thin;">
+                        <ul class="dropdown-user">
+                            <!---Below li used to show the operator code -->
+                            <!-- <li>
+                                <div class="dw-user-box">
+                                    <div class="u-img"><img src="assets/images/users/1.jpg" alt="user"></div>
+                                    <div class="u-text">
+                                        <strong>{{LoggedIn}}</strong>
+                                    </div>
+                                </div>
+                            </li> -->
+                            <!-- <li role="separator" class="divider"></li> -->
+                            <!---above li used to show the operator code-->
+
+
+                            <li><a [routerLink]="['/utilities/change-password']">
+                                    <span class="fa fa-key" aria-hidden="true">
+                                    </span> Change Password</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" (click)="logOut()"><i class="fa fa-power-off"></i> Logout</a></li>
+
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav my-lg-0">
+            </ul>
+        </div>
+    </nav>
+</header>

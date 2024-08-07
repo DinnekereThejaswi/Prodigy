@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="ReligionMasterForm" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                    <label class="control-label" for="Religion">Religion <span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span><div class="tooltipdesign"> <i class="fal fa-question-circle"></i>
+                      <span class="tooltiptext tooltip-top">Religion Name</span>
+                    </div></label>
+                <input type="text" class="form-control" id="MainCounterCode" [(ngModel)]="ReligionMasterListData.Religion"
+                  formControlName="Religion" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                  <label class="control-label" for="DisplaySequence">Display Seq<span class="textRed"> <i
+                      class="fas fa-star-of-life"></i></span></label>
+                  <input type="text" class="form-control" id="DisplaySequence" [(ngModel)]="ReligionMasterListData.DisplaySequence"
+                    formControlName="DisplaySequence" NumberFieldvalidator />
+                </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                     <div class="form-group">
+                   <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" (click)="onSubmit(ReligionMasterForm)"><i class="fal fa-save"></i> Submit</button>
+                    <button type="submit" class="btn btn-danger  waves-effect waves-light btn-rounded btn-secondary">Cancel</button>
+                 </div>
+               </div>
+               <div class="col-md-6" style="text-align:right">
+                   <span class="textRed"> <i class="fas fa-star-of-life"></i></span> Mandatory fields
+               </div>
+             </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <pre>{{ ReligionMasterListData | json }}</pre>
+</div>

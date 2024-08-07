@@ -1,0 +1,103 @@
+
+  <div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-2" style="padding-top:22px;">
+    </div>
+    <div class="col-md-2">            
+      <div style="color: brown; text-align: right; font-style: italic;">
+        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+      (click)="OpenModal()">Add</button></div>
+     </div>
+   </div>
+   <br>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="topbar">
+                <tr>
+                  <th>Permission</th>
+                  <th>Role</th>
+                  <th>Active</th>
+                  <th>Activate</th>
+                  <th>De-Activate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let  _rolesPermissionList of RolesPermissionList; let i=index">
+                  <td class="padding">{{_rolesPermissionList.PermissionName}}</td>
+                  <td class="padding">{{_rolesPermissionList.RoleName}}</td>
+                  <td class="padding">{{_rolesPermissionList.Active}}</td>
+                  <td class="padding"><button (click)="Activate(i,_rolesPermissionList)">Activate</button></td>
+                  <td class="padding"><button (click)="Deactivate(i,_rolesPermissionList)">De-Activate</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="Modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document" style="max-width: 900px">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Permmission to the Role</h4>
+      </div>
+      <div class="modal-body">
+    <form class="form-horizontal" [formGroup]="RolePermissionForm">
+      <div class="row">
+       <div class="col-md-4">
+       <div class="form-group">
+         <label class="control-label" for="Date">Permission</label>
+         <select class="form-control" formControlName="PermissionID" [(ngModel)]="rolePermissionModel.PermissionID">
+          <option [ngValue]="null">Select</option>
+          <option *ngFor="let _permissionList of PermissionList" [value]="_permissionList.ID">
+            {{_permissionList.Name}}
+          </option>
+        </select>
+       </div>
+     </div>
+
+     <div class="col-md-4">
+      <div class="form-group">
+        <label class="control-label" for="Date">Role</label>
+        <select class="form-control" formControlName="RoleID" [(ngModel)]="rolePermissionModel.RoleID">
+         <option [ngValue]="null">Select</option>
+         <option *ngFor="let _rolesList of RolesList" [value]="_rolesList.ID">
+           {{_rolesList.Name}}
+         </option>
+       </select>
+      </div>
+     </div>
+
+     <div class="col-md-2" style="padding-top:22px;">
+       <div class="form-group">
+         <div style="color: brown; text-align: right; font-style: italic;">
+          <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+        (click)="Add(RolePermissionForm)">Add</button></div>
+       </div>
+     </div>
+     <div class="col-md-2">            
+     </div>
+   </div>
+    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- <pre>{{rolePermissionModel | json}}</pre> -->

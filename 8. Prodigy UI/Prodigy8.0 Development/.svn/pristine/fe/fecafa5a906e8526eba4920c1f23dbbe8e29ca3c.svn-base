@@ -1,0 +1,234 @@
+<div class="row" style="display:block;margin: auto;width: 30%;">
+  <form class="form-horizontal">
+    <div class="col-md-12" *ngIf="ShowHide">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-md-12 ">
+              <div class="form-group">
+                <label for="">Receipt Number</label>
+                <input class="form-control" name="ReceiptNo" type="number" [(ngModel)]="SummaryHeader.ReceiptNo">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <button class="printMe btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                  (click)="getReceiptPrint(SummaryHeader.ReceiptNo)"><i class="fal fa-print"></i>
+                  Reprint </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+            id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="container invoice-box htmlPrint" id="print-section" style="max-width: 1400px;border-width: 2em">
+          <div class="invoice">
+            <h3 style="text-align:center">CREDIT RECEIPT</h3>
+            <div class="card">
+              <div class="card-body">
+                <div class="row mb-4 margin">
+                  <div class="col-md-4 divborder bottom">
+                    <h5 class="mb-3 top"> CUSTOMER DETAILS:</h5>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Name</td>
+                          <td><b>{{ReceiptDetails.CustomerName}}</b></td>
+                        </tr>
+                        <tr>
+                          <td>Address</td>
+                          <td><b>{{ReceiptDetails.Address1}}</b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td> <b>{{ReceiptDetails.Address2}}</b></td>
+                        </tr>
+                        <tr>
+                          <td>State</td>
+                          <td><b>{{ReceiptDetails.State}}</b></td>
+                        </tr>
+                        <tr>
+                          <td>Mobile No</td>
+                          <td><b>{{ReceiptDetails.MobileNo}}</b></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="col-md-4 divborder bottom">
+                    <h5 class="mb-3 top">Bill Receipt</h5>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Receipt No</td>
+                          <td><b>{{ReceiptDetails.ReceiptNo }}</b></td>
+                        </tr>
+                        <tr>
+                          <td>Receipt Date</td>
+                          <td><b>{{ReceiptDetails.ReceiptDate | date: 'd/M/y'}}</b></td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="col-md-4 lastdivborder">
+                    <h5 class="mb-3 top"> SHOWROOM ADDRESS</h5>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Name</td>
+                          <td><b>{{ShowroomList.CompanyName }}</b></td>
+                        </tr>
+                        <tr class="spaceUnder">
+                          <td>Address</td>
+                          <td class="mb" style="width: 150px;
+                                                  word-break: break-all;white-space: normal;">
+                            <b>{{ShowroomList.Address1}}</b></td>
+
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td><b>{{ShowroomList.Address2}}</b>
+                        </tr>
+                        <tr>
+                          <td>Phone</td>
+                          <td><b>{{ShowroomList.PhoneNo}}</b></td>
+                        </tr>
+                        <tr>
+                          <td>TIN</td>
+                          <td><b>{{ShowroomList.TinNo}}</b></td>
+                        </tr>
+                        <tr>
+                          <td>E-mail</td>
+                          <td><b>{{ShowroomList.EMailID}}</b></td>
+                        </tr>
+                        <tr>
+                          <td>Website</td>
+                          <td><b>{{ShowroomList.Website}}</b></td>
+                        </tr>
+
+                      </tbody>
+
+                    </table>
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div *ngIf="ReceiptDetails.CFlag=='Y'" class="watermark">Cancelled</div>
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th style="text-align: center">Original/Duplicate</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Received with thanks from Mr./Mrs./M/s. <b>{{ReceiptDetails.CustomerName}}</b>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>The Sum of Rs.<b>{{ReceiptDetails.Amount}} ( {{ReceiptDetails.Amount |numberToWords }}
+                                )</b>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td> Towards the Bill Number: <b>{{SummaryHeader.BillNo}}</b> Dated:
+                              <b>{{ReceiptDetails.BilledDate | date: 'd/M/y'}}</b></td>
+                          </tr>
+                          <tr>
+                            <td>Customer Credit Balance Amount Rs :<b>{{ReceiptDetails.CreditBalance}}</b>
+                            </td>
+                          </tr>
+                          <tr *ngFor="let _array of Linesarray">
+                            <td *ngIf="_array.PayMode=='D'">By cheque/DD : <b>{{_array.PayAmount}}</b> , cheque/DD No.
+                              <b>{{_array.ChequeNo}}</b>,
+                              Dated: <b>{{_array.ChequeDate | date: 'd/M/y'}}</b>, Drawn on <b>{{_array.Bank}}</b>
+                            </td>
+                            <td *ngIf="_array.PayMode=='C'">Cash Received: <b>{{_array.PayAmount}}</b></td>
+                            <td *ngIf="_array.PayMode=='EP'">E-Payment: <b>{{_array.PayAmount}}</b></td>
+                            <td *ngIf="_array.PayMode=='R'">By CC: {{_array.PayAmount}} ,{{_array.BankName}} ,
+                              {{_array.Bank}} , {{_array.CardType}} , {{_array.CardAppNo}} </td>
+
+                            <td *ngIf="_array.PayMode=='Q'">By cheque/DD: <b>{{_array.PayAmount}} , ChequeNo:
+                                {{_array.ChequeNo}} , Dated: {{_array.ChequeDate | date: 'd/M/y'}} , Drawn on:
+                                {{_array.Bank}}</b></td>
+
+                          </tr>
+                          <tr>
+                            <td>Balance Amount: <b>{{ReceiptDetails.BalanceAmount | round}}</b> </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="ReceiptDetails.lstOfPayment">
+                  <div class="col-md-6">
+                    <div>Operator Code :{{ReceiptDetails.lstOfPayment[0].OperatorCode}}<b></b></div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 float-left">
+                    <div class="mb-5"></div>
+                    Customer Signature
+                  </div>
+                  <div class="col-md-6" style="text-align: right">
+                    <div class="mb-5">For {{ShowroomList.CompanyName}}</div>
+                    Authorized Signature
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="modal fade" id="CreditReceiptModal" tabindex="-1" role="dialog"
+    aria-labelledby="CreditReceiptModalTextTabLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+            id="CreditReceiptModalTextTabLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <ng-container *ngIf="PrintTypeBasedOnConfig">
+          <div class="container invoice-box htmlPrint" id="print-closed-section"
+            style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+            <pre>{{ReceiptDetails}}</pre>
+          </div>
+          <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+            <div id="DisplayCreditReceiptData" class="center" [innerHTML]='ReceiptDetails | safeHtml'></div>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

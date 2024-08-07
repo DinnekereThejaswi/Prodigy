@@ -1,0 +1,81 @@
+import { OnDestroy } from "@angular/core";
+import { Observable } from "rxjs";
+import { ShortcutEventOutput, ShortcutInput } from "./ng-keyboard-shortcuts.interfaces";
+export declare class KeyboardShortcutsService implements OnDestroy {
+    /**
+     * Parsed shortcuts
+     * for each key create a predicate function
+     */
+    private _shortcuts;
+    /**
+     * Throttle the keypress event.
+     */
+    private throttleTime;
+    private _pressed;
+    /**
+     * Streams of pressed events, can be used instead or with a command.
+     */
+    pressed$: Observable<ShortcutEventOutput>;
+    /**
+     * Disable all keyboard shortcuts
+     */
+    private disabled;
+    private _ignored;
+    /**
+     * Subscription for on destroy.
+     */
+    private readonly subscription;
+    private isAllowed;
+    private mapEvent;
+    private keydown$;
+    private readonly shortcuts;
+    constructor();
+    /**
+     * Remove subscription.
+     */
+    ngOnDestroy(): void;
+    /**
+     * Enable all keyboard shortcuts
+     */
+    enable(): KeyboardShortcutsService;
+    /**
+     * Disable all keyboard shortcuts
+     */
+    disable(): KeyboardShortcutsService;
+    /**
+     * Check if all keyboard shortcuts are disabled.
+     */
+    isDisabled(): boolean;
+    /**
+     * Add new shortcut/s
+     */
+    add(shortcuts: ShortcutInput[] | ShortcutInput, instance?: any): KeyboardShortcutsService;
+    /**
+     * bind to the component ngOnDestroy to remove related keys
+     * when component is destroyed.
+     * @param instance - component to remove keys when ngOnDestroy is called.
+     * @param keys
+     */
+    private bindOnDestroy(instance, keys);
+    /**
+     * Remove a command based on key or array of keys.
+     * can be used for cleanup.
+     * @param key
+     * @returns
+     */
+    remove(key: string | string[]): KeyboardShortcutsService;
+    /**
+     * Returns an observable of keyboard shortcut filtered by a specific key.
+     * @param key - the key to filter the observable by.
+     */
+    select(key: string): Observable<ShortcutEventOutput>;
+    /**
+     * transforms a shortcut to:
+     * a predicate function
+     */
+    private getKeys;
+    /**
+     * Parse each command using getKeys function
+     */
+    private parseCommand(command);
+}

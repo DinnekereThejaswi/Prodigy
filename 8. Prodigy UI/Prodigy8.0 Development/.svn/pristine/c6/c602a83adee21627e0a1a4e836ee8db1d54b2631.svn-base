@@ -1,0 +1,69 @@
+<div class="row">
+<div class="col-md-4">
+    <div class="form-group">
+      <select class="form-control mr-auto mt-2 mt-lg-0">
+        <option value="0">Select</option>
+        <option value="OrderNo">OrderNo</option>
+      </select>
+
+    </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+        <div class="input-group">
+      <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+        (click)="getSortByOptions()"><i class="fas fa-sort"></i> Sort</button>
+    </div>
+  </div>
+</div>
+<div class="col-md-4">
+</div>
+</div>
+
+
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="topbar">
+      <tr>
+        <th>S.No</th>
+        <th>Order No</th>
+        <th>Ref No</th>
+        <th>Date</th>
+        <th>Operator</th>
+        <th>Delivery Date</th>
+        <th>Rate Type</th>
+        <th>Gs Type</th>
+        <th>Rate</th>
+        <th>CustID</th>
+        <th>Total Amt</th>
+        <th>Advance</th>
+        <th>Bill No</th>
+        <th>SalesMen</th>
+      </tr>
+    </thead>
+
+    <tbody *ngFor="let _modifyOrderList of ModifyOrderList | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }; let i = index;">
+      <tr (click)="selectRecord(_modifyOrderList)" class="pointer">
+        <td>{{i + 1 }}</td>
+        <td>{{_modifyOrderList.OrderNo}}</td>
+        <td>{{_modifyOrderList.OrderNo}}</td>
+        <td>{{_modifyOrderList.OrderDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{_modifyOrderList.OperatorCode}}</td>
+        <td>{{_modifyOrderList.DeliveryDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{_modifyOrderList.OrderRateType}}</td>
+        <td>{{_modifyOrderList.gsCode}}</td>
+        <td>{{_modifyOrderList.Rate}}</td>
+        <td>{{_modifyOrderList.CustID}}</td>
+        <td>{{_modifyOrderList.TotalTaxAmount}}</td>
+        <td>{{_modifyOrderList.AdvacnceOrderAmount}}</td>
+        <td>{{_modifyOrderList.BillNo}}</td>
+        <td>{{_modifyOrderList.SalCode}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div >
+  <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+</div>

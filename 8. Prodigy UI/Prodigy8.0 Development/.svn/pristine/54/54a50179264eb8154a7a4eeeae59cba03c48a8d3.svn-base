@@ -1,0 +1,408 @@
+<div class="row">
+    <div class="col-sm-8">
+
+    </div>
+    <div class="col-sm-4">
+        <app-lastdocno [routerUrl]="routerUrl" style="color: brown; text-align: right; font-style: italic;">
+        </app-lastdocno>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="NonbarcodereceiptHeaderForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">Receipt From</label>
+                        <select class="form-control" [(ngModel)]="NTReceiptPost.IssueBranchCode"  
+                        class="form-control" formControlName="frmCtrl_ReceiptFrom"
+                           >
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _issueTo of IssueTo" [value]="_issueTo.Code">
+                                {{_issueTo.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="GS">Receipt Type</label>
+                        <select     class="form-control" formControlName="frmCtrl_Receipttype">
+                            <option [ngValue]="null">Select</option>
+                            <option *ngFor="let _receivedtype of receivedtype" [value]="_receivedtype.Value">
+                                {{_receivedtype.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label" for="Received By"> Received By </label>
+                        <input class="form-control" type="text" value="Admin" readonly>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label" for="Receipt Date">Receipt Date</label>
+                        <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig"
+                            [(ngModel)]="applicationDate" readonly value="{{applicationDate | date:'dd/MM/yyyy' }}" />
+                    </div>
+                </div>
+             
+
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="GS">Issue No</label>
+                        <input class="form-control" type="text" [(ngModel)]="NTReceiptPost.IssueNo"
+                           formControlName="frmCtrl_Receipttype">
+                    </div>
+                </div>
+                <div class="col-sm-1" style="padding-top:28px;">
+                    <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        href="javascript:void(0)" (click)="go()">
+                        Go
+                    </a>
+                </div>
+                <div class="col-sm-1" style="padding-top:28px;">
+                    <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                        href="javascript:void(0)" (click)="Reset()">
+                        Cancel
+                    </a>
+                </div>
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <label class="control-label" for="GS">Remarks</label>
+                        <input class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#itemDetails" (click)="ToggleitemDetails()"
+            [ngClass]="EnableItemDetails ? 'collapsed' : ''" [attr.data-toggle]="EnableItemDetails ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#005BFF">
+                        <i class="fal fa-hand-receiving fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>ItemDetails</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <div id="itemDetails" class="card-body collapse" [collapse]="EnableItemDetails">
+                <div class="row">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="topbar">
+                                <tr>
+                                    <th></th>
+                                    <th>Counter</th>
+                                    <th>GS</th>
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Gr.Wt</th>
+                                    <th>St.Wt</th>
+                                    <th>N.Wt</th>
+                                    <th>D.Cts</th>
+                                    <th>Purity%</th>
+                                    <th>Pure.Wt</th>
+                                    <th>Rate/Gram</th>
+                                    <th>Amount</th>
+                                    <!-- <th>Action</th> -->
+                                    <!-- <th>
+                                        <button
+                                            class="btn waves-effect waves-light btn-rounded btn-outline-secondary pull-right"
+                                            style="margin-top: 1.2rem !important;" (click)="add()"
+                                            [disabled]="EnableAddRow">
+                                            <i class="far fa-plus-circle"></i> Add</button>
+                                    </th> -->
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let field of fieldArray; let i = index">
+                                <tr>
+                                    <td>
+                                        <h3><a href="javascript:void(0)" data-toggle="collapse"
+                                                (click)="sendDataToStoneDiamondComp(field,i)" title="Stone/Diamond"
+                                                [attr.data-target]="'#collapseStone'+ i" id='panels'><i
+                                                    class="fas fa-gem align-middle"></i></a>
+                                        </h3>
+                                    </td>
+                                    <td>
+                                        <select class="form-control  CustomWidth150" [(ngModel)]="field.CounterCode"
+                                            #CounterCode>
+                                            <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                            <option *ngFor="let _Counter of CounterList" [value]="_Counter.CounterCode"
+                                                [disabled]="readonly[i]">
+                                                {{_Counter.CounterName}} </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control mr-auto mt-2 mt-lg-0 CustomWidth150"
+                                            (change)="getItemList(CounterCode.value,GSCode.value,i)"
+                                            [(ngModel)]="field.GSCode" #GSCode>
+                                            <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                            <option *ngFor="let _GSList of GSList" [value]="_GSList.GSCode"
+                                                [disabled]="readonly[i]">
+                                                {{_GSList.GSName}} </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control CustomWidth75" [(ngModel)]="field.ItemCode"
+                                            (change)="CounterStock(field)">
+                                            <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                            <option *ngFor="let _ItemName of ItemList[i]" [value]="_ItemName.ItemCode"
+                                                [disabled]="readonly[i]">
+                                                {{_ItemName.ItemName}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth50" type="text" [(ngModel)]="field.Qty"
+                                            [readonly]="readonly[i]" appNumbersOnly placeholder="0" >
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text"
+                                            [(ngModel)]="field.GrossWt" [readonly]="readonly[i]"
+                                            (change)="calcNwtByGwt(i)" appNumbersOnly placeholder="0.00">
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text"
+                                            [(ngModel)]="field.StoneWt" [readonly]="readonly[i]"
+                                            (change)="calcNwtBySwt(i)" appNumbersOnly placeholder="0.00">
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text" [(ngModel)]="field.NetWt"
+                                            readonly placeholder="0.00">
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text" [(ngModel)]="field.Dcts"
+                                            [readonly]="readonly[i]" appNumbersOnly placeholder="0.00">
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type=" text"
+                                            [(ngModel)]="field.PurityPercent" [readonly]="readonly[i]"
+                                            (change)="calcPurWt(i)" appNumbersOnly placeholder="0.00">
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text"
+                                            [(ngModel)]="field.PureWeight" readonly placeholder="0.00">
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text" [(ngModel)]="field.Rate"
+                                            [readonly]="readonly[i]" (change)="calcAmt(i)" appNumbersOnly
+                                            placeholder="0.00">
+                                    </td>
+                                    <td>
+                                        <input class="form-control CustomWidth75" type="text" [(ngModel)]="field.Amount"
+                                            readonly appNumbersOnlyplaceholder="0.00">
+                                    </td>
+                                    <!-- <td>
+                                        <ng-container *ngIf="EnableEditDelbtn[i]">
+                                            <button class="btn btn-default btn-rounded" type="button"
+                                                (click)="editFieldValue(i)"><i class="fal fa-pencil-alt"></i>
+                                                Edit</button>
+                                            <button class="btn btn-danger btn-rounded" type="button"
+                                                (click)="deleteFieldValue(i)"><i class="fal fa-trash-alt"></i>
+                                                Delete</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="EnableSaveCnlbtn[i]">
+                                            <button class="btn btn-success btn-rounded" type="button"
+                                                (click)="saveDataFieldValue(i)"><i class="fal fa-save"></i>
+                                                Save</button>
+                                            <button class="btn btn-warning btn-rounded" type="button"
+                                                (click)="cancelDataFieldValue(i)"><i class="far fa-window-close"></i>
+                                                Cancel</button>
+                                        </ng-container>
+                                    </td> -->
+
+                                </tr>
+                                <tr>
+                                    <td colspan="15" class="hiddenRow" *ngIf="i === Index">
+                                        <div class="collapse wrapper" id="collapseStone{{i}}" data-parent="#panels">
+                                            <app-stone-diamond [NTReceiptsLinesDetails]="LinesDetails"
+                                                (stoneCarat)="receivestoneCarat()"></app-stone-diamond>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row" *ngIf="NTReceiptPost.ReceiptDetails.length > '0'">
+    <div class="col-md-4">
+        <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+            (click)="SaveNTReceipt()">
+            <i class="far fa-save"></i> Submit</button>
+        <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" (click)="cancel()"
+            type="button"><i class="far fa-window-close"></i>&nbsp;Cancel</button>
+    </div>
+</div>
+<br>
+<br>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-12">
+                    <div class="social-widget">
+                        <div class="soc-content">
+                            <div class="col-3 b-r">
+                                <h4 class="font-medium"><b>{{GrossWt() | number:'1.3-3'}}</b>
+                                </h4>
+                                <h5 class="text-black">Gross Wt </h5>
+                            </div>
+                            <div class="col-3 b-r">
+                                <h4 class="font-medium"><b>{{StoneWt() | number:'1.3-3'}}</b>
+                                </h4>
+                                <h5 class="text-black">Stone Wt</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>{{NetWt() | number:'1.3-3'}}</b></h4>
+                                <h5 class="text-black">Net Wt</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>{{PureWt() | number:'1.3-3'}}</b></h4>
+                                <h5 class="text-black">Pure Wt</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>{{DctsWt() | number:'1.3-3'}}</b></h4>
+                                <h5 class="text-black">Dcts</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-5 col-md-5">
+        <div class="card">
+            <div class="row">
+                <div class="col-12">
+                    <div class="social-widget">
+                        <div class="soc-header box-facebook" style="padding: 3px;">
+                            <h3 class="text-white">Summary</h3>
+                        </div>
+                        <div class="soc-content">
+                            <div class="col-4 b-r">
+                                <h4 class="font-medium"> <b>{{Amount() | number:'1.2-2'}}</b>
+                                    <h1 class="float-right">+</h1>
+                                </h4>
+                                <h5 class="text-black">Item Value </h5>
+                            </div>
+                            <div class="col-4 b-r">
+                                <h4 class="font-medium">0.00
+                                    <h1 class="float-right">+</h1>
+                                </h4>
+                                <h5 class="text-black">Stn Amt</h5>
+                            </div>
+                            <div class="col-4 b-r">
+                                <h4 class="font-medium"><b>0.00</b>
+                                    <h1 class="float-right">=</h1>
+                                </h4>
+                                <h5 class="text-black">Dm Amt</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7 col-md-7">
+        <div class="card">
+            <div class="row">
+                <div class="col-12">
+                    <div class="social-widget">
+                        <div class="soc-header box-twitter" style="padding: 3px;">
+                            <h3 class="text-white">Summary</h3>
+                        </div>
+                        <div class="soc-content">
+                            <div class="col-3 b-r">
+                                <h4 class="font-medium"> <b>{{Amount() | number:'1.2-2'}}</b>
+                                    <h1 class="float-right">+</h1>
+                                </h4>
+                                <h5 class="text-black">Total Amt </h5>
+                            </div>
+                            <div class="col-3 b-r">
+                                <h4 class="font-medium"><b>0.00</b>
+                                    <h1 class="float-right">+</h1>
+                                </h4>
+                                <h5 class="text-black">CGST Amt</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>0.00</b>
+                                    <h1 class="float-right">+</h1>
+                                </h4>
+                                <h5 class="text-black">SGST Amt</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>0.00</b>
+                                    <h1 class="float-right">=</h1>
+                                </h4>
+                                <h5 class="text-black">IGST Amt</h5>
+                            </div>
+                            <div class="col-2 b-r">
+                                <h4 class="font-medium"><b>{{Amount() | number:'1.2-2'}}</b></h4>
+                                <h5 class="text-black">Final Amt</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" style="display:block;margin: auto;width: 30%;">
+    <div class="modal fade" id="NTReceiptsTab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                        class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                        id="exampleModalLabel" (click)=printNtreceipt()><i class="fal fa-print"></i> Print</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <ng-container *ngIf="PrintTypeBasedOnConfig">
+                    <div class="container invoice-box htmlPrint" id="print-closed-section"
+                        style="max-width: 900px;border-width: 2em" *ngIf="PrintTypeBasedOnConfig.PrintType == 'RAW'">
+                        <pre>{{NTreceiptPrint}}</pre>
+                    </div>
+                    <span *ngIf="PrintTypeBasedOnConfig.PrintType == 'HTML'">
+                        <div id="DisplayntreceiptData" class="center" [innerHTML]='NTreceiptPrint | safeHtml'></div>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-container *ngIf="EnableJson">
+    <div class="col-md-3">
+        <pre>{{NTReceiptPost | json}}</pre>
+    </div>
+</ng-container>

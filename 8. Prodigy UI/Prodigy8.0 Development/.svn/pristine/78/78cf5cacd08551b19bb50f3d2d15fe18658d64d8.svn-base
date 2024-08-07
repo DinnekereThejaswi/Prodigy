@@ -1,0 +1,1 @@
+{"version":3,"file":"main.js","sources":["D:/MagnaWeb-Angular7.0/4. Source Code/Prodigy-Angular8.0/node_modules/@progress/telerik-angular-report-viewer/dist/es/main.js"],"sourcesContent":["export { TelerikReportingModule } from './telerik-reporting.module';\r\nexport { TelerikReportViewerComponent } from './telerik-report-viewer.component';\r\n"],"names":[],"mappings":"AAAA;;"}

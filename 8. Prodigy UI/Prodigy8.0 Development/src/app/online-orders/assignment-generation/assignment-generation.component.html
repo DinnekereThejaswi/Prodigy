@@ -1,0 +1,188 @@
+<div class="card">
+    <div class="card-body">
+        <form class="form-horizontal" [formGroup]="ReceivedOrdersForm">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <div class="form-group">
+                        <label for="">Start Shipment Date</label>
+                        <input type="text" class="form-control" formControlName="FromDate"
+                            [(ngModel)]="ReceivedOrderJson.FromDate" bsDatepicker [bsConfig]="datePickerConfig"
+                            placeholder="Start Shipment Date">
+                    </div>
+                </div>
+                <div class="col-md-2 ">
+                    <div class="form-group">
+                        <label for="">End Shipment Date</label>
+                        <input type="text" class="form-control" formControlName="ToDate"
+                            [(ngModel)]="ReceivedOrderJson.ToDate" bsDatepicker [bsConfig]="datePickerConfig"
+                            placeholder="End Shipment Date">
+                    </div>
+                </div>
+                <div class="col-md-2 ">
+                    <div class="form-group">
+                        <label for="">Market Place</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="MarketplaceID"
+                            [(ngModel)]="ReceivedOrderJson.MarketplaceID"
+                            (change)="LoadOrderPerAssignment(ReceivedOrdersForm)">
+                            <option [value]="null">Select</option>
+                            <option *ngFor="let _marketPlaceList of marketPlaceList" [value]="_marketPlaceList.Id">
+                                {{_marketPlaceList.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="form-group">
+                        <label for="">Status</label>
+                        <select class="form-control mr-auto mt-2 mt-lg-0" formControlName="Type"
+                            [(ngModel)]="ReceivedOrderJson.Type" (change)="chngStatus()">
+                            <option [value]="null">Select</option>
+                            <option *ngFor="let _orderStages of orderStages" [value]="_orderStages">
+                                {{_orderStages}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" style="display: inline-block;padding-top: 1.5rem;">
+                        <button class="btn btn-success btn-rounded" type="button" (click)="Search()"><i
+                                class="fa fa-search"></i>&nbsp;Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="">Total Orders</label>
+                        <input type="text" class="form-control" [(ngModel)]="OrderPerAssignmentByDefault"
+                            [ngModelOptions]="{standalone: true}" readonly>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="">Orders Per Assignment</label>
+                        <input type="text" class="form-control" [(ngModel)]="OrderPerAssignment"
+                            [ngModelOptions]="{standalone: true}" (change)="TopOrderDataToPickList()"
+                            (keyup.enter)="TopOrderDataToPickList()">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">Online Order Count</legend>
+                        <div class="row" *ngIf="PendingOrderCount.length > 0">
+                            <div class="col-sm-4" *ngIf="PendingOrderCount[1].MarketPlace == 1">
+                                <h2>Amazon({{PendingOrderCount[1].Count}})</h2>
+                            </div>
+                            <div class="col-sm-4" *ngIf="PendingOrderCount[2].MarketPlace == 3">
+                                <h2>Bhima({{PendingOrderCount[2].Count}})</h2>
+                            </div>
+                            <div class="col-sm-4" *ngIf="PendingOrderCount[3].MarketPlace == 5">
+                                <h2>Flipkart({{PendingOrderCount[3].Count}})</h2>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" style="margin-bottom: 10%;" *ngIf="OrderPerAssignment!=0">
+                        <label for="">Select Top {{OrderPerAssignment}} Open Orders</label><br>
+                        <input type="checkbox" class="chkbxsize" [checked]="checkedTopOrders"
+                            (change)="pushTopOrdersDataToPickList($event)">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<div class="table-responsive">
+    <table class="table" id="panels">
+        <thead class="topbar">
+            <tr>
+                <th>Order No</th>
+                <th>Order Source</th>
+                <th>Central RefNo</th>
+                <th>Shipment Date</th>
+                <th>Item Code</th>
+                <th>Barcode/SKU</th>
+                <th>Quantity</th>
+                <th>Gross Wt</th>
+                <th>Status</th>
+                <th><input type="checkbox" [checked]="checkedAll" (change)="pushAllDataToPickList($event)"></th>
+            </tr>
+        </thead>
+        <!-- <tbody
+            *ngFor="let _onlineOrder of OnlineOrder  | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }; let i = index;"> -->
+        <tbody *ngFor="let _onlineOrder of OnlineOrder; let i = index;">
+            <tr>
+                <td>{{_onlineOrder.OrderNo}}</td>
+                <td>{{_onlineOrder.OrderSource}}</td>
+                <td>{{_onlineOrder.CentralRefNo}}</td>
+                <td>{{_onlineOrder.ShipmentDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{_onlineOrder.ItemCode}}</td>
+                <td>{{_onlineOrder.BarcodeNo}}</td>
+                <td>{{_onlineOrder.Qty}}</td>
+                <td>{{_onlineOrder.Gwt | number:'1.3-3'}}</td>
+                <td>{{_onlineOrder.Status}}</td>
+                <td *ngIf="_onlineOrder.Status == 'Open'">
+                    <input type="checkbox" [disabled]="false" [checked]="dataExist(_onlineOrder.OrderNo)"
+                        (change)="pushDataToPickList($event,i,_onlineOrder)">
+                </td>
+                <td *ngIf="_onlineOrder.Status != 'Open'">
+                    <input type="checkbox" [disabled]="true" [checked]="otherStatuschecked"
+                        (change)="pushDataToPickList($event,i,_onlineOrder)">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <br>
+    <div *ngIf="NoRecords">
+        <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+    </div> -->
+</div>
+<div class="row">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-4" style="margin-top: 2px;">
+        <div class="text-right">&nbsp;
+            <button class="btn btn-success btn-rounded" type="button" (click)="AddItemToPickList()"><i
+                    class="fa fa-plus"></i>&nbsp;Add
+                Items To Pick List</button>
+        </div>
+    </div>
+</div>
+<br>
+
+
+<div class="modal fade" id="printReceivedOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 750px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <span>
+                <div id="DisplayData" class="center" [innerHTML]='PrintPickList'></div>
+            </span>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{ReceivedOrderJson | json}}</pre>
+</ng-container>
+
+<ng-container *ngIf="EnableJson">
+    <pre>{{pushReceivedOrder | json}}</pre>
+</ng-container>

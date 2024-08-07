@@ -1,0 +1,696 @@
+<div class="card mb-0">
+  <div class="card-header">PRODUCT TREE
+  </div>
+  <div class="card-body">
+    <table class="table table-hover table-condensed table-striped" style=" width: auto;">
+      <div id="test" class="tree">
+        <ul>
+          <li class="parent_li" *ngFor="let _tree of  ItemList ; let i=index">
+            <span class="bg-primary" title="{{_tree.ItemLevel1Name}}">{{_tree.ItemLevel1Name}} &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <i class="button" class="fa fa-plus-circle" style="width: 30px; height: 30px;"
+                (click)="AddNewCategory(_tree.ItemLevel1ID,_tree.ItemLevel1Name,_tree.GSCode,i,_tree)"
+                title="Add Category"></i>
+              &nbsp;
+              <i class="button" class="fa fa-edit" style="width: 30px; height: 30px;" (click)="EditGS(_tree,i)"
+                title="Edit-GS">
+              </i>
+
+            </span>
+            <ul>
+              <li class="parent_li" *ngFor="let _category of _tree.innerLevelItems ; let i=index">
+                <span class="bg-info"
+                  title="{{_category.AliasName}}">{{_category.ItemLevel2Name}}-{{_category.AliasName}} &nbsp;
+                  &nbsp;
+                  &nbsp; &nbsp; &nbsp;
+                  <i class="button" class="fa fa-plus-circle" style="width: 30px; height: 30px;"
+                    (click)="AddNewItem(_category.ItemLevel2Id,_category.AliasName,i,_category.GSCode,_category)"
+                    title="AddNewItemS"></i>
+                  <i class="button" class="fa fa-edit" style="width: 30px; height: 30px;"
+                    (click)="EditCategory(_tree.innerLevelItems,i)" title="Edit Category"></i>
+                  <i class="button" class="fa fa-trash" aria-hidden="true" style="width: 30px; height: 30px;"
+                    (click)="DeleteCategory(_category.ObjID,_category.ItemLevelName,_category)" title="Delete"></i>
+                </span>
+                <ul>
+                  <li class="parent_li" *ngFor="let _level2 of _category.innerLevelItems ; let i=index"><span
+                      title="{{_level2.ItemLevelName}}">{{_level2.ItemLevel3Name}}-{{_level2.AliasName}}
+                      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                      <i class="button" class="fa fa-edit" style="width: 30px; height: 30px;"
+                        (click)="EditItem(_category.innerLevelItems,i)" title="Edit Item"></i>
+                      <i class="button" class="fa fa-trash" aria-hidden="true" style="width: 30px; height: 30px;"
+                        (click)="DeleteItem(_level2.ObjID,_level2.ItemLevel3Name,_level2)" title="Delete"></i>
+
+                    </span>
+                    <ul>
+                      <li class="parent_li" *ngFor="let _level3 of _level2.innerLevelItems ; let i=index"><span
+                          title="{{_level3.ItemLevelName}}">{{_level3.ItemLevel3Name}}-{{_level3.AliasName}}
+                          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          <!-- <i class="button" class="fa fa-edit" style="width: 30px; height: 30px;"
+                            (click)="EditItem(_level2)" title="Edit"></i>
+                          <i class="button" class="fa fa-trash" aria-hidden="true" style="width: 30px; height: 30px;"
+                            (click)="DeleteLeve2(_level2.ObjID,_level2.ItemLevel3Name,_level2)" title="Delete"></i> -->
+
+                        </span>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </table>
+  </div>
+  <!-- {{  ProductTReeListData | json}} -->
+  <ng-container *ngIf="EnableJson">
+    <pre>{{GSTPostingSetupListData | json}}</pre>
+  </ng-container>
+
+</div>
+<div class="modal overlay" id="CategoryModel" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content ">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Category Details</h4>
+        <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary MT-2"
+          style="margin-top: 1.2rem !important;" class="close" data-dismiss="modal"
+          (click)="CategoryModelModalClose()"></button>
+      </div>
+      <form [formGroup]="CategoryForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label">Item Code</label>
+                <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                  formControlName="frmCtrl_ItemCode" (input)="Codes.value = Codes.value.toUpperCase()"
+                  [(ngModel)]="ProductTReeListData.ItemLevel2Name" maxlength="30" placeholder="Enter Name"
+                  [readonly]="isReadOnly" #Codes>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Item Name </label>
+                <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                  formControlName="frmCtrl_ItemName" (input)="Codes.value = Codes.value.toUpperCase()"
+                  AlphabetFieldValidator [(ngModel)]="ProductTReeListData.AliasName" maxlength="30"
+                  placeholder="Enter Name" #Codes>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Karat</label>
+                    <select class="form-control" formControlName="frmCtrl_Karat"
+                      [(ngModel)]="ProductTReeListData.karat">
+                      <option [value]="null">Select</option>
+                      <option *ngFor="let _Typeskarat of KaratList" [value]="_Typeskarat.Karat">
+                        {{_Typeskarat.Karat}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Min. Qty </label>
+                    <input type="text" class="form-control" IntegerDecimalFieldValidator
+                      [(ngModel)]="ProductTReeListData.MinUnits" formControlName="frmCtrl_minQty" maxlength="30"
+                      placeholder="Min Qty">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">lock Qty</label>
+                    <div class="form-group" style="width: 20px;height: 20px;">
+                      <input type="checkbox" class="chkbxsize" class="form-control"
+                        [(ngModel)]="ProductTReeListData.QtyLock" formControlName="frmCtrl_LockQty"
+                        (change)="IsQuantityLock($event)" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label">TCS % </label>
+                <input type="text" class="form-control" IntegerDecimalFieldValidator
+                  [(ngModel)]="ProductTReeListData.TcsPerc" formControlName="frmCtrl_TcsPercent" maxlength="3"
+                  placeholder="Enter TC%">
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="control-label">TO ADD PHOTO </label>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <div class="input-group">
+            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+              style="margin-top: 1.2rem !important;" (click)="SaveLevel2Item(CategoryForm)">
+              <i class="fal fa-save">Add</i></button>
+
+            <button class="btn  btn-danger waves-effect waves-light btn-rounded btn-secondary MT-2"
+              style="margin-top: 1.2rem !important;" data-dismiss="modal" (click)="ModalClose()">close</button>
+          </div> -->
+
+          <div class="input-group">
+            <div style="align-items:flex-start;">
+              <ng-container *ngIf="EnableSave">
+                <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  style="margin-top: 1.2rem !important;" (click)="ModifiedCategory(CategoryForm)">
+                  <i class="far fa-save"></i>&nbsp;Save</button>
+              </ng-container>
+              <ng-container *ngIf="EnableAdd">
+                <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  style="margin-top: 1.2rem !important;" (click)="SaveLevel2Item(CategoryForm)">
+                  <i class="fal fa-plus-circle"></i>&nbsp;Add</button>
+              </ng-container>
+              <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                style="margin-top: 1.2rem !important;" data-dismiss="modal" (click)="CategoryModelModalClose()">
+                <i class="fal fa-times"></i>&nbsp;Close</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- {{  ProductTReeListData | json}} -->
+    <ng-container *ngIf="EnableJson">
+      <pre>{{GSTPostingSetupListData | json}}</pre>
+    </ng-container>
+
+  </div>
+</div>
+<div class="modal overlay" id="AddItemModel" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content ">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Item Details</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal" (click)="AddItemModelModalClose()">&times;</button> -->
+      </div>
+      <form [formGroup]="ItemForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label">Item Code</label>
+                <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                  formControlName="frmCtrl_ItemCode" (input)="Codes.value = Codes.value.toUpperCase()"
+                  [(ngModel)]="ProductTReeListData.ItemLevel3Name" maxlength="30" placeholder="Enter Name"
+                  [readonly]="isReadOnly">
+              </div>
+              <div class="form-group">
+                <label class="control-label">Item Name </label>
+                <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                  formControlName="frmCtrl_ItemName" (input)="Codes.value = Codes.value.toUpperCase()"
+                  [(ngModel)]="ProductTReeListData.AliasName" maxlength="30" placeholder="Enter Name">
+              </div>
+              <div class="row">
+                <!-- <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Karat</label>
+                    <select class="form-control" formControlName="frmCtrl_Karat"
+                      [(ngModel)]="ProductTReeListData.karat">
+                      <option *ngFor="let _Typeskarat of KaratList" 
+                      [value]="_Typeskarat.Karat">
+                        {{_Typeskarat.Karat}}
+                      </option>
+                    </select>
+                  </div>
+                </div> -->
+
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Karat</label>
+                    <select class="form-control" formControlName="frmCtrl_Karat"
+                      [(ngModel)]="ProductTReeListData.karat">
+                      <option [value]="null">Select</option>
+                      <option *ngFor="let _Typeskarat of KaratList" [value]="_Typeskarat.Karat">
+                        {{_Typeskarat.Karat}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Min. Qty </label>
+                    <input type="text" class="form-control" IntegerDecimalFieldValidator
+                      [(ngModel)]="ProductTReeListData.MinUnits" formControlName="frmCtrl_minQty" maxlength="30"
+                      placeholder="Min Qty">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">lock Qty</label>
+                    <div class="form-group" style="width: 20px;height: 20px;">
+                      <input type="checkbox" class="chkbxsize" class="form-control"
+                        [(ngModel)]="ProductTReeListData.QtyLock" formControlName="frmCtrl_LockQty"
+                        (change)="IsQuantityLock($event)" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">TCS % </label>
+                    <input type="text" class="form-control" IntegerDecimalFieldValidator
+                      [(ngModel)]="ProductTReeListData.TcsPerc" formControlName="frmCtrl_TcsPercent" maxlength="30"
+                      placeholder="Enter TC%">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Min.MC </label>
+                    <input type="text" class="form-control" IntegerDecimalFieldValidator
+                      [(ngModel)]="ProductTReeListData.MinProfitPercent" formControlName="ffrmCtrl_MinMc" maxlength="30"
+                      placeholder="Min Qty">
+                  </div>
+                </div>
+                <!-- <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="control-label">Image Id</label>
+                    <div class="form-group">
+                      <input type="text" class="form-control" IntegerDecimalFieldValidator
+                        [(ngModel)]="ProductTReeListData.MinUnits" formControlName="ffrmCtrl_ImgId" maxlength="30"
+                        placeholder="Min Qty">
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="control-label">TO ADD PHOTO </label>
+              </div>
+            </div>
+          </div>
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">GST</legend>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Goods Type</label>
+                  <select class="form-control" formControlName="frmCtrl_goodsType"
+                    [(ngModel)]="ProductTReeListData.GSTGoodsGroupCode">
+                    <option [value]="null">Select</option>
+                    <option *ngFor="let _typesOfGoods of goodsType" [ngValue]="_typesOfGoods.Code">
+                      {{_typesOfGoods.Code}}-{{_typesOfGoods.Description}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Service Type</label>
+                  <select class="form-control" formControlName="frmCtrl_serviceTpe"
+                    [(ngModel)]="ProductTReeListData.GSTServicesGroupCode">
+                    <option [value]="null">Select</option>
+                    <option *ngFor="let _serviceType of serviceType" [ngValue]="_serviceType.Code">
+                      {{_serviceType.Code}}-{{_serviceType.Description}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">HSN</label>
+                  <select class="form-control" formControlName="frmCtrl_Hsn" [(ngModel)]="ProductTReeListData.HSN">
+                    <option [value]="">Select</option>
+                    <option *ngFor="let _hsn of HSN" [ngValue]="_hsn.Code">
+                      {{_hsn.Code}}-{{_hsn.Description}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="row">
+            <div class="col-sm-5">
+              <div class="form-group">
+                <label class="control-label"><b>Counters</b></label>
+                <ngx-select-dropdown (change)="ListOfCountersSelected($event)" formControlName="frmCtrl_Counter"
+                  [multiple]="true" [config]="config" [options]="counterList" [ngModel]="SelectedCounters">
+                </ngx-select-dropdown>
+              </div>
+            </div>
+            <!-- "node_modules/ngx-select-dropdown/dist/assets/style.css"         [(ngModel)]="dataModel"     -->
+            <div class="col-sm-5">
+              <div class="form-group">
+                <label class="control-label">Default Counter</label>
+                <select class="form-control" formControlName="frmCtrl_DefltCounter" type="checkbox"
+                  [(ngModel)]="ProductTReeListData.CounterCode">
+                  <option [value]="null">Select</option>
+                  <option *ngFor="let _counter of DefaultcounterList" [ngValue]="_counter.CounterCode">
+                    {{_counter.CounterCode}}-{{_counter.CounterName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <!-- <div class="col-sm-2">
+              <div class="form-group">
+                <label class="control-label">Closed</label>
+                <div class="form-group" style="width: 20px;height: 20px;">
+                  <input type="checkbox" class="chkbxsize" class="form-control" formControlName="frmCtrl_iSClosed"
+                    (change)="IsQuantityLock($event)" [checked]="ProductTReeListData.QtyLock=='Y'" />
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col-sm-2" style="background-color:yellow;">
+              <div class="form-group">
+                <label class="control-label">Tagged</label>
+                <div class="form-group" style="width: 20px;height: 20px;">
+                  <input type="checkbox" class="chkbxsize" class="form-control" formControlName="frmCtrl_iSTagged"
+                    (change)="IsTagged($event)" [checked]="ProductTReeListData.Tagged=='Y'" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2" style="background-color:pink;">
+              <div class="form-group">
+                <label class="control-label">Stone</label>
+                <div class="form-group" style="width: 20px;height: 20px;">
+                  <input type="checkbox" class="chkbxsize" class="form-control" formControlName="frmCtrl_iSStone"
+                    (change)="IsStone($event)" [checked]="ProductTReeListData.Stone=='Y'" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2" style="background-color:yellow;">
+              <div class="form-group">
+                <label class="control-label">Diamond</label>
+                <div class="form-group" style="width: 20px;height: 20px;">
+                  <input type="checkbox" class="chkbxsize" class="form-control" formControlName="frmCtrl_iSDiamond"
+                    (change)="IsDiamond($event)" [checked]="ProductTReeListData.Diamond=='Y'" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2" style="background-color:pink;">
+              <div class="form-group">
+                <label class="control-label">PieceItem</label>
+                <div class="form-group" style="width: 20px;height: 20px;">
+                  <input type="checkbox" class="chkbxsize" class="form-control" formControlName="frmCtrl_isPieceItem"
+                    (change)="IsPieceItem($event)" [checked]="ProductTReeListData.PieceItem=='Y'" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2" style="background-color:yellow;">
+              <div class="form-group">
+                <label class="control-label">Hallmark</label>
+                <div class="form-group" style="width: 20px;height: 20px;">
+                  <input type="checkbox" class="chkbxsize" class="form-control" formControlName="frmCtrl_isHallMarked"
+                    (change)="IsHallmark($event)" [checked]="ProductTReeListData.Hallmark=='Y'" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2" style="background-color:pink;">
+              <div class="form-group">
+                <label class="control-label">Certification</label>
+                <div class="form-group" style="width: 20px;height: 20px;">
+                  <input type="checkbox" class="chkbxsize" class="form-control"
+                    formControlName="frmCtrl_isCertification" (change)="IsCertification($event)"
+                    [checked]="ProductTReeListData.Certification=='Y'" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="input-group">
+            <div style="align-items:flex-start;">
+              <ng-container *ngIf="EnableSave">
+                <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  style="margin-top: 1.2rem !important;" (click)="ModifiedItem(ItemForm)">
+                  <i class="far fa-save"></i>&nbsp;Save</button>
+              </ng-container>
+              <ng-container *ngIf="EnableAdd">
+                <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                  style="margin-top: 1.2rem !important;" (click)="SaveLevel3Item(ItemForm)">
+                  <i class="fal fa-plus-circle"></i>&nbsp;Add</button>
+              </ng-container>
+              <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                style="margin-top: 1.2rem !important;" data-dismiss="modal" (click)="AddItemModelModalClose()">
+                <i class="fal fa-times"></i>&nbsp;Close</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- {{  ProductTReeListData | json}} -->
+    <ng-container *ngIf="EnableJson">
+      <pre>{{GSTPostingSetupListData | json}}</pre>
+    </ng-container>
+
+  </div>
+</div>
+<div class="modal overlay" id="EditGSModel" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <form [formGroup]="EditGsEntryFrom" class="form-horizontal">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h4 class="modal-title"> Group Stack Details</h4>
+          <div class="row">
+            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+              style="margin-top: 1.2rem !important;" (click)="UpdateGSList()">
+              <i class="far fa-plus-circle"></i>Save</button>
+            <button class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+              style="margin-top: 1.2rem !important; " (click)="EditGSModelClose()">
+              <i class="far fa-plus-circle"></i>Close</button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <!-- <form [formGroup]="EditGsEntryFrom" class="form-horizontal"> -->
+          <div class="row">
+            <div class="col-sm-12">
+              <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Item Details</legend>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label class="control-label">GS Code</label>
+                      <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                        (input)="GSCodes.value = GSCodes.value.toUpperCase()" AlphabetFieldValidator
+                        [(ngModel)]="GsEntryListData.GsCode" [readonly]="isReadOnly" formControlName="FormGSCode"
+                        maxlength="4" placeholder="Enter GS Code" #GSCodes>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label class="control-label">GS Name</label>
+                      <input oninput="this.value = this.value.toUpperCase()" class="form-control"
+                        (input)="GSNames.value = GSNames.value.toUpperCase()" AlphabetFieldValidator
+                        [(ngModel)]="GsEntryListData.ItemLevel1Name " formControlName="FormGSName" maxlength="25"
+                        placeholder="Enter GS Name" #GSNames>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label class="control-label">UOM</label>
+                      <select class="form-control" formControlName="FormMeasureType"
+                        [(ngModel)]="GsEntryListData.MeasureType">
+                        <option [ngValue]="null">Select</option>
+                        <option *ngFor="let _uom of uom" [ngValue]="_uom.code">
+                          {{_uom.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label class="control-label">Stock Group </label>
+                      <select class="form-control" formControlName="FormStockName"
+                        [(ngModel)]="GsEntryListData.MetalType" (change)="StockGroupChanged($event)" #FormStockName>
+                        <option [value]="null">Select</option>
+                        <option *ngFor="let _stock of StockGroupList" [value]="_stock.MetalCode">
+                          {{_stock.MetalName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-3 " *ngIf="SelectedStockGroupCode =='GL'">
+                    <div class="form-group">
+                      <label class="control-label">Karat</label>
+                      <select class="form-control" formControlName="Formkarat" [(ngModel)]="GsEntryListData.Karat">
+                        <option [value]="null">Select</option>
+                        <option *ngFor="let _karat of KaratList" [value]="_karat.Karat">
+                          {{_karat.Karat}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label class="control-label">Purity</label>
+                      <input type="text" class="form-control" IntegerDecimalFieldValidator
+                        [(ngModel)]="GsEntryListData.Purity" formControlName="FormPurtiy" maxlength="5"
+                        placeholder="EnterPurity">
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <label class="control-label">Is Stone Attached</label>
+                    <div class="form-group" style="width: 20px;height: 20px;">
+                      <input type="checkbox" class="chkbxsize" class="form-control"
+                        formControlName="FormIsStoneAttached" (change)="checkkboxchng($event)"
+                        [checked]="GsEntryListData.IsStone =='Y'" />
+                    </div>
+                  </div>
+                </div>
+                <fieldset class="scheduler-border">
+                  <legend class="scheduler-border">GST</legend>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="control-label">Goods Type</label>
+                        <select class="form-control" formControlName="FormGoodsTye"
+                          [(ngModel)]="GsEntryListData.GSTGoodsGroupCode">
+                          <option [value]="null">Select</option>
+                          <option *ngFor="let _typesOfGoods of goodsType" [ngValue]="_typesOfGoods.Code">
+                            {{_typesOfGoods.Code}}-{{_typesOfGoods.Description}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="control-label">Service Type</label>
+                        <select class="form-control" formControlName="FormServiceType"
+                          [(ngModel)]="GsEntryListData.GSTServicesGroupCode">
+                          <option [value]="null">Select</option>
+                          <option *ngFor="let _serviceType of serviceType" [ngValue]="_serviceType.Code">
+                            {{_serviceType.Code}}-{{_serviceType.Description}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="control-label">HSN</label>
+                        <select class="form-control" formControlName="FormHsnCode" [(ngModel)]="GsEntryListData.HSN">
+                          <option [value]="">Select</option>
+                          <option *ngFor="let _hsn of HSN" [ngValue]="_hsn.Code">
+                            {{_hsn.Code}}-{{_hsn.Description}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="control-label">Opn.PCs</label>
+                          <input type="text" class="form-control" [(ngModel)]="GsEntryListData.OpeningUnits"
+                            formControlName="FormOpnPiece" IntegerDecimalFieldValidator maxlength="4" placeholder="0">
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="control-label">Open Value</label>
+                          <input type="text" class="form-control" IntegerDecimalFieldValidator
+                            [(ngModel)]="GsEntryListData.OpeningGwtValue" formControlName="FormOpnValue" maxlength="9"
+                            placeholder="0.00">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="control-label">Opn. Gr.Wt</label>
+                          <input type="text" class="form-control" IntegerDecimalFieldValidator
+                            [(ngModel)]="GsEntryListData.OpeningGwt" formControlName="FormOpnGWT" maxlength="5"
+                            placeholder="0.00">
+                        </div>
+
+                        <div class="form-group">
+                          <label class="control-label">Opn.Nt.Wt</label>
+                          <input type="text" class="form-control" IntegerDecimalFieldValidator
+                            [(ngModel)]="GsEntryListData.OpeningNwt" formControlName="FormOpnNWT" maxlength="5"
+                            placeholder="0.00">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label class="control-label">commodity Code</label>
+                      <input type="text" class="form-control" [(ngModel)]="GsEntryListData.CommodityCode"
+                        formControlName="FormCommodityCode" maxlength="10" placeholder="Enter CommodityCode">
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-bordered  table-hover ">
+                    <thead class="topbar"></thead>
+                    <tbody>
+                      <tr>
+                        <td class="form-group">
+                          <label class="control-label">Sales</label>
+                          <div class="form-group" style="width: 20px;height: 20px;">
+                            <input type="checkbox" id="FormIsSales" class="chkbxsize" class="form-control"
+                              formControlName="FormIsSales" (change)="checkkboxchng1($event)"
+                              [checked]="GsEntryListData.BillType == 'S'" />
+                          </div>
+                        </td>
+                        <td class="form-group">
+                          <label class="control-label">Purchase</label>
+                          <div class="form-group" style="width: 20px;height: 20px;">
+                            <input type="checkbox" id="FormIsPurchase" class="chkbxsize" class="form-control"
+                              formControlName="FormIsPurchase" (change)="checkkboxchng2($event)"
+                              [checked]="GsEntryListData.BillType=='P'" />
+                          </div>
+                        </td>
+                        <td class="form-group ">
+                          <label class="control-label">Repair</label>
+                          <div class="form-group" style="width: 20px;height: 20px;">
+                            <input type="checkbox" id="FormIsRepair" class="chkbxsize" class="form-control"
+                              formControlName="FormIsRepair" (change)="checkkboxchng3($event)"
+                              [checked]="GsEntryListData.BillType=='R'" />
+                          </div>
+                        </td>
+                        <td lass="form-group ">
+                          <label class="control-label">Packing</label>
+                          <div class="form-group" style="width: 20px;height: 20px;">
+                            <input type="checkbox" id="FormIsPacking" class="chkbxsize" class="form-control"
+                              formControlName="FormIsPacking" (change)="checkkboxchng4($event)"
+                              [checked]="GsEntryListData.BillType=='Z'" />
+                          </div>
+                        </td>
+                        <td class="form-group ">
+                          <label class="control-label">GiftItems</label>
+                          <div class="form-group" style="width: 20px;height: 20px;">
+                            <input type="checkbox" id="FormIsGift" class="chkbxsize" class="form-control"
+                              formControlName="FormIsGift" (change)="checkkboxchng5($event)"
+                              [checked]="GsEntryListData.BillType=='G'" />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <ng-container *ngIf="EnableJson">
+            <pre>{{GsEntryListData |json}}</pre>
+          </ng-container>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

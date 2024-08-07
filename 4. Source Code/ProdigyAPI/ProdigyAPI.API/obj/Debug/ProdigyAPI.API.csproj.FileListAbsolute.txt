@@ -1,0 +1,310 @@
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ApplicationInsights.config
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\csc.exe
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\System.Collections.Immutable.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\System.Reflection.Metadata.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\vbc.exe
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\VBCSCompiler.exe
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\VBCSCompiler.exe.config
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\XmlDocument.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Prodigy.dll.config
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Prodigy.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Prodigy.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Antlr3.Runtime.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\EntityFramework.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\EntityFramework.SqlServer.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Globals.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.Agent.Intercept.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.DependencyCollector.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.PerfCounterCollector.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.ServerTelemetryChannel.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.Web.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.WindowsServer.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.ApplicationInsights.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.Core.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.Owin.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Data.Edm.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Data.OData.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.Logging.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.Tokens.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Cors.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Cookies.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Facebook.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Google.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.OAuth.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Twitter.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Web.Infrastructure.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Newtonsoft.Json.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Owin.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.BL.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.Marketplace.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.Model.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.SIGlobals.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Swashbuckle.Core.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.IdentityModel.Tokens.Jwt.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Net.Http.Formatting.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Spatial.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Cors.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Helpers.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.Cors.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.OData.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.Owin.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.WebHost.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Mvc.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Optimization.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Razor.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.Deployment.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.Razor.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\WebActivatorEx.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\WebGrease.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\NtoW.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\NReco.PdfGenerator.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.ShipmentIntegration.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.BL.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.Marketplace.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.Model.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.SIGlobals.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.DependencyCollector.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.ServerTelemetryChannel.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.Web.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.WindowsServer.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.ApplicationInsights.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Data.Edm.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Data.OData.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.Logging.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.Tokens.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Cors.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.OAuth.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Newtonsoft.Json.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.IdentityModel.Tokens.Jwt.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Net.Http.Formatting.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Spatial.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.Cors.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.OData.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.WebHost.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Helpers.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Mvc.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Optimization.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Razor.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.Deployment.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.Razor.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Antlr3.Runtime.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\EntityFramework.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\EntityFramework.SqlServer.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.Core.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.Owin.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Facebook.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Cookies.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Google.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Twitter.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.Owin.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\NReco.PdfGenerator.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.ShipmentIntegration.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\de\Microsoft.Data.Edm.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\es\Microsoft.Data.Edm.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\fr\Microsoft.Data.Edm.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\it\Microsoft.Data.Edm.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ja\Microsoft.Data.Edm.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ko\Microsoft.Data.Edm.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ru\Microsoft.Data.Edm.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hans\Microsoft.Data.Edm.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hant\Microsoft.Data.Edm.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\de\Microsoft.Data.OData.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\es\Microsoft.Data.OData.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\fr\Microsoft.Data.OData.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\it\Microsoft.Data.OData.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ja\Microsoft.Data.OData.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ko\Microsoft.Data.OData.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ru\Microsoft.Data.OData.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hans\Microsoft.Data.OData.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hant\Microsoft.Data.OData.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\de\System.Spatial.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\es\System.Spatial.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\fr\System.Spatial.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\it\System.Spatial.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ja\System.Spatial.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ko\System.Spatial.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ru\System.Spatial.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hans\System.Spatial.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hant\System.Spatial.resources.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\obj\Debug\ProdigyAPI.API.csprojResolveAssemblyReference.cache
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\obj\Debug\Prodigy.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\obj\Debug\Prodigy.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ApplicationInsights.config
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\csc.exe
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\System.Collections.Immutable.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\System.Reflection.Metadata.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\vbc.exe
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\VBCSCompiler.exe
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\roslyn\VBCSCompiler.exe.config
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\XmlDocument.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Prodigy.dll.config
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Prodigy.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Prodigy.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Antlr3.Runtime.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\EntityFramework.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\EntityFramework.SqlServer.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Globals.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.Agent.Intercept.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.DependencyCollector.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.PerfCounterCollector.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.ServerTelemetryChannel.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.Web.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.WindowsServer.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.ApplicationInsights.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.Core.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.Owin.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Data.Edm.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Data.OData.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.Logging.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.Tokens.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Cors.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Host.SystemWeb.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Cookies.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Facebook.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Google.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.OAuth.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Twitter.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Web.Infrastructure.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Newtonsoft.Json.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Owin.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.BL.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.Marketplace.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.Model.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.SIGlobals.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Swashbuckle.Core.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.IdentityModel.Tokens.Jwt.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Net.Http.Formatting.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Spatial.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Cors.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Helpers.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.Cors.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.OData.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.Owin.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.WebHost.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Mvc.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Optimization.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Razor.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.Deployment.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.Razor.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\WebActivatorEx.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\WebGrease.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\NtoW.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\NReco.PdfGenerator.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.ShipmentIntegration.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.BL.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.Marketplace.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.Model.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.SIGlobals.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.DependencyCollector.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.ServerTelemetryChannel.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.Web.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AI.WindowsServer.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.ApplicationInsights.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Data.Edm.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Data.OData.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.Logging.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.IdentityModel.Tokens.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Cors.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Host.SystemWeb.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.OAuth.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Newtonsoft.Json.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.IdentityModel.Tokens.Jwt.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Net.Http.Formatting.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Spatial.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.Cors.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.OData.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.WebHost.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Helpers.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Mvc.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Optimization.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Razor.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.Deployment.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.WebPages.Razor.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Antlr3.Runtime.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\EntityFramework.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\EntityFramework.SqlServer.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.Core.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.Owin.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Facebook.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Cookies.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Google.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.Twitter.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\System.Web.Http.Owin.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\NReco.PdfGenerator.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ProdigyAPI.ShipmentIntegration.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\de\Microsoft.Data.Edm.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\es\Microsoft.Data.Edm.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\fr\Microsoft.Data.Edm.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\it\Microsoft.Data.Edm.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ja\Microsoft.Data.Edm.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ko\Microsoft.Data.Edm.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ru\Microsoft.Data.Edm.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hans\Microsoft.Data.Edm.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hant\Microsoft.Data.Edm.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\de\Microsoft.Data.OData.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\es\Microsoft.Data.OData.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\fr\Microsoft.Data.OData.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\it\Microsoft.Data.OData.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ja\Microsoft.Data.OData.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ko\Microsoft.Data.OData.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ru\Microsoft.Data.OData.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hans\Microsoft.Data.OData.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hant\Microsoft.Data.OData.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\de\System.Spatial.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\es\System.Spatial.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\fr\System.Spatial.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\it\System.Spatial.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ja\System.Spatial.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ko\System.Spatial.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\ru\System.Spatial.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hans\System.Spatial.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\bin\zh-Hant\System.Spatial.resources.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\obj\Debug\ProdigyAPI.API.csprojResolveAssemblyReference.cache
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\obj\Debug\Prodigy.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.API\obj\Debug\Prodigy.pdb

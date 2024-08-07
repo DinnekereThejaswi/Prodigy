@@ -1,0 +1,226 @@
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div id="header" class="card-body show">
+            <form class="form-horizontal">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Bill No</label>
+                                        <div class="m-b-10">
+                                            <input type="text"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                class="form-control" (change)="getcahbacklistItems(billNO.value)"
+                                                maxlength="7" placeholder="Please Enter Bill no" autocomplete="off"
+                                                GreenBorder #billNO />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <br>
+                                    <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                        type="submit" (keyup.enter)="getcahbacklistItems(billNO.value)"><i
+                                            class="fal fa-search"></i>
+                                        Search</button>
+                                </div>
+                                <!-- <div class="col-md-2">
+                                    <br>
+                                    <button
+                                        class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                        type="submit" (click)="postCashback()"><i class="fa fa-plus "></i>
+                                        Save</button>
+                                </div> -->
+                                <!-- <div class="col-md-3">
+                                    <div class="form-group" style="display: inline-block;padding-top: 1.5rem;">
+                                        <button class="btn waves-effect waves-light btn-rounded btn-outline-secondary"
+                                            type="submit"><i class="fal fa-search"></i>
+                                            Search</button>
+                                    </div>
+                                </div> -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div id="header" class="card-body show">
+            <form class="form-horizontal">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <th>SL.NO</th>
+                                <th>Bill No</th>
+                                <th>Bill Amount</th>
+                                <th>Eligible CB</th>
+                                <th>Actual CB </th>
+
+                                <th>Remarks</th>
+
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let _list of cashbackListData;let i = index;">
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <td>{{_list.BillNo}}</td>
+                                <td>{{_list.BillAmt}}</td>
+                                <td>{{_list.EligableCashBack}}</td>
+                                <td><input type="text" maxlength="6"
+                                        (change)="UpdateActualCashbackAmt(_list,i,amount.value)"
+                                        (keyup.enter)="UpdateActualCashbackAmt(_list,i,amount.value)"
+                                        value="{{_list.ActualCashBack}}" IntegerDecimalFieldValidator #amount
+                                        required />
+                                </td>
+                                <!-- <td>{{_list.ActualCashBack}}</td> -->
+                                <td><input type="text" (change)="updateremarks(i,usertext.value)"
+                                        (keyup.enter)="updateremarks(i,usertext.value)" value="{{_list.Remarks}}"
+                                        #usertext required /></td>
+
+                                <!-- <td>{{_list.Remarks}}</td> -->
+
+                                <td>
+                                    <i class="far fa-trash-alt fa-1-5x pointer"
+                                        style='color: red; font-size: 1.5em !important;' (click)="Delete(i)">
+                                    </i>
+                                </td>
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <ng-container *ngIf="EnableJson">
+                    <pre>{{ cashbackPostModal | json }}</pre>
+                </ng-container>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2">
+        <br>
+        <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" type="submit"
+            (click)="postCashback()"><i class="fa fa-save "></i>
+            Save</button>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-bordered " style="border-color: 1px solid black;">
+            <tbody>
+                <tr>
+                    <td>
+                        <label class="control-label">
+                            <b><input type="text" readonly placeholder="0.00"
+                                    value="{{ CalulatedBillamount(cashbackListData)}}"
+                                    style="background-color: #f2f2f2"></b></label>
+                    </td>
+                    <td>
+                        <label class="control-label">
+                            <b> <input type="text" readonly value="{{ CalulatedActualCashBack(cashbackListData)}}"
+                                    style="background-color: #f2f2f2"></b></label>
+                    </td>
+                    <td>
+                        <label class="control-label">
+                            <b><input type="text" readonly placeholder="0.00"
+                                    value="{{ CalulatedEligableCashBack(cashbackListData)}}"
+                                    style="background-color:  #f2f2f2"></b></label>
+                    </td>
+                    <td>
+                        <label class="control-label">
+                            <b><input type="checkbox" [checked]="cashbackPostModal.IsEPayment"
+                                    (change)="chkbxchng($event)"
+                                    style="height:25px; width:25px; vertical-align: middle;" /></b>
+                            &nbsp;&nbsp;&nbsp;&nbsp;E-Payment
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-sm">
+          
+            <input type="text" readonly placeholder="0.00" value="{{ CalulatedBillamount(cashbackListData)}}"
+                style="background-color: #f2f2f2">
+        </div>
+        <div class="col-sm">
+            <input type="text" readonly value="{{ CalulatedActualCashBack(cashbackListData)}}"
+                style="background-color: #f2f2f2">
+        </div>
+        <div class="col-sm">
+            <input type="text" readonly placeholder="0.00" value="{{ CalulatedEligableCashBack(cashbackListData)}}"
+                style="background-color:  #f2f2f2">
+        </div>
+        <div class="col-sm">
+            <label class="control-label">
+                <div class="form-group" style="width: 20px;height: 20px;">
+                    <input type="checkbox" class="chkbxsize" class="form-control" />
+                </div>
+            </label>
+        </div>
+    </div>
+</div> -->
+
+<!--printJournalEntryModal-->
+
+<div class="modal fade" id="printJournalEntryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="print">
+                <span>
+                    <div id="DisplayData" class="center" [innerHTML]='PrintDetails'></div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--ReprintCashVoucher-->
+<div class="modal fade" id="printCashVoucher" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=print()><i class="fal fa-print"></i> Print</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="print">
+                <span>
+                    <div id="DisplayData" class="center" [innerHTML]='PrintDetails'></div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

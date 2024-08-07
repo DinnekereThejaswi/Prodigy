@@ -1,0 +1,436 @@
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#SupplierDetails" (click)="ToggleSupplierDetails()"
+            [ngClass]="EnableSupplierDetails ? 'collapsed' : ''"
+            [attr.data-toggle]="EnableSupplierDetails ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#005BFF">
+                        <i class="fa fa-industry fa-2x mr-2 align-middle" aria-hidden="true"></i>
+                        <span class="align-middle Pointer"><ins>Supplier Details</ins></span>
+                    </a>
+                </div>
+                <div class="col-md-7"></div>
+                <div class="col-md-3" style="float: right;">
+                    <button class="btn  btn-outline-dark waves-effect waves-light btn-rounded btn-secondary MT-2">
+                        <i class="fal fa-edit"></i>&nbsp;Modify/View</button>
+                </div>
+            </div>
+        </div>
+        <div id="SupplierDetails" class="card-body collapse" [collapse]="EnableSupplierDetails">
+            <form [formGroup]="SupplierDetailsForm">
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group1">
+                            <label class="control-label" for="code">Code<span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span>
+                            </label>
+                            <input (input)="Codes.value = Codes.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_Code" id="Code" placeholder=" Please Enter Code"
+                                oninput="this.value = this.value.toUpperCase()" AlphabetFieldValidator maxlength="15"
+                                [(ngModel)]="BranchListData.PartyCode" type="text" autocomplete="off">
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="GSTIN">GSTIN<span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span>
+                            </label>
+                            <input (input)="GSTIN.value = GSTIN.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_GSTIN" id="GSTIN" placeholder=" Please Enter GSTIN"
+                                oninput="this.value = this.value.toUpperCase()" AlphaNumericValidator maxlength="15"
+                                [(ngModel)]="BranchListData.TIN" type="text" #GSTIN
+                                (change)="TINValidation(BranchListData.TIN)" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="Name">Name<span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span>
+                            </label>
+                            <input (input)="Name.value = Name.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_Name" id="Name" placeholder=" Please Enter Name"
+                                oninput="this.value = this.value.toUpperCase()" AlphabetFieldValidator maxlength="50"
+                                [(ngModel)]="BranchListData.PartyName" type="text" #Name />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="Address1">Address 1 </label>
+                            <input (input)="Address1.value = Address1.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_Address1" id="Address" placeholder="Please Enter Address 1"
+                                oninput="this.value = this.value.toUpperCase()" AlphabetFieldValidator maxlength="30"
+                                [(ngModel)]="BranchListData.Address1" type="text" #Address1 autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="Address2">Address 2 </label>
+                            <input (input)="Address2.value = Address2.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_Address2" id="Address2" placeholder="Please Enter Address 2"
+                                oninput="this.value = this.value.toUpperCase()" AlphabetFieldValidator maxlength="30"
+                                [(ngModel)]="BranchListData.Address2" type="text" #Address2 autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+
+                            <label class="control-label" for="Area">Area </label>
+                            <input (input)="Area.value = Area.value.toUpperCase()" class="form-control" id="Area"
+                                placeholder=" Please Enter Area" formControlName="frmCtrl_Area"
+                                oninput="this.value = this.value.toUpperCase()" AlphabetFieldValidator maxlength="20"
+                                [(ngModel)]="BranchListData.Address3" type="text" #Area autocomplete="off" />
+
+
+
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group1">
+                            <label class="control-label" for="Pin">Pin </label>
+                            <input (input)="Pin.value = Pin.value.toUpperCase()" class="form-control" id="Pin"
+                                placeholder="Please Enter Pin" formControlName="frmCtrl_pin"
+                                oninput="this.value = this.value.toUpperCase()" AlphaNumericValidator maxlength="7"
+                                [(ngModel)]="BranchListData.PinCode" type="text" #Pin autocomplete="off" />
+                        </div>
+
+                        <div class="form-group1">
+                            <label class="control-label" for="City">City
+                            </label>
+                            <input (input)="Codes.value = Codes.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_city" id="City" placeholder="Please Enter City"
+                                oninput="this.value = this.value.toUpperCase()" AlphabetFieldValidator maxlength="15"
+                                type="text" #Codes [(ngModel)]="BranchListData.City" autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="StateCode">State</label><span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span>
+                            <select class="form-control" formControlName="frmCtrl_state"
+                                [(ngModel)]="BranchListData.StateCode"
+                                (change)="stateDetails($event.target.selectedIndex)">
+                                <option [ngValue]="null">Select State</option>
+                                <option *ngFor="let State of StateList" [ngValue]="State.TINNo">
+                                    {{State.StateName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="Country">Country</label>
+                            <input (input)="Country.value = Country.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_country" id="Country" placeholder="Please Enter Country"
+                                oninput="this.value = this.value.toUpperCase()" AlphabetFieldValidator maxlength="10"
+                                [(ngModel)]="BranchListData.Country" type="text" #Country autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="District">District</label>
+                            <input (input)="District.value = District.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_District" id="District" placeholder="Please Enter District"
+                                oninput="this.value = this.value.toUpperCase()" AlphabetFieldValidator maxlength="15"
+                                [(ngModel)]="BranchListData.District" type="text" #District autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="Phone">Ph No
+                            </label>
+                            <input (input)="Phone.value = Phone.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_Phone" id="Phone" placeholder="Enter Phone No"
+                                oninput="this.value = this.value.toUpperCase()" AlphaNumericValidator maxlength="13"
+                                [(ngModel)]="BranchListData.Phone" type="text" #Phone autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-md">
+
+                        <div class="form-group1">
+                            <label class="control-label" for="Mob">Mob No
+                            </label>
+                            <input (input)="Mob.value = Mob.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_Mob" id="Mob" placeholder="Please Enter Mobile no"
+                                oninput="this.value = this.value.toUpperCase()" AlphaNumericValidator maxlength="10"
+                                [(ngModel)]="BranchListData.Mobile" type="text" #Mob autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="Fax">Fax No
+                            </label>
+                            <input (input)="Fax.value = Fax.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_Fax" id="Fax" placeholder="Please Enter Fax No"
+                                oninput="this.value = this.value.toUpperCase()" IntegerDecimalFieldValidator
+                                maxlength="15" [(ngModel)]="BranchListData.FaxNo" type="text" #Fax autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="EmailID">Email-Id </label>
+                            <input type="email" class="form-control" id="EmailID" formControlName="frmCtrl_EmailID"
+                                (keydown.enter)="$event.preventDefault()" maxlength="25" EmailFieldValidator
+                                placeholder="Please Enter Email" [(ngModel)]="BranchListData.Email" autocomplete="off"
+                                (change)="EmailValidation(BranchListData.Email)" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="Website">Website</label>
+                            <input class="form-control" id="Website" formControlName="frmCtrl_Website"
+                                placeholder="Please Enter Website" AlphabetFieldValidator [readonly]="isReadOnly"
+                                type="text" [(ngModel)]="BranchListData.Website" autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="Contact">Contact Person</label>
+                            <input class="form-control" id="Contact" formControlName="frmCtrl_ContactPerson"
+                                placeholder="Please Enter Contact Person" AlphabetFieldValidator maxlength="20"
+                                type="text" [(ngModel)]="BranchListData.ContactPerson" autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="EmailID">Contact Email-Id </label>
+                            <input type="email" class="form-control" id="EmailID"
+                                formControlName="frmCtrl_ContactEmailID" (keydown.enter)="$event.preventDefault()"
+                                maxlength="200" EmailFieldValidator autocomplete="off"
+                                placeholder=" Enter Contact Email-Id" [(ngModel)]="BranchListData.ContactEmail"
+                                autocomplete="off" (change)="EmailValidation(BranchListData.ContactEmail)" />
+                        </div>
+
+                    </div>
+                    <div class="col-md">
+
+                        <div class="form-group1">
+                            <label class="control-label" for="Contact">Contact No</label>
+                            <input (input)="Contact.value = Contact.value.toUpperCase()" class="form-control"
+                                formControlName="frmCtrl_Contactno" id="Contact" placeholder="Please Enter Contact No"
+                                oninput="this.value = this.value.toUpperCase()" AlphaNumericValidator maxlength="12"
+                                type="text" #Contact [(ngModel)]="BranchListData.ContactMobileNo" autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="PANNo">PAN <span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span></label>
+                            <input (input)="PANNo.value = PANNo.value.toUpperCase()" type="text"
+                                [(ngModel)]="BranchListData.PAN" class="form-control" formControlName="frmCtrl_PAN"
+                                oninput="this.value = this.value.toUpperCase()" id="PANNo"
+                                placeholder="Please Enter PAN No" maxlength="10" #PANNo autocomplete="off" />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="CST">CST No</label>
+                            <input class="form-control" formControlName="frmCtrl_CST" style="text-transform:uppercase"
+                                id="CST" placeholder="Please Enter CST No " maxlength="15"
+                                [(ngModel)]="BranchListData.CSTNo" autocomplete="off"
+                                (input)="CST.value = CST.value.toUpperCase()"
+                                oninput="this.value = this.value.toUpperCase()" type="text" #CST />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label" for="TDS">TDS<span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span></label>
+                            <select class="form-control" formControlName="frmCtrl_TDS"
+                                (change)="TDSDropdownChange($event.target.selectedIndex)">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let _vendors of TDSVendors" [ngValue]="_vendors.tdsID">
+                                    {{_vendors.tds_name}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-check form-group1">
+                            <br>
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled"
+                                (change)="SameEntityCheck($event)" [checked]="IsChecked()">
+                            <label class="form-check-label" for="flexCheckCheckedDisabled">
+                                Is Same Entity
+                            </label>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </form>
+            <ng-container *ngIf="EnableJson">
+                <pre>{{ BranchListData | json}}</pre>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<br>
+
+<div id="accordian" class="accordion">
+    <div class="card mb-0">
+        <div class="card-header Pointer" href="#OpeningDetails" (click)="ToggleOpeningDetails()"
+            [ngClass]="EnableOpeningDetails ? 'collapsed' : ''"
+            [attr.data-toggle]="EnableOpeningDetails ? '':'collapse'"
+            style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a class="card-title align-middle" style="color:#00BBD6">
+                        <i class="fa fa-folder-open  fa-2x mr-2 align-middle"></i>
+                        <span class="align-middle Pointer"><ins>Opening details</ins></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="OpeningDetails" class="card-body collapse" [collapse]="EnableOpeningDetails">
+            <form [formGroup]="OpeningDetailsHeaderForm">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label" for="refer">Reference No
+                            </label>
+                            <input class="form-control" id="refer" placeholder="Enter Reference No" appNumbersOnly
+                                [(ngModel)]="ListOpenDetModel.RefNo" type='number' step='0.01' value='0.00'
+                                placeholder='Enter Reference No' formControlName="frmCtrl_RefNo" autocomplete="off"
+                                #RefNo />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label" for="GS">GS Type</label>
+                            <select class="form-control" [(ngModel)]="ListOpenDetModel.GSCode"
+                                formControlName="frmCtrl_GSCode">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let _GSList of GSTypes" [ngValue]="_GSList.Code">
+                                    {{_GSList.Name}} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">UOM</label>
+                            <select class="form-control" [(ngModel)]="ListOpenDetModel.WeightType"
+                                formControlName="frmCtrl_WeightType">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let _uom of uom" [ngValue]="_uom.code">
+                                    {{_uom.name}}
+                                </option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">Opn Type</label>
+                            <select class="form-control" [(ngModel)]="ListOpenDetModel.MetalCode"
+                                formControlName="frmCtrl_MetalCode">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let _openTypes of openTypes" [ngValue]="_openTypes.ir_code">
+                                    {{_openTypes.ir_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label" for="Opn">Opn Gr.Wt</label>
+                            <input class="form-control" id="Opn" placeholder="Enter Opn Gr.Wt" appNumbersOnly
+                                maxlength="7" [(ngModel)]="ListOpenDetModel.OpnWeight" type='number' step='0.01'
+                                value='0.00' placeholder='0.00' formControlName="frmCtrl_OpnWeight"
+                                autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label" for="Nt">Opn Nt.Wt</label>
+                            <input class="form-control" id="Nt" placeholder="Enter Opn Nt.Wt" appNumbersOnly
+                                [(ngModel)]="ListOpenDetModel.OpnNetWeight" type='number'
+                                (change)="CalculatePureWt(ListOpenDetModel.OpnNetWeight)" step='0.01' value='0.00'
+                                placeholder='0.00' formControlName="frmCtrl_OpnNetWeight" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label" for="pwt">Opn P.Wt</label>
+                            <input class="form-control" id="pwt" placeholder="Enter Opn P.Wt" appNumbersOnly
+                                formControlName="frmCtrl_OpnPureWeight" [(ngModel)]="ListOpenDetModel.OpnPureWeight"
+                                type='number' step='0.01' value='0.00' placeholder='0.00' autocomplete="off" readonly />
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">Dr/CR</label>
+                            <select class="form-control" formControlName="frmCtrl_BalnceType"
+                                [(ngModel)]="ListOpenDetModel.BalType">DebitOrCredit
+                                <option [ngValue]="null" disabled>Select</option>
+                                <option *ngFor="let _data of DebitOrCredit" [ngValue]="_data.code">
+                                    {{_data.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label" for="Opnbal">Opn Bal(Rs)</label>
+                            <input class="form-control" id="Opnbal" placeholder="Enter Opn Nt.Wt"
+                                [(ngModel)]="ListOpenDetModel.OpnBal" type='number' step='0.01' value='0.00'
+                                placeholder='0.00' IntegerDecimalFieldValidator formControlName="frmCtrl_OpnBal"
+                                autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+
+                            <button
+                                class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2 float-right"
+                                style="margin-top: 1.2rem !important;" (click)="Clear()">
+                                <i class="fal fa-trash"></i>&nbsp;Clear
+                            </button>
+                            <ng-container *ngIf="EnableAdd">
+                                <button
+                                    class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2 float-right"
+                                    style="margin-top: 1.2rem !important;"
+                                    (click)="AddOpeningDetails(OpeningDetailsHeaderForm)">
+                                    <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                            </ng-container>
+                            <ng-container *ngIf="EnableSave">
+                                <button
+                                    class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2 float-right"
+                                    style="margin-top: 1.2rem !important;"
+                                    (click)="SaveOpeningDetails(OpeningDetailsHeaderForm)">
+                                    <i class="fal fa-save"></i>&nbsp;Save</button>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" *ngIf="openingDetailsObj.GSCode != 'null'">
+                            <table class="table table-bordered table-hover">
+                                <thead class="topbar">
+                                    <tr>
+                                        <th>Sl No</th>
+                                        <th>Reference NO</th>
+                                        <th>GS Type</th>
+                                        <th>UOM</th>
+                                        <th>Opn Type</th>
+                                        <th>Open Gr.Wt(gms)</th>
+                                        <th>Open Nt.Wt(gms) </th>
+                                        <th>Open P.Wt(gms)</th>
+                                        <th>Dr/Cr</th>
+                                        <th>Opn Bal(Rs)</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let _data of openingDetailsObj;index as i">
+                                        <td>{{i+1}}</td>
+                                        <td>{{_data.RefNo}}</td>
+                                        <td>{{_data.GSCode}}</td>
+                                        <td>{{_data.WeightType}}</td>
+                                        <td>{{_data.MetalCode}}</td>
+                                        <td>{{_data.OpnWeight}}</td>
+                                        <td>{{_data.OpnNetWeight}}</td>
+                                        <td>{{_data.OpnPureWeight}}</td>
+                                        <td>{{_data.BalType}}</td>
+                                        <td>{{_data.OpnBal}}</td>
+                                        <td>
+                                            <button
+                                                class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2 float-right"
+                                                (click)="Edit(_data)">
+                                                <i class="fal fa-edit"></i>Edit</button>
+                                        </td>
+                                        <td>
+                                            <button
+                                                class="btn btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2 float-right"
+                                                (click)="delete(i)">
+                                                <i class="fal fa-trash"></i>Delete</button>
+                                        </td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <ng-container *ngIf=" EnableJson">
+                        <pre>{{ListOpenDetModel | json}}</pre>
+                    </ng-container>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<br>
+<button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary" type="button" (click)="Submit()"><i
+        class="fal fa-save"></i> Submit</button>

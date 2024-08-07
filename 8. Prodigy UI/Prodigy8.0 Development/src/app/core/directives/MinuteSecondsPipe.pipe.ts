@@ -1,0 +1,25 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+
+@Pipe({
+    name: 'minuteSeconds'
+  })
+  export class MinuteSecondsPipe implements PipeTransform {
+  
+      transform(value: number): string {
+         const hours: number = Math.floor(value/3600);  
+         const minutes: number = Math.floor((value - (hours * 3600)) / 60);
+         const seconds:number=value - (hours * 3600) - (minutes * 60);
+         return hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + 
+         Math.round((seconds * 100) / 100).toString().padStart(2, '0');
+
+            //  const hours:number=Math.floor(value/3600); 
+            //  const minutes: number = Math.floor((value - (hours * 3600)) / 60);
+            //  const seconds:number=value - (hours * 3600) - (minutes * 60);
+            //  const sec = Math.round(seconds * 100) / 100
+            //  return hours + ':' + 
+            //      minutes+':'+sec;
+ 
+
+      }
+  }

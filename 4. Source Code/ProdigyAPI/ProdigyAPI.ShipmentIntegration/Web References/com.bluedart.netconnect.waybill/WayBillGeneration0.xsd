@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" />
+  <xs:import schemaLocation="http://netconnect.bluedart.com/Ver1.9/Demo/ShippingAPI/WayBill/WayBillGeneration.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" />
+  <xs:element name="GenerateWayBill">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="Request" nillable="true" type="q1:WayBillGenerationRequest" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" minOccurs="0" name="Profile" nillable="true" type="q2:UserProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateWayBillResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="GenerateWayBillResult" nillable="true" type="q3:WayBillGenerationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImportData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="Request" nillable="true" type="q4:ArrayOfWayBillGenerationRequest" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" minOccurs="0" name="Profile" nillable="true" type="q5:UserProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImportDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="ImportDataResult" nillable="true" type="q6:ArrayOfWayBillGenerationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelWaybill">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="Request" nillable="true" type="q7:AWBCancelationRequest" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" minOccurs="0" name="Profile" nillable="true" type="q8:UserProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelWaybillResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="CancelWaybillResult" nillable="true" type="q9:AWBCancelationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEwayBill">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="ERequest" nillable="true" type="q10:EwayBillRequest" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" minOccurs="0" name="Profile" nillable="true" type="q11:UserProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEwayBillResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="UpdateEwayBillResult" nillable="true" type="q12:EwayBillResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateWayBill">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="Request" nillable="true" type="q13:WayBillGenerationRequest" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/SAPI.Entities.Admin" minOccurs="0" name="Profile" nillable="true" type="q14:UserProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateWayBillResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/SAPI.Entities.WayBillGeneration" minOccurs="0" name="UpdateWayBillResult" nillable="true" type="q15:WayBillGenerationResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

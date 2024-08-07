@@ -1,0 +1,92 @@
+<div class="card">
+  <div class="card-body">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="ReceiptNo">C.R. No.</label>
+                <input type="text" class="form-control" name="ReceiptNo"
+                  [(ngModel)]="CreditrecieptSummaryHeader.ReceiptNo"
+                  (change)="GetReceiptValues(CreditrecieptSummaryHeader.ReceiptNo)" BlueBorder />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="ReceiptDate">CR. Date</label>
+                <input type="text" class="form-control" readonly name="ReceiptDate"
+                  [(ngModel)]="CreditrecieptSummaryHeader.ReceiptDate" value="{{ CreditrecieptSummaryHeader.ReceiptDate | date:'DD/MM/YYYY' }}" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="CustomerName">Customer Name</label>
+                <input type="text" class="form-control" readonly name="CustomerName"
+                  [(ngModel)]="CreditrecieptSummaryHeader.CustomerName" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="Address1">Address</label>
+                <input type="text" class="form-control" readonly name="Address1"
+                  [(ngModel)]="CreditrecieptSummaryHeader.Address1" /><br><br>
+                <input type="text" class="form-control" readonly name="Address2"
+                  [(ngModel)]="CreditrecieptSummaryHeader.Address2" /><br><br>
+                <input type="text" class="form-control" readonly name="Address3"
+                  [(ngModel)]="CreditrecieptSummaryHeader.Address3" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="PhoneNo">Phone No</label>
+                <input type="text" class="form-control" readonly name="PhoneNo"
+                  [(ngModel)]="CreditrecieptSummaryHeader.PhoneNo" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="MobileNo">Mobile No</label>
+                <input type="text" class="form-control" readonly name="MobileNo"
+                  [(ngModel)]="CreditrecieptSummaryHeader.MobileNo" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="Amount">Amount</label>
+                <input type="text" class="form-control" readonly name="Amount"
+                  [(ngModel)]="CreditrecieptSummaryHeader.Amount" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="Remarks">Remarks</label>
+                <input type="text" class="form-control" name="Remarks"
+                  [(ngModel)]="CreditrecieptSummaryHeader.Remarks" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <a class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2" href="javascript:void(0)"
+              (click)="PostCancelReceipt()">
+              Cancel Credit Receipt
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+<ng-container *ngIf="EnableJson">
+  <pre>{{CreditrecieptSummaryHeader | json}}</pre>
+</ng-container>

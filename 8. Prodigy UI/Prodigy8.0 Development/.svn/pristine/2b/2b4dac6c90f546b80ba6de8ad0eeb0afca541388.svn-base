@@ -1,0 +1,95 @@
+{
+  "_from": "@progress/telerik-angular-report-viewer",
+  "_id": "@progress/telerik-angular-report-viewer@11.20.1118",
+  "_inBundle": false,
+  "_integrity": "sha512-AGh6K3VF7I+zxjPeOHa9Nkevuz9q2nzkbPVZvTiD25ons+rexISzZS6mMgYt6nMx2WOYQ4dUQvLQo8ZP4t0bLA==",
+  "_location": "/@progress/telerik-angular-report-viewer",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@progress/telerik-angular-report-viewer",
+    "name": "@progress/telerik-angular-report-viewer",
+    "escapedName": "@progress%2ftelerik-angular-report-viewer",
+    "scope": "@progress",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@progress/telerik-angular-report-viewer/-/telerik-angular-report-viewer-11.20.1118.tgz",
+  "_shasum": "ee9672f2fc6819108db3f4c333204a04ac8362cb",
+  "_spec": "@progress/telerik-angular-report-viewer",
+  "_where": "D:\\MagnaWeb-Angular7.0\\4. Source Code\\Prodigy-Angular8.0",
+  "author": {
+    "name": "Progress® Telerik® Reporting"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Progress® Telerik® Report Viewer for Angular",
+  "devDependencies": {
+    "@angular/animations": "^4.0.0",
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/compiler-cli": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/platform-server": "^4.0.0",
+    "@types/core-js": "0.9.35",
+    "@types/jasmine": "2.2.34",
+    "@types/node": "~8.9.4",
+    "@types/zone.js": "0.0.27",
+    "codelyzer": "3.0.0-beta.4",
+    "core-js": "^2.2.2",
+    "del": "^2.2.2",
+    "gulp": "^3.9.0",
+    "jquery": "^3.2.1",
+    "rimraf": "^2.6.1",
+    "rxjs": "^5.0.1",
+    "tslint": "^4.0.0",
+    "typescript": "^2.1.5",
+    "zone.js": "^0.8.4"
+  },
+  "files": [
+    "dist/"
+  ],
+  "homepage": "http://www.telerik.com/reporting",
+  "keywords": [
+    "ReportViewer",
+    "Report Viewer",
+    "Telerik",
+    "Kendo UI",
+    "Angular"
+  ],
+  "license": "http://www.telerik.com/purchase/license-agreement/reporting-dlw-s",
+  "main": "dist/cjs/main.js",
+  "module": "dist/es/main.js",
+  "name": "@progress/telerik-angular-report-viewer",
+  "peerDependencies": {
+    "@angular/common": ">=4.0.0",
+    "@angular/core": ">=4.0.0",
+    "jquery": ">=3.2.1",
+    "rxjs": ">=5.0.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.telerik.com"
+  },
+  "scripts": {
+    "api-check": "gulp api-check",
+    "build": "rimraf dist && gulp build-package",
+    "lint": "gulp lint",
+    "start": "gulp start",
+    "test": "gulp test"
+  },
+  "typings": "dist/es/main.d.ts",
+  "version": "11.20.1118",
+  "module_ivy_ngcc": "__ivy_ngcc__/dist/es/main.js",
+  "__processed_by_ivy_ngcc__": {
+    "module": "8.2.14",
+    "typings": "8.2.14"
+  }
+}

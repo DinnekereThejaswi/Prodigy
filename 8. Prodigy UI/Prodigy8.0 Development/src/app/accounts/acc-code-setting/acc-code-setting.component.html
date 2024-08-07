@@ -1,0 +1,111 @@
+<div class="card mb-0">
+    <div class="card-body">
+        <form [formGroup]="AccCodesettingForm" class="form-horizontal">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="objid">Obj Id<span class="textRed"> <i
+                                    class="fas fa-star-of-life"></i></span>
+                        </label>
+                        <input class="form-control" formControlName="frmCtrl_ObjId" [(ngModel)]="accSetingModel.ObjID"
+                            [readonly]="isReadOnly" type="number" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="accname">Account Name
+                            <span class="textRed"> <i class="fas fa-star-of-life"></i></span>
+                        </label>
+                        <select class="form-control" formControlName="frmCtrl_AcountName" Autofocus
+                            [(ngModel)]="accSetingModel.AccCode">
+                            <option [ngValue]="null" selected>Select</option>
+                            <option *ngFor="let _accounts of AccNames" [value]="_accounts.Code">
+                                {{_accounts.Name}} </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label" for="Description">Description
+                        </label>
+                        <input type="text" class="form-control" id="Description" placeholder="Enter Description"
+                            [(ngModel)]="accSetingModel.Description" formControlName="frmCtrl_Description" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <ng-container *ngIf="EnableAdd">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="add(AccCodesettingForm)">
+                                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                        </ng-container>
+                        <ng-container *ngIf="EnableSave">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="save(AccCodesettingForm)">
+                                <i class="fal fa-save"></i>&nbsp;Save</button>
+                        </ng-container>
+                        <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;" (click)="clear()">
+                            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <ng-container *ngIf="EnableJson">
+            <pre>{{accSetingModel | json}}</pre>
+        </ng-container>
+
+    </div>
+</div>
+
+<br>
+
+<div class="card mb-0">
+    <div class="card-body">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="topbar">
+                        <tr>
+                            <th>Obj Id</th>
+                            <th>Account Name</th>
+                            <th>Description</th>
+                            <th>Object Status</th>
+                            <th>Edit</th>
+                            <th>Open</th>
+                            <th>close</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let _details of AccSetting  | paginate: { itemsPerPage:top, totalItems:totalItems, currentPage: pagenumber }">
+                            <td>{{_details.ObjID }}</td>
+                            <td>{{_details.AccName }}</td>
+                            <td>{{_details.Description }}</td>
+                            <td [style.color]="getStatusColor(_details.ObjectStatus)">
+                                <b>{{_details.ObjectStatus }}</b>
+                            </td>
+                            <!-- <td [style.color]="getStatusColor(_details.ObjectStatus)">
+                                <b>{{_details.ObjectStatus | statusName :_details.ObjectStatus }}</b>
+                            </td> -->
+                            <td align="center">
+                                <i class="fas fa-edit" title="edit" (click)="editField(_details)"></i>
+                            </td>
+                            <td align="center">
+                                <i class="fas fa-lock-open" title="open" (click)="openField(_details)"></i>
+                            </td>
+                            <td align="center">
+                                <i class="fas fa-lock" title="close" (click)="closeField(_details)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <pagination-controls (pageChange)="onPageChange($event) ">
+            </pagination-controls>
+        </div>
+    </div>
+</div>

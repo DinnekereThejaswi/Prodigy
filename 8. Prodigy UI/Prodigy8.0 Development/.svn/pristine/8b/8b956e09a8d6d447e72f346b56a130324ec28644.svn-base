@@ -1,0 +1,1 @@
+{"version":3,"file":"console.service.d.ts","sources":["E:/MagnaWeb-Angular8.0/node_modules/@ng-select/ng-select/ng-select/console.service.d.ts"],"sourcesContent":["export declare class ConsoleService {\n    warn(message: string): void;\n}\n"],"names":[],"mappings":";AAAA;;;AAEA;"}

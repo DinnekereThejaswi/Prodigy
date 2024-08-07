@@ -1,0 +1,23 @@
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\ProdigyAPI.Model.dll.config
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\ProdigyAPI.Model.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\ProdigyAPI.Model.pdb
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\EntityFramework.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\EntityFramework.SqlServer.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\Newtonsoft.Json.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\EntityFramework.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\EntityFramework.SqlServer.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\Newtonsoft.Json.xml
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\obj\Debug\ProdigyAPI.Model.dll
+E:\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\obj\Debug\ProdigyAPI.Model.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\ProdigyAPI.Model.dll.config
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\ProdigyAPI.Model.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\ProdigyAPI.Model.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\EntityFramework.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\EntityFramework.SqlServer.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\Newtonsoft.Json.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\EntityFramework.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\EntityFramework.SqlServer.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\bin\Debug\Newtonsoft.Json.xml
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\obj\Debug\ProdigyAPI.Model.dll
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\obj\Debug\ProdigyAPI.Model.pdb
+F:\E drive\prodigyapi\4. Source Code\ProdigyAPI\ProdigyAPI.Model\obj\Debug\ProdigyAPI.Model.csprojResolveAssemblyReference.cache

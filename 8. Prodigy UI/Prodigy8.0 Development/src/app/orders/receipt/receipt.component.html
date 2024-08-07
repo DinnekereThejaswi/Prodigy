@@ -1,0 +1,197 @@
+<form [formGroup]="ReceiptForm" class="form-horizontal">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card card-outline-info">
+        <!-- <div class="card-header">
+          <h4 class="m-b-0 text-white">Receipt </h4>
+        </div> -->
+        <div class="card-body">
+          <div class="form-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group has-success">
+                  <label for="PayMode">Mode</label>
+                  <select class="form-control mr-auto mt-2 mt-lg-0" #PayMode formControlName="PayMode"
+                    (change)="onchangePaymode(PayMode.value)" [(ngModel)]="ReceiptHeaders.PayMode">
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let _paymentModes of PaymentModes" [value]="_paymentModes.PayMode">
+                      {{_paymentModes.PayName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2" *ngIf="toggle == 'Others'">
+                <div class="form-group">
+                  <label>Ref No</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.RefBillNo"
+                    formControlName="RefBillNo" NumberFieldvalidator>
+                </div>
+              </div>
+              <ng-container *ngIf="toggle == 'Card'">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>Card No</label>
+                    <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.CardNo" formControlName="CardNo"
+                      placeholder="Enter Card Number" NumberFieldvalidator>
+                  </div>
+                </div>
+              </ng-container>
+              <div class="col-md-2" *ngIf="toggle == 'Card'">
+                <div class="form-group">
+                  <label>Card AppNo</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.CardAppNo"
+                    formControlName="CardAppNo" placeholder="Enter Card App Number" NumberFieldvalidator>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Card'">
+                <div class="form-group">
+                  <label>Card Type</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.CardType"
+                    formControlName="CardType" placeholder="Enter Card Type" AlphabetFieldValidator>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Card' || toggle == 'Cheque'">
+                <div class="form-group">
+                  <label>Bank name</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.BankName"
+                    formControlName="BankName" placeholder="Enter Bank Name" required AlphabetFieldValidator>
+
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Card'">
+                <div class="form-group">
+                  <!-- <label>Bank</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.Bank" formControlName="Bank"> -->
+                  <label for="Bank">Bank</label>
+                  <select class="form-control mr-auto mt-2 mt-lg-0" #Bank formControlName="Bank"
+                    [(ngModel)]="ReceiptHeaders.Bank">
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let _BankList of BankList" [value]="_BankList.Bank">
+                      {{_BankList.BankName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Card'">
+                <div class="form-group">
+                  <label>Expire Date</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.ExpiryDate"
+                    formControlName="ExpiryDate" placeholder="Enter Expiry Date">
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Card'">
+                <div class="form-group">
+                  <label>Card Charges</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.CardCharges"
+                    formControlName="CardCharges" placeholder="Card Charges" IntegerDecimalFieldValidator>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Card'">
+                <div class="form-group">
+                  <label>Card Swiped By</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.CardSwipedBy"
+                    formControlName="CardSwipedBy" placeholder="Card Swiped By" AlphabetFieldValidator>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Cheque'">
+                <div class="form-group">
+                  <label>Chq/ DD No</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.ChequeNo"
+                    formControlName="ChequeNo" placeholder="Enter Chq/ DD No" required NumberFieldvalidator>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Cheque'">
+                <div class="form-group">
+                  <label>Chq.Date</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.ChequeDate"
+                    formControlName="ChequeDate" placeholder="Cheque Date">
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Card' || toggle == 'Cash' || toggle == 'Cheque' 
+                || toggle == 'DD' || toggle == 'BC'">
+                <div class="form-group">
+                  <label>Details</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.Details" formControlName="Details"
+                    placeholder="Enter Details" AlphaNumericFieldValidator>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Card' || toggle == 'Cash' || toggle == 'Cheque' || 
+                toggle == 'DD' || toggle == 'BC'">
+                <div class="form-group">
+                  <label>Amount</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.AmtReceived"
+                    formControlName="AmtReceived" placeholder="Enter Amount Received" IntegerDecimalFieldValidator>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Others'">
+                <div class="form-group">
+                  <label>Scheme Code</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.SchemeCode"
+                    formControlName="SchemeCode" placeholder="Enter Scheme Code">
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Others'">
+                <div class="form-group">
+                  <label>Group Code</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.GroupCode"
+                    formControlName="GroupCode" placeholder="Enter Group Code ">
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="toggle == 'Others'">
+                <div class="form-group">
+                  <label>Branch</label>
+                  <input type="text" class="form-control" [(ngModel)]="ReceiptHeaders.CTBranch"
+                    formControlName="CTBranch" placeholder="Enter Branch" AlphabetFieldValidator>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions" [hidden]="toggle=='Invalid'">
+              <button type="submit" class="btn btn-success" (click)="addRow(ReceiptForm)"> <i class="fa fa-check"></i>
+                Add</button>
+              <button type="button" class="btn btn-inverse">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="topbar">
+      <tr>
+        <th>Payment Mode</th>
+        <th>Card No Mode</th>
+        <th>Cheque/DD</th>
+        <th>Amount</th>
+        <th>Details</th>
+        <th>Card App No</th>
+        <th>Scheme</th>
+        <th>Card Swiped By</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let _arrayList of ArrayList; let i = index">
+      <td>{{_arrayList.PayMode}}</td>
+      <td>{{_arrayList.CardNo}}</td>
+      <td>{{_arrayList.ChequeNo}}</td>
+      <td>{{_arrayList.AmtReceived}}</td>
+      <td>{{_arrayList.Details}}</td>
+      <td>{{_arrayList.CardAppNo}}</td>
+      <td>{{_arrayList.SchemeCode}}</td>
+      <td>{{_arrayList.CardSwipedBy}}</td>
+      <td>
+        <i class="far fa-trash-alt fa-1-5x pointer" style='color: red; font-size: 1.5em !important;'
+          (click)="DeleteRow(i,_arrayList)"></i>
+      </td>
+    </tbody>
+  </table>
+</div>
+<ng-container *ngIf="EnableJson">
+  <pre>{{ReceiptHeaders | json}}</pre>
+  <pre>{{ArrayList | json}}</pre>
+</ng-container>

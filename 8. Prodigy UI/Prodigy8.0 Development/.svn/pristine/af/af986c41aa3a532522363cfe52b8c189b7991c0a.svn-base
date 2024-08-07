@@ -1,0 +1,48 @@
+.dropdown-label { 
+    background-color:transparent /* This hides the background */; 
+    background-image:none; 
+    -webkit-appearance: none /* Webkit Fix */; 
+    border:none; 
+    box-shadow:none; 
+    pointer-events: none;    
+  }
+
+  @media only screen and (max-width: 600px) {
+    .columns {
+      width: 100%;
+    }
+  }
+
+
+
+  @media (min-width:2200px) and (max-width: 2440px) {
+    .table-responsive {
+     overflow-x: hidden !important;
+  
+}
+}
+@media (min-width: 300px) and (max-width: 2200px) {
+    .table-responsive {
+    overflow-x: auto !important;
+  
+}}
+
+
+[type=radio]:checked+label:before {
+  border: 2px solid transparent;
+  -webkit-animation: ripple 0.2s linear forwards;
+  animation: ripple 0.2s linear forwards
+}
+
+[type=radio].with-gap:checked+label:after, [type=radio].with-gap:checked+label:before, [type=radio]:checked+label:after {
+  border: 2px solid #26a69a
+}
+
+[type=radio].with-gap:checked+label:after, [type=radio]:checked+label:after {
+  background-color: #26a69a;
+  z-index: 0
+}
+
+.form-group1 {
+  margin-bottom: 10px;
+}

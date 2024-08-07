@@ -1,0 +1,112 @@
+<div class="row">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-4" style="margin-top: 2px;">
+        <div class="text-right">&nbsp;
+            <button class="btn btn-success btn-rounded" type="button"><i class="fas fa-list"></i>&nbsp;
+                List in Market Place</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">SKU</label>
+                                <select class="form-control mr-auto mt-2 mt-lg-0">
+                                    <option [ngValue]="null">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Item</label>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Total Available Qty</label>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Qty Listed in Amazon</label>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label class="control-label">Design</label>
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Weight</label>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Sellable</label>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Reserved</label>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Update Qty</label>
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-2" style="margin-top: 2px;">
+        <div class="text-right">&nbsp;
+            <button class="btn btn-success btn-rounded" type="button"><i class="far fa-save"></i>
+                Update</button>
+        </div>
+    </div>
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-2">
+
+    </div>
+</div>
+<br>

@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-5">
+              <h3>GS Grouping</h3>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+          <h6 class="card-subtitle"></h6>
+          <div class="table-responsive my-custom-scrollbar">
+            <table class="table table-bordered">
+              <thead class="topbar">
+                <tr>
+                  <!-- <th>ID</th>-->
+  
+                  <th>IR Type</th>
+                  <th>GS</th>
+                   <th>Ation</th>
+                </tr>
+              </thead>
+  
+              <tbody>
+                <!-- <tr *ngFor="let kar of Location | search: searchText | paginate: { itemsPerPage:top, totalItems:MainCount, currentPage: p }" [ngClass]="{'btn-primary': cust.ID == currentId }"> -->
+                <tr *ngFor="let List of GroupingList">
+                  <td>{{List.IRCode}}</td>
+                  <td>{{List.GSCode}}</td>
+                  <td>
+                    <i class="far fa-pencil-alt pointer mr-4" style="color:orange" title="Edit" (click)="editGSGroupRecord(List.ObjID)"></i>
+                    <i class="fas fa-trash-alt pointer" style="color:red" title="Delete" (click)="deleteGSGroupRecord(List.ObjID)" ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <form [formGroup]="GSGroupForm" class="form-horizontal">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                   <label class="control-label" for="IRCode">IR Type <span class="textRed"> <i
+                          class="fas fa-star-of-life"></i></span></label>
+                    <select class="form-control" formControlName="IRCode" 
+                    [(ngModel)]="GSGroupListData.IRCode"  (click)="Mainlist(GSGroupListData.IRCode)">
+                      <option [ngValue]="null">Select</option>
+                      <option *ngFor="let _List of IRTypeList" [ngValue]="_List.IRCode">
+                        {{_List.IRName}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="control-label" for="GSCode">GS<span class="textRed"> <i
+                          class="fas fa-star-of-life"></i></span>
+                    </label>
+                    <select class="form-control" formControlName="GSCode" [(ngModel)]="GSGroupListData.GSCode">
+                      <option [ngValue]="null">Select</option>
+                      <option *ngFor="let GsCode of GSGroupList" [ngValue]="GsCode.GsCode" >
+                        {{GsCode.GSName}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+    
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded btn-secondary"
+                      (click)="onSubmit(GSGroupForm)"><i class="fal fa-save"></i> Submit</button>
+                    <button type="submit"
+                      class="btn btn-danger  waves-effect waves-light btn-rounded btn-secondary">Cancel</button>
+                  </div>
+                </div>
+                <div class="col-md-6" style="text-align:right">
+                  <span class="textRed"> <i class="fas fa-star-of-life"></i></span> Mandatory fields
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

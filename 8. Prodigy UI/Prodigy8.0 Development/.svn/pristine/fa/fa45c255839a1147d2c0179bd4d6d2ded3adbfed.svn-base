@@ -1,0 +1,202 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <form [formGroup]="StoneMasterForm" class="form-horizontal" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="gs">GS <span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span></label>
+                            <select type="text" class="form-control" id="gs" formControlName="frmCtrl_Gs"
+                                (change)="Changed($event)" [(ngModel)]="StoneMasterPostModel.Type">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let list of StoneLsit" [value]="list.Code">{{list.Name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <label *ngFor="let radiobutton of radioItems">
+                            <input type="radio" name="options" [value]="radiobutton"
+                                [checked]="radiobutton === model.option" (change)="ChangedOption(radiobutton)"
+                                style="height:25px; width:25px; vertical-align: middle;">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <u><strong>{{radiobutton}}</strong></u>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <br>
+                        <button type="button"
+                            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                            (click)=Print() id="exampleModalLabel"><i class="fal fa-print"></i> Print</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="Code">Code<span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span></label>
+                            <input type="text" class="form-control" id="Code" formControlName="frmCtrl_Code"
+                                [(ngModel)]="StoneMasterPostModel.Code" placeholder="Enter code">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="Name">Name<span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span></label>
+                            <input type="text" class="form-control" id="Name" formControlName="frmCtrl_GsName"
+                                [(ngModel)]="StoneMasterPostModel.StoneName" placeholder="Enter Name">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="TDS">HSN<span class="textRed"> <i
+                                        class="fas fa-star-of-life"></i></span></label>
+                            <input type="text" class="form-control" id="HSN" formControlName="frmCtrl_HSN"
+                                [(ngModel)]="StoneMasterPostModel.HSN" placeholder="Enter HSN">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="Counter">Counter </label>
+                            <select type="text" class="form-control" id="Counter" formControlName="frmCtrl_Counter"
+                                [(ngModel)]="StoneMasterPostModel.CounterCode">
+                                <option [value]="null">Select</option>
+                                <option *ngFor="let _counter of counterList" [ngValue]="_counter.CounterCode">
+                                    {{_counter.CounterCode}}-{{_counter.CounterName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <ng-container *ngIf="EnableAdd">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="Add(StoneMasterForm)">
+                                <i class="far fa-plus-circle"></i>&nbsp;Add</button>
+                        </ng-container>
+                        <ng-container *ngIf="EnableSave">
+                            <button class="btn btn-success waves-effect waves-light btn-rounded btn-secondary MT-2"
+                                style="margin-top: 1.2rem !important;" (click)="save(StoneMasterForm)">
+                                <i class="fal fa-save"></i>&nbsp;Save</button>
+                        </ng-container>
+                        <button class="btn  btn-warning waves-effect waves-light btn-rounded btn-secondary MT-2"
+                            style="margin-top: 1.2rem !important;" (click)="Clear()">
+                            <i class="fal fa-trash"></i>&nbsp;Clear</button>
+
+                    </div>
+                </div>
+            </form>
+            <ng-container *ngIf="EnableJson">
+                <pre>{{getDetailsByInitial |json}}</pre>
+                <pre>{{StoneMasterPostModel |json}}</pre>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="topbar">
+                            <tr>
+                                <!-- <th>ID</th>-->
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>HSN </th>
+                                <th>Counter </th>
+                                <th>Status</th>
+                                <th>Edit</th>
+                                <th>Open</th>
+                                <th>Close</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let List of ListOfStone">
+                            <tr>
+                                <td>{{List.Code}}</td>
+                                <td>{{List.StoneName}}</td>
+                                <td>{{List.HSN}}</td>
+                                <td>{{List.CounterCode}}</td>
+                                <td [style.color]="getStatusColor(List.Status)"><b>{{List.Status}}</b></td>
+                                <td>
+                                    <i class="fas fa-edit" title="edit" (click)="edit(List)"></i>
+                                </td>
+                                <td>
+                                    <i class="fas fa-lock-open" title="open" (click)="Activate(List)"></i>
+                                </td>
+                                <td>
+                                    <i class="fas fa-lock" title="close" (click)="Deactivate(List)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="StoneMAster" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 900px">
+        <div class="modal-content">
+            <div class="modal-header">
+
+
+                <button type="button"
+                    class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary"
+                    id="exampleModalLabel" (click)=printStonedData()><i class="fal fa-print"></i>
+                    Print</button>
+                <h3 class="modal-title">{{bcode}}-Stone List</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" id="DisplayntStoneData">
+                            <table class="table table-bordered">
+                                <thead class="TableHead">
+                                    <th>UOM</th>
+                                    <th>Type</th>
+                                    <th>Stone Type</th>
+                                    <th>Stone Name</th>
+                                    <th>Batch</th>
+                                    <th>Code</th>
+                                    <th>Counter </th>
+                                    <th>Brand </th>
+                                    <th>Color</th>
+                                    <th>Cut</th>
+                                    <th>Clarity</th>
+
+                                    <th>Status </th>
+                                </thead>
+                                <tbody *ngFor="let List of printStoneData">
+                                    <tr>
+                                        <td>{{List.Uom}}</td>
+                                        <td>{{List.Type}}</td>
+                                        <td>{{List.StoneType}}</td>
+                                        <td>{{List.StoneName}}</td>
+                                        <td>{{List.Batch}}</td>
+                                        <td>{{List.Code}}</td>
+                                        <td>{{List.CounterCode}}</td>
+                                        <td>{{List.BrandName}}</td>
+                                        <td>{{List.Color}}</td>
+                                        <td>{{List.Cut}}</td>
+                                        <td>{{List.Clarity}}</td>
+                                        <td>{{List.Status}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

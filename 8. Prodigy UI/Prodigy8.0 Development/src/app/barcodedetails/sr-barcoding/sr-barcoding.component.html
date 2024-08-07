@@ -1,0 +1,806 @@
+<div class="row">
+    <div class="col-sm-5">
+    </div>
+    <div class="col-sm-5">
+    </div>
+    <div class="col-sm-2">
+        <div class="form-group">
+            <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+                style="margin-top: 5px;" (click)="ListSRItems()">
+                <i class="far fa-code-merge"></i> Available SR Items</button>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="EnableSR">
+    <div id="accordian" class="accordion">
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#itemDetails" (click)="ToggleitemDetails()"
+                [ngClass]="EnableItemDetails ? 'collapsed' : ''" [attr.data-toggle]="EnableItemDetails ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <a class="card-title align-middle" style="color:#005BFF">
+                            <i class="fal fa-hand-receiving fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Item Details</ins></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="itemDetails" class="card-body collapse" [collapse]="EnableItemDetails">
+                <div class="col-md-12">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Supplier</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.PartyName"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Item</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.ItemName"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Design</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.DesignName"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Qty</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.Qty"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Karat</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.Karat"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Gross Wt</label>
+                                    <input class="form-control" type="text" (change)="GetNetWT();"
+                                        [(ngModel)]="SRBarcodeDetails.Gwt" [ngModelOptions]="{standalone: true}"
+                                        readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Stone Wt</label>
+                                    <input class="form-control" type="text" (change)="GetNetWT();"
+                                        [(ngModel)]="SRBarcodeDetails.Swt" [ngModelOptions]="{standalone: true}"
+                                        readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Net Wt</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.Nwt"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Stone Amount</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.StoneAmount"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Diamond Amount</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.DaimondAmount"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Counter</label>
+                                    <select class="form-control mr-auto mt-2 mt-lg-0"
+                                        [(ngModel)]="SRBarcodeDetails.CounterCode"
+                                        [ngModelOptions]="{standalone: true}">
+                                        <option [ngValue]="null" [disabled]=true>Select</option>
+                                        <option [disabled]=true *ngFor="let _Counter of CounterList"
+                                            [value]="_Counter.CounterCode">
+                                            {{_Counter.CounterName}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Size</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.ItemSize"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Piece Rate</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.PieceRate"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Order No</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.OrderNo"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Purity%</label>
+                                    <input class="form-control" type="text"
+                                        [(ngModel)]="SRBarcodeDetails.PurPurityPercentage"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">MC Type</label>
+                                    <!-- <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.McType"
+                                        [ngModelOptions]="{standalone: true}" readonly /> -->
+                                    <select class="form-control mr-auto mt-2 mt-lg-0"
+                                        [(ngModel)]="SRBarcodeDetails.McType" [ngModelOptions]="{standalone: true}"
+                                        [disabled]="true">
+                                        <option value="select" [disabled]="true" *ngFor="let MC of MCList"
+                                            [value]="MC.MC_ID">
+                                            {{MC.MC_NAME}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">MC/grm</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.PurMcGram"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">MC/Piece</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.McPerPiece"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">MC%</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.McPercent"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">MC Amt</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.McAmount"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Pur MC Type</label>
+                                    <!-- <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.PurMcType"
+                                        [ngModelOptions]="{standalone: true}" readonly /> -->
+                                    <select class="form-control mr-auto mt-2 mt-lg-0"
+                                        [(ngModel)]="SRBarcodeDetails.PurMcType" [ngModelOptions]="{standalone: true}"
+                                        [disabled]="true">
+                                        <option value="select" [disabled]="true" *ngFor="let MC of MCList"
+                                            [value]="MC.MC_ID">
+                                            {{MC.MC_NAME}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Wast%</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.WastPercent"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Wast grms</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.WastageGrams"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Pur MC%</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.PurMcGram"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Pur Rate/Gram</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.PurRate"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Old Barcode No</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.OldBarcodeNo"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">V.Model No</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.VendorModelNo"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Tag Prints</label>
+                                    <input class="form-control" type="text" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Tag Wt</label>
+                                    <input class="form-control" type="text" [(ngModel)]="SRBarcodeDetails.TagWt"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Certification No</label>
+                                    <input class="form-control" type="text"
+                                        [(ngModel)]="SRBarcodeDetails.CertificationNo"
+                                        [ngModelOptions]="{standalone: true}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Image</label>
+                                    <input class="form-control" #myInput type="file" id="file"
+                                        (change)="handleBrowse($event)" readonly BlueBorder>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="no">Uploaded Image</label>
+                                    <img class="form-control" height="100">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#StoneDetails" (click)="TogglestoneDetails()"
+                [ngClass]="EnableStoneDetails ? 'collapsed' : ''"
+                [attr.data-toggle]="EnableStoneDetails ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <a class="card-title align-middle" style="color:#ffa600">
+                            <i class="fal fa-hand-receiving fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Stone/Diamond Details</ins></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="StoneDetails" class="card-body collapse" [collapse]="EnableStoneDetails">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" style="width: 4300px;">
+                            <thead class="topbar">
+                                <tr>
+                                    <th>GS</th>
+                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Qty</th>
+                                    <th>Carat</th>
+                                    <th>Pur.Amt</th>
+                                    <th>Rate/Carat</th>
+                                    <th>Selling Amount</th>
+                                    <th>Color</th>
+                                    <th>Clarity</th>
+                                    <th>Size</th>
+                                    <th>Shape</th>
+                                    <th>Cut</th>
+                                    <th>Polish</th>
+                                    <th>Symmetry</th>
+                                    <th>Flourescence</th>
+                                    <th>Certificate</th>
+                                    <!-- <th>Action</th>
+                                    <th> <button (click)="addrow()"
+                                            class=" pull-right btn waves-effect waves-light btn-rounded btn-outline-secondary wd"
+                                            [disabled]="true">Add
+                                        </button></th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let field of fieldArray; let i = index">
+                                    <td>
+                                        <select [(ngModel)]="field.StoneGSType" name="{{field.StoneGSType}}"
+                                            class="form-control CustomWidth150"
+                                            (change)="getStoneName(field.StoneGSType,i)">
+                                            <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                            <option *ngFor="let _stoneGS of stoneType" [disabled]="readonly[i]"
+                                                [value]="_stoneGS.gs_code">
+                                                {{_stoneGS.GSName}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.StoneType" name="{{field.StoneType}}"
+                                            class="form-control CustomWidth150"
+                                            (change)="StoneList(field.StoneGSType,field.StoneType,i)">
+                                            <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                            <option *ngFor="let _stoneType of StoneTypes[i]" [disabled]="readonly[i]"
+                                                [value]="_stoneType.Name">
+                                                {{_stoneType.Code}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="field.StoneGSType !='STN'">
+                                            <select [(ngModel)]="field.Name" name="{{field.Name}}"
+                                                class="form-control CustomWidth150">
+                                                <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                                <option *ngFor="let _stoneName of stoneName[i]" [disabled]="readonly[i]"
+                                                    [value]="_stoneName.stone_name">
+                                                    {{_stoneName.stone_name}}
+                                                </option>
+                                            </select>
+                                        </ng-container>
+                                        <ng-container *ngIf="field.StoneGSType =='STN'">
+                                            <select [(ngModel)]="field.Name" name="{{field.Name}}"
+                                                class="form-control CustomWidth150">
+                                                <option [ngValue]="null" [disabled]="readonly[i]">Select</option>
+                                                <option *ngFor="let _stoneName of stoneName[i]" [disabled]="readonly[i]"
+                                                    [value]="_stoneName.StoneName">
+                                                    {{_stoneName.StoneName}}
+                                                </option>
+                                            </select>
+                                        </ng-container>
+                                    </td>
+                                    <td s>
+                                        <input type="number" [(ngModel)]="field.Qty" name="{{field.Qty}}"
+                                            class="form-control CustomWidth50" placeholder="Quantity"
+                                            [readonly]="readonly[i]">
+                                    </td>
+                                    <td>
+                                        <input type="number" [(ngModel)]="field.Carrat" name="{{field.Carrat}}"
+                                            class="form-control CustomWidth50" placeholder="Carat"
+                                            [readonly]="readonly[i]" BlueBorder (change)="getStoneWt(i)">
+                                    </td>
+                                    <td>
+                                        <input type="text"
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                            [(ngModel)]="field.PurRate" name="{{field.PurRate}}"
+                                            class="form-control CustomWidth75" placeholder="PurRate"
+                                            [readonly]="readonly[i]">
+                                    </td>
+                                    <td>
+                                        <input type="number" [(ngModel)]="field.Rate" name="{{field.Rate}}"
+                                            class="form-control CustomWidth75" placeholder="Rate/Carat"
+                                            (change)="GetAmount(i)" [readonly]="readonly[i]" BlueBorder>
+                                    </td>
+                                    <td>
+                                        <input type="number" [(ngModel)]="field.Amount" name="{{field.Amount}}"
+                                            class="form-control CustomWidth75" (change)="GetRate(i)"
+                                            [readonly]="readonly[i]" placeholder="Amount">
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.Color" name="{{field.Color}}"
+                                            class="form-control CustomWidth75">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _diamondColor of diamondColor" [disabled]="true"
+                                                [value]="_diamondColor.Code">
+                                                {{_diamondColor.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.Clarity" name="{{field.Clarity}}"
+                                            class="form-control CustomWidth75">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _diamondClarity of diamondClarity" [disabled]="true"
+                                                [value]="_diamondClarity.Code">
+                                                {{_diamondClarity.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.Size" name="{{field.Size}}"
+                                            class="form-control CustomWidth75">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _diamondSize of diamondSize" [disabled]="true"
+                                                [value]="_diamondSize.Code">
+                                                {{_diamondSize.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.Shape" name="{{field.Shape}}"
+                                            class="form-control CustomWidth75">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _diamondShape of diamondShape" [disabled]="true"
+                                                [value]="_diamondShape.Code">
+                                                {{_diamondShape.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.Cut" name="{{field.Cut}}"
+                                            class="form-control CustomWidth75">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _diamondCut of diamondCut" [disabled]="true"
+                                                [value]="_diamondCut.Code">
+                                                {{_diamondCut.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.Polish" name="{{field.Polish}}"
+                                            class="form-control CustomWidth75">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _diamondPolish of diamondPolish" [disabled]="true"
+                                                [value]="_diamondPolish.Code">
+                                                {{_diamondPolish.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.Symmetry" name="{{field.Symmetry}}"
+                                            class="form-control CustomWidth75">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _diamondSymmetry of diamondSymmetry" [disabled]="true"
+                                                [value]="_diamondSymmetry.Code">
+                                                {{_diamondSymmetry.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.Fluorescence" name="{{field.Fluorescence}}"
+                                            class="form-control CustomWidth75">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _diamondFluorescence of diamondFluorescence"
+                                                [disabled]="true" [value]="_diamondFluorescence.Code">
+                                                {{_diamondFluorescence.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select [(ngModel)]="field.Certificate" name="{{field.Certificate}}"
+                                            class="form-control CustomWidth75">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _diamondCertificate of diamondCertificate"
+                                                [disabled]="true" [value]="_diamondCertificate.Code">
+                                                {{_diamondCertificate.Name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <!-- <td colspan="2">
+                                        <ng-container *ngIf="EnableEditDelbtn[i]">
+                                            <button class="btn btn-default btn-rounded" type="button"
+                                                (click)="editFieldValue(i)"><i class="fal fa-pencil-alt"></i>
+                                                Edit</button>
+                                            <button class="btn btn-danger btn-rounded" type="button"
+                                                (click)="deleteFieldValue(i)"><i class="fal fa-trash-alt"></i>
+                                                Delete</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="EnableSaveCnlbtn[i]">
+                                            <button class="btn btn-success btn-rounded" type="button"
+                                                (click)="saveDataFieldValue(i)"><i class="fal fa-save"></i>
+                                                Save</button>
+                                            <button class="btn btn-warning btn-rounded" type="button"
+                                                (click)="cancelDataFieldValue(i)"><i class="far fa-window-close"></i>
+                                                Cancel</button>
+                                        </ng-container>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <br>
+        <div class="card mb-0">
+            <div class="card-header Pointer" href="#DiamondDetails" (click)="TogglediamondDetails()"
+                [ngClass]="EnableDiamondDetails ? 'collapsed' : ''"
+                [attr.data-toggle]="EnableDiamondDetails ? '':'collapse'"
+                style="background-color: #fdfdfd; box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.36);color:black">
+                <div class="row">
+                    <div class="col-md-2 ">
+                        <a class="card-title align-middle" style="color:#00f7ff">
+                            <i class="fal fa-hand-receiving fa-2x mr-2 align-middle"></i>
+                            <span class="align-middle Pointer"><ins>Diamond Details</ins></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="DiamondDetails" class="card-body collapse" [collapse]="EnableDiamondDetails">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" style="width: 2375px;">
+                            <thead class="topbar">
+                                <tr>
+                                    <th>GS</th>
+                                    <th>Name</th>
+                                    <th>Qty</th>
+                                    <th>Carat</th>
+                                    <th>Rate/Carat</th>
+                                    <th>Pur.Amt</th>
+                                    <th>Selling Amount</th>
+                                    <th>Color</th>
+                                    <th>Clarity</th>
+                                    <th>Size</th>
+                                    <th>Shape</th>
+                                    <th>Cut</th>
+                                    <th>Polish</th>
+                                    <th>Symmetry</th>
+                                    <th>Flourescence</th>
+                                    <th>Certificate</th>
+                                    <th>Action</th>
+                                    <th> <button (click)="addrow1()"
+                                            class=" pull-right btn waves-effect waves-light btn-rounded btn-outline-secondary wd"
+                                            [disabled]="EnableAddRow1">Add
+                                        </button></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let field1 of fieldArray1; let i = index">
+                                    <td style="width: 250px;">
+                                        <select [(ngModel)]="field1.StoneGSType" name="{{field1.StoneGSType}}"
+                                            class="form-control" (change)="getStoneName1(field1.StoneGSType,i)">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _stoneType of stoneType" [disabled]="true"
+                                                [value]="_stoneType.gs_code">
+                                                {{_stoneType.GSName}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 250px;">
+                                        <select [(ngModel)]="field1.Name" name="{{field1.Name}}" class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                            <option *ngFor="let _stoneName of stoneName1[i]" [disabled]="true"
+                                                [value]="_stoneName.stone_name">
+                                                {{_stoneName.stone_name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <input type="number" [(ngModel)]="field1.Qty" name="{{field1.Qty}}"
+                                            class="form-control" placeholder="Quantity" [readonly]="true">
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <input type="number" [(ngModel)]="field1.Carrat" name="{{field1.Carrat}}"
+                                            class="form-control" placeholder="Carat" [readonly]="true"
+                                            BlueBorder (change)="getStoneWt(i)">
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <input type="number" [(ngModel)]="field1.Rate" name="{{field1.Rate}}"
+                                            class="form-control" placeholder="Rate/Carat" [readonly]="true"
+                                            BlueBorder>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <input type="text"
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                            [(ngModel)]="field1.PurRate" name="{{field1.PurRate}}" class="form-control"
+                                            placeholder="PurRate" [readonly]="true">
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <input type="number" [(ngModel)]="field1.Amount" name="{{field1.Amount}}"
+                                            class="form-control" [readonly]="true" placeholder="Amount">
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <select [(ngModel)]="field1.Color" name="{{field1.Color}}" class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <select [(ngModel)]="field1.Clarity" name="{{field1.Clarity}}"
+                                            class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <select [(ngModel)]="field1.Size" name="{{field1.Size}}" class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <select [(ngModel)]="field1.Shape" name="{{field1.Shape}}" class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <select [(ngModel)]="field1.Cut" name="{{field1.Cut}}" class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <select [(ngModel)]="field1.Polish" name="{{field1.Polish}}"
+                                            class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <select [(ngModel)]="field1.Symmetry" name="{{field1.Symmetry}}"
+                                            class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <select [(ngModel)]="field1.Fluorescence" name="{{field1.Fluorescence}}"
+                                            class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;">
+                                        <select [(ngModel)]="field1.Certificate" name="{{field1.Certificate}}"
+                                            class="form-control">
+                                            <option [ngValue]="null" [disabled]="true">Select</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 125px;" colspan="2">
+                                        <ng-container *ngIf="EnableEditDelbtn1[i]">
+                                            <button class="btn btn-danger btn-rounded" type="button"
+                                                (click)="deleteFieldValue1(i)"><i class="fal fa-trash-alt"></i>
+                                                Delete</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="EnableSaveCnlbtn1[i]">
+                                            <button class="btn btn-success btn-rounded" type="button"
+                                                (click)="saveDataFieldValue1(i)"><i class="fal fa-save"></i>
+                                                Save</button>
+                                            <button class="btn btn-warning btn-rounded" type="button"
+                                                (click)="cancelDataFieldValue1(i)"><i class="far fa-window-close"></i>
+                                                Cancel</button>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+                (click)="Submit()">
+                <i class="far fa-save"></i> Submit</button>
+            <button class="btn btn-danger waves-effect waves-light btn-rounded btn-secondary" type="button"><i
+                    class="far fa-window-close"></i>&nbsp;Cancel</button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="social-widget">
+                            <div class="soc-header box-facebook" style="padding: 3px;">
+                                <h3 class="text-white">Summary</h3>
+                            </div>
+                            <div class="soc-content">
+                                <div class="col-3 b-r">
+                                    <h4 class="font-medium"><b>{{stncarat | number:'1.3-3'}}</b>
+                                    </h4>
+                                    <h5 class="text-black">Stone Carat</h5>
+                                </div>
+                                <div class="col-3 b-r">
+                                    <h4 class="font-medium"><b>{{dmdcarat | number:'1.3-3'}}</b>
+                                    </h4>
+                                    <h5 class="text-black">Diamond Carat</h5>
+                                </div>
+                                <div class="col-3 b-r">
+                                    <h4 class="font-medium"><b>{{SRBarcodeDetails.StoneAmount | number:'1.2-2'}}</b>
+                                    </h4>
+                                    <h5 class="text-black">Stone Amount</h5>
+                                </div>
+                                <div class="col-3 b-r">
+                                    <h4 class="font-medium"><b>{{SRBarcodeDetails.DaimondAmount | number:'1.2-2'}}</b>
+                                    </h4>
+                                    <h5 class="text-black">Diamond Amount</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<div class="modal fade" id="SRTab" tabindex="-1" role="contentinfo" data-backdrop="static" data-keyboard="false"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4><b>SR Items Available For Barcoding</b></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" style="height:350pt;overflow: scroll;">
+                            <table id="elementsPeriodic">
+                                <thead class="topbar">
+                                    <th></th>
+                                    <th>SNo</th>
+                                    <th>SR No</th>
+                                    <th>Billed Branch</th>
+                                    <th>GS Code</th>
+                                    <th>Item</th>
+                                    <th>Gross Wt</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let _list of SRItems | orderBy: 'SalesBillNo';let i=index;"
+                                        class="pointer">
+                                        <td>
+                                            <input type="checkbox" class="chkbxsize" [checked]="i  === selectedIndex"
+                                                (click)="onCheckboxChange(_list,$event,i)" />
+                                        </td>
+                                        <td>{{i+1}}</td>
+                                        <td>{{_list.SalesBillNo}}</td>
+                                        <td>{{_list.BranchCode}}</td>
+                                        <td>{{_list.GSCode}}</td>
+                                        <td>{{_list.ItemCode}}</td>
+                                        <td>{{_list.GrossWt}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <pre>{{SRGetModel | json}}</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4" style="text-align: center;">
+                        <button
+                            class="btn btn-outline-success waves-effect waves-light btn-rounded btn-outline-secondary "
+                            style="margin-top: 1.2rem !important;" (click)="Save()">
+                            <i class="far fa-save"></i> Save</button>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="EnableJson">
+    <div class="col-md-3">
+        <pre>{{SRBarcodeDetails | json}}</pre>
+    </div>
+</ng-container>

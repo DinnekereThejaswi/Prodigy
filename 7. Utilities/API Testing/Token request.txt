@@ -1,0 +1,19 @@
+Auth Token request body:
+grant_type=password&client_id=Prodigy&client_secret=DmyfBR3e55XquIdi71nzko7gvm6BhDwvAt8r4FoRLuo=&username=si&password=123
+
+
+Refresh token request body:
+grant_type=refresh_token&client_id=Prodigy&client_secret=DmyfBR3e55XquIdi71nzko7gvm6BhDwvAt8r4FoRLuo=&refresh_token={{refresh_token}}
+
+Response:
+{
+    "access_token": "Vy4JxYes3EQtlYvjRkOzQy3B7am-lpnzevbdDbXxkBs72pP1L3mB6X07u2wi6iNZUQ7v7tXEw7wxKu-TYqCcn-VU_m2CJzsdxbCIxIRKsZ42I4KAelsLpAaMeBT3y87cU6A2LummHQNTPDOStcojVoyFkqIJS1LZvDHO2pWqGAG3h381kglbNWfasLLXcrKhoQ3BsBG3JYuMTvflROYBn95ppqv_k6A_7BHPUfpx1XSPoLOnqjkxSJq3K6oARpadWMsm75sCmiSTWuA6dHLqRbb3lv_lItk0Bk3Kr7O8_aaugz0s256nZumLUf1lsywNTG0-zR5sh57zhXfCk-P_Fb1g2gtQgUVRGKwXfjNXL0biHnfVHaeDnYaFS18udfh3Gagjh4ijyl-b-4pGU6t9revfvyMekTmt4vjOqm-XnaQ",
+    "token_type": "bearer",
+    "expires_in": 299,
+    "refresh_token": "f57537324705472eb6c166aea58d597e",
+    "client_id": "Prodigy",
+    "userdisplayname": "ADMIN",
+    "role": "admin",
+    ".issued": "Wed, 12 Feb 2020 05:30:45 GMT",
+    ".expires": "Wed, 12 Feb 2020 05:35:45 GMT"
+}

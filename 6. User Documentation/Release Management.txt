@@ -1,0 +1,11 @@
+
+Phase2 Testing.
+Date: 24/09/2020
+API Version: 248
+API URL: 192.168.10.8/MagnaWebPosV2
+Database: MagnaRJR20200922
+
+Angular Version: 1024
+Angular URL: 192.168.10.8/ProdigyV2
+
+Magna Application Version: 4986
